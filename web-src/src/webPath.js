@@ -8,7 +8,7 @@ const slash = "/";
 // 버전
 const protocol = "http://";
 
-const host = "jejujobara.com";
+const host = "gateway.hicompint.com";
 // const host = "210.116.101.159";
 
 const port = "60000";

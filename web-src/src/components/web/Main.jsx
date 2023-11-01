@@ -1,11 +1,11 @@
-import { React, useEffect, useRef, useState } from "react";
-
-import Header from "components/web/common/Header";
 import Footer from "components/web/common/Footer";
-import MainMainvisual from "./main/mainComponents/MainMainvisual";
+import React, {useEffect, useRef, useState} from "react";
 import MainContents from "./main/mainComponents/MainContents";
 import Aos from "aos";
 import MainPopupModal from "./main/mainComponents/contents/modal/MainPopupModal";
+import Header from "components/web/common/Header";
+import MainMainvisual from "components/web/main/mainComponents/MainMainvisual";
+
 
 function Main() {
     useEffect(() => {
@@ -72,8 +72,6 @@ function Main() {
 
             {/* 푸터 */}
             <Footer />
-
-            <div></div>
 
             {/* 팝업모달 */}
             <MainPopupModal
