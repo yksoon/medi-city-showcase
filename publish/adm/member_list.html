@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="kr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>2023 JOB-ARA FESTIVAL - 관리자</title>
+
+        <script src="js/jquery-3.7.0.min.js"></script>
+
+        <link rel="stylesheet" href="/publish/css/default.css" />
+        <link rel="stylesheet" href="css/adm.css" />
+    </head>
+<body>
+    <div class="wrap">
+        <div class="admin">
+            <header>
+                <div class="gnb">
+                    <div class="adm_profile">
+                        <p>관리자 (admin)</p>
+                        <div>
+                            <a href="login.html" class="font-12">로그아웃</a>
+                            <a
+                                href="http://dev-web.medi-city.co.kr/publish/index.html"
+                                target="_blank"
+                                class="font-12"
+                                >HOMEPAGE</a
+                            >
+                        </div>
+                    </div>
+                    <ul class="sub_gnb">
+                        <li>
+                            <a onclick="navList('dash')">대시보드</a>
+                        </li>
+                        <li>
+                            <a onclick="navList('memberList')" class="on">사전등록 관리</a>
+                        </li>
+                        <li>
+                            <a onclick="navList('dateList')">일정 관리</a>
+                        </li>
+                        <li>
+                            <a>게시판 관리</a>
+                            <ul class="sub_2depth">
+                                <li>
+                                    <a onclick="navList('notice')">공지사항</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a onclick="navList('talk')">댓글 관리</a>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <div class="content">
+                <div class="title">
+                    <h3>사전등록 리스트</h3>
+                </div>
+                <div class="con_area">
+                    <div class="adm_search">
+                        <div>
+                            <select name="" id="">
+                                <option value="">구분</option>
+                                <option value="">이름</option>
+                                <option value="">소속</option>
+                            </select>
+                            <input type="text" class="input">
+                            <a href="" class="btn btn02">검색</a>
+                        </div>
+                        <div>
+                            <a href="javascript:void(0)" class="btn btn01" title="#memberInsert" onclick="modal_open(memberInsert);">임의등록</a>
+                            <!-- <a href="" class="btn btn01">엑셀 다운로드</a> -->
+                        </div>
+                    </div>
+                    <div class="adm_table">
+                        <table class="table_a">
+                            <colgroup>
+                                <col width="3%">
+                                <col width="4%">
+                                <col width="10%">
+                                <col width="5%">
+                                <col width="10%">
+                                <col width="10%">
+                                <col width="8%">
+                                <col width="8%">
+                                <col width="8%">
+                                <col width="8%">
+                                <col width="8%">
+                                <col width="6%">
+                                <col width="6%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th rowspan="2"><input type="checkbox"></th>
+                                    <th rowspan="2">고유번호</th>
+                                    <th rowspan="2">ID</th>
+                                    <th rowspan="2">이름</th>
+                                    <th rowspan="2">연락처</th>
+                                    <th rowspan="2">학교</th>
+                                    <th rowspan="2">학과</th>
+                                    <th rowspan="2">생년월일</th>
+                                    <th rowspan="2">희망직종</th>
+                                    <th colspan="2">참여프로그램</th>
+                                    <th rowspan="2">이력서 보기</th>
+                                    <th rowspan="2">정보수정</th>
+                                </tr>
+                                <tr>
+                                    <th>NCS 모의고사</th>
+                                    <th style="border-right:1px solid #ddd;">현직자 토크콘서트</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>1</td>
+                                    <td>ej.lim@hicomp.net</td>
+                                    <td>임은지</td>
+                                    <td>010-0000-0000</td>
+                                    <td>하이컴프아이엔티</td>
+                                    <td>디자인</td>
+                                    <td>1999-06-16</td>
+                                    <td>디자이너</td>
+                                    <td>Y</td>
+                                    <td>Y</td>
+                                    <td>
+                                        <a href="" class="tablebtn">이력서 보기</a>
+                                    </td>
+                                    <td>
+                                        <a href="" class="tablebtn">정보 수정</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagenation">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal_wrap" id="modal_wrap">
+        <div class="modal w800" id="memberInsert">
+            <!-- modal content - 회원등록 //S -->
+            <div class="modal_close" onclick="modal_close();"><img src="img/common/modal_close.png" alt=""></div>
+            <div class="form">
+                <h4 class="mo_title">회원등록</h4>
+                <table class="table_bb">
+                    <colgroup>
+                        <col width="30%">
+                        <col width="*">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <td><input type="email" class="input w180" autofocus></td>
+                        </tr>
+                        <tr>
+                            <th>이름</th>
+                            <td>
+                                <input type="name" class="input w120" placeholder="성">
+                                <input type="name" class="input w120" placeholder="이름">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>연락처</th>
+                            <td>
+                                <div id="phone_num" class="m0">
+                                    <input type="tel" class="input w120" id="phone_num1" value="010" readonly>
+                                    <input type="tel" class="input w120" id="phone_num2">
+                                    <input type="tel" class="input w120" id="phone_num3">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>학교</th>
+                            <td><input type="text" class="input w180"></td>
+                        </tr>
+                        <tr>
+                            <th>학과</th>
+                            <td><input type="text" class="input w180"></td>
+                        </tr>
+                        <tr>
+                            <th>생년월일</th>
+                            <td><input type="date" value="" name="" class="input input_date"/></td>
+                        </tr>
+                        <tr>
+                            <th>희망직종</th>
+                            <td><input type="text" class="input w180"></td>
+                        </tr>
+                        <tr>
+                            <th>참여프로그램</th>
+                            <td>
+                                <label><input type="checkbox" value=""> <b>NCS 모의고사</b> (10:00~15:00 체육관 내 강의실)</label><br>
+                                <label><input type="checkbox" value=""> <b>현직자 토크콘서트</b> (15:00~17:00 / 체육관 내)</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>이력서업로드</th>
+                            <td>
+                                <input type="file">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="btn_box">
+                    <a href="" class="btn btn01">등록</a>
+                    <a href="" class="btn btn02">취소</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 모달 - 회원등록 //E -->
+
+</body>
+</html>
+<script src="js/nav.js"></script>
+<script src="js/basic.js"></script>
+

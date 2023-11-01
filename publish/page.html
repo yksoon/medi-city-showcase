@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <title>잡아라 페이지목록</title>
+    <style>
+        .wrap {width: 1200px;margin:0 auto;}
+        .title {text-align: center;padding: 40px 0 20px;font-size:21px;font-weight:900;}
+        table {border-top: 1px solid #ddd;}
+        table td:first-child {border-top: 1px solid #ddd;border-left: 1px solid #ddd;}
+        table thead tr th {border: 1px solid #ccc; background-color: #f4f4f4; color: #111; font-size: 15px;}
+        table tbody tr th { border: 1px solid #ccc; color: #111; font-size: 13px; padding: 3px 10px; text-align: left;}
+        table tbody tr td {border: 1px solid #ccc; color: #111; font-size: 13px; padding: 3px 7px;}
+        table tbody tr td.g {text-align: center;background: #4ea74e;color: #fff;}
+        table tbody tr td.o {text-align: center;background: #ff9100;color: #fff;}
+        table tbody tr td.r {text-align: center;background: #d54a4a;color: #fff;}
+        table tbody tr td a:link {text-decoration: underline;color: blue;}
+        table tbody tr td a:visited {text-decoration: underline;color: blue;}
+        table tbody tr.tit {background:#ddd;}
+        table tbody tr.r_tit {background:#111;}
+        table tbody tr.r_tit th { color: #fff; font-size: 16px; padding: 4px 10px;}
+        table tbody tr.tit th { color: #111; font-size: 16px; padding: 4px 10px;}
+        table tbody tr.cancel th, table tbody tr.cancel td {text-decoration:line-through;}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h3 class="title">잡아라 페이지목록</h3>
+        <table>
+            <colgroup>
+                <col width="20%">
+                <col width="*">
+                <col width="10%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>페이지</th>
+                    <th>링크</th>
+                    <th>퍼블완료</th>
+                </tr>
+            </thead>
+                <tbody>
+                   <tr>
+                        <th>메인</th>
+                        <td><a href="index.html" target="_blank">index.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr class="tit">
+                        <th colspan="3">박람회안내</th>
+                    </tr>
+                    <tr>
+                        <th>행사소개</th>
+                        <td><a href="" target="_blank">intro_intro.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr class="cancel">
+                        <th>인사말</th>
+                        <td>삭제</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>행사장소</th>
+                        <td><a href="" target="_blank">intro_venue.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr class="tit">
+                        <th colspan="3">프로그램</th>
+                    </tr>
+                    <tr>
+                        <th><span style="text-decoration: line-through;">취업연계 프로그램</span> 행사일정</th>
+                        <td><a href="" target="_blank">program_job.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr>
+                        <th><span style="text-decoration: line-through;">무대프로그램</span> 세부프로그램</th>
+                        <td><a href="" target="_blank">program_stage.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr>
+                        <th>이벤트프로그램</th>
+                        <td><a href="" target="_blank">program_event.html</a></td>
+                        <td class="o">준비중페이지 세팅</td>
+                    </tr>
+                    <tr class="tit">
+                        <th colspan="3">사전등록</th>
+                    </tr>
+                    <tr>
+                        <th>사전등록</th>
+                        <td><a href="" target="_blank">registration.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr class="tit">
+                        <th colspan="3">참여기업</th>
+                    </tr>
+                    <tr>
+                        <th>참여기업</th>
+                        <td><a href="" target="_blank">company.html</a></td>
+                        <td></td>
+                    </tr>
+                    <tr class="tit">
+                        <th colspan="3">공지</th>
+                    </tr>
+                    <tr>
+                        <th>공지</th>
+                        <td><a href="" target="_blank">notice.html</a></td>
+                        <td></td>
+                    </tr>
+                    <tr class="r_tit">
+                        <th colspan="3">관리자</th>
+                    </tr>
+                    <tr>
+                        <th>대시보드(통계)</th>
+                        <td><a href="" target="_blank">adm/index.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr>
+                        <th>사전등록관리</th>
+                        <td><a href="" target="_blank">adm/member_list.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr>
+                        <th>일정관리</th>
+                        <td><a href="" target="_blank">adm/date.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr class="tit">
+                        <th colspan="3">게시판관리</th>
+                    </tr>
+                    <tr>
+                        <th>공지사항</th>
+                        <td><a href="" target="_blank">adm/notice.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+                    <tr>
+                        <th>댓글관리</th>
+                        <td><a href="" target="_blank">adm/talk.html</a></td>
+                        <td class="g">완료</td>
+                    </tr>
+            </tbody>
+        </table>
+        
+    </div>
+</body>
+</html>
+<script>
+    $(document).ready(function(){
+        $('a').click(function(){
+            var link = $(this).text();
+            $(this).attr('href',link);
+        })
+    });
+</script>

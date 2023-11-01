@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="kr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>2023 JOB-ARA FESTIVAL - 관리자</title>
+
+        <script src="js/jquery-3.7.0.min.js"></script>
+
+        <link rel="stylesheet" href="/publish/css/default.css" />
+        <link rel="stylesheet" href="css/adm.css" />
+    </head>
+<body>
+    <div class="wrap">
+        <div class="admin">
+            <header>
+                <div class="gnb">
+                    <div class="adm_profile">
+                        <p>관리자 (admin)</p>
+                        <div>
+                            <a href="login.html" class="font-12">로그아웃</a>
+                            <a
+                                href="http://dev-web.medi-city.co.kr/publish/index.html"
+                                target="_blank"
+                                class="font-12"
+                                >HOMEPAGE</a
+                            >
+                        </div>
+                    </div>
+                    <ul class="sub_gnb">
+                        <li>
+                            <a onclick="navList('dash')">대시보드</a>
+                        </li>
+                        <li>
+                            <a onclick="navList('memberList')">사전등록 관리</a>
+                        </li>
+                        <li>
+                            <a onclick="navList('date')" class="on">일정 관리</a>
+                        </li>
+                        <li>
+                            <a>게시판 관리</a>
+                            <ul class="sub_2depth">
+                                <li>
+                                    <a onclick="navList('notice')">공지사항</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a onclick="navList('talk')">댓글 관리</a>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <div class="content">
+                <div class="title">
+                    <h3>일정 관리</h3>
+                </div>
+                <div class="con_area">
+                    <!-- <div class="adm_search">
+                        <div>
+                            <select name="" id="">
+                                <option value="">구분</option>
+                                <option value="">이름</option>
+                                <option value="">소속</option>
+                            </select>
+                            <input type="text" class="input">
+                            <a href="" class="btn btn02">검색</a>
+                        </div>
+                    </div> -->
+                    <div class="adm_table">
+                        <table class="table_a">
+                            <colgroup>
+                                <col width="*">
+                                <col width="30%">
+                                <col width="30%">
+                                <col width="8%">
+                                <col width="8%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>항목</th>
+                                    <th>시작일자</th>
+                                    <th>종료일자</th>
+                                    <th>저장</th>
+                                    <th>초기화</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>행사일자</td>
+                                    <td>
+                                        <input type="date" class="input w180">
+                                        <input type="time" class="input w180">
+                                    </td>
+                                    <td>
+                                        <input type="date" class="input w180">
+                                        <input type="time" class="input w180">
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn btn01">저장</a>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn btn02">초기화</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>사전등록 기간</td>
+                                    <td>
+                                        <input type="date" class="input w180">
+                                        <input type="time" class="input w180">
+                                    </td>
+                                    <td>
+                                        <input type="date" class="input w180">
+                                        <input type="time" class="input w180">
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn btn01">저장</a>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn btn02">초기화</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagenation">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+<script src="js/nav.js"></script>
+<script src="js/basic.js"></script>
+

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="kr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>2023 JOB-ARA FESTIVAL - 관리자</title>
+
+        <script src="js/jquery-3.7.0.min.js"></script>
+
+        <link rel="stylesheet" href="/publish/css/default.css" />
+        <link rel="stylesheet" href="css/adm.css" />
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="admin">
+                <header>
+                    <div class="gnb">
+                        <div class="adm_profile">
+                            <p>관리자 (admin)</p>
+                            <div>
+                                <a href="login.html" class="font-12">로그아웃</a>
+                                <a
+                                    href="http://dev-web.medi-city.co.kr/publish/index.html"
+                                    target="_blank"
+                                    class="font-12"
+                                    >HOMEPAGE</a
+                                >
+                            </div>
+                        </div>
+                        <ul class="sub_gnb">
+                            <li>
+                                <a onclick="navList('dash')" class="on">대시보드</a>
+                            </li>
+                            <li>
+                                <a onclick="navList('memberList')">사전등록 관리</a>
+                            </li>
+                            <li>
+                                <a onclick="navList('dateList')">일정 관리</a>
+                            </li>
+                            <li>
+                                <a>게시판 관리</a>
+                                <ul class="sub_2depth">
+                                    <li>
+                                        <a onclick="navList('notice')">공지사항</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a onclick="navList('talk')">댓글 관리</a>
+                            </li>
+                        </ul>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="title">
+                        <h3>통계</h3>
+                    </div>
+                    <div class="con_area">
+                        <div>
+                            <table class="table_a">
+                                <colgroup>
+                                    <col width="33%">
+                                    <col width="33%">
+                                    <col width="*">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th colspan="4">총 사전등록 수</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">000</td>
+                                    </tr>
+                                    <tr>
+                                        <th>연령별 등록 수</th>
+                                        <th>등록구분</th>
+                                        <th>참여프로그램</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner_table_wrap">
+                                            <table class="inner_table">
+                                                <colgroup>
+                                                    <col width="50%">
+                                                    <col width="50%">
+                                                </colgroup>
+                                                <tr>
+                                                    <th>10대</th>
+                                                    <td><a href="">00</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>20대</th>
+                                                    <td><a href="">00</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>30대</th>
+                                                    <td><a href="">00</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>기타</th>
+                                                    <td><a href="">00</a></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="inner_table_wrap">
+                                            <table class="inner_table">
+                                                <colgroup>
+                                                    <col width="50%">
+                                                    <col width="50%">
+                                                </colgroup>
+                                                <tr>
+                                                    <th>소속기관 수 (학교)</th>
+                                                    <td><a href="">00</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>전공과 수 (학과)</th>
+                                                    <td><a href="">00</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>전공분야 수 (희망직종)</th>
+                                                    <td><a href="">00</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>&nbsp;</th>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="inner_table_wrap">
+                                            <table class="inner_table">
+                                                <colgroup>
+                                                    <col width="50%">
+                                                    <col width="50%">
+                                                </colgroup>
+                                                <tr>
+                                                    <th>NCS 모의고사</th>
+                                                    <td><a href="">00</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>현직자 토크콘서트</th>
+                                                    <td><a href="">00</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>&nbsp;</th>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>&nbsp;</th>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+<script src="js/nav.js"></script>
+<script src="js/basic.js"></script>

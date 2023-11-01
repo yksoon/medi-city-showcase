@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="kr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>2023 JOB-ARA FESTIVAL - 관리자</title>
+
+        <script src="js/jquery-3.7.0.min.js"></script>
+
+        <link rel="stylesheet" href="/publish/css/default.css" />
+        <link rel="stylesheet" href="css/adm.css" />
+    </head>
+<body>
+    <div class="wrap">
+        <div class="admin">
+            <header>
+                <div class="gnb">
+                    <div class="adm_profile">
+                        <p>관리자 (admin)</p>
+                        <div>
+                            <a href="login.html" class="font-12">로그아웃</a>
+                            <a
+                                href="http://dev-web.medi-city.co.kr/publish/index.html"
+                                target="_blank"
+                                class="font-12"
+                                >HOMEPAGE</a
+                            >
+                        </div>
+                    </div>
+                    <ul class="sub_gnb">
+                        <li>
+                            <a onclick="navList('dash')">대시보드</a>
+                        </li>
+                        <li>
+                            <a onclick="navList('memberList')">사전등록 관리</a>
+                        </li>
+                        <li>
+                            <a onclick="navList('dateList')">일정 관리</a>
+                        </li>
+                        <li>
+                            <a class="on">게시판 관리</a>
+                            <ul class="sub_2depth">
+                                <li>
+                                    <a onclick="navList('notice')">공지사항</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a onclick="navList('talk')">댓글 관리</a>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <div class="content">
+                <div class="title">
+                    <h3>공지사항</h3>
+                </div>
+                <div class="con_area">
+                    <div class="adm_search">
+                        <div>
+                            <select name="" id="">
+                                <option value="">구분</option>
+                                <option value="">이름</option>
+                                <option value="">소속</option>
+                            </select>
+                            <input type="text" class="input">
+                            <a href="" class="btn btn02">검색</a>
+                        </div>
+                    </div>
+                    <div class="adm_notice">
+                        <div class="adm_table">
+                            <table class="table_a">
+                                <colgroup>
+                                    <col width="5%">
+                                    <col width="5%">
+                                    <col width="*">
+                                    <col width="20%">
+                                    <col width="10%">
+                                    <col width="10%">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox"></th>
+                                        <th>번호</th>
+                                        <th>제목</th>
+                                        <th>파일</th>
+                                        <th>조회수</th>
+                                        <th>등록일</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>1</td>
+                                        <td>
+                                            공지사항 제목
+                                        </td>
+                                        <td>
+                                            <div class="file_wrap">
+                                                <a href="">
+                                                    <img src="img/common/file.svg" alt=""> 파일이름1.docx
+                                                </a>
+                                                <a href="">
+                                                    <img src="img/common/file.svg" alt=""> 파일이름2.pdf
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="viewer_wrap">
+                                                <img src="img/common/user_icon.png" alt=""> 16
+                                            </div>
+                                        </td>
+                                        <td>
+                                            2023-08-16
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="btn_box btn_right">
+                            <a href="" class="btn btn01">글쓰기</a>
+                            <a href="" class="btn btn02">삭제</a>
+                        </div>
+                    </div>
+                    <div class="pagenation">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- modal content - 글쓰기 //S -->
+    <div class="modal_wrap" id="modal_wrap">
+        <div class="modal w800" id="memberInsert">
+            <div class="modal_close" onclick="modal_close();"><img src="img/common/modal_close.png" alt=""></div>
+            <div class="form">
+                <h4 class="mo_title">글쓰기</h4>
+                <table class="table_bb">
+                    <colgroup>
+                        <col width="30%">
+                        <col width="*">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>제목</th>
+                            <td><input type="email" class="input wp100" autofocus></td>
+                        </tr>
+                        <tr>
+                            <th>파일첨부</th>
+                            <td>
+                                <input type="file">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <textarea name="" id="" class="input"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>자동등록방지</th>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="btn_box">
+                    <a href="" class="btn btn01">등록</a>
+                    <a href="" class="btn btn02">취소</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 모달 - 회원등록 //E -->
+
+</body>
+</html>
+<script src="js/nav.js"></script>
+<script src="js/basic.js"></script>
+
