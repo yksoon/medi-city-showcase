@@ -73,6 +73,8 @@ function Main() {
             {/* 푸터 */}
             <Footer />
 
+            <div></div>
+
             {/* 팝업모달 */}
             <MainPopupModal
                 isOpen={isOpen}

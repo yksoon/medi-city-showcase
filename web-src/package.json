@@ -1,6 +1,6 @@
 {
-    "name": "com.jobara",
-    "version": "1.2.2",
+    "name": "kr.co.medi-city.showcase",
+    "version": "1.0.0",
     "private": true,
     "homepage": ".",
     "dependencies": {
