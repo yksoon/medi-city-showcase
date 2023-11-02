@@ -12,7 +12,7 @@ const { persistAtom } = recoilPersist({
 // 관리자 페이지
 export const pageAtom = atom({
     key: "page",
-    default: "dashboard",
+    default: "consultingBoard",
     effects_UNSTABLE: [persistAtom], // 세션에 저장하려면 해당 코드 추가
 });
 

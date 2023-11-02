@@ -111,11 +111,6 @@ const SideNav = (props) => {
 
             // 성공
             if (result_code === successCode.success) {
-                // dispatch(
-                //     set_spinner({
-                //         isLoading: false,
-                //     })
-                // );
 
                 setIsSpinner(false);
 
@@ -127,12 +122,6 @@ const SideNav = (props) => {
             // 에러
             else {
                 CommonConsole("log", res);
-
-                // dispatch(
-                //     set_spinner({
-                //         isLoading: false,
-                //     })
-                // );
 
                 setIsSpinner(false);
 
@@ -147,12 +136,6 @@ const SideNav = (props) => {
 
     // 로그아웃
     const signOut = () => {
-        // dispatch(
-        //     set_spinner({
-        //         isLoading: true,
-        //     })
-        // );
-
         setIsSpinner(true);
 
         // signout
@@ -177,25 +160,12 @@ const SideNav = (props) => {
             let result_code = res.headers.result_code;
 
             if (result_code === successCode.success) {
-                // localStorage.removeItem("userInfo");
-                // dispatch(init_user_info_admin(null));
 
                 resetUserInfoAdmin();
                 resetUserTokenAdmin();
 
-                // dispatch(
-                //     set_spinner({
-                //         isLoading: false,
-                //     })
-                // );
-
                 setIsSpinner(false);
 
-                // dispatch(
-                //     set_page({
-                //         page: "dashboard",
-                //     })
-                // );
                 navigate(routerPath.admin_signin_url);
             }
         };
@@ -226,6 +196,11 @@ const SideNav = (props) => {
         }
     };
 
+    // 홈페이지 열기
+    const openToHomepage = () => {
+        window.open(routerPath.web_main_url, '_blank')
+    }
+
     return (
         <>
             <header>
@@ -243,7 +218,8 @@ const SideNav = (props) => {
                                 로그아웃
                             </Link>{" "}
                             <Link
-                                to={routerPath.web_main_url}
+                                // to={routerPath.web_main_url}
+                                onClick={openToHomepage}
                                 className="font-12"
                             >
                                 HOMEPAGE
