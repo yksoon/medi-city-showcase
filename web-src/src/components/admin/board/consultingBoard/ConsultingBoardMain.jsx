@@ -146,7 +146,7 @@ const ConsultingBoardMain = (props) => {
         if (checked) {
             // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
             const idArray = [];
-            boardList.forEach((el) => idArray.push(el.member_sq));
+            boardList.forEach((el) => idArray.push(el.board_idx));
             setCheckItems(idArray);
         } else {
             // 전체 선택 해제 시 checkItems 를 빈 배열로 상태 업데이트
@@ -161,40 +161,47 @@ const ConsultingBoardMain = (props) => {
 
     // 약관 상세
     const detailBoard = (board_idx) => {
-        // setIsSpinner(true);
-        //
-        // const url = apiPath.api_admin_kmedi_member_detail + member_sq;
-        // const data = {};
-        //
-        // // 파라미터
-        // const restParams = {
-        //     method: "get",
-        //     url: url,
-        //     data: data,
-        //     err: err,
-        //     callback: (res) => responsLogic(res),
-        // };
-        //
-        // CommonRest(restParams);
-        //
-        // const responsLogic = (res) => {
-        //     if (res.headers.result_code === successCode.success) {
-        //         const result_info = res.data.result_info;
-        //         setModData(result_info);
-        //
-        //         modUser();
-        //
-        //         setIsSpinner(false);
-        //     } else {
-        //         setIsSpinner(false);
-        //
-        //         CommonNotify({
-        //             type: "alert",
-        //             hook: alert,
-        //             message: res.headers.result_message_ko,
-        //         });
-        //     }
-        // };
+        setIsSpinner(true);
+
+        const url = apiPath.api_admin_get_board + board_idx;
+        const data = {};
+
+        // 파라미터
+        const restParams = {
+            method: "get",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            if (res.headers.result_code === successCode.success) {
+                const result_info = res.data.result_info;
+                setModData(result_info);
+
+                // console.log(result_info)
+                modBoard();
+
+                setIsSpinner(false);
+            } else {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: res.headers.result_message_ko,
+                });
+            }
+        };
+    };
+
+    // 상세보기 모달
+    const modBoard = () => {
+        setModalTitle("문의내용 상세보기");
+        setIsOpen(true);
     };
 
     // --------------------------------- 테이블 세팅 -------------------------------------
@@ -213,7 +220,7 @@ const ConsultingBoardMain = (props) => {
                         handleSingleCheck(e.target.checked, info.getValue())
                     }
                     checked={
-                        checkItems.includes(info.getValue()) ? true : false
+                        checkItems.includes(info.getValue())
                     }
                 />
             ),
@@ -226,8 +233,6 @@ const ConsultingBoardMain = (props) => {
                         checkItems &&
                         boardList &&
                         checkItems.length === boardList.length
-                            ? true
-                            : false
                     }
                 />
             ),
@@ -427,26 +432,6 @@ const ConsultingBoardMain = (props) => {
                             ))}
                             </thead>
                             <tbody>
-                            {/* <tr>
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                    <td>23-05-30</td>
-                                    <td>정상</td>
-                                    <td>개인의사</td>
-                                    <td>임은지</td>
-                                    <td>010-0000-0000</td>
-                                    <td>ej.lim@hicomp.net</td>
-                                    <td>hicompint</td>
-                                    <td>
-                                        <Link
-                                            href="kmedi_member_local_detail.html"
-                                            className="tablebtn"
-                                        >
-                                            상세보기
-                                        </Link>
-                                    </td>
-                                </tr> */}
                             {boardList.length !== 0 ? (
                                 table.getRowModel().rows.map((row) => (
                                     <tr key={row.id}>
@@ -491,15 +476,15 @@ const ConsultingBoardMain = (props) => {
 
                 </div>
             </div>
-            {/*<CommonModal*/}
-            {/*    isOpen={isOpen}*/}
-            {/*    title={modalTitle}*/}
-            {/*    width={"800"}*/}
-            {/*    handleModalClose={handleModalClose}*/}
-            {/*    component={"RegOneLineBoardModal"}*/}
-            {/*    handleNeedUpdate={handleNeedUpdate}*/}
-            {/*    modOneLine={modOneLine}*/}
-            {/*/>*/}
+            <CommonModal
+                isOpen={isOpen}
+                title={modalTitle}
+                width={"800"}
+                handleModalClose={handleModalClose}
+                component={"ConsultingBoardModalMain"}
+                handleNeedUpdate={handleNeedUpdate}
+                modData={modData}
+            />
         </>
     );
 };

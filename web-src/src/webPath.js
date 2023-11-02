@@ -221,7 +221,9 @@ const apiPath = {
     // /v1/board/{board_idx}
     // GET
     // 게시판 상세
-    api_admin_get_board: `${base_api_url + slash + version + slash}board`,
+    api_admin_get_board: `${
+        base_api_url + slash + version + slash
+    }board${slash}`,
 
     // /v1/board/
     // PUT MULTI
@@ -231,7 +233,9 @@ const apiPath = {
     // /v1/board/
     // DELETE
     // 게시판 삭제
-    api_admin_remove_board: `${base_api_url + slash + version + slash}board`,
+    api_admin_remove_board: `${
+        base_api_url + slash + version + slash
+    }board${slash}`,
 
     // /v1/board/_download
     // POST
@@ -239,6 +243,16 @@ const apiPath = {
     api_admin_board_download: `${
         base_api_url + slash + version + slash
     }board/_download`,
+
+    // /v1/_comment
+    // POST MULTI
+    // 문의 답변 등록
+    api_admin_reg_comment: `${base_api_url + slash + version + slash}_comment`,
+
+    // /v1/_comment
+    // PUT MULTI
+    // 문의 답변 등록
+    api_admin_mod_comment: `${base_api_url + slash + version + slash}_comment`,
 };
 
 export { routerPath, apiPath };
