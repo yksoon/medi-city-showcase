@@ -17,7 +17,6 @@ import {
 } from "recoil";
 import {
     isSpinnerAtom,
-    pageAtom,
     userInfoAdminAtom,
     userTokenAdminAtom,
 } from "recoils/atoms";
@@ -42,7 +41,6 @@ const SignIn = () => {
     // );
     const navigate = useNavigate();
 
-    const setPage = useSetRecoilState(pageAtom);
     const setUserInfoAdmin = useSetRecoilState(userInfoAdminAtom);
     const setUserTokenAdmin = useSetRecoilState(userTokenAdminAtom);
 
@@ -55,8 +53,6 @@ const SignIn = () => {
         if (userTokenAdmin) {
             navigate(routerPath.admin_main_url);
         } else {
-            setPage("dashboard");
-
             resetUserInfoAdmin();
             resetUserTokenAdmin();
 

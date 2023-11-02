@@ -1,33 +1,12 @@
-import {
-    CommonConsole,
-    CommonErrorCatch,
-    CommonErrModule,
-    CommonRest,
-    CommonSpinner,
-} from "common/js/Common";
-import { RestServer } from "common/js/Rest";
-import DashBoardMain from "components/admin/dashboard/DashBoardMain";
+import {CommonErrModule, CommonRest, CommonSpinner,} from "common/js/Common";
 import SideNav from "components/admin/nav/SideNav";
-import UserList from "components/admin/user/userList/UserList";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { apiPath, routerPath } from "webPath";
-import Notice from "./board/notice/Notice";
-import OneLineBoard from "./board/oneLineBoard/OneLineBoard";
-import { successCode } from "resultCode";
-import {
-    useRecoilState,
-    useRecoilValue,
-    useResetRecoilState,
-    useSetRecoilState,
-} from "recoil";
-import {
-    isSpinnerAtom,
-    pageAtom,
-    userInfoAdminAtom,
-    userTokenAdminAtom,
-} from "recoils/atoms";
-import { refresh } from "aos";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
+import {apiPath, routerPath} from "webPath";
+import {successCode} from "resultCode";
+import {useRecoilState, useRecoilValue,} from "recoil";
+import {isSpinnerAtom, pageAtom, userInfoAdminAtom, userTokenAdminAtom,} from "recoils/atoms";
+import ConsultingBoardMain from "components/admin/board/consultingBoard/ConsultingBoardMain";
 
 const Admin = () => {
     const err = CommonErrModule();
@@ -179,24 +158,12 @@ const Admin = () => {
     // 렌더링 페이지
     const renderPage = (page) => {
         switch (page) {
-            // 대시보드
-            case "dashboard":
-                return <DashBoardMain isRefresh={isRefresh} />;
-
-            // 사전등록 관리
-            case "userList":
-                return <UserList isRefresh={isRefresh} />;
-
-            // 공지사항
-            case "notice":
-                return <Notice isRefresh={isRefresh} />;
-
-            // 한줄게시판
-            case "oneLineBoard":
-                return <OneLineBoard isRefresh={isRefresh} />;
+            // 상담문의
+            case "consultingBoard":
+                return <ConsultingBoardMain isRefresh={isRefresh} />;
 
             default:
-                return <DashBoardMain />;
+                return <ConsultingBoardMain isRefresh={isRefresh} />;
         }
     };
     return (

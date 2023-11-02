@@ -15,7 +15,7 @@ const port = "60000";
 
 const version = "v1";
 
-const gateway = "jobara";
+const gateway = "showcase";
 
 // 기본 url
 // const base_url = protocol + host + colon + port + slash + version + slash;
