@@ -50,7 +50,7 @@
         "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
     },
     "scripts": {
-        "start": "set PORT=3005 && react-scripts start",
+        "start": "set PORT=30001 && react-scripts start",
         "build": "set BUILD_PATH=../build&& react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"

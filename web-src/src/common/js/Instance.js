@@ -3,12 +3,17 @@ import axios from "axios";
 let ip;
 let token;
 
+// 인스턴스 타임아웃
 const timeOut = 20000;
+
+// Header Prefix
+const prefix = "Showcase"
 
 /*
     REST CONNECTION 시 Request 를 가로채서
     request.headers 를 셋팅한다.
-    
+
+    ex)
     Jobara-Src = : 0.0.0.0
     Jobara-Token = JEJUJOBARA xxxxxxxxxxxxxxx
 
@@ -25,11 +30,6 @@ const Instance = axios.create({
 
 Instance.interceptors.request.use(
     (config) => {
-        // ip = store.getState().ipInfo.ipInfo;
-        // token = store.getState().userInfo.userToken;
-
-        // config.headers["Jobara-Src"] = ip ? ip : "";
-        // config.headers["Jobara-Token"] = token ? token : "";
         setInterceptors(config);
         return config;
     },
@@ -51,11 +51,6 @@ const Instance_admin = axios.create({
 
 Instance_admin.interceptors.request.use(
     (config) => {
-        // ip = store.getState().ipInfo.ipInfo;
-        // token = store.getState().userInfo.userToken;
-
-        // config.headers["Jobara-Src"] = ip ? ip : "";
-        // config.headers["Jobara-Token"] = token ? token : "";
         setInterceptorsAdmin(config);
         return config;
     },
@@ -74,12 +69,6 @@ const Instance_multi = axios.create({
 
 Instance_multi.interceptors.request.use(
     (config) => {
-        // ip = store.getState().ipInfo.ipInfo;
-        // token = store.getState().userInfo.userToken;
-
-        // config.headers["Jobara-Src"] = ip ? ip : "";
-        // config.headers["Jobara-Token"] = token ? token : "";
-
         setInterceptors(config);
         return config;
     },
@@ -99,11 +88,6 @@ const Instance_admin_multi = axios.create({
 
 Instance_admin_multi.interceptors.request.use(
     (config) => {
-        // ip = store.getState().ipInfo.ipInfo;
-        // token = store.getState().userInfo.userToken;
-
-        // config.headers["Jobara-Src"] = ip ? ip : "";
-        // config.headers["Jobara-Token"] = token ? token : "";
         setInterceptorsAdmin(config);
         return config;
     },
@@ -113,13 +97,6 @@ Instance_admin_multi.interceptors.request.use(
 );
 
 const setInterceptors = (config) => {
-    // ip = store.getState().ipInfo.ipInfo;
-    // token = store.getState().userInfo.userToken;
-
-    // ip =
-    //     JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo !== null
-    //         ? JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo
-    //         : sessionStorage.getItem("ipInfo");
     const recoilSession = JSON.parse(sessionStorage.getItem("recoilSession"));
 
     ip =
@@ -128,21 +105,13 @@ const setInterceptors = (config) => {
             : recoilSession.ipInfo;
     token = recoilSession === null ? "" : recoilSession.userToken;
 
-    config.headers["Jobara-Src"] = ip ? ip : "";
-    config.headers["Jobara-Token"] = token ? token : "";
+    config.headers[`${prefix}-Src`] = ip ? ip : "";
+    config.headers[`${prefix}-Token`] = token ? token : "";
 
     return config;
 };
 
 const setInterceptorsAdmin = (config) => {
-    // ip = store.getState().ipInfo.ipInfo;
-    // token = store.getState().userInfoAdmin.userTokenAdmin;
-    // const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
-
-    // ip =
-    //     JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo !== null
-    //         ? JSON.parse(sessionStorage.getItem("recoilSession")).ipInfo
-    //         : sessionStorage.getItem("ipInfo");
     const recoilSession = JSON.parse(sessionStorage.getItem("recoilSession"));
 
     ip =
@@ -151,8 +120,8 @@ const setInterceptorsAdmin = (config) => {
             : recoilSession.ipInfo;
     token = recoilSession === null ? "" : recoilSession.userTokenAdmin;
 
-    config.headers["Jobara-Src"] = ip ? ip : "";
-    config.headers["Jobara-Token"] = token ? token : "";
+    config.headers[`${prefix}-Src`] = ip ? ip : "";
+    config.headers[`${prefix}-Token`] = token ? token : "";
 
     return config;
 };

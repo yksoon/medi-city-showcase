@@ -1,10 +1,10 @@
-import Footer from "components/web/common/Footer";
 import React, {useEffect, useRef, useState} from "react";
 import MainContents from "./main/mainComponents/MainContents";
 import Aos from "aos";
 import MainPopupModal from "./main/mainComponents/contents/modal/MainPopupModal";
 import Header from "components/web/common/Header";
 import MainMainvisual from "components/web/main/mainComponents/MainMainvisual";
+import Footer from "components/web/common/Footer";
 
 
 function Main() {
