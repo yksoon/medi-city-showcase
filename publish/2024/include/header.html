@@ -1,0 +1,76 @@
+<div id="header_content">
+    <h1 class="logo"><a href="/" ><img src="img/main/logo.png" alt="" /></a></h1> 
+    
+    
+    <!-- 서브페이지용 상단메뉴(pc) //  S -->
+    
+    <div id="gnb">
+        <ul>
+            <li>
+                <a href="intro_intro.html">박람회안내</a>
+                <div class="submenu">
+                    <a href="intro_intro.html">행사소개</a>
+                    <a href="intro_venue.html">행사장소</a>
+                </div>                        
+            </li>
+            <li>
+                <a href="program_job.html">프로그램</a>
+                <div class="submenu">
+                    <a href="program_job.html">행사일정</a>
+                    <a href="program_stage.html">세부프로그램</a>
+                    <a href="program_event.html">이벤트프로그램</a>
+                </div>                        
+            </li>
+            <li>
+                <a href="registration.html">사전등록</a>                    
+            </li>
+            <li>
+                <a href="company.html">참여기업</a>                     
+            </li>
+            <li>
+                <a href="notice.html">공지</a>                       
+            </li>
+        </ul>
+
+    </div>
+    
+    <!-- 서브페이지용 상단메뉴(pc) // E -->
+    
+    <!--모바일 메뉴 // S-->
+    <div id="top_right">
+        <div id="menu-icon2" class="all_menu">
+            <span></span>
+            <span></span>
+            <span class="short"></span>
+        </div>
+        <nav>
+            <ul id="nav">
+                <li><a href="javascript:void(0)" id="nav1">박람회안내</a>
+                    <ul id="nav1_s">
+                        <li><a href="intro_intro.html">행사소개</a></li>
+                        <li><a href="intro_venue.html">행사장소</a></li>
+                    </ul>
+                </li>
+                <li><a href="javascript:void(0)" id="nav2">프로그램</a>
+                    <ul id="nav2_s">
+                        <li><a href="program_job.html">행사일정</a></li>
+                        <li><a href="program_stage.html">세부프로그램</a></li>
+                        <li><a href="program_event.html">이벤트프로그램</a></li>
+                    </ul>
+                </li>
+                <li><a href="" id="nav3">사전등록</a></li>
+                <li><a href="" id="nav4">참여기업</a></li>
+                <li><a href="" id="nav5">공지</a></li>
+            </ul>
+        </nav>
+    </div>
+    <script>				
+        $(document).ready(function(){
+            $('#menu-icon2').click(function(){
+                $(this).toggleClass('open');
+            });
+        });
+        
+    </script>
+    <!--모바일메뉴 // E -->
+</div>
