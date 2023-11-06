@@ -22,7 +22,6 @@ import {
 } from "recoils/atoms";
 
 const SignIn = () => {
-
     const { alert } = useAlert();
     const err = CommonErrModule();
     const [isSpinner, setIsSpinner] = useRecoilState(isSpinnerAtom);
@@ -188,7 +187,7 @@ const SignIn = () => {
                                 </div>
                                 <div>
                                     <Link
-                                        className="btn btn01"
+                                        className="subbtn on"
                                         onClick={clickLogin}
                                     >
                                         로그인

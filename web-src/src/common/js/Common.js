@@ -14,6 +14,8 @@ import {
 } from "recoils/atoms";
 import useConfirm from "hook/useConfirm";
 import ConsultingBoardModalMain from "components/admin/board/consultingBoard/modal/ConsultingBoardModalMain";
+import RegistrationManageModalMain from "components/admin/registration/registrationManage/modal/RegistrationManageModalMain";
+import EntryManageModalMain from "components/admin/registration/entryManage/modal/EntryManageModalMain";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -56,6 +58,27 @@ const CommonModal = (props) => {
                         modData={props.modData}
                     />
                 );
+
+            // 사전등록관리
+            case "RegistrationManageModalMain":
+                return (
+                    <RegistrationManageModalMain
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modData={props.modData}
+                    />
+                );
+
+            // 사전등록관리
+            case "EntryManageModalMain":
+                return (
+                    <EntryManageModalMain
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modData={props.modData}
+                    />
+                );
+
             default:
                 return;
         }
@@ -135,7 +158,7 @@ const CommonConsole = (type, responseData) => {
                 decodeURI(result_message_ko),
                 decodeURI(result_message_en),
                 decodeURI(result_code),
-                decodeURI(message)
+                decodeURI(message),
             );
 
         case "alertMsg":
@@ -200,7 +223,7 @@ const CommonErrorCatch = async (
     setIsSpinner,
     alert,
     resetUserInfoAdmin,
-    resetUserTokenAdmin
+    resetUserTokenAdmin,
 ) => {
     // 오류발생시 실행
     CommonConsole("log", error);
@@ -236,7 +259,7 @@ const CommonErrorCatch = async (
                 setIsSpinner,
                 alert,
                 resetUserInfoAdmin,
-                resetUserTokenAdmin
+                resetUserTokenAdmin,
             );
         }
         // 에러
@@ -372,7 +395,7 @@ const CommonRest = async (restParams = {}) => {
                 setIsSpinner,
                 alert,
                 resetUserInfoAdmin,
-                resetUserTokenAdmin
+                resetUserTokenAdmin,
             );
 
             // console.log(restParams);
@@ -397,7 +420,7 @@ const CommonCheckDate = async (
     alert,
     callbackFunc,
     // dispatch
-    setIsSpinner
+    setIsSpinner,
 ) => {
     // dispatch(
     //     set_spinner({

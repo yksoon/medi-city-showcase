@@ -1,12 +1,19 @@
-import {CommonErrModule, CommonRest, CommonSpinner,} from "common/js/Common";
+import { CommonErrModule, CommonRest, CommonSpinner } from "common/js/Common";
 import SideNav from "components/admin/nav/SideNav";
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router";
-import {apiPath, routerPath} from "webPath";
-import {successCode} from "resultCode";
-import {useRecoilState, useRecoilValue,} from "recoil";
-import {isSpinnerAtom, pageAtom, userInfoAdminAtom, userTokenAdminAtom,} from "recoils/atoms";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { apiPath, routerPath } from "webPath";
+import { successCode } from "resultCode";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+    isSpinnerAtom,
+    pageAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
 import ConsultingBoardMain from "components/admin/board/consultingBoard/ConsultingBoardMain";
+import RegistraionManageMain from "components/admin/registration/registrationManage/RegistraionManageMain";
+import EntryManageMain from "components/admin/registration/entryManage/EntryManageMain";
 
 const Admin = () => {
     const err = CommonErrModule();
@@ -162,8 +169,16 @@ const Admin = () => {
             case "consultingBoard":
                 return <ConsultingBoardMain isRefresh={isRefresh} />;
 
+            // 사전등록관리
+            case "registrationMng":
+                return <RegistraionManageMain isRefresh={isRefresh} />;
+
+            // 참가자관리
+            case "entryMng":
+                return <EntryManageMain isRefresh={isRefresh} />;
+
             default:
-                return <ConsultingBoardMain isRefresh={isRefresh} />;
+                return <RegistraionManageMain isRefresh={isRefresh} />;
         }
     };
     return (
