@@ -295,6 +295,20 @@ const apiPath = {
     api_admin_detail_reg_users: `${
         base_api_url + slash + version + slash
     }reg/_user${slash}`,
+
+    // /v1/reg/user
+    // PUT
+    // 참가자관리 상세
+    api_admin_mod_reg_users: `${
+        base_api_url + slash + version + slash
+    }reg/user`,
+
+    // /v1/reg/user/{registration_idx}/
+    // DELETE
+    // 참가자관리 삭제
+    api_admin_remove_reg_users: `${
+        base_api_url + slash + version + slash
+    }reg/user${slash}`,
 };
 
 export { routerPath, apiPath };

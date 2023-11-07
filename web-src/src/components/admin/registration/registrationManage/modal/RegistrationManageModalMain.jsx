@@ -230,8 +230,6 @@ const RegistrationManageModalMain = (props) => {
         }
     };
 
-    const modBoard = () => {};
-
     // 국적 SELECT 스타일
     const customStyles = {
         control: () => ({

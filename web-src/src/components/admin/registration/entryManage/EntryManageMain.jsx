@@ -183,8 +183,16 @@ const EntryManageMain = (props) => {
                   type: "confirm",
                   hook: confirm,
                   message: "선택된 항목을 삭제 하시겠습니까?",
-                  // callback: () => removeBoard(),
+                  callback: () => removeBoard(),
               });
+    };
+
+    const removeBoard = () => {
+        let checkItemsStr = checkItems.join();
+        setIsSpinner(true);
+
+        const url = `${apiPath.api_admin_remove_reg_users}${checkItemsStr}`;
+        // TODO: 내일하자
     };
 
     // 상세
@@ -550,7 +558,7 @@ const EntryManageMain = (props) => {
             <CommonModal
                 isOpen={isOpen}
                 title={modalTitle}
-                width={"800"}
+                width={"1400"}
                 handleModalClose={handleModalClose}
                 component={"EntryManageModalMain"}
                 handleNeedUpdate={handleNeedUpdate}

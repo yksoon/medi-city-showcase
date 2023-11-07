@@ -69,7 +69,7 @@ const CommonModal = (props) => {
                     />
                 );
 
-            // 사전등록관리
+            // 참가자 관리
             case "EntryManageModalMain":
                 return (
                     <EntryManageModalMain

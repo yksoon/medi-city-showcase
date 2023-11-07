@@ -154,7 +154,7 @@ const SignIn = () => {
                         <div className="login">
                             <h1>
                                 <img
-                                    src="img/web/main/maintxt.png"
+                                    src="img/common/adm_logo.png"
                                     alt=""
                                     style={{ width: "210px" }}
                                 />
