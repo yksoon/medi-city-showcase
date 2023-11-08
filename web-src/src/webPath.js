@@ -303,7 +303,7 @@ const apiPath = {
         base_api_url + slash + version + slash
     }reg/user`,
 
-    // /v1/reg/user/{registration_idx}/
+    // /v1/reg/user/{registration_idx}/{institution_idxs}
     // DELETE
     // 참가자관리 삭제
     api_admin_remove_reg_users: `${
