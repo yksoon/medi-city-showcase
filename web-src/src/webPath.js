@@ -221,7 +221,9 @@ const apiPath = {
     // /v1/board/{board_idx}
     // GET
     // 게시판 상세
-    api_admin_get_board: `${base_api_url + slash + version + slash}board`,
+    api_admin_get_board: `${
+        base_api_url + slash + version + slash
+    }board${slash}`,
 
     // /v1/board/
     // PUT MULTI
@@ -231,7 +233,9 @@ const apiPath = {
     // /v1/board/
     // DELETE
     // 게시판 삭제
-    api_admin_remove_board: `${base_api_url + slash + version + slash}board`,
+    api_admin_remove_board: `${
+        base_api_url + slash + version + slash
+    }board${slash}`,
 
     // /v1/board/_download
     // POST
@@ -239,6 +243,72 @@ const apiPath = {
     api_admin_board_download: `${
         base_api_url + slash + version + slash
     }board/_download`,
+
+    // /v1/_comment
+    // POST MULTI
+    // 문의 답변 등록
+    api_admin_reg_comment: `${base_api_url + slash + version + slash}_comment`,
+
+    // /v1/_comment
+    // PUT MULTI
+    // 문의 답변 등록
+    api_admin_mod_comment: `${base_api_url + slash + version + slash}_comment`,
+
+    // ------------------ Registration Management API 사전등록 관리 API ------------------
+    // /v1/_regs
+    // POST
+    // 사전등록 목록
+    api_admin_list_regs: `${base_api_url + slash + version + slash}_regs`,
+
+    // /v1/reg
+    // POST
+    // 사전등록 등록
+    api_admin_reg_regs: `${base_api_url + slash + version + slash}reg`,
+
+    // /v1/_reg/{registration_idx}/
+    // GET
+    // 사전등록 등록
+    api_admin_get_reg: `${base_api_url + slash + version + slash}_reg${slash}`,
+
+    // /v1/reg
+    // PUT
+    // 사전등록 수정
+    api_admin_mod_regs: `${base_api_url + slash + version + slash}reg`,
+
+    // /v1/reg/{registration_idxs}
+    // DELETE
+    // 사전등록 삭제
+    api_admin_delete_regs: `${
+        base_api_url + slash + version + slash
+    }reg${slash}`,
+
+    // /v1/reg/_users
+    // POST
+    // 참가자관리 목록
+    api_admin_list_reg_users: `${
+        base_api_url + slash + version + slash
+    }reg/_users`,
+
+    // /v1/reg/_user/{registration_idx}/{institution_idx}
+    // GET
+    // 참가자관리 상세
+    api_admin_detail_reg_users: `${
+        base_api_url + slash + version + slash
+    }reg/_user${slash}`,
+
+    // /v1/reg/user
+    // PUT
+    // 참가자관리 상세
+    api_admin_mod_reg_users: `${
+        base_api_url + slash + version + slash
+    }reg/user`,
+
+    // /v1/reg/user/{registration_idx}/
+    // DELETE
+    // 참가자관리 삭제
+    api_admin_remove_reg_users: `${
+        base_api_url + slash + version + slash
+    }reg/user${slash}`,
 };
 
 export { routerPath, apiPath };

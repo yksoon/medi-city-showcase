@@ -21,53 +21,25 @@ const ConfirmModal = () => {
                     return (
                         <div className="alert" key={`confirm_${idx}`}>
                             <div>
-                                {/* <span
-                                    className="noti_icon"
-                                    id="modal-modal-title"
-                                >
-                                    <img src="img/common/alert.png" alt="" />
-                                </span> */}
-                                <h3>JOBARA</h3>
-                                <p>
+                                <span className="confirm_icon">?</span>
+                                <h3>
                                     {message
                                         ? decodeURI(message)
                                               .replaceAll("%20", " ")
                                               .replaceAll("%40", "@")
                                               .replaceAll("%3A", ":")
                                         : ""}
-                                </p>
+                                </h3>
                             </div>
-                            <div className="btn_box">
-                                <Link
-                                    className="backbtn on"
-                                    onClick={(e) => {
-                                        ok.click();
-                                        e.preventDefault();
-                                    }}
-                                >
+                            <div className="modal_btn_box">
+                                <Link className="modal_btn on" onClick={ok.click}>
                                     {ok.text}{" "}
-                                    <span>
-                                        <img
-                                            src="img/common/arrow.png"
-                                            alt=""
-                                        />
-                                    </span>
                                 </Link>{" "}
                                 <Link
-                                    className="backbtn"
-                                    id="closeBtn"
-                                    onClick={(e) => {
-                                        cancel.click();
-                                        e.preventDefault();
-                                    }}
+                                    className="modal_btn"
+                                    onClick={cancel.click}
                                 >
                                     {cancel.text}{" "}
-                                    <span>
-                                        <img
-                                            src="img/common/arrow.png"
-                                            alt=""
-                                        />
-                                    </span>
                                 </Link>
                             </div>
                         </div>

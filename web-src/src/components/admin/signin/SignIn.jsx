@@ -22,12 +22,6 @@ import {
 } from "recoils/atoms";
 
 const SignIn = () => {
-    // const dispatch = useDispatch();
-    // const { alert } = useAlert();
-    // const resetUserInfoAdmin = useResetRecoilState(userInfoAdminAtom);
-    // const resetUserTokenAdmin = useResetRecoilState(userTokenAdminAtom);
-    // const err = { dispatch, alert, resetUserInfoAdmin, resetUserTokenAdmin };
-
     const { alert } = useAlert();
     const err = CommonErrModule();
     const [isSpinner, setIsSpinner] = useRecoilState(isSpinnerAtom);
@@ -36,9 +30,6 @@ const SignIn = () => {
     const resetUserTokenAdmin = useResetRecoilState(userTokenAdminAtom);
 
     const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
-    // const userTokenAdmin = useSelector(
-    //     (state) => state.userInfoAdmin.userTokenAdmin
-    // );
     const navigate = useNavigate();
 
     const setUserInfoAdmin = useSetRecoilState(userInfoAdminAtom);
@@ -56,7 +47,6 @@ const SignIn = () => {
             resetUserInfoAdmin();
             resetUserTokenAdmin();
 
-            // dispatch(init_user_info_admin(null));
             inputID.current.focus();
         }
     }, []);
@@ -87,12 +77,6 @@ const SignIn = () => {
     };
 
     const login = () => {
-        // dispatch(
-        //     set_spinner({
-        //         isLoading: true,
-        //     })
-        // );
-
         setIsSpinner(true);
 
         // /v1/signin
@@ -126,37 +110,13 @@ const SignIn = () => {
                     delete user_info[deleteKey[i]];
                 }
 
-                // resetUserInfoAdmin();
-                // resetUserTokenAdmin();
-
-                // dispatch(init_user_info_admin(null));
-
-                // sessionStorage.setItem(
-                //     "userInfoAdmin",
-                //     JSON.stringify(user_info)
-                // );
-                // dispatch(set_user_info_admin(JSON.stringify(user_info)));
-                // dispatch(set_user_token_admin(JSON.stringify(user_info)));
-
                 setUserInfoAdmin(user_info);
                 setUserTokenAdmin(user_info.token);
-
-                // dispatch(
-                //     set_spinner({
-                //         isLoading: false,
-                //     })
-                // );
 
                 setIsSpinner(false);
 
                 navigate(routerPath.admin_main_url);
             } else {
-                // dispatch(
-                //     set_spinner({
-                //         isLoading: false,
-                //     })
-                // );
-
                 setIsSpinner(false);
 
                 CommonNotify({
@@ -194,7 +154,7 @@ const SignIn = () => {
                         <div className="login">
                             <h1>
                                 <img
-                                    src="img/web/main/maintxt.png"
+                                    src="img/common/adm_logo.png"
                                     alt=""
                                     style={{ width: "210px" }}
                                 />
@@ -227,7 +187,7 @@ const SignIn = () => {
                                 </div>
                                 <div>
                                     <Link
-                                        className="btn btn01"
+                                        className="subbtn on"
                                         onClick={clickLogin}
                                     >
                                         로그인

@@ -13,6 +13,9 @@ import {
     userTokenAdminAtom,
 } from "recoils/atoms";
 import useConfirm from "hook/useConfirm";
+import ConsultingBoardModalMain from "components/admin/board/consultingBoard/modal/ConsultingBoardModalMain";
+import RegistrationManageModalMain from "components/admin/registration/registrationManage/modal/RegistrationManageModalMain";
+import EntryManageModalMain from "components/admin/registration/entryManage/modal/EntryManageModalMain";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -45,6 +48,37 @@ const CommonModal = (props) => {
             //             modUserData={props.modUserData}
             //         />
             //     );
+
+            // 상담문의
+            case "ConsultingBoardModalMain":
+                return (
+                    <ConsultingBoardModalMain
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modData={props.modData}
+                    />
+                );
+
+            // 사전등록관리
+            case "RegistrationManageModalMain":
+                return (
+                    <RegistrationManageModalMain
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modData={props.modData}
+                    />
+                );
+
+            // 참가자 관리
+            case "EntryManageModalMain":
+                return (
+                    <EntryManageModalMain
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modData={props.modData}
+                    />
+                );
+
             default:
                 return;
         }
@@ -54,45 +88,32 @@ const CommonModal = (props) => {
             <Modal
                 open={modalOption.isOpen}
                 onClose={modalOption.handleModalClose}
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
             >
                 <div className="modal_wrap" id="modal_wrap">
                     <div className={`modal w${modalOption.width}`}>
                         <div
-                            className="modal_close"
-                            onClick={modalOption.handleModalClose}
+                            className="modal_content form hotel"
+                            id="hotelInsert"
                         >
-                            <img src="img/common/modal_close.png" alt="" />
-                        </div>
-                        <div className="form">
-                            {component === "MainContentsNoticeModal" ? (
-                                <>
-                                    <h4
-                                        className="notice_title"
-                                        id="transition-modal-title"
-                                    >
-                                        {modalOption.title}
-                                    </h4>
-                                    <p className="notice_date">
-                                        {props.modNotice &&
-                                            props.modNotice.reg_dttm}
-                                    </p>
-                                </>
-                            ) : (
-                                <>
-                                    <h4
-                                        className="mo_title"
-                                        id="transition-modal-title"
-                                    >
-                                        {modalOption.title}
-                                    </h4>
-                                </>
-                            )}
-                            {/* 모달 컨텐츠 드가자 */}
-                            <div id="transition-modal-description">
-                                {renderComponent(component)}
+                            <div className="mo_title">
+                                <h4>{modalOption.title}</h4>
+                                <div
+                                    className="modal_close"
+                                    onClick={modalOption.handleModalClose}
+                                >
+                                    <img
+                                        src="img/common/modal_close.png"
+                                        alt=""
+                                    />
+                                </div>
                             </div>
+
+                            {/* 모달 컨텐츠 드가자 */}
+
+                            {renderComponent(component)}
+
                             {/* 모달 컨텐츠 드가자 END */}
                         </div>
                     </div>
@@ -137,7 +158,7 @@ const CommonConsole = (type, responseData) => {
                 decodeURI(result_message_ko),
                 decodeURI(result_message_en),
                 decodeURI(result_code),
-                decodeURI(message)
+                decodeURI(message),
             );
 
         case "alertMsg":
@@ -202,7 +223,7 @@ const CommonErrorCatch = async (
     setIsSpinner,
     alert,
     resetUserInfoAdmin,
-    resetUserTokenAdmin
+    resetUserTokenAdmin,
 ) => {
     // 오류발생시 실행
     CommonConsole("log", error);
@@ -238,7 +259,7 @@ const CommonErrorCatch = async (
                 setIsSpinner,
                 alert,
                 resetUserInfoAdmin,
-                resetUserTokenAdmin
+                resetUserTokenAdmin,
             );
         }
         // 에러
@@ -374,7 +395,7 @@ const CommonRest = async (restParams = {}) => {
                 setIsSpinner,
                 alert,
                 resetUserInfoAdmin,
-                resetUserTokenAdmin
+                resetUserTokenAdmin,
             );
 
             // console.log(restParams);
@@ -399,7 +420,7 @@ const CommonCheckDate = async (
     alert,
     callbackFunc,
     // dispatch
-    setIsSpinner
+    setIsSpinner,
 ) => {
     // dispatch(
     //     set_spinner({

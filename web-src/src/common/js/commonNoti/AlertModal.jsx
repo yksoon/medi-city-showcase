@@ -27,32 +27,19 @@ const AlertModal = () => {
                                 >
                                     <img src="img/common/alert.png" alt="" />
                                 </span> */}
-                                <h3>JOBARA</h3>
-                                <p>
+                                <span className="alert_icon">!</span>
+                                <h3>
                                     {message
                                         ? decodeURI(message)
                                               .replaceAll("%20", " ")
                                               .replaceAll("%40", "@")
                                               .replaceAll("%3A", ":")
                                         : ""}
-                                </p>
+                                </h3>
                             </div>
-                            <div className="btn_box">
-                                <Link
-                                    className="backbtn"
-                                    id="okBtn"
-                                    onClick={(e) => {
-                                        ok.click();
-                                        e.preventDefault();
-                                    }}
-                                >
-                                    {ok.text}
-                                    <span>
-                                        <img
-                                            src="img/common/arrow.png"
-                                            alt=""
-                                        />
-                                    </span>
+                            <div className="modal_btn_box">
+                                <Link className="modal_btn" onClick={ok.click}>
+                                    {ok.text}{" "}
                                 </Link>
                             </div>
                         </div>

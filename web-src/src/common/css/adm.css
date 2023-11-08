@@ -125,9 +125,9 @@ h3.h_title {font-size: 21px;font-weight: 700;border:none;margin:0 0 20px;}
 
 /* 모달 //S */
 h4.mo_title {font-size: 24px;font-weight: 700;margin:0 0 20px;padding: 0 0 10px;border-bottom: 1px solid #ddd;;}
-div.mo_title {font-size: 24px;font-weight: 700;margin:0 0 20px;padding: 40px 10px 20px ;border-bottom: 1px solid #ddd;display:flex;justify-content: space-between;position:sticky;top:0;left:0;background:#fff;}
+div.mo_title {font-size: 24px;font-weight: 700;margin:0 0 20px;padding: 40px 10px 20px ;border-bottom: 1px solid #ddd;display:flex;justify-content: space-between;position:sticky;top:0;left:0;background:#fff;z-index:10;}
 div.mo_title > h4{font-size: 24px;font-weight: 700;}
-.mo_subtitle {font-size:18px;font-weight: 700;margin:0 0 20px;}
+.mo_subtitle {font-size:18px;font-weight: 700;margin:20px;}
 /* .modal_wrap {display:none;position:fixed;top:0;left:0;width:100%;height:100vh;overflow:hidden;background: rgba(0,0,0,0.4);z-index:999;} */
 .modal_wrap {display:block;position:fixed;top:0;left:0;width:100%;height:100vh;overflow:hidden;z-index:999;}
 /* .modal_wrap .modal {position:absolute;top:50%;left:50%;transform:translate(-50%, -50%); box-shadow: 5px 5px 15px rgba(0,0,0,0.1);background:#fff;padding:40px;max-height:90%;overflow-y:scroll;z-index:999;border-radius: 5px;} */
