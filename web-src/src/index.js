@@ -6,7 +6,7 @@ import { RecoilRoot } from "recoil";
 import RecoilizeDebugger from "recoilize";
 
 // Bootstrap
-// import "common/css/bootstrap.min.css";
+// import "common_old/css/bootstrap.min.css";
 
 import App from "./App";
 

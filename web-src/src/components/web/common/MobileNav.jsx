@@ -6,6 +6,7 @@ import { routerPath } from "webPath";
 function MobileNav() {
     useEffect(() => {
         $("#nav").hide();
+        $(".nav_2depth").hide();
     }, []);
 
     const menuClick = () => {
@@ -15,8 +16,9 @@ function MobileNav() {
 
     const menuDepth = (e) => {
         e.preventDefault();
-        $(".nav_2depth").slideUp();
-        $(e.target).siblings(".nav_2depth").slideToggle();
+        // $(".nav_2depth").slideUp();
+        // $(e.target).siblings(".nav_2depth").slideToggle();
+        $(e.target).siblings(`#${e.target.id}_s`).slideToggle();
     };
 
     return (
@@ -35,105 +37,91 @@ function MobileNav() {
                 <nav>
                     <ul id="nav">
                         <li>
-                            <Link to={routerPath.web_main_url} id="nav5">
-                                홈
-                            </Link>
-                        </li>
-                        <li>
                             <Link
+                                to="program.html"
                                 id="nav1"
                                 onClick={(e) => {
                                     menuDepth(e);
                                     e.preventDefault();
                                 }}
                             >
-                                박람회안내
+                                PROGRAM
                             </Link>
-                            <ul className="nav_2depth">
-                                <li>
-                                    <Link to={routerPath.web_intro_url}>
-                                        행사소개
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to={routerPath.web_intro_location_url}
-                                    >
-                                        행사장소
-                                    </Link>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <Link
+                                to=""
                                 id="nav2"
                                 onClick={(e) => {
                                     menuDepth(e);
                                     e.preventDefault();
                                 }}
                             >
-                                프로그램
+                                Participation Sign-up
                             </Link>
-                            <ul className="nav_2depth">
+                            <ul
+                                id="nav2_s"
+                                className="nav_2depth"
+                                style={{ display: "block" }}
+                            >
                                 <li>
-                                    <Link to={routerPath.web_program_url}>
-                                        행사일정
-                                    </Link>
+                                    <Link to="guideline.html">Guideline</Link>
                                 </li>
                                 <li>
-                                    <Link
-                                        to={routerPath.web_program_detail_url}
-                                    >
-                                        세부 프로그램
-                                    </Link>
+                                    <Link to="signup.html">Online Sign-up</Link>
                                 </li>
                                 <li>
-                                    <Link to={routerPath.web_program_event_url}>
-                                        이벤트 프로그램
-                                    </Link>
+                                    <Link to="">Sign-up Confirmation</Link>
                                 </li>
                             </ul>
                         </li>
                         <li>
                             <Link
+                                to=""
                                 id="nav3"
                                 onClick={(e) => {
                                     menuDepth(e);
                                     e.preventDefault();
                                 }}
                             >
-                                사전등록
+                                Artbuddy, K-ART
                             </Link>
-                            <ul className="nav_2depth">
+                            <ul
+                                id="nav3_s"
+                                className="nav_2depth"
+                                style={{ display: "block" }}
+                            >
                                 <li>
-                                    <Link to={routerPath.web_signup_url}>
-                                        사전등록
-                                    </Link>
+                                    <Link to="">K-ART Exhibition</Link>
                                 </li>
                                 <li>
-                                    <Link to={routerPath.web_signupchk_url}>
-                                        사전등록확인
-                                    </Link>
+                                    <Link href="">Gallery</Link>
                                 </li>
                             </ul>
                         </li>
                         <li>
                             <Link
-                                // onClick={() =>
-                                //     openUrl(
-                                //         "https://lincplus.jejunu.ac.kr/programs/notice.htm?act=view&seq=1364"
-                                //     )
-                                // }
-                                to={`${routerPath.web_company_url}/list`}
+                                to=""
                                 id="nav4"
+                                onClick={(e) => {
+                                    menuDepth(e);
+                                    e.preventDefault();
+                                }}
                             >
-                                참여기업
+                                Venue Information
                             </Link>
-                        </li>
-                        <li>
-                            <Link to={routerPath.web_notice_url} id="nav5">
-                                공지사항
-                            </Link>
+                            <ul
+                                id="nav4_s"
+                                className="nav_2depth"
+                                style={{ display: "block" }}
+                            >
+                                <li>
+                                    <Link to="#section03">Venue</Link>
+                                </li>
+                                <li>
+                                    <Link to="">Booth Map</Link>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </nav>

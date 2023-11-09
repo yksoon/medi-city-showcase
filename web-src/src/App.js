@@ -88,7 +88,7 @@ function App() {
     }, [location]);
 
     // Spinner
-    // const spinnerOption = useSelector((state) => state.common.spinner);
+    // const spinnerOption = useSelector((state) => state.common_old.spinner);
 
     // IP
     const getIpInfo = async () => {

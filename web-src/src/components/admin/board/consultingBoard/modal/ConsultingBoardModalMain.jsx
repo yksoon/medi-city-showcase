@@ -299,7 +299,7 @@ const ConsultingBoardModalMain = (props) => {
                                                         to={`${fileBaseUrl}${item.file_path_enc}`}
                                                     >
                                                         <img
-                                                            src="/img/common/file.svg"
+                                                            src="/img/common_old/file.svg"
                                                             alt=""
                                                         />
                                                         {item.file_name}
