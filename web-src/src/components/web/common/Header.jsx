@@ -43,13 +43,13 @@ function Header() {
                                     <Link href="">Gallery</Link>
                                 </div>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link href="#section03">VENUE INFORMATION</Link>
                                 <div className="submenu">
                                     <Link href="#section03">Venue</Link>
                                     <Link href="">Booth Map</Link>
                                 </div>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                     {/* 모바일 메뉴 // S */}
