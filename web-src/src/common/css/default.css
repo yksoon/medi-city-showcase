@@ -6,113 +6,105 @@
     font-weight: 400;
     font-style: normal;
     src: url('/public/font_hi/Pretendard-Regular.woff')  format('woff');
-}  
+}
 @font-face {
     font-family: 'Pretendard';
     font-weight: 600;
     font-style: bold;
     src: url('/public/font_hi/Pretendard-Medium.woff')  format('woff');
-}  
+}
 @font-face {
     font-family: 'Pretendard';
     font-weight: 900;
     font-style: bold;
     src: url('/public/font_hi/Pretendard-Bold.woff')  format('woff');
-}  
+}
 
 @font-face {
-    font-family: 'GmarketSans';
-    font-weight: 300;
-    font-style: normal;
-    src: url('/public/font_hi/GmarketSansTTFLight.woff')  format('woff');
-}  
-
-@font-face {
-    font-family: 'GmarketSans';
+    font-family: 'raleway';
     font-weight: 400;
     font-style: normal;
-    src: url('/public/font_hi/GmarketSansTTFMedium.woff')  format('woff');
-} 
-@font-face {
-    font-family: 'GmarketSans';
-    font-weight: 900;
-    font-style: bold;
-    src: url('/public/font_hi/GmarketSansTTFBold.woff')  format('woff');
-} 
+    src: url('/public/font_hi/Raleway-Regular_0.woff')  format('woff');
+}
 
 @font-face {
-    font-family: 'LOTTERIACHAB';
-    src: url('/public/font_hi/chab.ttf') format("truetype");
-    font-weight: normal;
+    font-family: 'raleway';
+    font-weight: 600;
     font-style: normal;
+    src: url('/public/font_hi/Raleway-SemiBold_0.woff')  format('woff');
+}
+@font-face {
+    font-family: 'raleway';
+    font-weight: 900;
+    font-style: bold;
+    src: url('/public/font_hi/Raleway-Bold_0.woff')  format('woff');
 }
 
 
 /* */
 * {box-sizing: border-box;;}
-BODY {font-size:14px; color:#111; font-family: "Pretendard", Dotum, "돋움", Verdana, Arial, sans-serif;}
+BODY {font-size:14px; color:#111; font-family: "raleway", 'Pretendard', Dotum, "돋움", Verdana, Arial, sans-serif;}
 header {margin:0; padding:0;}
 h5 {
-	-webkit-margin-before: 0;
+    -webkit-margin-before: 0;
     -webkit-margin-after: 0;
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
 }
 /* CSS reset Start*/
 
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
-	margin:0;
-	padding:0;
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+    margin:0;
+    padding:0;
 }
 
 html {
-	margin:0;
-	padding:0;
-	overflow-y: scroll; 
-	
-	width:100%;
-	height:100%;
+    margin:0;
+    padding:0;
+    overflow-y: scroll;
+
+    width:100%;
+    height:100%;
 
 }
 
 body {
-	margin:0;
-	padding:0;
-	width:100%;
-	height:100%;
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
 }
 
 table {
-	border-collapse:collapse;
-	border-spacing:0;
-	padding:0;
-	margin:0;
-	width:100%;
+    border-collapse:collapse;
+    border-spacing:0;
+    padding:0;
+    margin:0;
+    width:100%;
 }
-fieldset,img { 
-	border:0;
+fieldset,img {
+    border:0;
 }
 
 address,caption,cite,code,dfn,th,var {
-	font-style:normal;
-	font-weight:normal;
+    font-style:normal;
+    font-weight:normal;
 }
 ol,ul {
-	list-style:none;
+    list-style:none;
 }
 a {
-text-decoration:none;
+    text-decoration:none;
 }
 caption,th {
-	text-align:left;
+    text-align:left;
 }
 h1,h2,h3,h4,h5,h6 {
-	font-size:100%;
-	font-weight:normal;
+    font-size:100%;
+    font-weight:normal;
 }
-#noticeModalContent h1, #noticeModalContent h2, #noticeModalContent h3, #noticeModalContent h4, #noticeModalContent h5, #noticeModalContent h6, #noticeModalContent p{font-size:revert;font-weight: revert;}
 q:before,q:after {
-	content:'';
+    content:'';
 }
 abbr,acronym { border:0;
 }
@@ -124,8 +116,8 @@ article, aside, hgroup, header, footer, figure, figcaption, section,time, mark, 
 
 
 th {
-	text-align:center;
-	font-weight:bold;
+    text-align:center;
+    font-weight:bold;
 }
 
 a {color: #444444}

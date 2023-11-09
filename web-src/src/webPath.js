@@ -6,7 +6,7 @@ const slash = "/";
 // 호스트
 // 포트
 // 버전
-const protocol = "http://";
+const protocol = "https://";
 
 const host = "gateway.hicompint.com";
 // const host = "210.116.101.159";

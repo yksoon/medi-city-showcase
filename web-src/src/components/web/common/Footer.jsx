@@ -12,19 +12,18 @@ function Footer() {
             <div id="footer">
                 <div id="footer_content">
                     <address>
-                        <p className="flogo">
-                            <img src="img/web/main/logo.png" alt="" />
-                        </p>
-                        63243 제주특별자치도 제주시 제주대학로 102 산학협력관
-                        4층 410-1호 Tel. 064)754-3125~6, 064)754-4412~5 Fax.
-                        064-751-3127, 070-4170-4127
+                        <b>MEDY-CITY</b>
                         <br />
-                        Copyright © 2013 JEJU NATIONAL UNIVERSITY Leaders in
-                        INdustry-university Cooperation.
-                        <br />본 웹사이트에 게시된 이메일 주소가 전자우편 수집
-                        프로그램이나 그 밖의 기술적 장치를 이용하여 무단으로
-                        수집되는 것을 거부하며, 이를 위반시 정보통신망법에 의해
-                        형사 처벌됨을 유념하시기 바랍니다.
+                        사업자 : (주)메디씨티{" "}
+                        <img src="img/web/main/f_bar.jpg" alt="" /> 대표자:
+                        박성민 <img src="img/web/main/f_bar.jpg" alt="" />{" "}
+                        사업자등록번호 : 588-86-02555{" "}
+                        <img src="img/web/main/f_bar.jpg" alt="" /> 주소 :
+                        경기도 고양시 일산동구 무궁화로 43-55, 302호{" "}
+                        <img src="img/web/main/f_bar.jpg" alt="" /> 문의 :
+                        sunyoung.eom@medi-city.co.kr, 031-926-3181
+                        <br />
+                        Copyright Medicity. All rights reserved.
                     </address>
                 </div>
             </div>

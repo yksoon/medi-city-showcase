@@ -25,7 +25,7 @@ const AlertModal = () => {
                                     className="noti_icon"
                                     id="modal-modal-title"
                                 >
-                                    <img src="img/common/alert.png" alt="" />
+                                    <img src="img/common_old/alert.png" alt="" />
                                 </span> */}
                                 <span className="alert_icon">!</span>
                                 <h3>
@@ -44,7 +44,7 @@ const AlertModal = () => {
                             </div>
                         </div>
                     );
-                }
+                },
             )}
         </div>
     );
