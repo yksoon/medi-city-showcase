@@ -273,14 +273,15 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .signup .boxing .red{color:red; font-size:24px;}
 .signup .boxing table {border-top:1px solid #59047f;}
 .signup .boxing table thead tr th {padding:10px ; background-color:#59047f;font-size:18px;color:#fff;}
-.signup .boxing table tbody tr th {padding:20px 12px 20px 30px; font-size:16px; color:#000;border-bottom:1px solid #ccc;font-size:17px;font-weight:900;text-align:left;}
-.signup .boxing table tbody tr td {padding:20px 12px; font-size:16px; color:#000;border-bottom:1px solid #ccc;font-size:17px;}
+.signup .boxing table tbody tr th {padding:20px 12px 20px 30px; color:#000;border-bottom:1px solid #ccc;font-size:17px;font-weight:900;text-align:left;}
+.signup .boxing table tbody tr td {padding:20px 12px; color:#000;border-bottom:1px solid #ccc;font-size:17px;}
 .signup .boxing table tbody tr td input[type="text"]{border:1px solid #ccc; height:45px; line-height: 45px;padding-left:10px;font-size:17px;width:80%;font-family:inherit;}
 .signup .boxing table tbody tr td input[type="text"].input_m{width:100px;}
 .signup .boxing table tbody tr td input[type="text"].input_n{width:220px;}
 .signup .boxing table tbody tr td input[type="checkbox"] {vertical-align: middle;}
 
 .signup .boxing table .center {text-align: center;}
+.signup .boxing table .gray {background-color:#f5f5f5;}
 .signup .boxing table tbody tr td p {font-size:16px; font-weight:600; line-height:23px; margin:6px 0;}
 .signup .boxing table tbody tr td p span {display:inline-block; padding:10px; background-color:#f5f5f5;width:100%; box-sizing: border-box;margin:5px 0 0 0;}
 .signup .boxing table tbody tr td select {width:110px;height:45px; line-height:45px;padding:0 10px;}
@@ -518,50 +519,75 @@ select {
 	.guideline .boxing .dot:before {top:8px;}
 
 
-}
-
-@media screen and (max-width:375px) { 
-	#mainvisual{height:370px;}
-	#mainvisual .main_txt h3{font-size: 12px;;}
-	#mainvisual .main_txt .date {font-size:15px; line-height:20px;}
-	#mainvisual .main_txt .date .pink {font-size:16px;}
-	#mainvisual .main_txt .ob_img {bottom:30px;}
-	#mainvisual .main_txt .ob_img img {width:140px;}
-
-	.section01 h3 {font-size:20px;}
-	.section01 .txt{font-size: 12px;}
-	.section01 .hostbox{margin:0;}
-	.section01 .hostbox span.logobox {margin: 0 0 10px 0;}
-	.section01 .hostbox span.logobox img {    transform: scale(0.6);}
-	.section01 .overview li {font-size:13px;line-height:17px;}
-	.section01 .overview li span{height:25px; line-height: 25px; font-size:10px;}
-
-	.section01 .free .free_in {padding:5px 10px;}
-	.section01 .free .free_in .tit{top:-30px; left:-32px;}
-	.section01 .free .free_in .tit img{width:90px;}
-	.section01 .free .free_in h3{font-size:15px;padding:10px 0;}
-	.section01 .free .free_in ul li {height:auto;line-height:18px;font-size:15px;padding:10px  38px 10px 0;}
-	.section01 .free .free_in ul li .date {display:block;width:80px;margin:0 0 3px 0;}
-	.section01 .free .free_in ul li .icon {position:absolute; top:20px; right:0px;}
-	.section01 .free .free_in ul li .icon img{width:35px;}
-	.section02 .sec02_in a {font-size:17px;}
-
-	#subvisual .sub_txt_in > h4 {font-size:18px;}
-	#con_area .c_tit {font-size:18px; letter-spacing:-0.02em;}
-	.sub_hostbox span.logobox {margin:0;}
-	.sub_hostbox span.logobox img {transform:scale(0.8);}
-	.sub_quick .quick_in a {font-size:17px;}
+	/* Online Sign-up */
+	.signup .boxing .r_noti{font-size:12px;}
+	.signup .boxing .red{font-size:20px;}
+	.signup .boxing table colgroup col {width:100% !important;}
+	.signup .boxing table thead tr th {display:block; padding:10px 5px; font-size:14px;}
+	.signup .boxing table tbody tr th {display:block;padding:10px 5px; font-size:13px;line-height:16px;word-break: keep-all;}
+	.signup .boxing table tbody tr td {display:block; padding:10px 5px; font-size:13px;}
+	.signup .boxing table tbody tr td input[type="text"]{height:40px; line-height: 40px;font-size:13px;margin:3px;}
+	.signup .boxing table tbody tr td input[type="text"].input_m{width:27%;}
+	.signup .boxing table tbody tr td input[type="text"].input_n{width:46%;}
+	
+	.signup .boxing table tbody tr td p {font-size:13px; line-height:20px;}
+	.signup .boxing table tbody tr td p span {padding:8px;}
+	.signup .boxing table tbody tr td select {width:90%;height:40px; line-height:40px;padding:0 5px;}
+	.signup .addzone {padding:15px; font-size:13px;}
+	.signup .morezone {font-size:14px;}
+	.signup .gray{padding:20px ; font-size:14px;line-height:21px;}
 
 
-	/* program */
-	.program table thead tr th {font-size:13px;}
-
-
-	/* guideline */
-	.guideline .top {font-size:14px; line-height:20px;}
-	.guideline .boxing .pbox{font-size:15px;padding:15px;}
 
 
 
 }
+
+
+
+
+	@media screen and (max-width:375px) { 
+		#mainvisual{height:370px;}
+		#mainvisual .main_txt h3{font-size: 12px;;}
+		#mainvisual .main_txt .date {font-size:15px; line-height:20px;}
+		#mainvisual .main_txt .date .pink {font-size:16px;}
+		#mainvisual .main_txt .ob_img {bottom:30px;}
+		#mainvisual .main_txt .ob_img img {width:140px;}
+
+		.section01 h3 {font-size:20px;}
+		.section01 .txt{font-size: 12px;}
+		.section01 .hostbox{margin:0;}
+		.section01 .hostbox span.logobox {margin: 0 0 10px 0;}
+		.section01 .hostbox span.logobox img {    transform: scale(0.6);}
+		.section01 .overview li {font-size:13px;line-height:17px;}
+		.section01 .overview li span{height:25px; line-height: 25px; font-size:10px;}
+
+		.section01 .free .free_in {padding:5px 10px;}
+		.section01 .free .free_in .tit{top:-30px; left:-32px;}
+		.section01 .free .free_in .tit img{width:90px;}
+		.section01 .free .free_in h3{font-size:15px;padding:10px 0;}
+		.section01 .free .free_in ul li {height:auto;line-height:18px;font-size:15px;padding:10px  38px 10px 0;}
+		.section01 .free .free_in ul li .date {display:block;width:80px;margin:0 0 3px 0;}
+		.section01 .free .free_in ul li .icon {position:absolute; top:20px; right:0px;}
+		.section01 .free .free_in ul li .icon img{width:35px;}
+		.section02 .sec02_in a {font-size:17px;}
+
+		#subvisual .sub_txt_in > h4 {font-size:18px;}
+		#con_area .c_tit {font-size:18px; letter-spacing:-0.02em;}
+		.sub_hostbox span.logobox {margin:0;}
+		.sub_hostbox span.logobox img {transform:scale(0.8);}
+		.sub_quick .quick_in a {font-size:17px;}
+
+
+		/* program */
+		.program table thead tr th {font-size:13px;}
+
+
+		/* guideline */
+		.guideline .top {font-size:14px; line-height:20px;}
+		.guideline .boxing .pbox{font-size:15px;padding:15px;}
+
+
+
+	}
 
