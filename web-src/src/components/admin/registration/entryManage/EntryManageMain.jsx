@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import PropTypes from "prop-types";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
 import {
@@ -23,8 +22,7 @@ import { successCode } from "resultCode";
 import { Link } from "react-router-dom";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { Pagination } from "@mui/material";
-import EntryManageModalMain from "components/admin/registration/entryManage/modal/EntryManageModalMain";
+import { Checkbox, Pagination } from "@mui/material";
 
 const EntryManageMain = (props) => {
     const { confirm } = useConfirm();
@@ -139,7 +137,16 @@ const EntryManageMain = (props) => {
     const handleSingleCheck = (checked, id) => {
         if (checked) {
             // 단일 선택 시 체크된 아이템을 배열에 추가
-            setCheckItems((prev) => [...prev, id]);
+
+            let newArr = checkItems;
+            newArr.push(id);
+
+            newArr = newArr.filter((element, index) => {
+                return newArr.indexOf(element) === index;
+            });
+
+            console.log([...newArr]);
+            setCheckItems(newArr);
         } else {
             // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
             setCheckItems(checkItems.filter((el) => el !== id));
@@ -151,7 +158,11 @@ const EntryManageMain = (props) => {
         if (checked) {
             // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
             const idArray = [];
-            boardList.forEach((el) => idArray.push(el.institution_idx));
+            // boardList.forEach((el) => idArray.push(el.institution_idx));
+            boardList.forEach((el) =>
+                idArray.push(`${el.registration_idx}-${el.institution_idx}`),
+            );
+
             setCheckItems(idArray);
         } else {
             // 전체 선택 해제 시 checkItems 를 빈 배열로 상태 업데이트
@@ -188,11 +199,58 @@ const EntryManageMain = (props) => {
     };
 
     const removeBoard = () => {
-        let checkItemsStr = checkItems.join();
+        console.log(checkItems);
         setIsSpinner(true);
 
-        const url = `${apiPath.api_admin_remove_reg_users}${checkItemsStr}`;
-        // TODO: 내일하자
+        const length = checkItems.length;
+
+        let data = {};
+        let checkCount = 0;
+
+        for (let i = 0; i < length; i++) {
+            // /v1/reg/user/{registration_idx}/{institution_idxs}
+            // DELETE
+            // 참가자관리 삭제
+            let url =
+                apiPath.api_admin_remove_reg_users +
+                `${checkItems[i].split("-")[0]}/${checkItems[i].split("-")[1]}`;
+
+            // console.log(url);
+            // 파라미터
+            const restParams = {
+                method: "delete",
+                url: url,
+                data: data,
+                err: err,
+                callback: (res) => responsLogic(res),
+                admin: "Y",
+            };
+
+            CommonRest(restParams);
+        }
+
+        const responsLogic = (res) => {
+            if (res.headers.result_code === successCode.success) {
+                checkCount++;
+
+                if (checkCount === length) {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: `${checkCount} 건의 참가건이 삭제 되었습니다.`,
+                        callback: () => refresh(),
+                    });
+
+                    const refresh = () => {
+                        setCheckItems([]);
+
+                        setIsNeedUpdate(!isNeedUpdate);
+                    };
+                }
+            }
+        };
     };
 
     // 상세
@@ -244,26 +302,51 @@ const EntryManageMain = (props) => {
         setIsOpen(true);
     };
 
+    const selectedCountry = (e, value) => {
+        console.log(value);
+    };
+
     // --------------------------------- 테이블 세팅 -------------------------------------
 
     // 컬럼 세팅
     const columns = useMemo(() => [
         {
-            accessorKey: "institution_idx",
-            cell: (info) => (
-                <input
-                    type="checkbox"
-                    name={`institution_idx_${info.getValue()}`}
-                    id={info.getValue()}
-                    value={info.getValue()}
+            id: "registration_idx_institution_idx",
+            cell: (row) => (
+                <Checkbox
+                    size="small"
+                    name={row.getValue().props.id}
+                    id={row.getValue().props.id}
+                    value={row.getValue().props.id}
                     onChange={(e) =>
-                        handleSingleCheck(e.target.checked, info.getValue())
+                        handleSingleCheck(
+                            e.target.checked,
+                            row.getValue().props.id,
+                        )
                     }
-                    checked={checkItems.includes(info.getValue())}
+                    checked={checkItems.includes(row.getValue().props.id)}
+                />
+            ),
+            accessorFn: (row) => (
+                <Checkbox
+                    size="small"
+                    name={`${row.registration_idx}-${row.institution_idx}`}
+                    id={`${row.registration_idx}-${row.institution_idx}`}
+                    value={`${row.registration_idx}-${row.institution_idx}`}
+                    onChange={(e) =>
+                        handleSingleCheck(
+                            e.target.checked,
+                            `${row.registration_idx}-${row.institution_idx}`,
+                        )
+                    }
+                    checked={checkItems.includes(
+                        `${row.registration_idx}-${row.institution_idx}`,
+                    )}
                 />
             ),
             header: () => (
-                <input
+                <Checkbox
+                    size="small"
                     type="checkbox"
                     name="select-all"
                     onChange={(e) => handleAllCheck(e.target.checked)}
@@ -543,6 +626,10 @@ const EntryManageMain = (props) => {
                             </tbody>
                         </table>
                     </div>
+                    {/*<CountrySelect*/}
+                    {/*    onChange={selectedCountry}*/}
+                    {/*    defaultValue={"82"}*/}
+                    {/*/>*/}
                     {Object.keys(pageInfo).length !== 0 && (
                         <div className="pagenation">
                             <Pagination
