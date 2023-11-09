@@ -16,9 +16,17 @@ function MobileNav() {
 
     const menuDepth = (e) => {
         e.preventDefault();
-        // $(".nav_2depth").slideUp();
+        $(".nav_2depth").slideUp();
         // $(e.target).siblings(".nav_2depth").slideToggle();
-        $(e.target).siblings(`#${e.target.id}_s`).slideToggle();
+
+        if (
+            $(e.target).siblings(`#${e.target.id}_s`)[0].style.display ===
+            "block"
+        ) {
+            $(e.target).siblings(`#${e.target.id}_s`).slideUp();
+        } else {
+            $(e.target).siblings(`#${e.target.id}_s`).slideToggle();
+        }
     };
 
     return (

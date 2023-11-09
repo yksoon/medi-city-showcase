@@ -1,24 +1,23 @@
 {
   "files": {
-    "main.css": "./static/css/main.47c23168.css",
-    "main.js": "./static/js/main.87025d4e.js",
-    "static/js/65.dede5063.chunk.js": "./static/js/65.dede5063.chunk.js",
+    "main.css": "./static/css/main.9a5cc78a.css",
+    "main.js": "./static/js/main.04d1cd03.js",
+    "static/js/700.dc0e54aa.chunk.js": "./static/js/700.dc0e54aa.chunk.js",
     "static/js/27.85681d8e.chunk.js": "./static/js/27.85681d8e.chunk.js",
-    "static/js/834.38f89d73.chunk.js": "./static/js/834.38f89d73.chunk.js",
-    "static/media/chab.ttf": "./static/media/chab.73854a05b07c4f60f35d.ttf",
+    "static/media/mainvisual.png": "./static/media/mainvisual.ccf5e022738fdb6f7c13.png",
     "static/media/Pretendard-Bold.woff": "./static/media/Pretendard-Bold.dd56301118da9e158ce9.woff",
     "static/media/Pretendard-Medium.woff": "./static/media/Pretendard-Medium.f0cc544dcc84cf9f03b3.woff",
     "static/media/Pretendard-Regular.woff": "./static/media/Pretendard-Regular.21b4bbcb93a4b1214f7d.woff",
-    "static/media/GmarketSansTTFBold.woff": "./static/media/GmarketSansTTFBold.92299230fa7026b752cb.woff",
-    "static/media/GmarketSansTTFMedium.woff": "./static/media/GmarketSansTTFMedium.c441bbe11105e62d9be7.woff",
-    "static/media/GmarketSansTTFLight.woff": "./static/media/GmarketSansTTFLight.f3787517e506710aeb16.woff",
-    "static/media/main_bg.png": "./static/media/main_bg.3a72fc654918a8402aec.png",
-    "static/media/sub_bg.jpg": "./static/media/sub_bg.15a0c8d87e92295d159e.jpg",
-    "static/media/sec03_bg.png": "./static/media/sec03_bg.aedead899209586b7c1d.png",
+    "static/media/subvisual.png": "./static/media/subvisual.a04746089d186c311042.png",
+    "static/media/sec01_bg.jpg": "./static/media/sec01_bg.2d6a95d9745407067459.jpg",
+    "static/media/Raleway-SemiBold_0.woff": "./static/media/Raleway-SemiBold_0.0ba05d4ad8c3366d8a5f.woff",
+    "static/media/Raleway-Bold_0.woff": "./static/media/Raleway-Bold_0.35737ee480d021a52f90.woff",
+    "static/media/Raleway-Regular_0.woff": "./static/media/Raleway-Regular_0.758e64fb6ff5538913ad.woff",
+    "static/media/sec02_bg.jpg": "./static/media/sec02_bg.dd06841ee9b4bf95f6d5.jpg",
     "index.html": "./index.html"
   },
   "entrypoints": [
-    "static/css/main.47c23168.css",
-    "static/js/main.87025d4e.js"
+    "static/css/main.9a5cc78a.css",
+    "static/js/main.04d1cd03.js"
   ]
 }
