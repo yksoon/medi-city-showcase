@@ -28,7 +28,7 @@
 		<!--header//S-->
 		<div id="header"></div>
 		<!--header//E-->
-
+        
 
 		<div id="subvisual">
             <div class="sub_txt">
@@ -37,26 +37,61 @@
                     <h3>K-AESTHETIC & ART INDONESIA 2024</h3>
                     <h4>PROGRAM</h4>                
                 </div>
-                <p class="ob_img" data-aos="fade-left" data-aos-duration="1500">
-                    <img src="img/main/main_img.png" alt="키비 오브젝트이미지" />
-                </p>
             </div>
 		</div>
-		<!-- container //S-->
-		<div id="container">
-           
-
-        
 
 
-
+		<!-- 서브 container //S-->
+		<div id="container" class="sub_container">
+           <div id="con_area">
+                <div id="subtitle">
+                    <h3>PROGRAM</h3>
+                </div>
+                <div class="program">
+                    <h3 class="c_tit">January 24 (Wed) 2024</h3>                    
+                    <table>
+                        <colgroup>
+                            <col width="26%"/>
+                            <col width="*"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Session</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="time">14:00</td>
+                                <td>ARTBUDDY</td>
+                            </tr>
+                            <tr>
+                                <td class="time">15:00</td>
+                                <td>MyVenus</td>
+                            </tr>
+                            <tr>
+                                <td class="time">16:00</td>
+                                <td>MyVenus</td>
+                            </tr>
+                            <tr>
+                                <td class="time">18:00</td>
+                                <td>Gala Dinner (Invited guests only)</td>
+                            </tr>
+                            <tr>
+                                <td class="time">18:30</td>
+                                <td>Introduction of Medi-City</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+           </div>
         </div>
-		<!-- container //E-->
+		<!-- 서브 container //E-->
 
 
         
 		<!--footer //S-->
-		<div id="footer"></div>
+		<div id="footer_wrap"></div>
 		<!-- footer //E-->
 
 	</div>
@@ -73,7 +108,7 @@
         .then(data => header.innerHTML = data);
     
         //footer
-        const footer = document.querySelector('#footer');
+        const footer = document.querySelector('#footer_wrap');
         fetch('include/footer.html')
         .then(res => res.text())
         .then(data => footer.innerHTML = data);
