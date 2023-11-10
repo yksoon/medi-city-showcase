@@ -107,7 +107,7 @@ function MobileNav() {
                                 </li>
                             </ul>
                         </li>
-                        <li>
+                       {/* <li>
                             <Link
                                 to=""
                                 id="nav4"
@@ -130,7 +130,7 @@ function MobileNav() {
                                     <Link to="">Booth Map</Link>
                                 </li>
                             </ul>
-                        </li>
+                        </li> */}
                     </ul>
                 </nav>
             </div>
