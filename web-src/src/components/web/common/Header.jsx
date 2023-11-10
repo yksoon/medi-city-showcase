@@ -22,7 +22,9 @@ function Header() {
                     <div id="gnb">
                         <ul>
                             <li>
-                                <Link href="program.html">PROGRAM</Link>
+                                <Link to={routerPath.web_program_url}>
+                                    PROGRAM
+                                </Link>
                             </li>
                             <li>
                                 <Link href="guideline.html">

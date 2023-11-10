@@ -2,9 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { routerPath } from "webPath";
 
-const Section02 = () => {
+const FooterSub = () => {
     return (
         <>
+            <div className="sub_hostbox">
+                <span className="tit">HOST</span>
+                <span className="logobox">
+                    <img src="img/web/main/host_logo.png" alt="" />
+                </span>
+                <span className="tit">PARTNERS</span>
+                <span className="logobox">
+                    <img src="img/web/main/orga_logo01.png" alt="" />
+                </span>
+                <span className="logobox">
+                    <img src="img/web/main/orga_logo02.png" alt="" />
+                </span>
+            </div>
+
             <div className="section02">
                 <div className="sec02_in">
                     <Link to={routerPath.web_program_url} className="btn01">
@@ -37,4 +51,4 @@ const Section02 = () => {
     );
 };
 
-export default Section02;
+export default FooterSub;

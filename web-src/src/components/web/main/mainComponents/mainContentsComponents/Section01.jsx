@@ -1,6 +1,58 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import useConfirm from "hook/useConfirm";
+import useAlert from "hook/useAlert";
+import {CommonErrModule, CommonNotify, CommonRest} from "common/js/Common";
+import {useSetRecoilState} from "recoil";
+import {isSpinnerAtom} from "recoils/atoms";
+import {apiPath} from "webPath";
+import {successCode} from "resultCode";
+import {Skeleton} from "@mui/material";
+import {commaOfNumber} from "common/js/Pattern";
 
 const Section01 = () => {
+    const { confirm } = useConfirm();
+    const { alert } = useAlert();
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    const [registrationInfo, setRegistrationInfo] = useState([])
+
+    useEffect(() => {
+        getRegistration()
+    }, []);
+
+    // 정보 받아오기 REST
+    const getRegistration = () => {
+        const url = apiPath.api_admin_get_reg + "2";
+        const data = {};
+
+        // 파라미터
+        const restParams = {
+            method: "get",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            if (res.headers.result_code === successCode.success) {
+                const result_info = res.data.result_info;
+
+                setRegistrationInfo(result_info);
+            } else {
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    // message: res.headers.result_message_ko,
+                    message: "잠시후 다시 시도해주세요"
+                });
+            }
+        };
+    }
+
     return (
         <>
             <div className="section01">
@@ -54,30 +106,64 @@ const Section01 = () => {
                     <ul className="overview">
                         <li>
                             <span>DATE</span>
-                            <p>January 24 (Wed) ~ 25 (Thu), 2024</p>
+                            {registrationInfo.length !== 0 ? (
+                                // <p>January 24 (Wed) ~ 25 (Thu), 2024</p>
+                                <p>{registrationInfo.target_date}</p>
+                            ) : (
+                                <p><Skeleton variant="text" sx={{ fontSize: '1rem' }} width={"40%"} /></p>
+                            )}
+                            {/*<p><Skeleton variant="text" sx={{ fontSize: '1rem' }} width={300} /></p>*/}
+
                         </li>
                         <li>
                             <span>VENUE</span>
-                            <p>The Westin Jakarta, Indonesia (Grandballroom)</p>
+                            {registrationInfo.length !== 0 ? (
+                                // <p>The Westin Jakarta, Indonesia (Grandballroom)</p>
+                                <p>{registrationInfo.target_place}</p>
+                            ) : (
+                                <p><Skeleton variant="text" sx={{ fontSize: '1rem' }} width={"70%"} /></p>
+                            )}
                         </li>
                         <li>
                             <span>HOST</span>
-                            <p>Medi-City</p>
+                            {registrationInfo.length !== 0 ? (
+                                // <p>Medi-City</p>
+                                <p>{registrationInfo.target_host}</p>
+                            ) : (
+                                <p><Skeleton variant="text" sx={{ fontSize: '1rem' }} width={"30%"} /></p>
+                            )}
+
                         </li>
                         <li>
                             <span>PARTNERS</span>
-                            <p>SUMMITS, ARTBUDDY</p>
+                            {registrationInfo.length !== 0 ? (
+                                // <p>SUMMITS, ARTBUDDY</p>
+                                <p>{registrationInfo.target_supervision}</p>
+                            ) : (
+                                <p><Skeleton variant="text" sx={{ fontSize: '1rem' }} width={"40%"} /></p>
+                            )}
                         </li>
                         <li>
                             <span>Sign-up Fee</span>
-                            <p>￦12,000,000 (Including VAT)</p>
+                            {registrationInfo.length !== 0 ? (
+                                // <p>￦12,000,000 (Including VAT)</p>
+                                <p>{`￦${registrationInfo.entry_cost.toString().replace(commaOfNumber, ",")} (Including VAT)`}</p>
+                            ) : (
+                                <p><Skeleton variant="text" sx={{ fontSize: '1rem' }} width={"45%"} /></p>
+                            )}
                         </li>
                         <li>
                             <span>Inquiry</span>
-                            <p>
-                                Sunyoung Oeom (M. sunyoung.eom@medi-city.co.kr /
-                                T. 031-926-3181)
-                            </p>
+                            {registrationInfo.length !== 0 ? (
+                                    // <p>
+                                    //     Sunyoung Oeom (M. sunyoung.eom@medi-city.co.kr /
+                                    //     T. 031-926-3181)
+                                    // </p>
+                                <p>{registrationInfo.target_contactus}</p>
+                            ) : (
+                                <p><Skeleton variant="text" sx={{ fontSize: '1rem' }} width={"80%"} /></p>
+                            )}
+
                         </li>
                     </ul>
 

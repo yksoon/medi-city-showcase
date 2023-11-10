@@ -9,6 +9,7 @@ import NotFoundPage from "NotFoundPage";
 import Admin from "components/admin/Admin";
 import SignIn from "components/admin/signin/SignIn";
 import Forbidden from "Forbidden";
+import Program from "components/web/program/Program";
 
 // Router
 const Router = () => {
@@ -32,34 +33,38 @@ const Router = () => {
                     </Backdrop>
                 }
             >
-                    <Routes>
-                        {/* /link를 입력하면 LinkPage 오픈 */}
-                        {/* -------------------------------web------------------------------- */}
-                        {/* 메인 */}
-                        {/* URL : / */}
-                        <Route
-                            path={routerPath.web_main_url}
-                            element={<Main />}
-                        />
+                <Routes>
+                    {/* /link를 입력하면 LinkPage 오픈 */}
+                    {/* -------------------------------web------------------------------- */}
+                    {/* 메인 */}
+                    {/* URL : / */}
+                    <Route path={routerPath.web_main_url} element={<Main />} />
 
-                        {/* -------------------------------admin------------------------------- */}
-                        {/* 메인 */}
-                        {/* URL : /admin */}
-                        <Route
-                            path={routerPath.admin_main_url}
-                            element={<Admin />}
-                        />
+                    {/* 프로그램 */}
+                    {/* URL : /program */}
+                    <Route
+                        path={routerPath.web_program_url}
+                        element={<Program />}
+                    />
 
-                        {/* 로그인 */}
-                        {/* URL : /admin/signin */}
-                        <Route
-                            path={routerPath.admin_signin_url}
-                            element={<SignIn />}
-                        />
+                    {/* -------------------------------admin------------------------------- */}
+                    {/* 메인 */}
+                    {/* URL : /admin */}
+                    <Route
+                        path={routerPath.admin_main_url}
+                        element={<Admin />}
+                    />
 
-                        {/* 404 */}
-                        <Route path="*" element={<NotFoundPage />} />
-                    </Routes>
+                    {/* 로그인 */}
+                    {/* URL : /admin/signin */}
+                    <Route
+                        path={routerPath.admin_signin_url}
+                        element={<SignIn />}
+                    />
+
+                    {/* 404 */}
+                    <Route path="*" element={<NotFoundPage />} />
+                </Routes>
             </Suspense>
         </>
     );

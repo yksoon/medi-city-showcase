@@ -20,8 +20,9 @@ function MobileNav() {
         // $(e.target).siblings(".nav_2depth").slideToggle();
 
         if (
+            $(e.target).siblings(`#${e.target.id}_s`)[0] &&
             $(e.target).siblings(`#${e.target.id}_s`)[0].style.display ===
-            "block"
+                "block"
         ) {
             $(e.target).siblings(`#${e.target.id}_s`).slideUp();
         } else {
@@ -46,7 +47,7 @@ function MobileNav() {
                     <ul id="nav">
                         <li>
                             <Link
-                                to="program.html"
+                                to={routerPath.web_program_url}
                                 id="nav1"
                                 onClick={(e) => {
                                     menuDepth(e);
@@ -107,7 +108,7 @@ function MobileNav() {
                                 </li>
                             </ul>
                         </li>
-                       {/* <li>
+                        {/* <li>
                             <Link
                                 to=""
                                 id="nav4"

@@ -24,8 +24,12 @@ import {
     userTokenAtom,
     viewScheduleAtom,
 } from "recoils/atoms";
+import Aos from "aos";
 
 function App() {
+    useEffect(() => {
+        Aos.init();
+    });
     // let ipInfo = useSelector((state) => state.ipInfo.ipInfo);
     const [ipInfo, setIpInfo] = useRecoilState(ipInfoAtom);
 

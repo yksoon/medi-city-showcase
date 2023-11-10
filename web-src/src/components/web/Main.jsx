@@ -6,9 +6,9 @@ import MainMainvisual from "components/web/main/mainComponents/MainMainvisual";
 import Footer from "components/web/common/Footer";
 
 function Main() {
-    useEffect(() => {
-        Aos.init();
-    });
+    // useEffect(() => {
+    //     Aos.init();
+    // });
 
     return (
         <>

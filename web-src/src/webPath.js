@@ -36,53 +36,9 @@ const routerPath = {
     // /
     web_main_url: `${base_url}`,
 
-    // 행사소개
-    // /intro/intro
-    web_intro_url: `${base_url}intro/intro`,
-
-    // 행사장소
-    // /intro/location
-    web_intro_location_url: `${base_url}intro/location`,
-
-    // 행사일정
-    // /program/program
-    web_program_url: `${base_url}program/program`,
-
-    // 세부프로그램
-    // /program/detail
-    web_program_detail_url: `${base_url}program/detail`,
-
-    // 이벤트프로그램
-    // /program/event
-    web_program_event_url: `${base_url}program/event`,
-
-    // notice
-    // /notice/notice
-    web_notice_url: `${base_url}notice/notice`,
-
-    // 참여기업
-    // /company/companydetail
-    web_company_url: `${base_url}company/company`,
-
-    // 참여기업 리스트
-    // /company/companylist
-    // web_company_list_url: `${base_url}company/companylist`,
-
-    // 참여기업 상세
-    // /company/companydetail
-    // web_company_detail_url: `${base_url}company/detail`,
-
-    // 회원가입
-    // /signup
-    web_signup_url: `${base_url}signup`,
-
-    // 사전등록 확인
-    // /signupchk
-    web_signupchk_url: `${base_url}signupchk`,
-
-    // 사전등록 수정
-    // /signup_mod
-    web_signup_mod_url: `${base_url}signup_mod`,
+    // 프로그램
+    // /program
+    web_program_url: `${base_url}program`,
 
     // ---------------------- admin -------------------------
     // 메인
