@@ -291,17 +291,17 @@ const RegistrationManageModalMain = (props) => {
             return false;
         }
 
-        if (!registrationSubTitleKo.current.value) {
-            noti(registrationSubTitleKo, "부제목(국문)을 입력해주세요");
-
-            return false;
-        }
-
-        if (!registrationSubTitleEn.current.value) {
-            noti(registrationSubTitleEn, "부제목(영문)을 입력해주세요");
-
-            return false;
-        }
+        // if (!registrationSubTitleKo.current.value) {
+        //     noti(registrationSubTitleKo, "부제목(국문)을 입력해주세요");
+        //
+        //     return false;
+        // }
+        //
+        // if (!registrationSubTitleEn.current.value) {
+        //     noti(registrationSubTitleEn, "부제목(영문)을 입력해주세요");
+        //
+        //     return false;
+        // }
 
         if (!startDate.current.value) {
             noti(startDate, "시작일을 입력해주세요");
@@ -391,9 +391,7 @@ const RegistrationManageModalMain = (props) => {
                             </td>
                         </tr>
                         <tr>
-                            <th>
-                                부제목(국문) <span className="red">*</span>
-                            </th>
+                            <th>부제목(국문)</th>
                             <td>
                                 <input
                                     type="text"
@@ -403,9 +401,7 @@ const RegistrationManageModalMain = (props) => {
                             </td>
                         </tr>
                         <tr>
-                            <th>
-                                부제목(영문) <span className="red">*</span>
-                            </th>
+                            <th>부제목(영문)</th>
                             <td>
                                 <input
                                     type="text"

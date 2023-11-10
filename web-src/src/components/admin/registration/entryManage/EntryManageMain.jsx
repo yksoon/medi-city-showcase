@@ -360,8 +360,28 @@ const EntryManageMain = (props) => {
             enableSorting: false,
         },
 
+        columnHelper.accessor((row) => row.payment_status, {
+            id: "payment_status",
+            cell: (info) => info.getValue(),
+            header: "결제상태",
+            enableSorting: "alphanumericCaseSensitive",
+        }),
+
+        columnHelper.accessor((row) => row.additional_status, {
+            id: "additional_status",
+            cell: (info) => info.getValue(),
+            header: "참가상태",
+            enableSorting: "alphanumericCaseSensitive",
+        }),
+
         columnHelper.accessor(
-            (row) => `${row.institution_name_ko} (${row.institution_name_en})`,
+            (row) => (
+                <>
+                    {row.institution_name_ko}
+                    <br />
+                    {row.institution_name_en}
+                </>
+            ),
             {
                 id: "institution_name",
                 cell: (info) => info.getValue(),
@@ -375,7 +395,7 @@ const EntryManageMain = (props) => {
                 <>
                     {`${row.addr1_ko} ${row.addr2_ko}`}
                     <br />
-                    {`${row.addr1_en} ${row.addr2_en}`}
+                    {`${row.addr2_en}, ${row.addr1_en}`}
                 </>
             ),
             {
@@ -530,12 +550,14 @@ const EntryManageMain = (props) => {
                         <table className="table_a">
                             <colgroup>
                                 <col width="5%" />
-                                <col width="20%" />
+                                <col width="7%" />
+                                <col width="7%" />
+                                <col width="15%" />
                                 <col width="*" />
                                 <col width="10%" />
                                 <col width="10%" />
                                 <col width="10%" />
-                                <col width="10%" />
+                                <col width="7%" />
                                 <col width="5%" />
                             </colgroup>
                             <thead>
