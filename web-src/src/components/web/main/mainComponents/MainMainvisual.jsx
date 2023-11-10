@@ -1,12 +1,9 @@
 import { Skeleton } from "@mui/material";
-import { CommonOpenUrl } from "common/js/Common";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { ipInfoAtom, viewScheduleAtom } from "recoils/atoms";
-import { routerPath } from "webPath";
+import React from "react";
 
-const MainMainvisual = () => {
+const MainMainvisual = (props) => {
+    const registrationInfo = props.registrationInfo;
+
     return (
         <>
             <div id="mainvisual">
@@ -18,7 +15,19 @@ const MainMainvisual = () => {
                                 alt="Medi-City Medical Showcase"
                             />
                         </h2>
-                        <h3>K-AESTHETIC & ART INDONESIA 2024</h3>
+
+                        {registrationInfo.length !== 0 ? (
+                            <h3>
+                                {registrationInfo.registration_sub_title_en}
+                            </h3>
+                        ) : (
+                            <Skeleton
+                                variant="text"
+                                sx={{ fontSize: "2rem" }}
+                                width={"100%"}
+                            />
+                        )}
+
                         <p className="date">
                             January <span className="pink">24-25</span>, 2024
                             <br />

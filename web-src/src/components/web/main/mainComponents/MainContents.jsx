@@ -2,12 +2,14 @@ import Section01 from "components/web/main/mainComponents/mainContentsComponents
 import Section02 from "components/web/main/mainComponents/mainContentsComponents/Section02";
 import Section03 from "components/web/main/mainComponents/mainContentsComponents/Section03";
 
-const MainContents = () => {
+const MainContents = (props) => {
+    const registrationInfo = props.registrationInfo;
+
     return (
         <>
             <div id="container">
                 {/*section01*/}
-                <Section01 />
+                <Section01 registrationInfo={registrationInfo} />
 
                 {/*section02*/}
                 <Section02 />

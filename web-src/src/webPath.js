@@ -40,6 +40,10 @@ const routerPath = {
     // /program
     web_program_url: `${base_url}program`,
 
+    // 가이드라인
+    // /participation/guideline
+    web_participation_guideline_url: `${base_url}participation/guideline`,
+
     // ---------------------- admin -------------------------
     // 메인
     // /admin

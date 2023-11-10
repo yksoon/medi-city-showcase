@@ -311,12 +311,31 @@ const RegistraionManageMain = (props) => {
         },
 
         columnHelper.accessor(
-            (row) =>
-                `${row.registration_title_ko} (${row.registration_title_en})`,
+            (row) => (
+                <>
+                    {row.registration_title_ko}
+                    <br />({row.registration_title_en})
+                </>
+            ),
             {
                 id: "title",
                 cell: (info) => info.getValue(),
                 header: "제목 (영문)",
+                sortingFn: "alphanumericCaseSensitive",
+            },
+        ),
+
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {row.registration_sub_title_ko}
+                    <br /> ({row.registration_sub_title_en})
+                </>
+            ),
+            {
+                id: "subtitle",
+                cell: (info) => info.getValue(),
+                header: "부제목 (영문)",
                 sortingFn: "alphanumericCaseSensitive",
             },
         ),
@@ -492,11 +511,12 @@ const RegistraionManageMain = (props) => {
                             <colgroup>
                                 <col width="5%" />
                                 <col width="*" />
+                                <col width="*" />
                                 <col width="10%" />
                                 <col width="5%" />
                                 <col width="10%" />
                                 <col width="10%" />
-                                <col width="10%" />
+                                <col width="5%" />
                                 <col width="10%" />
                                 <col width="5%" />
                             </colgroup>

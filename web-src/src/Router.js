@@ -10,6 +10,7 @@ import Admin from "components/admin/Admin";
 import SignIn from "components/admin/signin/SignIn";
 import Forbidden from "Forbidden";
 import Program from "components/web/program/Program";
+import Guideline from "components/web/participation/guideline/Guideline";
 
 // Router
 const Router = () => {
@@ -45,6 +46,13 @@ const Router = () => {
                     <Route
                         path={routerPath.web_program_url}
                         element={<Program />}
+                    />
+
+                    {/* 가이드라인 */}
+                    {/* URL : /participation/guideline */}
+                    <Route
+                        path={routerPath.web_participation_guideline_url}
+                        element={<Guideline />}
                     />
 
                     {/* -------------------------------admin------------------------------- */}

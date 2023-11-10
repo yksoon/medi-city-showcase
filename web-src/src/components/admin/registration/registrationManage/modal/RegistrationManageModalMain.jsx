@@ -31,6 +31,8 @@ const RegistrationManageModalMain = (props) => {
     // refs
     const registrationTitleKo = useRef(null);
     const registrationTitleEn = useRef(null);
+    const registrationSubTitleKo = useRef(null);
+    const registrationSubTitleEn = useRef(null);
     const startDate = useRef(null);
     const startTime = useRef(null);
     const endDate = useRef(null);
@@ -105,6 +107,10 @@ const RegistrationManageModalMain = (props) => {
     const setDefaultValue = () => {
         registrationTitleKo.current.value = modData.registration_title_ko ?? "";
         registrationTitleEn.current.value = modData.registration_title_en ?? "";
+        registrationSubTitleKo.current.value =
+            modData.registration_sub_title_ko ?? "";
+        registrationSubTitleEn.current.value =
+            modData.registration_sub_title_en ?? "";
         startDate.current.value = modData.start_date ?? "";
         startTime.current.value = modData.start_time ?? "";
         endDate.current.value = modData.end_date ?? "";
@@ -159,6 +165,8 @@ const RegistrationManageModalMain = (props) => {
             const data = {
                 registration_title_ko: registrationTitleKo.current.value,
                 registration_title_en: registrationTitleEn.current.value,
+                registration_sub_title_ko: registrationSubTitleKo.current.value,
+                registration_sub_title_en: registrationSubTitleEn.current.value,
                 start_date: startDate.current.value,
                 start_time: startTime.current.value,
                 end_date: endDate.current.value,
@@ -283,6 +291,18 @@ const RegistrationManageModalMain = (props) => {
             return false;
         }
 
+        if (!registrationSubTitleKo.current.value) {
+            noti(registrationSubTitleKo, "부제목(국문)을 입력해주세요");
+
+            return false;
+        }
+
+        if (!registrationSubTitleEn.current.value) {
+            noti(registrationSubTitleEn, "부제목(영문)을 입력해주세요");
+
+            return false;
+        }
+
         if (!startDate.current.value) {
             noti(startDate, "시작일을 입력해주세요");
 
@@ -367,6 +387,30 @@ const RegistrationManageModalMain = (props) => {
                                     type="text"
                                     className="input wp100"
                                     ref={registrationTitleEn}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                부제목(국문) <span className="red">*</span>
+                            </th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={registrationSubTitleKo}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                부제목(영문) <span className="red">*</span>
+                            </th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={registrationSubTitleEn}
                                 />
                             </td>
                         </tr>

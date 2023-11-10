@@ -44,6 +44,8 @@ const EntryManageModalMain = (props) => {
     const registrationIdx = useRef(null);
     const registrationTitleKo = useRef(null);
     const registrationTitleEn = useRef(null);
+    const registrationSubTitleKo = useRef(null);
+    const registrationSubTitleEn = useRef(null);
     const paymentStatusCd = useRef(null);
     const additionalStatusCd = useRef(null);
     const institutionTypeCd = useRef(null);
@@ -145,6 +147,10 @@ const EntryManageModalMain = (props) => {
         // registrationIdx.current.value = modData.registration_idx ?? "";
         registrationTitleKo.current.value = modData.registration_title_ko;
         registrationTitleEn.current.value = modData.registration_title_en;
+        registrationSubTitleKo.current.value =
+            modData.registration_sub_title_ko;
+        registrationSubTitleEn.current.value =
+            modData.registration_sub_title_en;
         paymentStatusCd.current.value = modData.payment_status_cd;
         additionalStatusCd.current.value = modData.additional_status_cd;
         institutionTypeCd.current.value = modData.institution_type_cd;
@@ -523,6 +529,26 @@ const EntryManageModalMain = (props) => {
                                     type="text"
                                     className="input wp100"
                                     ref={registrationTitleEn}
+                                    disabled={true}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>부제목(국문)</th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={registrationSubTitleKo}
+                                    disabled={true}
+                                />
+                            </td>
+                            <th>부제목(영문)</th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={registrationSubTitleEn}
                                     disabled={true}
                                 />
                             </td>

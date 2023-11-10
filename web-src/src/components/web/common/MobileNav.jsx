@@ -74,7 +74,13 @@ function MobileNav() {
                                 style={{ display: "block" }}
                             >
                                 <li>
-                                    <Link to="guideline.html">Guideline</Link>
+                                    <Link
+                                        to={
+                                            routerPath.web_participation_guideline_url
+                                        }
+                                    >
+                                        Guideline
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link to="signup.html">Online Sign-up</Link>

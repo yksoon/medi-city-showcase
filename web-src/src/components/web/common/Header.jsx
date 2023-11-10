@@ -15,7 +15,7 @@ function Header() {
                     data-aos-duration="1100"
                 >
                     <h1 className="logo">
-                        <Link href="/">
+                        <Link to={routerPath.web_main_url}>
                             <img src="img/web/main/logo2.png" alt="" />
                         </Link>
                     </h1>
@@ -31,7 +31,13 @@ function Header() {
                                     PARTICIPATION SIGN-UP
                                 </Link>
                                 <div className="submenu">
-                                    <Link href="guideline.html">Guideline</Link>
+                                    <Link
+                                        to={
+                                            routerPath.web_participation_guideline_url
+                                        }
+                                    >
+                                        Guideline
+                                    </Link>
                                     <Link href="signup.html">
                                         Online Sign-up
                                     </Link>
