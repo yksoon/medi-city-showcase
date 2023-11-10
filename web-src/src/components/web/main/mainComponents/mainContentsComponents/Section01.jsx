@@ -93,7 +93,8 @@ const Section01 = () => {
                         <br />
                         K- Aesthetic& ART Indonesia 2024 is an official event
                         being organized for the first time in Jakarta, Indonesia
-                        by Medi-City, a company based and headquartered in South
+                        by Medi-City,<br/>
+                        a company based and headquartered in South
                         Korea.
                         <br />
                         <br />
