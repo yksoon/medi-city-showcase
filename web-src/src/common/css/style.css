@@ -558,11 +558,70 @@ select {
     .program table thead tr th {font-size:13px;}
 
 
-    /* guideline */
-    .guideline .top {font-size:14px; line-height:20px;}
-    .guideline .boxing .pbox{font-size:15px;padding:15px;}
+    /* Guideline */
+    .guideline .top {text-align: center; font-size: 20px; color:#000; line-height:31px; font-weight:900;margin:0 0 70px 0;}
+    .guideline .top b{color:#f82062; }
+    .guideline .boxing {margin:0 0 70px 0;}
+    .guideline .boxing .pbox {background-color:#faf2f5; padding:25px;margin:0 0 15px 0;font-size: 22px; font-weight: 900;color: #ed0743;;}
+    .guideline .boxing .l_noti {text-align:right; color:#333; font-size: 16px;}
+    .guideline .boxing .steps {background:url('/public/img/web/sub/step_line.png') 0  40% repeat-x;display:flex;justify-content: space-between;margin:0 0 30px 0;}
+    .guideline .boxing .steps li{width:190px;text-align :center;  font-size:17px; font-weight: 900; color:#000;}
+    .guideline .boxing .steps li p{width:190px;height:190px;display:flex;align-items: center;justify-content: center;margin:0 0 15px 0;}
+    .guideline .boxing .steps li.c01 p {background:url('/public/img/web/sub/step01.png') center center no-repeat;}
+    .guideline .boxing .steps li.c02 p {background:url('/public/img/web/sub/step02.png') center center no-repeat;}
+    .guideline .boxing .steps li.c03 p {background:url('/public/img/web/sub/step03.png') center center no-repeat;}
+    .guideline .boxing .steps li.c04 p {background:url('/public/img/web/sub/step04.png') center center no-repeat;}
+    .guideline .boxing .steps li.c05 p {background:url('/public/img/web/sub/step05.png') center center no-repeat;}
+    .guideline .boxing .steps li.c06 p {background:url('/public/img/web/sub/step06.png') center center no-repeat;}
+    .guideline .boxing dl dt {font-size:20px;font-weight: 900;color:#000;margin:25px 0 10px 0;}
+    .guideline .boxing .dot {font-size:17px; color:#000; letter-spacing: -0.015em; line-height:24px; margin:5px 0;padding-left:10px;position:relative;}
+    .guideline .boxing .dot:before {content:"";display:block; width:4px;height:1px; background-color:#000;position:absolute;top:12px; left:0;}
+    .guideline .boxing b.pink{color:#f82062;}
 
 
+    /* Online Sign-up */
+    .signup .boxing{margin:0 0 60px 0;}
+    .signup .boxing .r_noti{text-align:right;font-size:14px; color:#000;margin:0 0 5px 0;font-weight:900;}
+    .signup .boxing .red{color:rgb(255, 0, 0); font-size:24px;}
+    .signup .boxing table {border-top:1px solid #59047f;}
+    .signup .boxing table thead tr th {padding:10px ; background-color:#59047f;font-size:18px;color:#fff;}
+    .signup .boxing table tbody tr th {padding:20px 12px 20px 30px; color:#000;border-bottom:1px solid #ccc;font-size:17px;font-weight:900;text-align:left;}
+    .signup .boxing table tbody tr td {padding:20px 12px; color:#000;border-bottom:1px solid #ccc;font-size:17px;}
+    .signup .boxing table tbody tr td.del_td {border-left:1px solid #ccc;}
+    .signup .boxing table tbody tr td input[type="text"]{border:1px solid #ccc; height:45px; line-height: 45px;padding-left:10px;font-size:17px;width:80%;font-family:inherit;vertical-align:middle;margin:2px 0;}
+    .signup .boxing table tbody tr td input[type="text"].input_m{width:100px;}
+    .signup .boxing table tbody tr td input[type="text"].input_n{width:220px;}
+    .signup .boxing table tbody tr td input[type="checkbox"] {vertical-align: middle;}
+    .signup .boxing table tbody tr td .normal_btn{display:inline-block; line-height:15px;font-size:15px; padding:0 25px;height:45px;vertical-align:middle;line-height:45px;background-color:#59047f;color:#fff;}
+
+    .signup .boxing table .center {text-align: center;}
+    .signup .boxing table .gray {background-color:#f5f5f5;}
+    .signup .boxing table tbody tr td .per {display:block;background-color:#f82062;color:#fff;font-size:20px;padding:6px 20px;font-weight:900;border-radius:30px;box-sizing: border-box;}
+    .signup .boxing table tbody tr td p {font-size:16px; font-weight:600; line-height:23px; margin:6px 0;}
+    .signup .boxing table tbody tr td p span {display:inline-block; padding:10px; background-color:#f5f5f5;width:100%; box-sizing: border-box;margin:5px 0 0 0;}
+    .signup .boxing table tbody tr td select {width:110px;height:45px; line-height:45px;padding:0 10px;}
+    .signup .boxing table.add_tb{margin:20px 0 0 0;}
+
+    .signup .addzone {border:3px solid #ddd; padding:15px; font-size:18px;font-weight:600;color:#000;text-align: center;}
+    .signup .morezone {text-align: right; margin:30px 0 10px;font-size:18px; font-weight: 900;vertical-align: middle;}
+    .signup .morezone a{vertical-align: middle;color:#f82062;}
+    .signup .morezone a img{vertical-align: middle;}
+    .signup .gray{ background-color:#f5f5f5; padding:25px ; font-size:17px; color:#000; line-height:28px;}
+
+
+
+}
+
+/* IE */
+select::-ms-expand {
+    display: none;
+}
+select {
+    -o-appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url('/public/img/common/select_arrow.png') calc(100% - 10px) center no-repeat;
 
 }
 
