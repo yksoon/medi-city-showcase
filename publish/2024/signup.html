@@ -35,7 +35,7 @@
                 <div class="sub_txt_in">
                     <h2><img src="img/sub/sub_txt.png" alt="Medi-City Medical Showcase"/></h2>
                     <h3>K-AESTHETIC & ART INDONESIA 2024</h3>
-                    <h4>PARTICIPATION SIGN-UP</h4>                
+                    <h4 class="long">Plastic & Aesthetic Clinics<br/>SIGN-UP</h4>           
                 </div>
             </div>
 		</div>
@@ -47,7 +47,7 @@
 
                 <div id="leftmenu">
                     <a href="guideline.html">Guideline</a>
-                    <a href="signup.html">Online Sign-up</a>
+                    <a href="signup.html" class="active">Online Sign-up</a>
                     <a href="">Sign-up Confirmation</a>
                 </div>
                 <div id="subtitle">
@@ -141,6 +141,7 @@
                                     <td>
                                         <input type="text" value="" name="" class="input_n" placeholder="First Name" required/>
                                         <input type="text" value="" name="" class="input_n"  placeholder="Last Name" required/>
+                                        <p class="rednoti"> Must Match the English Spelling on the Passport.</p>
                                     </td>
                                     <th>Title <span class="red">*</span></th>
                                     <td><input type="text" value="" name="" required /></td>
@@ -157,6 +158,17 @@
                                     </td>
                                     <th>E-mail <span class="red">*</span></th>
                                     <td><input type="text" name="" required /></td>
+                                </tr>
+                                <tr>
+                                    <th>Birth <span class="red">*</span></th>
+                                    <td>
+                                        <input type="date" value="" name="" required/>
+                                    </td>
+                                    <th>Gender <span class="red">*</span></th>
+                                    <td>
+                                        <label for="man"><input type="radio" value="" name="gender" id="man"> Man</label> &nbsp;&nbsp;
+                                        <label for="woman"><input type="radio" value="" name="gender" id="woman"> Woman</label> 
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -177,10 +189,11 @@
                                     <td>
                                         <input type="text" value="" name="" class="input_n" placeholder="First Name" required/>
                                         <input type="text" value="" name="" class="input_n"  placeholder="Last Name" required/>
+                                        <p class="rednoti"> Must Match the English Spelling on the Passport.</p>
                                     </td>
                                     <th>Title <span class="red">*</span></th>
                                     <td><input type="text" value="" name="" required /></td>
-                                    <td rowspan="2" class="del_td">
+                                    <td rowspan="3" class="del_td">
                                         <a href="" title="Delete"><img src="img/sub/del_p.png" alt=""></a>
                                     </td>
                                 </tr>
@@ -193,6 +206,17 @@
                                     </td>
                                     <th>E-mail <span class="red">*</span></th>
                                     <td><input type="text" name="" required /></td>
+                                </tr>
+                                <tr>
+                                    <th>Birth <span class="red">*</span></th>
+                                    <td>
+                                        <input type="date" value="" name="" required/>
+                                    </td>
+                                    <th>Gender <span class="red">*</span></th>
+                                    <td>
+                                        <label for="man"><input type="radio" value="" name="gender" id="man"> Man</label> &nbsp;&nbsp;
+                                        <label for="woman"><input type="radio" value="" name="gender" id="woman"> Woman</label> 
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -216,7 +240,7 @@
                             <tbody>
                                 <tr>
                                     <th class="center gray">Contents</th>
-                                    <th class="center gray">Amount (KRW)</th>
+                                    <th class="center gray">Amount (KRW)<Br/>(Including VAT)</th>
                                     <th class="center gray">Select Check</th>
                                 </tr>
                                 <tr>
@@ -263,7 +287,7 @@
                             <tbody>
                                 <tr>
                                     <th class="center gray">Contents</th>
-                                    <th class="center gray">Amount (KRW)</th>
+                                    <th class="center gray">Amount (KRW)<br/>(Including VAT)</th>
                                     <th class="center gray">Select Check</th>
                                 </tr>
                                 <tr>
@@ -287,6 +311,21 @@
 
                     </div>
 
+                    <div class="boxing">                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Total price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="center"><p class="total">15,500,000</p></td>
+                                </tr>
+                            </tbody>
+                        </table>      
+                    </div>
+
                     <div class="boxing">
                         <h3 class="c_tit">Payment Information</h3>
                         <div class="gray">
@@ -295,6 +334,9 @@
                         </div>
                     </div>
 
+                    <div class="btn_box">
+                        <input type="submit" value="SUBMIT" name=""/>
+                    </div>
 
                 </div>
            </div>
