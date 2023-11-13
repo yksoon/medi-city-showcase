@@ -188,69 +188,64 @@ const Section01 = (props) => {
                         data-aos="fade-up"
                         data-aos-duration="1500"
                     >
-                        We would like to extend a warm invitation for everyone
-                        to join us at "K-Aesthetic & ART Indonesia 2024".
+                        “K-Aesthetic & ART Indonesia 2024” is the first
+                        “Medi-City Medical Showcase” hosted by Medi-City,
+                        headquartered in South Korea,
+                        <br />
+                        which established its overseas corporation in Indonesia
+                        in 2023.
                         <br />
                         <br />
-                        K- Aesthetic& ART Indonesia 2024 is an official event
-                        being organized for the first time in Jakarta, Indonesia
-                        by Medi-City,
+                        In 2022, Medi-City took its initial steps by globally
+                        introducing South Korea’s recognized medical technology
+                        and launching
                         <br />
-                        a company based and headquartered in South Korea.
+                        the “K-Medi Platform” to supply medical education video
+                        content worldwide. Additionally in 2023, we established
+                        “PT. MEDI CITY INDONESIA”,
                         <br />
+                        with the aim of serving as a medical business hub
+                        between South Korea and Indonesia which is the world’s
+                        fourth most populous nation,
                         <br />
-                        Medi-City initiated the launch of the "K-Medi Platform"
-                        in 2022 with the purpose of introducing globally
-                        recognized medical technology
-                        <br />
-                        from South Korea to the world as well providing medical
-                        educational content. <br />
-                        In 2023, we established PT. MEDI CITY INDONESIA , with
-                        the aim of serving as a medical business hub between
-                        South Korea and Indonesia
-                        <br />
-                        which is the world's fourth most populous nation, having
-                        recognized its almost limitless growth potential.
+                        having recognized its almost limitless growth potential.
                         <br />
                         <br />
                         The first showcase, which will take place in January
-                        2024, revolves around the theme:{" "}
-                        <strong>"K-Aesthetic & ART 2024".</strong>
-                        <br />
-                        It will introduce South Korea's specialized plastic
-                        surgery and beauty clinics to the people of Indonesia,
-                        providing the opportunity for
-                        <br />
-                        direct consultation with customers aspiring to have
-                        plastic surgery in South Korea. Influencers at the
-                        forefront of global market trends will participate,
-                        <br />
-                        and it will be an invaluable time to engage with clients
-                        with real needs.
+                        2024, revolves around the theme: "K-Aesthetic & ART
+                        2024". It will introduce South Korea's specialized
+                        plastic surgery and beauty clinics to the people of
+                        Indonesia, providing the opportunity for direct
+                        consultation with customers aspiring to have plastic
+                        surgery in South Korea. Influencers at the forefront of
+                        global market trends will participate, and it will be an
+                        invaluable time to engage with clients with real needs.{" "}
                         <br />
                         <br />
-                        This event is a collaboration with SUMMITS, which has
-                        already been attracting Indonesian patients to South
-                        Korean plastic surgery hospitals through the
+                        The showcase is conducted in collaboration with
+                        “SUMMITS”, which has been attracting Indonesian clients
+                        to South Korean Plastic & Aesthetic Clinics
                         <br />
-                        "My Venus" Application service. Additionally, a Korean
-                        art exhibition by ARTBUDDY will be held with the
-                        intention of promoting K-ART. <br />
+                        through the “My Venus” Application service.
+                        Additionally, a Korean art exhibition by ARTBUDDY will
+                        be held with the intention of promoting K-ART. <br />
                         <br />
-                        "K-Aesthetic & ART Indonesia 2024" is markedly different
-                        from many previous K-Beauty Expos or Exhibitions that
-                        mainly focused on hospital promotion
+                        Participating Plastic & Aesthetic Clinics can expect
+                        more than just promotion; the focus is on tangible
+                        results.
                         <br />
-                        without significant foreign patient attraction.
-                        "K-Aesthetic & ART Indonesia 2024" is distinct in that
-                        it provides tangible results in patient attraction
-                        on-site.
+                        Unlike many previous Plastic Surgery Expos that did not
+                        yield significant results in attracting foreign clients,
                         <br />
+                        “K-Aesthetic & ART Indonesia 2024” provides a unique
+                        opportunity to directly observe the outcomes of client
+                        attraction efforts on-site. <br />
                         <br />
                         We invite you to take the first step of your global
-                        journey in 2024 with us. <br />
+                        journey in 2024 with us.
                         <br />
                         Sincerely,
+                        <br />
                         <br />
                         <b>Steve Lee</b>
                     </p>

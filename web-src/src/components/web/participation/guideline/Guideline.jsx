@@ -102,7 +102,9 @@ const Guideline = () => {
                         <Link to={routerPath.web_participation_guideline_url}>
                             Guideline
                         </Link>
-                        <Link to="signup.html">Online Sign-up</Link>
+                        <Link to={routerPath.web_signup_signup_url}>
+                            Online Sign-up
+                        </Link>
                         <Link to="">Sign-up Confirmation</Link>
                     </div>
                     <div id="subtitle">
