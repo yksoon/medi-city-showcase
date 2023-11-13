@@ -73,7 +73,11 @@
                                 </tr>
                                 <tr>
                                     <th>Address <span class="red">*</span></th>
-                                    <td><input type="text" value="" name="" required /></td>
+                                    <td>
+                                        <input type="text" value="" name="" class="input_m" required/><a href="" class="normal_btn">Search</a><Br/>
+                                        <input type="text" value="" name="" required /><Br/>
+                                        <input type="text" value="" name="" required />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>The name of the contact person <span class="red">*</span></th>
@@ -116,19 +120,21 @@
                             <label for="sameInfo">If the above information is same, please check <input type="checkbox" id="sameInfo"/></label>
                         </div>
                         <div class="morezone">
-                            Adding participants &nbsp;
-                            <a href=""><img src="img/sub/add_p.png" alt=""></a>
-                            <a href=""><img src="img/sub/del_p.png" alt=""></a>
+                            <a href="">Adding participants &nbsp;<img src="img/sub/add_p.png" alt=""/></a>
+                            <!-- <a href=""><img src="img/sub/add_p.png" alt=""></a>
+                            <a href=""><img src="img/sub/del_p.png" alt=""></a> -->
                         </div>
 
                         <!-- 추가할경우 이 테이블이 늘어나면 됩니다.-->
-                        <table>
+                        <table class="add_tb">
                             <colgroup>
                                 <col width="10%"/>
-                                <col width="40%"/>
+                                <col width="38.5%"/>
                                 <col width="10%"/>
-                                <col width="40%"/>
+                                <col width="38.5%"/>
+                                <col width="3%"/>
                             </colgroup>
+                            
                             <tbody>
                                 <tr>
                                     <th>Name <span class="red">*</span></th>
@@ -138,6 +144,9 @@
                                     </td>
                                     <th>Title <span class="red">*</span></th>
                                     <td><input type="text" value="" name="" required /></td>
+                                    <td rowspan="2" class="del_td">
+                                        <a href="" title="Delete"><img src="img/sub/del_p.png" alt=""></a>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>TEL <span class="red">*</span></th>
@@ -151,6 +160,43 @@
                                 </tr>
                             </tbody>
                         </table>
+
+                        <!-- 추가할경우 이 테이블이 늘어나면 됩니다.-->
+                        <table class="add_tb">
+                            <colgroup>
+                                <col width="10%"/>
+                                <col width="38.5%"/>
+                                <col width="10%"/>
+                                <col width="38.5%"/>
+                                <col width="3%"/>
+                            </colgroup>
+                            
+                            <tbody>
+                                <tr>
+                                    <th>Name <span class="red">*</span></th>
+                                    <td>
+                                        <input type="text" value="" name="" class="input_n" placeholder="First Name" required/>
+                                        <input type="text" value="" name="" class="input_n"  placeholder="Last Name" required/>
+                                    </td>
+                                    <th>Title <span class="red">*</span></th>
+                                    <td><input type="text" value="" name="" required /></td>
+                                    <td rowspan="2" class="del_td">
+                                        <a href="" title="Delete"><img src="img/sub/del_p.png" alt=""></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>TEL <span class="red">*</span></th>
+                                    <td>
+                                        <input type="text" value="" name="" class="input_m" required/> - 
+                                        <input type="text" value="" name="" class="input_m" required/> -
+                                        <input type="text" value="" name="" class="input_m" required/>
+                                    </td>
+                                    <th>E-mail <span class="red">*</span></th>
+                                    <td><input type="text" name="" required /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
 
                     </div>
 

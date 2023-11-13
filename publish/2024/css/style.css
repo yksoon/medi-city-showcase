@@ -268,15 +268,17 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 /* Online Sign-up */
 .signup .boxing{margin:0 0 60px 0;}
 .signup .boxing .r_noti{text-align:right;font-size:14px; color:#000;margin:0 0 5px 0;font-weight:900;}
-.signup .boxing .red{color:rgb(63, 45, 45); font-size:24px;}
+.signup .boxing .red{color:rgb(255, 0, 0); font-size:24px;}
 .signup .boxing table {border-top:1px solid #59047f;}
 .signup .boxing table thead tr th {padding:10px ; background-color:#59047f;font-size:18px;color:#fff;}
 .signup .boxing table tbody tr th {padding:20px 12px 20px 30px; color:#000;border-bottom:1px solid #ccc;font-size:17px;font-weight:900;text-align:left;}
 .signup .boxing table tbody tr td {padding:20px 12px; color:#000;border-bottom:1px solid #ccc;font-size:17px;}
-.signup .boxing table tbody tr td input[type="text"]{border:1px solid #ccc; height:45px; line-height: 45px;padding-left:10px;font-size:17px;width:80%;font-family:inherit;}
+.signup .boxing table tbody tr td.del_td {border-left:1px solid #ccc;}
+.signup .boxing table tbody tr td input[type="text"]{border:1px solid #ccc; height:45px; line-height: 45px;padding-left:10px;font-size:17px;width:80%;font-family:inherit;vertical-align:middle;margin:2px 0;}
 .signup .boxing table tbody tr td input[type="text"].input_m{width:100px;}
 .signup .boxing table tbody tr td input[type="text"].input_n{width:220px;}
 .signup .boxing table tbody tr td input[type="checkbox"] {vertical-align: middle;}
+.signup .boxing table tbody tr td .normal_btn{display:inline-block; line-height:15px;font-size:15px; padding:0 25px;height:45px;vertical-align:middle;line-height:45px;background-color:#59047f;color:#fff;}
 
 .signup .boxing table .center {text-align: center;}
 .signup .boxing table .gray {background-color:#f5f5f5;}
@@ -284,9 +286,12 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .signup .boxing table tbody tr td p {font-size:16px; font-weight:600; line-height:23px; margin:6px 0;}
 .signup .boxing table tbody tr td p span {display:inline-block; padding:10px; background-color:#f5f5f5;width:100%; box-sizing: border-box;margin:5px 0 0 0;}
 .signup .boxing table tbody tr td select {width:110px;height:45px; line-height:45px;padding:0 10px;}
+.signup .boxing table.add_tb{margin:20px 0 0 0;}
+
 .signup .addzone {border:3px solid #ddd; padding:15px; font-size:18px;font-weight:600;color:#000;text-align: center;}
-.signup .morezone {text-align: right;color:#f82062; margin:30px 0 10px;font-size:18px; font-weight: 900;vertical-align: middle;}
-.signup .morezone a{vertical-align: middle;}
+.signup .morezone {text-align: right; margin:30px 0 10px;font-size:18px; font-weight: 900;vertical-align: middle;}
+.signup .morezone a{vertical-align: middle;color:#f82062;}
+.signup .morezone a img{vertical-align: middle;}
 .signup .gray{ background-color:#f5f5f5; padding:25px ; font-size:17px; color:#000; line-height:28px;}
 
 
@@ -528,7 +533,8 @@ select {
 	.signup .boxing table tbody tr td input[type="text"]{height:40px; line-height: 40px;font-size:13px;margin:3px;}
 	.signup .boxing table tbody tr td input[type="text"].input_m{width:27%;}
 	.signup .boxing table tbody tr td input[type="text"].input_n{width:46%;}
-	
+	.boxing table tbody tr td .normal_btn {font-size: 13px;padding: 0 21px;height: 38px;line-height: 38px;}
+
 	.signup .boxing table tbody tr td p {font-size:13px; line-height:20px;}
 	.signup .boxing table tbody tr td p span {padding:8px;}
 	.signup .boxing table tbody tr td select {width:90%;height:40px; line-height:40px;padding:0 5px;}
