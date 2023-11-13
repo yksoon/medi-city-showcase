@@ -11,6 +11,7 @@ import SignIn from "components/admin/signin/SignIn";
 import Forbidden from "Forbidden";
 import Program from "components/web/program/Program";
 import Guideline from "components/web/participation/guideline/Guideline";
+import SignUpMain from "components/web/signUp/signUp/SignUpMain";
 
 // Router
 const Router = () => {
@@ -68,6 +69,13 @@ const Router = () => {
                     <Route
                         path={routerPath.admin_signin_url}
                         element={<SignIn />}
+                    />
+
+                    {/* 사전등록 */}
+                    {/* URL : /signup/signup */}
+                    <Route
+                        path={routerPath.web_signup_signup_url}
+                        element={<SignUpMain />}
                     />
 
                     {/* 404 */}

@@ -44,6 +44,10 @@ const routerPath = {
     // /participation/guideline
     web_participation_guideline_url: `${base_url}participation/guideline`,
 
+    // 사전등록
+    // /signup/signup
+    web_signup_signup_url: `${base_url}signup/signup`,
+
     // ---------------------- admin -------------------------
     // 메인
     // /admin

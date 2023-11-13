@@ -34,6 +34,7 @@ const EntryManageModalMain = (props) => {
     const [additionalStatusOption, setAdditionalStatusOption] = useState([]);
     const [institutionTypeOption, setInstitutionTypeOption] = useState([]);
     const [genderOption, setGenderOption] = useState([]);
+    const [relationshipTypeOption, setRelationshipTypeOption] = useState([]);
 
     const [selectCountryOptions, setSelectCountryOptions] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState(null);
@@ -116,11 +117,17 @@ const EntryManageModalMain = (props) => {
         // 성별
         const genderArr = codes.filter((el) => el.code_type === "GENDER");
 
+        // 관계타입
+        const relationshipTypeArr = codes.filter(
+            (el) => el.code_type === "RELATIONSHIP_TYPE",
+        );
+
         setPaymentStatusOption(paymentStatusArr);
         setPaymentTypeOption(paymentTypeArr);
         setAdditionalStatusOption(additionalStatusArr);
         setInstitutionTypeOption(institutionTypeArr);
         setGenderOption(genderArr);
+        setRelationshipTypeOption(relationshipTypeArr);
 
         let options = [];
         const country = countryBank.filter(
@@ -218,6 +225,7 @@ const EntryManageModalMain = (props) => {
                 people_memo: modData.entry_info[i].people_memo,
                 position: modData.entry_info[i].position,
                 user_idx: modData.entry_info[i].user_idx,
+                relationship_type: modData.entry_info[i].relationship_type_cd,
                 idx: i + 1,
             };
             newArr.push(newObj);
@@ -272,6 +280,7 @@ const EntryManageModalMain = (props) => {
             people_memo: "",
             position: "",
             user_idx: "",
+            relationship_type: "",
             idx: entryInfo[entryInfo.length - 1].idx + 1,
         };
 
@@ -871,7 +880,11 @@ const EntryManageModalMain = (props) => {
                 </Link>
                 {entryInfo.length !== 0 &&
                     entryInfo.map((item, idx) => (
-                        <table className="table_bb" key={`entryInfo_${idx}`}>
+                        <table
+                            className="table_bb"
+                            key={`entryInfo_${idx}`}
+                            style={{ margin: "10px 0" }}
+                        >
                             <colgroup>
                                 <col width="20%" />
                                 <col width="30%" />
@@ -1090,8 +1103,42 @@ const EntryManageModalMain = (props) => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={3}></td>
-                                    <td style={{ textAlign: "right" }}>
+                                    <th>본인여부</th>
+                                    <td>
+                                        <select
+                                            className="wp100"
+                                            defaultValue={
+                                                item.relationship_type
+                                            }
+                                            key={`${item.idx}_gender`}
+                                            onChange={(e) =>
+                                                changeEntry(
+                                                    e,
+                                                    item.idx,
+                                                    "relationship_type",
+                                                )
+                                            }
+                                        >
+                                            {relationshipTypeOption.length !==
+                                                0 &&
+                                                relationshipTypeOption.map(
+                                                    (item2, idx2) => (
+                                                        <option
+                                                            key={`relationshipTypeOption_${idx}_${idx2}`}
+                                                            value={
+                                                                item2.code_key
+                                                            }
+                                                        >
+                                                            {item2.code_value}
+                                                        </option>
+                                                    ),
+                                                )}
+                                        </select>
+                                    </td>
+                                    <td
+                                        colSpan={2}
+                                        style={{ textAlign: "right" }}
+                                    >
                                         <Link
                                             to=""
                                             className="subbtn del"

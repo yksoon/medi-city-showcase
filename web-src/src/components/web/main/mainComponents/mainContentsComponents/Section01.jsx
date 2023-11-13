@@ -72,7 +72,10 @@ const Section01 = (props) => {
                                 <p>
                                     <Skeleton
                                         variant="text"
-                                        sx={{ fontSize: "1rem" }}
+                                        sx={{
+                                            fontSize: "1rem",
+                                            bgcolor: "lightgray !important",
+                                        }}
                                         width={"40%"}
                                     />
                                 </p>
@@ -88,7 +91,10 @@ const Section01 = (props) => {
                                 <p>
                                     <Skeleton
                                         variant="text"
-                                        sx={{ fontSize: "1rem" }}
+                                        sx={{
+                                            fontSize: "1rem",
+                                            bgcolor: "lightgray !important",
+                                        }}
                                         width={"70%"}
                                     />
                                 </p>
@@ -103,7 +109,10 @@ const Section01 = (props) => {
                                 <p>
                                     <Skeleton
                                         variant="text"
-                                        sx={{ fontSize: "1rem" }}
+                                        sx={{
+                                            fontSize: "1rem",
+                                            bgcolor: "lightgray !important",
+                                        }}
                                         width={"30%"}
                                     />
                                 </p>
@@ -118,7 +127,10 @@ const Section01 = (props) => {
                                 <p>
                                     <Skeleton
                                         variant="text"
-                                        sx={{ fontSize: "1rem" }}
+                                        sx={{
+                                            fontSize: "1rem",
+                                            bgcolor: "lightgray !important",
+                                        }}
                                         width={"40%"}
                                     />
                                 </p>
@@ -138,7 +150,10 @@ const Section01 = (props) => {
                                 <p>
                                     <Skeleton
                                         variant="text"
-                                        sx={{ fontSize: "1rem" }}
+                                        sx={{
+                                            fontSize: "1rem",
+                                            bgcolor: "lightgray !important",
+                                        }}
                                         width={"45%"}
                                     />
                                 </p>
@@ -156,7 +171,10 @@ const Section01 = (props) => {
                                 <p>
                                     <Skeleton
                                         variant="text"
-                                        sx={{ fontSize: "1rem" }}
+                                        sx={{
+                                            fontSize: "1rem",
+                                            bgcolor: "lightgray !important",
+                                        }}
                                         width={"80%"}
                                     />
                                 </p>

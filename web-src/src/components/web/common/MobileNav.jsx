@@ -83,7 +83,9 @@ function MobileNav() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="signup.html">Online Sign-up</Link>
+                                    <Link to={routerPath.web_signup_signup_url}>
+                                        Online Sign-up
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link to="">Sign-up Confirmation</Link>

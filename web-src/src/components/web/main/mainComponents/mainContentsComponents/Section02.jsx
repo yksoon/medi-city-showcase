@@ -19,7 +19,10 @@ const Section02 = () => {
                             </span>
                         </p>
                     </Link>
-                    <Link to="signup.html" className="btn02">
+                    <Link
+                        to={routerPath.web_signup_signup_url}
+                        className="btn02"
+                    >
                         Online Sign-up
                         <p className="cbox">
                             GO

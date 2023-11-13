@@ -38,7 +38,7 @@ function Header() {
                                     >
                                         Guideline
                                     </Link>
-                                    <Link href="signup.html">
+                                    <Link to={routerPath.web_signup_signup_url}>
                                         Online Sign-up
                                     </Link>
                                     <Link href="">Sign-up Confirmation</Link>
