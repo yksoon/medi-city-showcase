@@ -1,11 +1,471 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "components/web/common/Header";
 import FooterSub from "components/web/common/FooterSub";
 import Footer from "components/web/common/Footer";
 import { Link } from "react-router-dom";
-import { routerPath } from "webPath";
+import { apiPath, routerPath } from "webPath";
+import useAlert from "hook/useAlert";
+import useConfirm from "hook/useConfirm";
+import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { codesAtom, isSpinnerAtom } from "recoils/atoms";
+import { useDaumPostcodePopup } from "react-daum-postcode";
+import { registration_idx } from "common/js/static";
+import { successCode } from "resultCode";
+import { Checkbox } from "@mui/material";
+import { commaOfNumber } from "common/js/Pattern";
 
 const SignUpMain = () => {
+    const { alert } = useAlert();
+    const { confirm } = useConfirm();
+    const err = CommonErrModule();
+    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    const codes = useRecoilValue(codesAtom);
+
+    // 다음 주소검색
+    const open = useDaumPostcodePopup();
+
+    const [registrationInfo, setRegistrationInfo] = useState([]);
+
+    useEffect(() => {
+        getRegistration();
+    }, []);
+
+    // 사전등록 정보 받아오기 REST
+    const getRegistration = () => {
+        setIsSpinner(true);
+
+        const url = apiPath.api_admin_get_reg + registration_idx;
+        const data = {};
+
+        // 파라미터
+        const restParams = {
+            method: "get",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            if (res.headers.result_code === successCode.success) {
+                const result_info = res.data.result_info;
+
+                setRegistrationInfo(result_info);
+
+                setIsSpinner(false);
+            } else {
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    // message: res.headers.result_message_ko,
+                    message: "잠시후 다시 시도해주세요",
+                });
+
+                setIsSpinner(false);
+            }
+        };
+    };
+
+    // ------------------------------------------------------------------------------------------------------------------------
+
+    const institutionNameKo = useRef(null);
+    const institutionNameEn = useRef(null);
+    const addr1Ko = useRef(null);
+    const addr2Ko = useRef(null);
+    const addr1En = useRef(null);
+    const addr2En = useRef(null);
+    const zipcode = useRef(null);
+    const nameFirstKo = useRef(null);
+    const nameLastKo = useRef(null);
+    const nameFirstEn = useRef(null);
+    const nameLastEn = useRef(null);
+    const interPhoneNumber = useRef("82");
+    const mobile1 = useRef(null);
+    const mobile2 = useRef(null);
+    const mobile3 = useRef(null);
+    const email = useRef(null);
+    const fax1 = useRef(null);
+    const fax2 = useRef(null);
+    const fax3 = useRef(null);
+    const entryPersonNumber = useRef(null);
+    const interpretationCostChenk = useRef(null);
+
+    // 참가자 정보
+    const [entryInfo, setEntryInfo] = useState([]);
+
+    // 성별 옵션
+    const [genderOption, setGenderOption] = useState([]);
+
+    const [totalPriceState, setTotalPriceState] = useState("0");
+
+    const [interpretationCostYn, setInterpretationCostYn] = useState("N");
+
+    useEffect(() => {
+        setEntryInfoFunc();
+    }, []);
+
+    const handle = {
+        // 버튼 클릭 이벤트
+        openPost: () => {
+            open({
+                popupTitle: "showcase.medi-city.co.kr",
+                // top: 400,
+                // left: 500,
+                onComplete: handle.selectAddress,
+            });
+        },
+        // 주소 선택 이벤트
+        selectAddress: (data) => {
+            zipcode.current.value = data.zonecode;
+            addr1Ko.current.value = data.address;
+            addr1En.current.value = data.addressEnglish;
+        },
+    };
+
+    // 참가자 인덱스 재정의
+    const setEntryInfoFunc = () => {
+        let newArr = [];
+        let newObj = {
+            birth: "",
+            birth_yyyy: "",
+            birth_mm: "",
+            birth_dd: "",
+            duty: "",
+            email: "",
+            gender: "",
+            inter_phone_number: "82",
+            mobile1: "",
+            mobile2: "",
+            mobile3: "",
+            name_first_ko: "",
+            name_last_ko: "",
+            name_first_en: "",
+            name_last_en: "",
+            people_memo: "",
+            position: "",
+            user_idx: "",
+            relationship_type: "000",
+            idx: 1,
+        };
+        newArr.push(newObj);
+
+        setEntryInfo(newArr);
+
+        // 성별
+        const genderArr = codes.filter((el) => el.code_type === "GENDER");
+
+        setGenderOption(genderArr);
+    };
+
+    // 담당자와 동일 체크박스 이벤트
+    const changeSameInfoChk = (e) => {
+        const checked = e.target.checked;
+        if (checked) {
+            let newArr = entryInfo.filter((el) => el.idx !== entryInfo[0].idx);
+            // let orgItem = entryInfo.filter((el) => el.idx === 1)[0];
+            let orgItem = entryInfo[0];
+
+            orgItem["name_first_en"] = nameFirstEn.current.value;
+            orgItem["name_last_en"] = nameLastEn.current.value;
+            orgItem["name_first_ko"] = nameLastEn.current.value;
+            orgItem["name_last_ko"] = nameFirstEn.current.value;
+            orgItem["mobile1"] = mobile1.current.value;
+            orgItem["mobile2"] = mobile2.current.value;
+            orgItem["mobile3"] = mobile3.current.value;
+            orgItem["email"] = email.current.value;
+
+            newArr = [...newArr, orgItem];
+
+            // 정렬
+            newArr = newArr.sort((a, b) => {
+                return a.idx - b.idx;
+            });
+
+            console.log(newArr);
+            setEntryInfo([...newArr]);
+        } else {
+            let newArr = entryInfo.filter((el) => el.idx !== entryInfo[0].idx);
+            // let orgItem = entryInfo.filter((el) => el.idx === 1)[0];
+            let orgItem = entryInfo[0];
+
+            orgItem["name_first_en"] = "";
+            orgItem["name_last_en"] = "";
+            orgItem["name_first_ko"] = "";
+            orgItem["name_last_ko"] = "";
+            orgItem["mobile1"] = "";
+            orgItem["mobile2"] = "";
+            orgItem["mobile3"] = "";
+            orgItem["email"] = "";
+
+            newArr = [...newArr, orgItem];
+
+            // 정렬
+            newArr = newArr.sort((a, b) => {
+                return a.idx - b.idx;
+            });
+
+            console.log(newArr);
+            setEntryInfo([...newArr]);
+        }
+    };
+
+    // 사용자 추가
+    const addEntry = () => {
+        const newItem = {
+            birth: "",
+            birth_yyyy: "",
+            birth_mm: "",
+            birth_dd: "",
+            duty: "",
+            email: "",
+            gender: "",
+            inter_phone_number: "82",
+            mobile1: "",
+            mobile2: "",
+            mobile3: "",
+            name_first_ko: "",
+            name_last_ko: "",
+            name_first_en: "",
+            name_last_en: "",
+            people_memo: "",
+            position: "",
+            user_idx: "",
+            relationship_type: "100",
+            idx: entryInfo[entryInfo.length - 1].idx + 1,
+        };
+
+        setEntryInfo([...entryInfo, newItem]);
+    };
+
+    // 참가자 수정
+    const changeEntry = (e, idx, param) => {
+        let newArr = entryInfo.filter((el) => el.idx !== idx);
+        let orgItem = entryInfo.filter((el) => el.idx === idx)[0];
+
+        const val = e.target.value;
+
+        switch (param) {
+            case "birth":
+                orgItem = { ...orgItem };
+                const birth = val;
+                orgItem["birth_yyyy"] = birth.split("-")[0];
+                orgItem["birth_mm"] = birth.split("-")[1];
+                orgItem["birth_dd"] = birth.split("-")[2];
+                orgItem["birth"] = birth;
+                break;
+            case "name_first_en":
+                orgItem = { ...orgItem };
+                orgItem["name_first_en"] = val;
+                orgItem["name_last_ko"] = val;
+                break;
+            case "name_last_en":
+                orgItem = { ...orgItem };
+                orgItem["name_last_en"] = val;
+                orgItem["name_first_ko"] = val;
+                break;
+            default:
+                orgItem = { ...orgItem };
+                orgItem[param] = val;
+                break;
+        }
+
+        newArr = [...newArr, orgItem];
+
+        // 정렬
+        newArr = newArr.sort((a, b) => {
+            return a.idx - b.idx;
+        });
+
+        console.log(newArr);
+        setEntryInfo([...newArr]);
+    };
+
+    // 참가자 정보 삭제
+    const removeEntry = (idx) => {
+        if (entryInfo.length <= 1) {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: "참가자 1명 이상은 필수입니다.",
+            });
+
+            return false;
+        } else {
+            const newItem = entryInfo.filter((el) => el.idx !== idx);
+
+            let newArr = [];
+
+            const len = newItem.length;
+            for (let i = 0; i < len; i++) {
+                let newObj = { ...newItem[i] };
+
+                newArr.push(newObj);
+            }
+
+            setEntryInfo(newArr);
+        }
+    };
+
+    const interpretationCostHandler = () => {
+        if (interpretationCostChenk.current.checked) {
+            setInterpretationCostYn("Y");
+        } else {
+            setInterpretationCostYn("N");
+        }
+    };
+
+    const setTotalPriceFunc = () => {
+        if (registrationInfo.length !== 0) {
+            // 엔트리 금액
+            const entryCost = Number(registrationInfo.entry_cost);
+
+            // 인당 추가금액
+            const additionalCost = Number(registrationInfo.additional_cost);
+
+            // 추가인원
+            const numberOfPeople = entryInfo.length - 1;
+
+            // 통역가 금액
+            const interpretationCost = interpretationCostChenk.current.checked
+                ? Number(registrationInfo.interpretation_cost)
+                : 0;
+
+            const totalPrice =
+                entryCost +
+                additionalCost * numberOfPeople +
+                interpretationCost;
+
+            setTotalPriceState(String(totalPrice));
+        }
+    };
+
+    // 상태변화 감지하여 총 금액 계산
+    useEffect(() => {
+        setTotalPriceFunc();
+    }, [registrationInfo, entryInfo, interpretationCostYn]);
+
+    // 사전등록 버튼
+    const regEntry = () => {
+        if (validation()) {
+        }
+    };
+
+    // 검증
+    const validation = () => {
+        const noti = (ref, msg) => {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: msg,
+                callback: () => focus(),
+            });
+
+            const focus = () => {
+                ref.current.focus();
+            };
+        };
+
+        const notiEntry = (msg) => {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: msg,
+            });
+        };
+
+        if (!institutionNameEn.current.value) {
+            noti(institutionNameEn, "기관명을 입력해주세요");
+
+            return false;
+        }
+
+        if (!addr1En.current.value) {
+            noti(addr1En, "주소를 입력해주세요");
+
+            return false;
+        }
+
+        if (!addr2En.current.value) {
+            noti(addr2En, "상세 주소를 입력해주세요");
+
+            return false;
+        }
+
+        if (!nameFirstEn.current.value || !nameLastEn.current.value) {
+            noti(nameFirstEn, "담당자명을 입력해주세요");
+
+            return false;
+        }
+
+        if (
+            !mobile1.current.value ||
+            !mobile2.current.value ||
+            !mobile3.current.value
+        ) {
+            noti(mobile1, "연락처를 입력해주세요");
+
+            return false;
+        }
+
+        if (!email.current.value) {
+            noti(email, "이메일을 입력해주세요");
+
+            return false;
+        }
+
+        const length = entryInfo.length;
+        for (let i = 0; i < length; i++) {
+            if (
+                !entryInfo[i]["name_first_en"] ||
+                !entryInfo[i]["name_last_en"]
+            ) {
+                notiEntry("참가자 이름을 입력해주세요");
+
+                return false;
+            }
+
+            if (!entryInfo[i]["duty"]) {
+                notiEntry("참가자 직책을 입력해주세요");
+
+                return false;
+            }
+
+            if (
+                !entryInfo[i]["mobile1"] ||
+                !entryInfo[i]["mobile2"] ||
+                !entryInfo[i]["mobile3"]
+            ) {
+                notiEntry("참가자 연락처를 입력해주세요");
+
+                return false;
+            }
+
+            if (!entryInfo[i]["email"]) {
+                notiEntry("참가자 이메일을 입력해주세요");
+
+                return false;
+            }
+
+            if (!entryInfo[i]["birth"]) {
+                notiEntry("참가자 생년월일을 입력해주세요");
+
+                return false;
+            }
+
+            if (!entryInfo[i]["gender"]) {
+                notiEntry("참가자 성별을 입력해주세요");
+
+                return false;
+            }
+        }
+
+        return true;
+    };
+
     return (
         <>
             {/*header//S*/}
@@ -21,8 +481,12 @@ const SignUpMain = () => {
                                 alt="Medi-City Medical Showcase"
                             />
                         </h2>
-                        <h3>K-AESTHETIC & ART INDONESIA 2024</h3>
-                        <h4>PARTICIPATION SIGN-UP</h4>
+                        <h3>{registrationInfo.registration_sub_title_en}</h3>
+                        <h4 className="long">
+                            Plastic & Aesthetic Clinics
+                            <br />
+                            SIGN-UP
+                        </h4>
                     </div>
                 </div>
             </div>
@@ -34,9 +498,12 @@ const SignUpMain = () => {
                         <Link to={routerPath.web_participation_guideline_url}>
                             Guideline
                         </Link>
-                        <a to={routerPath.web_signup_signup_url}>
+                        <Link
+                            to={routerPath.web_signup_signup_url}
+                            className="active"
+                        >
                             Online Sign-up
-                        </a>
+                        </Link>
                         <a href="">Sign-up Confirmation</a>
                     </div>
                     <div id="subtitle">
@@ -65,9 +532,7 @@ const SignUpMain = () => {
                                         <td>
                                             <input
                                                 type="text"
-                                                value=""
-                                                name=""
-                                                required
+                                                ref={institutionNameEn}
                                             />
                                         </td>
                                     </tr>
@@ -79,28 +544,33 @@ const SignUpMain = () => {
                                         <td>
                                             <input
                                                 type="text"
-                                                value=""
-                                                name=""
-                                                className="input_m"
-                                                required
+                                                className="input_m hold"
+                                                id="zipcode"
+                                                ref={zipcode}
+                                                onClick={handle.openPost}
+                                                readOnly={true}
                                             />
-                                            <Link to="" className="normal_btn">
+                                            <Link
+                                                to=""
+                                                className="normal_btn"
+                                                onClick={handle.openPost}
+                                            >
                                                 Search
                                             </Link>
                                             <br />
                                             <input
                                                 type="text"
-                                                value=""
-                                                name=""
-                                                required
+                                                ref={addr1En}
+                                                onClick={handle.openPost}
+                                                readOnly={true}
+                                            />
+                                            <input
+                                                type="hidden"
+                                                ref={addr1Ko}
+                                                readOnly
                                             />
                                             <br />
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                required
-                                            />
+                                            <input type="text" ref={addr2En} />
                                         </td>
                                     </tr>
                                     <tr>
@@ -111,19 +581,15 @@ const SignUpMain = () => {
                                         <td>
                                             <input
                                                 type="text"
-                                                value=""
-                                                name=""
                                                 className="input_n"
                                                 placeholder="First Name"
-                                                required
+                                                ref={nameFirstEn}
                                             />{" "}
                                             <input
                                                 type="text"
-                                                value=""
-                                                name=""
                                                 className="input_n"
                                                 placeholder="Last Name"
-                                                required
+                                                ref={nameLastEn}
                                             />
                                         </td>
                                     </tr>
@@ -134,26 +600,20 @@ const SignUpMain = () => {
                                         <td>
                                             <input
                                                 type="text"
-                                                value=""
-                                                name=""
                                                 className="input_m"
-                                                required
+                                                ref={mobile1}
                                             />{" "}
                                             -{" "}
                                             <input
                                                 type="text"
-                                                value=""
-                                                name=""
                                                 className="input_m"
-                                                required
+                                                ref={mobile2}
                                             />{" "}
                                             -{" "}
                                             <input
                                                 type="text"
-                                                value=""
-                                                name=""
                                                 className="input_m"
-                                                required
+                                                ref={mobile3}
                                             />
                                         </td>
                                     </tr>
@@ -163,11 +623,7 @@ const SignUpMain = () => {
                                             <span className="red">*</span>
                                         </th>
                                         <td>
-                                            <input
-                                                type="text"
-                                                name=""
-                                                required
-                                            />
+                                            <input type="text" ref={email} />
                                         </td>
                                     </tr>
                                     <tr>
@@ -175,23 +631,20 @@ const SignUpMain = () => {
                                         <td>
                                             <input
                                                 type="text"
-                                                value=""
-                                                name=""
                                                 className="input_m"
+                                                ref={fax1}
                                             />{" "}
                                             -{" "}
                                             <input
                                                 type="text"
-                                                value=""
-                                                name=""
                                                 className="input_m"
+                                                ref={fax2}
                                             />{" "}
                                             -{" "}
                                             <input
                                                 type="text"
-                                                value=""
-                                                name=""
                                                 className="input_m"
+                                                ref={fax3}
                                             />
                                         </td>
                                     </tr>
@@ -209,207 +662,259 @@ const SignUpMain = () => {
                                 <label htmlFor="sameInfo">
                                     If the above information is same, please
                                     check{" "}
-                                    <input type="checkbox" id="sameInfo" />
+                                    <Checkbox
+                                        id="sameInfo"
+                                        onChange={changeSameInfoChk}
+                                    />
                                 </label>
                             </div>
                             <div className="morezone">
-                                <Link to="">
+                                <Link to="" onClick={addEntry}>
                                     Adding participants &nbsp;
                                     <img src="img/web/sub/add_p.png" alt="" />
                                 </Link>
                             </div>
 
-                            <table className="add_tb">
-                                <colgroup>
-                                    <col width="10%" />
-                                    <col width="38.5%" />
-                                    <col width="10%" />
-                                    <col width="38.5%" />
-                                    <col width="3%" />
-                                </colgroup>
+                            {entryInfo.length !== 0 &&
+                                entryInfo.map((item, idx) => (
+                                    <table
+                                        className="add_tb"
+                                        key={`entryInfo_${idx}`}
+                                    >
+                                        <colgroup>
+                                            <col width="10%" />
+                                            <col width="38.5%" />
+                                            <col width="10%" />
+                                            <col width="38.5%" />
+                                            <col width="3%" />
+                                        </colgroup>
 
-                                <tbody>
-                                    <tr>
-                                        <th>
-                                            Name <span className="red">*</span>
-                                        </th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                className="input_n"
-                                                placeholder="First Name"
-                                                required
-                                            />
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                className="input_n"
-                                                placeholder="Last Name"
-                                                required
-                                            />
-                                        </td>
-                                        <th>
-                                            Title <span className="red">*</span>
-                                        </th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                required
-                                            />
-                                        </td>
-                                        <td rowSpan="2" className="del_td">
-                                            <a href="" title="Delete">
-                                                <img
-                                                    src="img/web/sub/del_p.png"
-                                                    alt=""
-                                                />
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            TEL <span className="red">*</span>
-                                        </th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                className="input_m"
-                                                required
-                                            />{" "}
-                                            -
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                className="input_m"
-                                                required
-                                            />{" "}
-                                            -
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                className="input_m"
-                                                required
-                                            />
-                                        </td>
-                                        <th>
-                                            E-mail{" "}
-                                            <span className="red">*</span>
-                                        </th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name=""
-                                                required
-                                            />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <table className="add_tb">
-                                <colgroup>
-                                    <col width="10%" />
-                                    <col width="38.5%" />
-                                    <col width="10%" />
-                                    <col width="38.5%" />
-                                    <col width="3%" />
-                                </colgroup>
-
-                                <tbody>
-                                    <tr>
-                                        <th>
-                                            Name <span className="red">*</span>
-                                        </th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                className="input_n"
-                                                placeholder="First Name"
-                                                required
-                                            />
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                className="input_n"
-                                                placeholder="Last Name"
-                                                required
-                                            />
-                                        </td>
-                                        <th>
-                                            Title <span className="red">*</span>
-                                        </th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                required
-                                            />
-                                        </td>
-                                        <td rowSpan="2" className="del_td">
-                                            <a href="" title="Delete">
-                                                <img
-                                                    src="img/web/sub/del_p.png"
-                                                    alt=""
-                                                />
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            TEL <span className="red">*</span>
-                                        </th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                className="input_m"
-                                                required
-                                            />{" "}
-                                            -
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                className="input_m"
-                                                required
-                                            />{" "}
-                                            -
-                                            <input
-                                                type="text"
-                                                value=""
-                                                name=""
-                                                className="input_m"
-                                                required
-                                            />
-                                        </td>
-                                        <th>
-                                            E-mail{" "}
-                                            <span className="red">*</span>
-                                        </th>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name=""
-                                                required
-                                            />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        <tbody>
+                                            <tr>
+                                                <th>
+                                                    Name{" "}
+                                                    <span className="red">
+                                                        *
+                                                    </span>
+                                                </th>
+                                                <td>
+                                                    <input
+                                                        type="text"
+                                                        className="input_n"
+                                                        placeholder="First Name"
+                                                        value={
+                                                            item.name_first_en
+                                                        }
+                                                        key={`${item.idx}_name_first_en`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "name_first_en",
+                                                            )
+                                                        }
+                                                    />{" "}
+                                                    <input
+                                                        type="text"
+                                                        className="input_n"
+                                                        placeholder="Last Name"
+                                                        value={
+                                                            item.name_last_en
+                                                        }
+                                                        key={`${item.idx}_name_last_en`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "name_last_en",
+                                                            )
+                                                        }
+                                                    />
+                                                    <p className="rednoti">
+                                                        {" "}
+                                                        Must Match the English
+                                                        Spelling on the
+                                                        Passport.
+                                                    </p>
+                                                </td>
+                                                <th>
+                                                    Title{" "}
+                                                    <span className="red">
+                                                        *
+                                                    </span>
+                                                </th>
+                                                <td>
+                                                    <input
+                                                        type="text"
+                                                        value={item.duty}
+                                                        key={`${item.idx}_duty`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "duty",
+                                                            )
+                                                        }
+                                                    />
+                                                </td>
+                                                <td
+                                                    rowSpan="3"
+                                                    className="del_td"
+                                                >
+                                                    <Link
+                                                        to=""
+                                                        title="Delete"
+                                                        onClick={() =>
+                                                            removeEntry(
+                                                                item.idx,
+                                                            )
+                                                        }
+                                                    >
+                                                        <img
+                                                            src="img/web/sub/del_p.png"
+                                                            alt=""
+                                                        />
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    TEL{" "}
+                                                    <span className="red">
+                                                        *
+                                                    </span>
+                                                </th>
+                                                <td>
+                                                    <input
+                                                        type="text"
+                                                        className="input_m"
+                                                        value={item.mobile1}
+                                                        key={`${item.idx}_mobile1`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "mobile1",
+                                                            )
+                                                        }
+                                                    />{" "}
+                                                    -{" "}
+                                                    <input
+                                                        type="text"
+                                                        className="input_m"
+                                                        value={item.mobile2}
+                                                        key={`${item.idx}_mobile2`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "mobile2",
+                                                            )
+                                                        }
+                                                    />{" "}
+                                                    -{" "}
+                                                    <input
+                                                        type="text"
+                                                        className="input_m"
+                                                        value={item.mobile3}
+                                                        key={`${item.idx}_mobile3`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "mobile3",
+                                                            )
+                                                        }
+                                                    />
+                                                </td>
+                                                <th>
+                                                    E-mail{" "}
+                                                    <span className="red">
+                                                        *
+                                                    </span>
+                                                </th>
+                                                <td>
+                                                    <input
+                                                        type="text"
+                                                        value={item.email}
+                                                        key={`${item.idx}_email`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "email",
+                                                            )
+                                                        }
+                                                    />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    Birth{" "}
+                                                    <span className="red">
+                                                        *
+                                                    </span>
+                                                </th>
+                                                <td>
+                                                    <input
+                                                        type="date"
+                                                        value={item.birth}
+                                                        key={`${item.idx}_birth`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "birth",
+                                                            )
+                                                        }
+                                                    />
+                                                </td>
+                                                <th>
+                                                    Gender{" "}
+                                                    <span className="red">
+                                                        *
+                                                    </span>
+                                                </th>
+                                                <td>
+                                                    <select
+                                                        value={item.gender}
+                                                        key={`${item.idx}_gender`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "gender",
+                                                            )
+                                                        }
+                                                    >
+                                                        <option value="">
+                                                            - 선택 -
+                                                        </option>
+                                                        {genderOption.length !==
+                                                            0 &&
+                                                            genderOption.map(
+                                                                (
+                                                                    item2,
+                                                                    idx2,
+                                                                ) => (
+                                                                    <option
+                                                                        key={`genderOption_${idx}_${idx2}`}
+                                                                        value={
+                                                                            item2.code_key
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            item2.code_value
+                                                                        }
+                                                                    </option>
+                                                                ),
+                                                            )}
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                ))}
                         </div>
 
                         <div className="boxing">
@@ -434,6 +939,8 @@ const SignUpMain = () => {
                                         </th>
                                         <th className="center gray">
                                             Amount (KRW)
+                                            <br />
+                                            (Including VAT)
                                         </th>
                                         <th className="center gray">
                                             Select Check
@@ -467,7 +974,8 @@ const SignUpMain = () => {
                                                 </span>
                                             </p>
                                             <p>
-                                                4. A Exclusive Consultation Desk
+                                                4. An Exclusive Consultation
+                                                Desk
                                             </p>
                                             <p>
                                                 5. Transportation: <br />
@@ -481,9 +989,20 @@ const SignUpMain = () => {
                                                 </span>
                                             </p>
                                         </td>
-                                        <td className="center">12,000,000</td>
                                         <td className="center">
-                                            <input type="checkbox" value="" />
+                                            {registrationInfo.length !== 0 &&
+                                                registrationInfo.entry_cost
+                                                    .toString()
+                                                    .replace(
+                                                        commaOfNumber,
+                                                        ",",
+                                                    )}
+                                        </td>
+                                        <td className="center">
+                                            <Checkbox
+                                                checked={true}
+                                                disabled={true}
+                                            />
                                         </td>
                                     </tr>
                                 </tbody>
@@ -507,6 +1026,8 @@ const SignUpMain = () => {
                                         </th>
                                         <th className="center gray">
                                             Amount (KRW)
+                                            <br />
+                                            (Including VAT)
                                         </th>
                                         <th className="center gray">
                                             Select Check
@@ -516,13 +1037,33 @@ const SignUpMain = () => {
                                         <th className="center">
                                             Additional Participants (per person)
                                         </th>
-                                        <td className="center">2,500,000</td>
                                         <td className="center">
-                                            <select name="" id="">
-                                                <option value="">1</option>
-                                                <option value="">2</option>
-                                                <option value="">3</option>
-                                            </select>
+                                            {registrationInfo.length !== 0 &&
+                                                registrationInfo.additional_cost
+                                                    .toString()
+                                                    .replace(
+                                                        commaOfNumber,
+                                                        ",",
+                                                    )}
+                                        </td>
+                                        <td className="center">
+                                            {/*<select*/}
+                                            {/*    name=""*/}
+                                            {/*    id=""*/}
+                                            {/*    value={entryInfo.length - 1}*/}
+                                            {/*>*/}
+                                            {/*    /!*<option value="">0</option>*!/*/}
+                                            {/*    /!*<option value="">1</option>*!/*/}
+                                            {/*    /!*<option value="">2</option>*!/*/}
+                                            {/*    /!*<option value="">3</option>*!/*/}
+                                            {/*</select>*/}
+                                            <input
+                                                type="text"
+                                                className="input_m"
+                                                readOnly={true}
+                                                ref={entryPersonNumber}
+                                                value={entryInfo.length - 1}
+                                            />
                                         </td>
                                     </tr>
                                     <tr>
@@ -530,13 +1071,74 @@ const SignUpMain = () => {
                                             Interpretation (Korean-Indonesian) -
                                             2 days
                                         </th>
-                                        <td className="center">600,000</td>
                                         <td className="center">
-                                            <input type="checkbox" value="" />
+                                            {registrationInfo.length !== 0 &&
+                                                registrationInfo.interpretation_cost
+                                                    .toString()
+                                                    .replace(
+                                                        commaOfNumber,
+                                                        ",",
+                                                    )}
+                                        </td>
+                                        <td className="center">
+                                            <Checkbox
+                                                value=""
+                                                inputRef={
+                                                    interpretationCostChenk
+                                                }
+                                                onChange={
+                                                    interpretationCostHandler
+                                                }
+                                            />
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+
+                        <div className="boxing">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Total price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="center">
+                                            <p className="total">
+                                                {totalPriceState
+                                                    .toString()
+                                                    .replace(
+                                                        commaOfNumber,
+                                                        ",",
+                                                    )}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="boxing">
+                            <h3 className="c_tit">Payment Information</h3>
+                            <div className="gray">
+                                E-mail : {registrationInfo.email}
+                                <br />
+                                Bank Information :{" "}
+                                <b>
+                                    {`${registrationInfo.payment_bank_name} ${registrationInfo.payment_account} (예금주: ${registrationInfo.name_first_ko} ${registrationInfo.name_last_ko})`}
+                                </b>
+                            </div>
+                        </div>
+
+                        <div className="btn_box">
+                            <input
+                                type="submit"
+                                value="SUBMIT"
+                                name=""
+                                onClick={regEntry}
+                            />
                         </div>
                     </div>
                 </div>

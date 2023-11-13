@@ -22,13 +22,20 @@ function Header() {
                     <div id="gnb">
                         <ul>
                             <li>
+                                <Link to={routerPath.web_main_url}>HOME</Link>
+                            </li>
+                            <li>
                                 <Link to={routerPath.web_program_url}>
                                     PROGRAM
                                 </Link>
                             </li>
                             <li>
-                                <Link href="guideline.html">
-                                    PARTICIPATION SIGN-UP
+                                <Link
+                                    to={
+                                        routerPath.web_participation_guideline_url
+                                    }
+                                >
+                                    PLASTIC&AESTHETIC CLINICS SIGN-UP
                                 </Link>
                                 <div className="submenu">
                                     <Link

@@ -255,6 +255,9 @@ const Section01 = (props) => {
                         <span className="logobox">
                             <img src="img/web/main/host_logo.png" alt="" />
                         </span>
+                        <span className="logobox">
+                            <img src="img/web/main/host_logo02.png" alt="" />
+                        </span>
                         <span className="tit">PARTNERS</span>
                         <span className="logobox">
                             <img src="img/web/main/orga_logo01.png" alt="" />

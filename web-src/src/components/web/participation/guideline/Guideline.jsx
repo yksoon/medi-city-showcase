@@ -90,7 +90,11 @@ const Guideline = () => {
                             </h3>
                         )}
 
-                        <h4>PARTICIPATION SIGN-UP</h4>
+                        <h4 className="long">
+                            Plastic & Aesthetic Clinics
+                            <br />
+                            SIGN-UP
+                        </h4>
                     </div>
                 </div>
             </div>
@@ -99,7 +103,10 @@ const Guideline = () => {
             <div id="container" className="sub_container">
                 <div id="con_area">
                     <div id="leftmenu">
-                        <Link to={routerPath.web_participation_guideline_url}>
+                        <Link
+                            to={routerPath.web_participation_guideline_url}
+                            className="active"
+                        >
                             Guideline
                         </Link>
                         <Link to={routerPath.web_signup_signup_url}>
@@ -113,16 +120,18 @@ const Guideline = () => {
 
                     <div className="guideline">
                         <div className="top">
-                            Welcome all of you for joining the{" "}
-                            <b>{registrationInfo.registration_sub_title_en}.</b>
+                            Welcome all of you for joining the K-Aesthetic & ART
+                            Indonesia 2024.
                             <br />
-                            This Sign-up page pertains to South Korean Plastic
-                            Surgery clinics interested in participating in the
-                            upcoming event.
+                            <b>
+                                This Sign-up page pertains to South Korean
+                                Plastic Surgery clinics interested in
+                                participating in the upcoming event.
+                            </b>
                         </div>
 
                         <div className="boxing">
-                            <h3 className="c_tit">Period</h3>
+                            <h3 className="c_tit">Due date</h3>
                             <div className="pbox">
                                 ~ December 22, 2023 (Fri)
                             </div>
@@ -144,15 +153,6 @@ const Guideline = () => {
                                 <li className="c01">
                                     <p>
                                         <img
-                                            src="img/web/sub/step_icon01.png"
-                                            alt=""
-                                        />
-                                    </p>
-                                    Log-in
-                                </li>
-                                <li className="c02">
-                                    <p>
-                                        <img
                                             src="img/web/sub/step_icon02.png"
                                             alt=""
                                         />
@@ -161,7 +161,7 @@ const Guideline = () => {
                                     <br />
                                     "Participation Sign-up"
                                 </li>
-                                <li className="c03">
+                                <li className="c02">
                                     <p>
                                         <img
                                             src="img/web/sub/step_icon03.png"
@@ -172,7 +172,7 @@ const Guideline = () => {
                                     <br />
                                     online Sign-up
                                 </li>
-                                <li className="c04">
+                                <li className="c03">
                                     <p>
                                         <img
                                             src="img/web/sub/step_icon04.png"
@@ -183,7 +183,7 @@ const Guideline = () => {
                                     <br />
                                     payment
                                 </li>
-                                <li className="c05">
+                                <li className="c04">
                                     <p>
                                         <img
                                             src="img/web/sub/step_icon05.png"
@@ -194,7 +194,7 @@ const Guideline = () => {
                                     <br />
                                     Confirmation E-mail
                                 </li>
-                                <li className="c06">
+                                <li className="c05">
                                     <p>
                                         <img
                                             src="img/web/sub/step_icon06.png"
@@ -203,12 +203,21 @@ const Guideline = () => {
                                     </p>
                                     Complete
                                 </li>
+                                <li className="c06">
+                                    <p>
+                                        <img
+                                            src="img/web/sub/step_icon07.png"
+                                            alt=""
+                                        />
+                                    </p>
+                                    Check Your Sign-up Status on the 'Sign-up
+                                    Confirmation" page.
+                                </li>
                             </ul>
                             <p className="l_noti">
                                 * The confirmation of Sign-up will be directly
-                                sent via e-mail. If not, please contact at{" "}
-                                {registrationInfo.email} .
-                                {/*sunyoung.eom@medi-city.co.kr .{" "}*/}
+                                sent via e-mail. If not, please contact at
+                                sunyoung.eom@medi-city.co.kr .{" "}
                             </p>
                         </div>
 

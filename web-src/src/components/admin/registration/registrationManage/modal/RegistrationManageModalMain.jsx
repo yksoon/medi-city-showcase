@@ -7,6 +7,7 @@ import Select from "react-select";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
+import CountrySelect from "common/js/countryAutocomplete";
 
 const RegistrationManageModalMain = (props) => {
     const { alert } = useAlert();
@@ -25,8 +26,7 @@ const RegistrationManageModalMain = (props) => {
 
     const [paymentTypeOption, setPaymentTypeOption] = useState([]);
     const [bankOption, setBankOption] = useState([]);
-    const [selectCountryOptions, setSelectCountryOptions] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedCountry, setSelectedCountry] = useState("82");
 
     // refs
     const registrationTitleKo = useRef(null);
@@ -82,26 +82,6 @@ const RegistrationManageModalMain = (props) => {
 
         setPaymentTypeOption(paymentTypeArr);
         setBankOption(paymentBankArr);
-
-        let options = [];
-        const country = countryBank.filter(
-            (e) => e.code_type === "INTER_PHONE_TYPE",
-        );
-
-        for (let i = 0; i < country.length; i++) {
-            let newObj = {
-                value: country[i].code_key,
-                label: country[i].code_value,
-            };
-
-            options.push(newObj);
-        }
-
-        setSelectCountryOptions(options);
-
-        // 기본
-        const defaultObj = options.find((e) => e.value === "82");
-        setSelectedCountry(defaultObj);
     };
 
     const setDefaultValue = () => {
@@ -137,11 +117,7 @@ const RegistrationManageModalMain = (props) => {
         targetSupervision.current.value = modData.target_supervision ?? "";
         targetContactus.current.value = modData.target_contactus ?? "";
 
-        setSelectedCountry(
-            selectCountryOptions.find(
-                (e) => e.value === modData.inter_phone_number,
-            ),
-        );
+        setSelectedCountry(modData.inter_phone_number);
     };
 
     // 등록
@@ -182,7 +158,7 @@ const RegistrationManageModalMain = (props) => {
                 name_first_en: nameFirstEn.current.value,
                 name_last_en: nameLastEn.current.value,
                 email: email.current.value,
-                inter_phone_number: selectedCountry.value,
+                inter_phone_number: selectedCountry,
                 mobile1: mobile1.current.value,
                 mobile2: mobile2.current.value,
                 mobile3: mobile3.current.value,
@@ -583,23 +559,31 @@ const RegistrationManageModalMain = (props) => {
                         <tr>
                             <th>국가코드</th>
                             <td>
-                                <Select
-                                    className="select"
-                                    id="interPhoneNumber"
-                                    options={selectCountryOptions}
-                                    value={selectedCountry}
-                                    key={selectedCountry}
-                                    styles={customStyles}
-                                    onChange={(e) => {
+                                {/*<Select*/}
+                                {/*    className="select"*/}
+                                {/*    id="interPhoneNumber"*/}
+                                {/*    options={selectCountryOptions}*/}
+                                {/*    value={selectedCountry}*/}
+                                {/*    key={selectedCountry}*/}
+                                {/*    styles={customStyles}*/}
+                                {/*    onChange={(e) => {*/}
+                                {/*        setSelectedCountry(*/}
+                                {/*            selectCountryOptions.find(*/}
+                                {/*                (event) =>*/}
+                                {/*                    event.value === e.value,*/}
+                                {/*            ),*/}
+                                {/*        );*/}
+                                {/*        // handleSelectedCountry(e.value);*/}
+                                {/*    }}*/}
+                                {/*    ref={interPhoneNumber}*/}
+                                {/*/>*/}
+                                <CountrySelect
+                                    onChange={(e, value) =>
                                         setSelectedCountry(
-                                            selectCountryOptions.find(
-                                                (event) =>
-                                                    event.value === e.value,
-                                            ),
-                                        );
-                                        // handleSelectedCountry(e.value);
-                                    }}
-                                    ref={interPhoneNumber}
+                                            value ? value.value : "",
+                                        )
+                                    }
+                                    defaultValue={selectedCountry}
                                 />
                             </td>
                         </tr>

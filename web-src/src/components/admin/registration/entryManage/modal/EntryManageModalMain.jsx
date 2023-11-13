@@ -9,6 +9,7 @@ import Select from "react-select";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
 import useConfirm from "hook/useConfirm";
+import CountrySelect from "common/js/countryAutocomplete";
 
 const EntryManageModalMain = (props) => {
     const { alert } = useAlert();
@@ -37,7 +38,7 @@ const EntryManageModalMain = (props) => {
     const [relationshipTypeOption, setRelationshipTypeOption] = useState([]);
 
     const [selectCountryOptions, setSelectCountryOptions] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedCountry, setSelectedCountry] = useState("82");
 
     const [entryInfo, setEntryInfo] = useState([]);
 
@@ -80,6 +81,7 @@ const EntryManageModalMain = (props) => {
     const institutionMemo = useRef(null);
     const entryCount = useRef(null);
     const institutionIdx = useRef(null);
+    const interpretationCostYn = useRef(null);
 
     useEffect(() => {
         // 결제타입, 은행 초기화
@@ -128,26 +130,6 @@ const EntryManageModalMain = (props) => {
         setInstitutionTypeOption(institutionTypeArr);
         setGenderOption(genderArr);
         setRelationshipTypeOption(relationshipTypeArr);
-
-        let options = [];
-        const country = countryBank.filter(
-            (e) => e.code_type === "INTER_PHONE_TYPE",
-        );
-
-        for (let i = 0; i < country.length; i++) {
-            let newObj = {
-                value: country[i].code_key,
-                label: country[i].code_value,
-            };
-
-            options.push(newObj);
-        }
-
-        setSelectCountryOptions(options);
-
-        // 기본
-        const defaultObj = options.find((e) => e.value === "82");
-        setSelectedCountry(defaultObj);
     };
 
     const setDefaultValue = () => {
@@ -186,13 +168,10 @@ const EntryManageModalMain = (props) => {
         email.current.value = modData.email;
         institutionMemo.current.value = modData.institution_memo;
         // institutionIdx.current.value = modData.institution_idx;
+        interpretationCostYn.current.value = modData.interpretation_cost_yn;
 
         // 국가코드
-        setSelectedCountry(
-            selectCountryOptions.find(
-                (e) => e.value === modData.inter_phone_number,
-            ),
-        );
+        setSelectedCountry(modData.inter_phone_number);
 
         // 참가자 정보
         if (modData.entry_info.length !== 0) {
@@ -287,7 +266,7 @@ const EntryManageModalMain = (props) => {
         setEntryInfo([...entryInfo, newItem]);
     };
 
-    const changeEntry = (e, idx, param) => {
+    const changeEntry = (e, value, idx, param) => {
         let newArr = entryInfo.filter((el) => el.idx !== idx);
         let orgItem = entryInfo.filter((el) => el.idx === idx)[0];
 
@@ -317,6 +296,24 @@ const EntryManageModalMain = (props) => {
         });
 
         console.log(newArr);
+        setEntryInfo([...newArr]);
+    };
+
+    const changeEntryCountry = (e, value, idx) => {
+        console.log(e, value, idx);
+        let newArr = entryInfo.filter((el) => el.idx !== idx);
+        let orgItem = entryInfo.filter((el) => el.idx === idx)[0];
+
+        orgItem = { ...orgItem };
+        orgItem["inter_phone_number"] = value ? value.value : "";
+
+        newArr = [...newArr, orgItem];
+
+        // 정렬
+        newArr = newArr.sort((a, b) => {
+            return a.idx - b.idx;
+        });
+
         setEntryInfo([...newArr]);
     };
 
@@ -386,10 +383,11 @@ const EntryManageModalMain = (props) => {
             email: email.current.value,
             institution_memo: institutionMemo.current.value,
             institution_idx: modData.institution_idx,
-            inter_phone_number: selectedCountry.value,
+            inter_phone_number: selectedCountry,
             entry_info: entryInfo,
             show_yn: modData.show_yn,
             registration_idx: modData.registration_idx,
+            interpretation_cost_yn: interpretationCostYn.current.value,
         };
 
         const restParams = {
@@ -782,24 +780,41 @@ const EntryManageModalMain = (props) => {
                         <tr>
                             <th>국가코드</th>
                             <td>
-                                <Select
-                                    className="select"
-                                    id="interPhoneNumber"
-                                    options={selectCountryOptions}
-                                    value={selectedCountry}
-                                    key={selectedCountry}
-                                    styles={customStyles}
-                                    onChange={(e) => {
-                                        setSelectedCountry(
-                                            selectCountryOptions.find(
-                                                (event) =>
-                                                    event.value === e.value,
-                                            ),
-                                        );
-                                        // handleSelectedCountry(e.value);
-                                    }}
-                                    ref={interPhoneNumber}
-                                />
+                                {/*<Select*/}
+                                {/*    className="select"*/}
+                                {/*    id="interPhoneNumber"*/}
+                                {/*    options={selectCountryOptions}*/}
+                                {/*    value={selectedCountry}*/}
+                                {/*    key={selectedCountry}*/}
+                                {/*    styles={customStyles}*/}
+                                {/*    onChange={(e) => {*/}
+                                {/*        setSelectedCountry(*/}
+                                {/*            selectCountryOptions.find(*/}
+                                {/*                (event) =>*/}
+                                {/*                    event.value === e.value,*/}
+                                {/*            ),*/}
+                                {/*        );*/}
+                                {/*        // handleSelectedCountry(e.value);*/}
+                                {/*    }}*/}
+                                {/*    ref={interPhoneNumber}*/}
+                                {/*/>*/}
+                                {isModData ? (
+                                    <CountrySelect
+                                        onChange={(e, value) =>
+                                            setSelectedCountry(
+                                                value ? value.value : "",
+                                            )
+                                        }
+                                        defaultValue={selectedCountry ?? ""}
+                                    />
+                                ) : (
+                                    <CountrySelect
+                                        onChange={(e, value) =>
+                                            setSelectedCountry(value)
+                                        }
+                                        defaultValue={"82"}
+                                    />
+                                )}
                             </td>
                             <th>휴대전화</th>
                             <td>
@@ -863,8 +878,20 @@ const EntryManageModalMain = (props) => {
                                     ref={email}
                                 />
                             </td>
-                            <th>메모</th>
+                            <th>통역 여부</th>
                             <td>
+                                <select
+                                    className="wp100"
+                                    ref={interpretationCostYn}
+                                >
+                                    <option value="Y">있음</option>
+                                    <option value="N">없음</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>메모</th>
+                            <td colSpan={3}>
                                 <textarea
                                     className="input wp100"
                                     ref={institutionMemo}
@@ -1006,24 +1033,36 @@ const EntryManageModalMain = (props) => {
                                 <tr>
                                     <th>국가코드</th>
                                     <td>
-                                        <Select
-                                            className="select"
-                                            id="interPhoneNumber"
-                                            options={selectCountryOptions}
-                                            defaultValue={selectCountryOptions.find(
-                                                (e) =>
-                                                    e.value ===
-                                                    item.inter_phone_number,
-                                            )}
-                                            key={`${item.idx}_interPhoneNumber`}
-                                            // key={selectedCountry}
-                                            styles={customStyles}
-                                            onChange={(e) =>
-                                                changeEntry(
+                                        {/*<Select*/}
+                                        {/*    className="select"*/}
+                                        {/*    id="interPhoneNumber"*/}
+                                        {/*    options={selectCountryOptions}*/}
+                                        {/*    defaultValue={selectCountryOptions.find(*/}
+                                        {/*        (e) =>*/}
+                                        {/*            e.value ===*/}
+                                        {/*            item.inter_phone_number,*/}
+                                        {/*    )}*/}
+                                        {/*    key={`${item.idx}_interPhoneNumber`}*/}
+                                        {/*    // key={selectedCountry}*/}
+                                        {/*    styles={customStyles}*/}
+                                        {/*    onChange={(e) =>*/}
+                                        {/*        changeEntry(*/}
+                                        {/*            e,*/}
+                                        {/*            item.idx,*/}
+                                        {/*            "inter_phone_number",*/}
+                                        {/*        )*/}
+                                        {/*    }*/}
+                                        {/*/>*/}
+                                        <CountrySelect
+                                            onChange={(e, value) =>
+                                                changeEntryCountry(
                                                     e,
+                                                    value,
                                                     item.idx,
-                                                    "inter_phone_number",
                                                 )
+                                            }
+                                            defaultValue={
+                                                item.inter_phone_number ?? "82"
                                             }
                                         />
                                     </td>

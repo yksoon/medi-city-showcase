@@ -58,8 +58,6 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 
 
 #mainvisual .main_txt .ob_img {position:absolute; top:-200px; right:0;}
-
-
 #container {width:100%; }
 
 
@@ -136,7 +134,7 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .section02 .sec02_in a .cbox{position:absolute; top:30px; right:60px;width:72px;height:72px;line-height: 72px;background:url('/public/img/web/main/btn_circle.png') center center no-repeat;
     text-align: center;font-size:20px;color:#81109a;
 }
-.section02 .sec02_in a .cbox .arrow {position:Absolute;top:0;right:-22px;
+.section02 .sec02_in a .cbox .arrow {position:Absolute;right:-22px;
     transition: all 0.3s ease;
     -moz-transition: all 0.3s ease; /* Firefox 4 */
     -webkit-transition: all 0.3s ease; /* Safari and Chrome */
@@ -150,7 +148,6 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 /* section03 */
 .section03 {width:100%;background:url('/public/img/web/main/sec02_bg.jpg') center center no-repeat; background-size: cover;;}
 .section03 .hotel { position:relative; z-index:1; width:1300px; height:470px;margin:0 auto;padding:60px 0;display:flex;}
-.section03 .hotel_map {height:420px;}
 .section03 .hotel .img {margin-right:50px;}
 .section03 .hotel .info {padding:40px 0 0 0;}
 .section03 .hotel .info h4 {font-size:25px; color:#a78acb;}
@@ -177,9 +174,12 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 #footer {clear:both; padding:35px 0;}
 #footer_content {width:1400px; margin:0 auto; position:relative;}
 #footer_content .flogo {padding:0 0 20px 0;}
-#footer_content address {font-size:15px; color:#7b7b7b; line-height:26px; letter-spacing:-0.03em;}
-#footer_content address b{color:#9e095d;}
+#footer_content address {font-size:15px; color:#7b7b7b; line-height:22px; letter-spacing:-0.03em;}
+#footer_content address b{display:block;color:#9e095d;padding:13px 0 0 0;}
 #footer_content address img {padding:0 7px;}
+
+
+
 
 /*Quick Menu */
 #quick_menu {position:fixed; bottom:100px;  width:45px; right:100px;
@@ -198,6 +198,7 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 #subvisual  .sub_txt_in h2{margin:0 0 10px 0;}
 #subvisual  .sub_txt_in > h3{font-size:16px; color:#fff; letter-spacing: 0.20em;margin:0 0 40px 0;}
 #subvisual  .sub_txt_in > h4{font-size:40px; color:#fff;font-weight: 900;}
+#subvisual  .sub_txt_in > h4.long {font-size:32px;}
 
 
 .sub_quick {width:100%;height:130px; background:url('/public/img/web/main/sec012_bg.jpg') center 0 repeat-y;}
@@ -232,9 +233,10 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 }
 
 #leftmenu {text-align:center;padding:50px 0 0 0;}
-#leftmenu a{display:inline-block; font-size:17px;color:#111; padding:0 10px;background:url('/public/img/web/main/f_bar.jpg') 0 center no-repeat;font-weight: 600;;}
+#leftmenu a{display:inline-block; font-size:17px;color:#111; padding:0 15px;background:url('/public/img/web/sub/l_bar.png') 0 center no-repeat;font-weight: 600;}
 #leftmenu a:first-child{background:none;}
 #leftmenu a:hover, #leftmenu a:focus {color:#59047f;}
+#leftmenu a.active {color:#59047f;text-decoration:underline;}
 #subtitle {padding:30px 0 70px; text-align: center;}
 #subtitle h3 {font-size:42px; font-weight: 900; color:#59047f;display:inline-block; padding:0 20px; background:url('/public/img/web/sub/subtitle_bg.png') 0 100% repeat-x;}
 
@@ -265,29 +267,42 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .guideline .boxing dl dt {font-size:20px;font-weight: 900;color:#000;margin:25px 0 10px 0;}
 .guideline .boxing .dot {font-size:17px; color:#000; letter-spacing: -0.015em; line-height:24px; margin:5px 0;padding-left:10px;position:relative;}
 .guideline .boxing .dot:before {content:"";display:block; width:4px;height:1px; background-color:#000;position:absolute;top:12px; left:0;}
-.guideline .boxing b.pink{color:#f82062; }
+.guideline .boxing b.pink{color:#f82062;}
 
 
 /* Online Sign-up */
 .signup .boxing{margin:0 0 60px 0;}
 .signup .boxing .r_noti{text-align:right;font-size:14px; color:#000;margin:0 0 5px 0;font-weight:900;}
-.signup .boxing .red{color:red; font-size:24px;}
+.signup .boxing .red{color:rgb(255, 0, 0); font-size:24px;}
 .signup .boxing table {border-top:1px solid #59047f;}
 .signup .boxing table thead tr th {padding:10px ; background-color:#59047f;font-size:18px;color:#fff;}
-.signup .boxing table tbody tr th {padding:20px 12px 20px 30px; font-size:16px; color:#000;border-bottom:1px solid #ccc;font-size:17px;font-weight:900;text-align:left;}
-.signup .boxing table tbody tr td {padding:20px 12px; font-size:16px; color:#000;border-bottom:1px solid #ccc;font-size:17px;}
-.signup .boxing table tbody tr td input[type="text"]{border:1px solid #ccc; height:45px; line-height: 45px;padding-left:10px;font-size:17px;width:80%;font-family:inherit;}
+.signup .boxing table tbody tr th {padding:20px 12px 20px 30px; color:#000;border-bottom:1px solid #ccc;font-size:17px;font-weight:900;text-align:left;}
+.signup .boxing table tbody tr td {padding:20px 12px; color:#000;border-bottom:1px solid #ccc;font-size:17px;}
+.signup .boxing table tbody tr td.del_td {border-left:1px solid #ccc;}
+.signup .boxing table tbody tr td input[type="text"]{border:1px solid #ccc; height:45px; line-height: 45px;padding-left:10px;font-size:17px;width:80%;font-family:inherit;vertical-align:middle;margin:2px 0;}
 .signup .boxing table tbody tr td input[type="text"].input_m{width:100px;}
 .signup .boxing table tbody tr td input[type="text"].input_n{width:220px;}
+.signup .boxing table tbody tr td input[type="date"] {border:1px solid #ccc; height:45px; line-height: 45px;padding-left:10px;font-size:17px;width:150px;font-family:inherit;vertical-align:middle;margin:2px 0;}
 .signup .boxing table tbody tr td input[type="checkbox"] {vertical-align: middle;}
+.signup .boxing table tbody tr td .normal_btn{display:inline-block; line-height:15px;font-size:15px; padding:0 25px;height:45px;vertical-align:middle;line-height:45px;background-color:#59047f;color:#fff;}
 
 .signup .boxing table .center {text-align: center;}
+.signup .boxing table .gray {background-color:#f5f5f5;}
+.signup .boxing table tbody tr td .per {display:block;background-color:#f82062;color:#fff;font-size:20px;padding:6px 20px;font-weight:900;border-radius:30px;box-sizing: border-box;}
 .signup .boxing table tbody tr td p {font-size:16px; font-weight:600; line-height:23px; margin:6px 0;}
 .signup .boxing table tbody tr td p span {display:inline-block; padding:10px; background-color:#f5f5f5;width:100%; box-sizing: border-box;margin:5px 0 0 0;}
 .signup .boxing table tbody tr td select {width:110px;height:45px; line-height:45px;padding:0 10px;}
+.signup .boxing table tbody tr td p.rednoti {color:Red;font-size:14px;}
+.signup .boxing table tbody tr td p.total {font-weight: 900;font-size: 22px;;}
+.signup .boxing table.add_tb{margin:20px 0 0 0;}
+.signup .btn_box {text-align:center;}
+.signup .btn_box input[type="submit"]{display:inline-block; height:70px;line-height: 70px; padding:0 30px; font-size:26px; color:#fff; font-weight: 900;  background-color:#f82062;min-width:250px;outline:none;border:none;cursor:pointer;font-family: inherit;}
+.signup .btn_box input[type="submit"]:hover, .signup .btn_box input[type="submit"]:focus {background-color:#db134f;}
+
 .signup .addzone {border:3px solid #ddd; padding:15px; font-size:18px;font-weight:600;color:#000;text-align: center;}
-.signup .morezone {text-align: right;color:#f82062; margin:30px 0 10px;font-size:18px; font-weight: 900;vertical-align: middle;}
-.signup .morezone a{vertical-align: middle;}
+.signup .morezone {text-align: right; margin:30px 0 10px;font-size:18px; font-weight: 900;vertical-align: middle;}
+.signup .morezone a{vertical-align: middle;color:#f82062;}
+.signup .morezone a img{vertical-align: middle;}
 .signup .gray{ background-color:#f5f5f5; padding:25px ; font-size:17px; color:#000; line-height:28px;}
 
 
@@ -435,7 +450,7 @@ select {
     .section02 .sec02_in a{background-color:#81109a;display:block;width:100%;line-height:90px;font-size:20px;padding:0 20px;}
     .section02 .sec02_in a.btn02{background-color:#ee508c;}
     .section02 .sec02_in a .cbox{ top:19px; right:35px;width:55px;height:55px;line-height: 55px;background-size:100% 100%;font-size:16px;}
-    .section02 .sec02_in a .cbox .arrow {top:23px;right:-15px;}
+    .section02 .sec02_in a .cbox .arrow {right:-15px;}
     .section02 .sec02_in a .cbox .arrow img {width:20px;}
     .section02 .sec02_in a:hover .cbox .arrow {right:-20px;}
 
@@ -519,7 +534,38 @@ select {
     .guideline .boxing .dot:before {top:8px;}
 
 
+    /* Online Sign-up */
+    .signup .boxing .r_noti{font-size:12px;}
+    .signup .boxing .red{font-size:20px;}
+    .signup .boxing table colgroup col {width:100% !important;}
+    .signup .boxing table thead tr th {display:block; padding:10px 5px; font-size:14px;}
+    .signup .boxing table tbody tr th {display:block;padding:10px 5px; font-size:13px;line-height:16px;word-break: keep-all;}
+    .signup .boxing table tbody tr td {display:block; padding:10px 5px; font-size:13px;}
+    .signup .boxing table tbody tr td input[type="text"]{height:40px; line-height: 40px;font-size:13px;margin:3px;}
+    .signup .boxing table tbody tr td input[type="text"].input_m{width:27%;}
+    .signup .boxing table tbody tr td input[type="text"].input_n{width:46%;}
+    .signup .boxing table tbody tr td input[type="text"].input_n{width:220px;}
+    .signup .boxing table tbody tr td input[type="date"] {height:40px; line-height: 40px;font-size:13px;margin:3px;}
+    .boxing table tbody tr td .normal_btn {font-size: 13px;padding: 0 21px;height: 38px;line-height: 38px;}
+
+    .signup .boxing table tbody tr td p {font-size:13px; line-height:20px;}
+    .signup .boxing table tbody tr td p span {padding:8px;}
+    .signup .boxing table tbody tr td select {width:90%;height:40px; line-height:40px;padding:0 5px;}
+    .signup .addzone {padding:15px; font-size:13px;}
+    .signup .morezone {font-size:14px;}
+    .signup .gray{padding:20px ; font-size:14px;line-height:21px;}
+    .signup .btn_box {text-align:center;}
+    .signup .btn_box input[type="submit"]{height:50px;line-height: 50px; padding:0 30px; font-size:20px;min-width:150px;}
+
+
+
+
+
+
 }
+
+
+
 
 @media screen and (max-width:375px) {
     #mainvisual{height:370px;}
@@ -558,70 +604,11 @@ select {
     .program table thead tr th {font-size:13px;}
 
 
-    /* Guideline */
-    .guideline .top {text-align: center; font-size: 20px; color:#000; line-height:31px; font-weight:900;margin:0 0 70px 0;}
-    .guideline .top b{color:#f82062; }
-    .guideline .boxing {margin:0 0 70px 0;}
-    .guideline .boxing .pbox {background-color:#faf2f5; padding:25px;margin:0 0 15px 0;font-size: 22px; font-weight: 900;color: #ed0743;;}
-    .guideline .boxing .l_noti {text-align:right; color:#333; font-size: 16px;}
-    .guideline .boxing .steps {background:url('/public/img/web/sub/step_line.png') 0  40% repeat-x;display:flex;justify-content: space-between;margin:0 0 30px 0;}
-    .guideline .boxing .steps li{width:190px;text-align :center;  font-size:17px; font-weight: 900; color:#000;}
-    .guideline .boxing .steps li p{width:190px;height:190px;display:flex;align-items: center;justify-content: center;margin:0 0 15px 0;}
-    .guideline .boxing .steps li.c01 p {background:url('/public/img/web/sub/step01.png') center center no-repeat;}
-    .guideline .boxing .steps li.c02 p {background:url('/public/img/web/sub/step02.png') center center no-repeat;}
-    .guideline .boxing .steps li.c03 p {background:url('/public/img/web/sub/step03.png') center center no-repeat;}
-    .guideline .boxing .steps li.c04 p {background:url('/public/img/web/sub/step04.png') center center no-repeat;}
-    .guideline .boxing .steps li.c05 p {background:url('/public/img/web/sub/step05.png') center center no-repeat;}
-    .guideline .boxing .steps li.c06 p {background:url('/public/img/web/sub/step06.png') center center no-repeat;}
-    .guideline .boxing dl dt {font-size:20px;font-weight: 900;color:#000;margin:25px 0 10px 0;}
-    .guideline .boxing .dot {font-size:17px; color:#000; letter-spacing: -0.015em; line-height:24px; margin:5px 0;padding-left:10px;position:relative;}
-    .guideline .boxing .dot:before {content:"";display:block; width:4px;height:1px; background-color:#000;position:absolute;top:12px; left:0;}
-    .guideline .boxing b.pink{color:#f82062;}
+    /* guideline */
+    .guideline .top {font-size:14px; line-height:20px;}
+    .guideline .boxing .pbox{font-size:15px;padding:15px;}
 
 
-    /* Online Sign-up */
-    .signup .boxing{margin:0 0 60px 0;}
-    .signup .boxing .r_noti{text-align:right;font-size:14px; color:#000;margin:0 0 5px 0;font-weight:900;}
-    .signup .boxing .red{color:rgb(255, 0, 0); font-size:24px;}
-    .signup .boxing table {border-top:1px solid #59047f;}
-    .signup .boxing table thead tr th {padding:10px ; background-color:#59047f;font-size:18px;color:#fff;}
-    .signup .boxing table tbody tr th {padding:20px 12px 20px 30px; color:#000;border-bottom:1px solid #ccc;font-size:17px;font-weight:900;text-align:left;}
-    .signup .boxing table tbody tr td {padding:20px 12px; color:#000;border-bottom:1px solid #ccc;font-size:17px;}
-    .signup .boxing table tbody tr td.del_td {border-left:1px solid #ccc;}
-    .signup .boxing table tbody tr td input[type="text"]{border:1px solid #ccc; height:45px; line-height: 45px;padding-left:10px;font-size:17px;width:80%;font-family:inherit;vertical-align:middle;margin:2px 0;}
-    .signup .boxing table tbody tr td input[type="text"].input_m{width:100px;}
-    .signup .boxing table tbody tr td input[type="text"].input_n{width:220px;}
-    .signup .boxing table tbody tr td input[type="checkbox"] {vertical-align: middle;}
-    .signup .boxing table tbody tr td .normal_btn{display:inline-block; line-height:15px;font-size:15px; padding:0 25px;height:45px;vertical-align:middle;line-height:45px;background-color:#59047f;color:#fff;}
-
-    .signup .boxing table .center {text-align: center;}
-    .signup .boxing table .gray {background-color:#f5f5f5;}
-    .signup .boxing table tbody tr td .per {display:block;background-color:#f82062;color:#fff;font-size:20px;padding:6px 20px;font-weight:900;border-radius:30px;box-sizing: border-box;}
-    .signup .boxing table tbody tr td p {font-size:16px; font-weight:600; line-height:23px; margin:6px 0;}
-    .signup .boxing table tbody tr td p span {display:inline-block; padding:10px; background-color:#f5f5f5;width:100%; box-sizing: border-box;margin:5px 0 0 0;}
-    .signup .boxing table tbody tr td select {width:110px;height:45px; line-height:45px;padding:0 10px;}
-    .signup .boxing table.add_tb{margin:20px 0 0 0;}
-
-    .signup .addzone {border:3px solid #ddd; padding:15px; font-size:18px;font-weight:600;color:#000;text-align: center;}
-    .signup .morezone {text-align: right; margin:30px 0 10px;font-size:18px; font-weight: 900;vertical-align: middle;}
-    .signup .morezone a{vertical-align: middle;color:#f82062;}
-    .signup .morezone a img{vertical-align: middle;}
-    .signup .gray{ background-color:#f5f5f5; padding:25px ; font-size:17px; color:#000; line-height:28px;}
-
-
-
-}
-
-/* IE */
-select::-ms-expand {
-    display: none;
-}
-select {
-    -o-appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: url('/public/img/common/select_arrow.png') calc(100% - 10px) center no-repeat;
 
 }
 
