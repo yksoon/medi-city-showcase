@@ -49,10 +49,10 @@ function MobileNav() {
                             <Link
                                 to={routerPath.web_program_url}
                                 id="nav1"
-                                onClick={(e) => {
-                                    menuDepth(e);
-                                    e.preventDefault();
-                                }}
+                                // onClick={(e) => {
+                                //     menuDepth(e);
+                                //     e.preventDefault();
+                                // }}
                             >
                                 PROGRAM
                             </Link>
