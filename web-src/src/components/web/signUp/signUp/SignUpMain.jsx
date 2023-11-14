@@ -290,7 +290,7 @@ const SignUpMain = () => {
             CommonNotify({
                 type: "alert",
                 hook: alert,
-                message: "참가자 1명 이상은 필수입니다.",
+                message: "At least one participant is required.",
             });
 
             return false;
