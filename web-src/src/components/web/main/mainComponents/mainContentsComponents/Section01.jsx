@@ -149,29 +149,29 @@ const Section01 = (props) => {
                                 </p>
                             )}
                         </li>
-                        <li>
-                            <span>Sign-up Fee</span>
-                            {registrationInfo.length !== 0 ? (
-                                // <p>￦12,000,000 (Including VAT)</p>
-                                <p>{`￦${registrationInfo.entry_cost
-                                    .toString()
-                                    .replace(
-                                        commaOfNumber,
-                                        ",",
-                                    )} (Including VAT)`}</p>
-                            ) : (
-                                <p>
-                                    <Skeleton
-                                        variant="text"
-                                        sx={{
-                                            fontSize: "1rem",
-                                            bgcolor: "lightgray !important",
-                                        }}
-                                        width={"45%"}
-                                    />
-                                </p>
-                            )}
-                        </li>
+                        {/*<li>*/}
+                        {/*    <span>Sign-up Fee</span>*/}
+                        {/*    {registrationInfo.length !== 0 ? (*/}
+                        {/*        // <p>￦12,000,000 (Including VAT)</p>*/}
+                        {/*        <p>{`￦${registrationInfo.entry_cost*/}
+                        {/*            .toString()*/}
+                        {/*            .replace(*/}
+                        {/*                commaOfNumber,*/}
+                        {/*                ",",*/}
+                        {/*            )} (Including VAT)`}</p>*/}
+                        {/*    ) : (*/}
+                        {/*        <p>*/}
+                        {/*            <Skeleton*/}
+                        {/*                variant="text"*/}
+                        {/*                sx={{*/}
+                        {/*                    fontSize: "1rem",*/}
+                        {/*                    bgcolor: "lightgray !important",*/}
+                        {/*                }}*/}
+                        {/*                width={"45%"}*/}
+                        {/*            />*/}
+                        {/*        </p>*/}
+                        {/*    )}*/}
+                        {/*</li>*/}
                         <li>
                             <span>Inquiry</span>
                             {registrationInfo.length !== 0 ? (
