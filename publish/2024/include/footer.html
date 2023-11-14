@@ -1,5 +1,28 @@
 
 
+
+
+
+<div id="go_top">
+    <a href="#header"><img src="img/common/go_top.png" alt="상단으로 이동"/></a>
+</div>
+
+<script>
+    // 상단으로이동 퀵버튼 등장
+    document.addEventListener('scroll', function() {
+        var currentScrollValue = document.documentElement.scrollTop;
+        var gotop = document.getElementById("go_top");
+
+        if( currentScrollValue > 100){
+            gotop.style.opacity="1";
+        } else {
+            gotop.style.opacity="0";
+        }
+
+    });
+</script>
+
+
 <div class="sub_hostbox">
     <span class="tit">HOST</span>
     <span class="logobox"><img src="img/main/host_logo.png" alt=""/></span>

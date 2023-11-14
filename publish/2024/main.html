@@ -133,7 +133,7 @@
                     <div class="free" data-aos="fade-up" data-aos-duration="1200">
                         <div class="free_in">
                             <p class="tit"><img src="img/main/free_tit.png" alt="" /></p>
-                            <h3>For all 24-25 event participants</h3>
+                            <h3>For All of you</h3>
                             <ul>
                                 <li>
                                     <span class="date">1/24</span>Westin Hotel <b>Lunch buffet</b>
@@ -144,8 +144,12 @@
                                     <span class="icon"><img src="img/main/f_icon02.png" alt=""/></span>
                                 </li>
                                 <li>
-                                    <span class="date">1/24-25</span>Gifts</b>
+                                    <span class="date">1/24-25</span>Gifts
                                     <span class="icon"><img src="img/main/f_icon03.png" alt=""/></span>
+                                </li>
+                                <li>
+                                    <span class="date">1/24-25</span>Free Admission<br/><b class="long">(Only for Indonesian Participants)</b>
+                                    <span class="icon"><img src="img/main/f_icon04.png" alt=""/></span>
                                 </li>
                             </ul>
                         </div>
@@ -246,6 +250,26 @@
 
         </div>
 		<!-- container //E-->
+
+
+        <div id="go_top">
+            <a href="#header"><img src="img/common/go_top.png" alt="상단으로 이동"/></a>
+        </div>
+
+        <script>
+            // 상단으로이동 퀵버튼 등장
+            document.addEventListener('scroll', function() {
+                var currentScrollValue = document.documentElement.scrollTop;
+                var gotop = document.getElementById("go_top");
+
+                if( currentScrollValue > 600){
+                    gotop.style.opacity="1";
+                } else {
+                    gotop.style.opacity="0";
+                }
+
+            });
+        </script>
 
 		<!--footer //S-->
 		<div id="footer">

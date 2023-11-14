@@ -96,7 +96,7 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 	-moz-box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
 }
 
-.section01 .free .free_in{background-color:#fff;padding:25px 20px 10px;}
+.section01 .free .free_in{background-color:#fff;padding:10px 20px 10px;}
 .section01 .free .free_in .tit{position:absolute;top:-50px; left:-64px;animation: shake .5s infinite alternate;}
 
 
@@ -111,19 +111,20 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
   }
 
 
-.section01 .free .free_in h3{width:100%;text-align: center;font-size: 26px; color:#ff004b; font-weight:900;letter-spacing: -0.01em;padding:15px 0;
-	background:url('../img/main/free_st.png') 100% 0 no-repeat;
+.section01 .free .free_in h3{width:100%;text-align: center;font-size: 28px; color:#ff004b; font-weight:900;letter-spacing: -0.01em;padding:15px 0 7px;
+	background:url('../img/main/free_st.png') 75% 0 no-repeat;
 }
-.section01 .free .free_in ul li {position:relative;padding:0 5px; border-bottom:1px solid #ddd;text-align:left;height:75px;line-height:75px;font-size:20px;font-weight:900;color:#000;}
+.section01 .free .free_in ul li {position:relative;padding: 20px 0 20px 100px;border-bottom:1px solid #ddd;text-align:left;line-height:20px;font-size:20px;font-weight:900;color:#000;}
 .section01 .free .free_in ul li:last-child{bordeR:none;}
 .section01 .free .free_in ul li b{color:#ff004b;}
-.section01 .free .free_in ul li .date {display:inline-block;width:85px; height: 23px; line-height: 23px; background-color:#ff004b;
+.section01 .free .free_in ul li b.long {font-size:17px;}
+.section01 .free .free_in ul li .date {position:absolute; left:0; top:20px;display:inline-block;width:85px; height: 23px; line-height: 23px; background-color:#ff004b;
 	text-align:center;margin:0 15px 0 0;color:#fff;font-size:17px;
 	border-radius: 23px;
 	-webkit-border-radius: 23px;
 	-moz-border-radius: 23px;
 }
-.section01 .free .free_in ul li .icon {position:absolute; top:12px; right:20px;}
+.section01 .free .free_in ul li .icon {position:absolute; top:23%; right:20px;}
 
 
 
@@ -178,7 +179,13 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 #footer_content address b{display:block;color:#9e095d;padding:13px 0 0 0;}
 #footer_content address img {padding:0 7px;}
 
-
+#go_top {opacity: 0;
+	transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease; /* Firefox 4 */
+	-webkit-transition: all 0.5s ease; /* Safari and Chrome */
+	-o-transition: all 0.5s ease; /* Opera */
+}
+#go_top a {position:fixed; bottom:50px;right:40px;}
 
 
 /*Quick Menu */
@@ -242,11 +249,35 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 
 
 /* PROGRAM */
-.program table thead tr th{background-color:#5e0875;padding:20px 0;font-size:19px;font-weight: 900;color: #fff;;}
-.program table thead tr th:first-child {border-radius:62px 0 0 62px;}
-.program table thead tr th:last-child {border-radius:0 62px 62px 0;}
-.program table tbody tr td{border-bottom:1px solid #ccc; padding:25px 0; text-align: center;font-size:18px;color:#000; font-weight:900;}
-.program table tbody tr td.time{color:#5e0875; font-weight: 400;}
+.program .boxing {margin:0 0 60px 0;}
+.program table.de_tb thead tr th{background-color:#5e0875;padding:20px 0;font-size:19px;font-weight: 900;color: #fff;;}
+.program table.de_tb thead tr th:first-child {border-radius:62px 0 0 62px;}
+.program table.de_tb thead tr th:last-child {border-radius:0 62px 62px 0;}
+.program table.de_tb tbody tr td{border-bottom:1px solid #ccc; padding:25px 0; text-align: center;font-size:18px;color:#000; font-weight:900;}
+.program table.de_tb tbody tr td.time{color:#5e0875; font-weight: 400;}
+
+.program table.glance_tb  {border-spacing: 5px;border-collapse: separate;}
+.program table.glance_tb thead tr th.pur {background-color:#5e0875;padding:20px 0;font-size:22px;font-weight: 900;color: #fff;
+	border-radius:65px;
+	-webkit-border-radius:65px;
+	-moz-border-radius:65px;
+}
+.program table.glance_tb thead tr.gray th {background-color:#f4f4f4; padding:22px 5px; font-size:19px; color:#5e0875;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+}
+.program table.glance_tb tbody tr td {height:50px;font-size:19px;font-weight:900;}
+.program table.glance_tb tbody tr td.time {padding: 15px 5px; border-bottom:1px solid #ddd;text-align:center;color:#5e0875;font-size:17px;font-weight:400;}
+.program table.glance_tb tbody tr td.normal {padding: 15px 5px; border-bottom:1px solid #ddd;text-align:center;color:#000;font-weight:400;}
+.program table.glance_tb tbody tr td > div {height:100%;text-align:center; display: flex;align-items: center;justify-content: center;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+.program table.glance_tb tbody tr td .c01 {background-color:#fde2ec;}
+.program table.glance_tb tbody tr td .c02 {background-color:#f6e2fd;}
+.program table.glance_tb tbody tr td .c03 {background-color:#e2e8fd;}
+.program table.glance_tb tbody tr td .c04 {background-color:#f9fde2;}
 
 
 /* Guideline */
@@ -438,10 +469,11 @@ select {
 	.section01 .free .free_in .tit{top:-30px; left:-41px;}
 	.section01 .free .free_in .tit img{width:120px;}
 	.section01 .free .free_in h3{font-size: 20px; padding:15px 0 5px;background:none;}
-	.section01 .free .free_in ul li {height:60px;line-height:60px;font-size:15px;padding-right:40px;}
-	.section01 .free .free_in ul li .date {width:60px; height: 20px; line-height: 20px;margin:0 10px 0 0;font-size:13px;}
-	.section01 .free .free_in ul li .icon {position:absolute; top:10px; right:0px;}
-	.section01 .free .free_in ul li .icon img{width:35px;}
+	.section01 .free .free_in ul li {line-height:18px;font-size:15px;padding:10px 0 10px 70px;}
+	.section01 .free .free_in ul li .date {width:50px; height:17px; line-height: 17px;font-size:11px;top:10px;}
+	.section01 .free .free_in ul li .icon {position:absolute; top:20%; right:0px;}
+	.section01 .free .free_in ul li .icon img{width:25px;}
+	.section01 .free .free_in ul li b.long {font-size:13px;}
 
 
 	/* section02 */
@@ -475,6 +507,9 @@ select {
 	#footer_content address {font-size:13px; line-height:20px;word-break: keep-all;}
 		
 
+	#go_top {display: none;}
+
+
 	/* sub-layout */
 	#subvisual {height:270px; background:url('../img/sub/subvisual.png') 58% 100% no-repeat;background-size:cover;}
 	#subvisual  .sub_txt {width:auto;  top:90px;}
@@ -500,7 +535,7 @@ select {
 	#leftmenu {padding:50px 0 20px;}
 	#leftmenu a{font-size:15px;padding:5px 7px;}
 
-	#subtitle {padding:0 0 40px; text-align: center;}
+	#subtitle {padding:30px 0 40px; text-align: center;}
 	#subtitle h3 {font-size:27px; padding:0 10px;}
 
 	#con_area {width:auto; padding:0 20px 100px; }
@@ -510,8 +545,18 @@ select {
 
 
 	/* PROGRAM */
-	.program table thead tr th{padding:12px 0;font-size:14px;}
-	.program table tbody tr td{padding:20px 5px;font-size:14px;}
+	.program table.de_tb thead tr th{padding:15px 3px;font-size:14px;}
+	.program table.de_tb tbody tr td{padding:15px 3px;font-size:13px;}
+
+	.program table.glance_tb thead tr th.pur {padding:15px 3px;font-size:14px;}
+	.program table.glance_tb thead tr.gray th {padding:15px 3px; font-size:13px; }
+	.program table.glance_tb tbody tr td {height:30px;font-size:12px;}
+	.program table.glance_tb tbody tr td.time {padding: 12px 3px;font-size:12px;}
+	.program table.glance_tb tbody tr td.normal {padding: 12px 3px;}
+	.program table.glance_tb tbody tr td > div {height:100%;text-align:center; display: flex;align-items: center;justify-content: center;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+	}
 
 
 	/* Guideline */
@@ -587,9 +632,9 @@ select {
 		.section01 .free .free_in .tit{top:-30px; left:-32px;}
 		.section01 .free .free_in .tit img{width:90px;}
 		.section01 .free .free_in h3{font-size:15px;padding:10px 0;}
-		.section01 .free .free_in ul li {height:auto;line-height:18px;font-size:15px;padding:10px  38px 10px 0;}
-		.section01 .free .free_in ul li .date {display:block;width:80px;margin:0 0 3px 0;}
-		.section01 .free .free_in ul li .icon {position:absolute; top:20px; right:0px;}
+		.section01 .free .free_in ul li {height:auto;line-height:14px;font-size:13px;padding:10px  38px 10px 0;}
+		.section01 .free .free_in ul li .date {display:block;position:static;width:80px;margin:0 0 3px 0;}
+		.section01 .free .free_in ul li .icon {position:absolute; top:15px; right:0px;}
 		.section01 .free .free_in ul li .icon img{width:35px;}
 		.section02 .sec02_in a {font-size:17px;}
 
