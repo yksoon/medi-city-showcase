@@ -25,7 +25,7 @@ const Section01 = (props) => {
                             <p className="tit">
                                 <img src="img/web/main/free_tit.png" alt="" />
                             </p>
-                            <h3>For all 24-25 event participants</h3>
+                            <h3>For All of you</h3>
                             <ul>
                                 <li>
                                     <span className="date">1/24</span>Westin
@@ -48,11 +48,24 @@ const Section01 = (props) => {
                                     </span>
                                 </li>
                                 <li>
-                                    <span className="date">1/24-25</span>
-                                    <b>Gifts</b>
+                                    <span className="date">1/24-25</span>Gifts
                                     <span className="icon">
                                         <img
                                             src="img/web/main/f_icon03.png"
+                                            alt=""
+                                        />
+                                    </span>
+                                </li>
+                                <li>
+                                    <span className="date">1/24-25</span>Free
+                                    Admission
+                                    <br />
+                                    <b className="long">
+                                        (Only for Indonesian Participants)
+                                    </b>
+                                    <span className="icon">
+                                        <img
+                                            src="img/web/main/f_icon04.png"
                                             alt=""
                                         />
                                     </span>

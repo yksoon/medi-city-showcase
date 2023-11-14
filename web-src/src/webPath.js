@@ -260,12 +260,17 @@ const apiPath = {
         base_api_url + slash + version + slash
     }reg/_user${slash}`,
 
+    // /v1/reg/_user
+    // POST
+    // 참가자관리 등록
+    api_admin_reg_reg_user: `${
+        base_api_url + slash + version + slash
+    }reg/_user`,
+
     // /v1/reg/user
     // PUT
-    // 참가자관리 상세
-    api_admin_mod_reg_users: `${
-        base_api_url + slash + version + slash
-    }reg/user`,
+    // 참가자관리 수정
+    api_admin_mod_reg_user: `${base_api_url + slash + version + slash}reg/user`,
 
     // /v1/reg/user/{registration_idx}/{institution_idxs}
     // DELETE

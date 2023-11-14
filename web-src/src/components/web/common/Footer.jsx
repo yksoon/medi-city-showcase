@@ -1,14 +1,39 @@
 import { CommonSpinner } from "common/js/Common";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
+import { Link } from "react-router-dom";
 
 function Footer() {
     const isSpinner = useRecoilValue(isSpinnerAtom);
 
+    useEffect(() => {
+        // 상단으로이동 퀵버튼 등장
+        document.addEventListener("scroll", function () {
+            let currentScrollValue = document.documentElement.scrollTop;
+            let gotop = document.getElementById("go_top");
+
+            if (currentScrollValue > 100) {
+                gotop.style.opacity = "1";
+            } else {
+                gotop.style.opacity = "0";
+            }
+        });
+    }, []);
+
+    const goToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     return (
         <>
             {/* footer //S */}
+            <div id="go_top">
+                <Link to="" onClick={goToTop}>
+                    <img src="img/common/go_top.png" alt="상단으로 이동" />
+                </Link>
+            </div>
+
             <div id="footer">
                 <div id="footer_content">
                     <address>

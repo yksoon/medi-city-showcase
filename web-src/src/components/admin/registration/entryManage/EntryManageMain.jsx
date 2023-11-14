@@ -509,13 +509,13 @@ const EntryManageMain = (props) => {
                             className="btn_box btn_right"
                             style={{ margin: 0 }}
                         >
-                            {/*<Link*/}
-                            {/*    to=""*/}
-                            {/*    className="subbtn on"*/}
-                            {/*    onClick={regBoard}*/}
-                            {/*>*/}
-                            {/*    등록*/}
-                            {/*</Link>*/}
+                            <Link
+                                to=""
+                                className="subbtn on"
+                                onClick={regBoard}
+                            >
+                                등록
+                            </Link>
                             <Link
                                 to=""
                                 className="subbtn del"

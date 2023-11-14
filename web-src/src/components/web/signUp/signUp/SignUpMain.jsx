@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Header from "components/web/common/Header";
 import FooterSub from "components/web/common/FooterSub";
 import Footer from "components/web/common/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { apiPath, routerPath } from "webPath";
 import useAlert from "hook/useAlert";
 import useConfirm from "hook/useConfirm";
@@ -20,6 +20,8 @@ const SignUpMain = () => {
     const { confirm } = useConfirm();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    const navigate = useNavigate();
 
     const codes = useRecoilValue(codesAtom);
 
@@ -147,7 +149,6 @@ const SignUpMain = () => {
             name_last_en: "",
             people_memo: "",
             position: "",
-            user_idx: "",
             relationship_type: "000",
             idx: 1,
         };
@@ -233,7 +234,6 @@ const SignUpMain = () => {
             name_last_en: "",
             people_memo: "",
             position: "",
-            user_idx: "",
             relationship_type: "100",
             idx: entryInfo[entryInfo.length - 1].idx + 1,
         };
@@ -349,8 +349,102 @@ const SignUpMain = () => {
     }, [registrationInfo, entryInfo, interpretationCostYn]);
 
     // 사전등록 버튼
-    const regEntry = () => {
+    const regEntry = (method) => {
         if (validation()) {
+            CommonNotify({
+                type: "confirm",
+                hook: confirm,
+                message: "Would you like to apply as a participant like this?",
+                callback: () => doRegEntry(),
+            });
+
+            const doRegEntry = () => {
+                setIsSpinner(true);
+
+                let url;
+                if (method === "reg") {
+                    // /v1/reg
+                    // POST
+                    // 사전등록 등록
+                    url = apiPath.api_admin_reg_reg_user;
+                } else if (method === "mod") {
+                    // /v1/reg
+                    // PUT
+                    // 사전등록 수정
+                    url = apiPath.api_admin_mod_reg_users;
+                }
+
+                const data = {
+                    payment_status: "000", // 결제상태 000: 결제대기
+                    additional_status: "000", // 참가상태 000: 참가등록
+                    institution_type: "000", // 000: 병원
+                    institution_name_ko: institutionNameEn.current.value,
+                    institution_name_en: institutionNameEn.current.value,
+                    addr1_ko: addr1Ko.current.value,
+                    addr2_ko: addr2En.current.value,
+                    addr1_en: addr1En.current.value,
+                    addr2_en: addr2En.current.value,
+                    zipcode: zipcode.current.value,
+                    fax1: fax1.current.value,
+                    fax2: fax2.current.value,
+                    fax3: fax3.current.value,
+                    mobile1: mobile1.current.value,
+                    mobile2: mobile2.current.value,
+                    mobile3: mobile3.current.value,
+                    name_first_ko: nameLastEn.current.value,
+                    name_last_ko: nameFirstEn.current.value,
+                    name_first_en: nameFirstEn.current.value,
+                    name_last_en: nameLastEn.current.value,
+                    email: email.current.value,
+                    inter_phone_number: "82",
+                    entry_info: entryInfo,
+                    show_yn: "Y",
+                    registration_idx: registrationInfo.registration_idx,
+                    interpretation_cost_yn: interpretationCostYn,
+                };
+
+                const restParams = {
+                    method:
+                        method === "reg"
+                            ? "post"
+                            : method === "mod"
+                            ? "put"
+                            : "",
+                    url: url,
+                    data: data,
+                    err: err,
+                    callback: (res) => responseLogic(res),
+                };
+
+                CommonRest(restParams);
+
+                const responseLogic = (res) => {
+                    let result_code = res.headers.result_code;
+                    if (result_code === successCode.success) {
+                        setIsSpinner(false);
+
+                        CommonNotify({
+                            type: "alert",
+                            hook: alert,
+                            message:
+                                method === "reg"
+                                    ? "Participant registration application has been completed"
+                                    : method === "mod"
+                                    ? "Participant modification has been completed"
+                                    : "",
+                            callback: () => navigate(routerPath.web_main_url),
+                        });
+                    } else {
+                        setIsSpinner(false);
+
+                        CommonNotify({
+                            type: "alert",
+                            hook: alert,
+                            message: "Please try again in a few minutes",
+                        });
+                    }
+                };
+            };
         }
     };
 
@@ -378,25 +472,28 @@ const SignUpMain = () => {
         };
 
         if (!institutionNameEn.current.value) {
-            noti(institutionNameEn, "기관명을 입력해주세요");
+            noti(
+                institutionNameEn,
+                "Please enter Plastic & Aesthetic Clinic Name",
+            );
 
             return false;
         }
 
         if (!addr1En.current.value) {
-            noti(addr1En, "주소를 입력해주세요");
+            noti(addr1En, "Please enter your address");
 
             return false;
         }
 
         if (!addr2En.current.value) {
-            noti(addr2En, "상세 주소를 입력해주세요");
+            noti(addr2En, "Please enter detailed address");
 
             return false;
         }
 
         if (!nameFirstEn.current.value || !nameLastEn.current.value) {
-            noti(nameFirstEn, "담당자명을 입력해주세요");
+            noti(nameFirstEn, "Please enter the name of the contact person");
 
             return false;
         }
@@ -406,13 +503,13 @@ const SignUpMain = () => {
             !mobile2.current.value ||
             !mobile3.current.value
         ) {
-            noti(mobile1, "연락처를 입력해주세요");
+            noti(mobile1, "Please enter your phone number");
 
             return false;
         }
 
         if (!email.current.value) {
-            noti(email, "이메일을 입력해주세요");
+            noti(email, "Please enter your e-mail");
 
             return false;
         }
@@ -423,13 +520,13 @@ const SignUpMain = () => {
                 !entryInfo[i]["name_first_en"] ||
                 !entryInfo[i]["name_last_en"]
             ) {
-                notiEntry("참가자 이름을 입력해주세요");
+                notiEntry("Please enter participant name");
 
                 return false;
             }
 
             if (!entryInfo[i]["duty"]) {
-                notiEntry("참가자 직책을 입력해주세요");
+                notiEntry("Please enter participant title");
 
                 return false;
             }
@@ -439,25 +536,25 @@ const SignUpMain = () => {
                 !entryInfo[i]["mobile2"] ||
                 !entryInfo[i]["mobile3"]
             ) {
-                notiEntry("참가자 연락처를 입력해주세요");
+                notiEntry("Please enter participant phone number");
 
                 return false;
             }
 
             if (!entryInfo[i]["email"]) {
-                notiEntry("참가자 이메일을 입력해주세요");
+                notiEntry("Please enter participant email");
 
                 return false;
             }
 
             if (!entryInfo[i]["birth"]) {
-                notiEntry("참가자 생년월일을 입력해주세요");
+                notiEntry("Please enter the participant's date of birth");
 
                 return false;
             }
 
             if (!entryInfo[i]["gender"]) {
-                notiEntry("참가자 성별을 입력해주세요");
+                notiEntry("Please enter participant gender");
 
                 return false;
             }
@@ -858,6 +955,7 @@ const SignUpMain = () => {
                                                 <td>
                                                     <input
                                                         type="date"
+                                                        placeholder="YYYY-MM-DD"
                                                         value={item.birth}
                                                         key={`${item.idx}_birth`}
                                                         onChange={(e) =>
@@ -888,7 +986,7 @@ const SignUpMain = () => {
                                                         }
                                                     >
                                                         <option value="">
-                                                            - 선택 -
+                                                            - Select -
                                                         </option>
                                                         {genderOption.length !==
                                                             0 &&
@@ -1137,7 +1235,7 @@ const SignUpMain = () => {
                                 type="submit"
                                 value="SUBMIT"
                                 name=""
-                                onClick={regEntry}
+                                onClick={() => regEntry("reg")}
                             />
                         </div>
                     </div>

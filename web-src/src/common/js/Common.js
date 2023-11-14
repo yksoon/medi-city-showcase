@@ -340,8 +340,8 @@ const CommonNotify = async (option) => {
             const resultAlert = await hook({
                 message: message,
                 buttons: {
-                    ok: "확인",
-                    cancel: "취소",
+                    ok: "Ok",
+                    cancel: "cancel",
                 },
             });
 

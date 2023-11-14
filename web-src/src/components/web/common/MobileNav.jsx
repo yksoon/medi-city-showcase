@@ -66,7 +66,7 @@ function MobileNav() {
                                     e.preventDefault();
                                 }}
                             >
-                                Participation Sign-up
+                                Plastic & Aesthetic Clinics SIGN-UP
                             </Link>
                             <ul
                                 id="nav2_s"

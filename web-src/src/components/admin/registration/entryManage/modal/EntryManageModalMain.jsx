@@ -10,6 +10,7 @@ import { apiPath } from "webPath";
 import { successCode } from "resultCode";
 import useConfirm from "hook/useConfirm";
 import CountrySelect from "common/js/countryAutocomplete";
+import { registration_idx } from "common/js/static";
 
 const EntryManageModalMain = (props) => {
     const { alert } = useAlert();
@@ -40,7 +41,11 @@ const EntryManageModalMain = (props) => {
     const [selectCountryOptions, setSelectCountryOptions] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState("82");
 
+    // 참가자
     const [entryInfo, setEntryInfo] = useState([]);
+
+    // 사전등록정보
+    const [registrationInfo, setRegistrationInfo] = useState([]);
 
     // refs
     const registrationIdx = useRef(null);
@@ -90,8 +95,8 @@ const EntryManageModalMain = (props) => {
 
     useEffect(() => {
         if (paymentTypeOption.length !== 0) {
-            // 수정일 경우 디폴트 세팅
-            isModData && setDefaultValue();
+            // 수정일 경우 디폴트 세팅 등록일경우 베이직
+            isModData ? setDefaultValue() : setBasicSetting();
         }
     }, [paymentTypeOption]);
 
@@ -179,32 +184,95 @@ const EntryManageModalMain = (props) => {
         }
     };
 
+    // 등록일 경우 베이직 세팅
+    const setBasicSetting = () => {
+        setIsSpinner(true);
+
+        const url = apiPath.api_admin_get_reg + registration_idx;
+        const data = {};
+
+        // 파라미터
+        const restParams = {
+            method: "get",
+            url: url,
+            data: data,
+            err: err,
+            admin: "Y",
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            if (res.headers.result_code === successCode.success) {
+                const result_info = res.data.result_info;
+
+                registrationTitleKo.current.value =
+                    result_info.registration_title_ko;
+                registrationTitleEn.current.value =
+                    result_info.registration_title_en;
+                registrationSubTitleKo.current.value =
+                    result_info.registration_sub_title_ko;
+                registrationSubTitleEn.current.value =
+                    result_info.registration_sub_title_en;
+
+                // 사전등록정보
+                setRegistrationInfo(result_info);
+
+                // 참가자 정보
+                setEntryInfoFunc();
+
+                setIsSpinner(false);
+            } else {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: res.headers.result_message_ko,
+                });
+            }
+        };
+    };
+
     // 참가자 인덱스 재정의
     const setEntryInfoFunc = () => {
         let newArr = [];
 
-        const len = modData.entry_info.length;
+        const len = isModData ? modData.entry_info.length : 1;
         for (let i = 0; i < len; i++) {
             let newObj = {
-                birth: modData.entry_info[i].birth,
-                birth_yyyy: modData.entry_info[i].birth_yyyy,
-                birth_mm: modData.entry_info[i].birth_mm,
-                birth_dd: modData.entry_info[i].birth_dd,
-                duty: modData.entry_info[i].duty,
-                email: modData.entry_info[i].email,
-                gender: modData.entry_info[i].gender_cd,
-                inter_phone_number: modData.entry_info[i].inter_phone_number,
-                mobile1: modData.entry_info[i].mobile1,
-                mobile2: modData.entry_info[i].mobile2,
-                mobile3: modData.entry_info[i].mobile3,
-                name_first_ko: modData.entry_info[i].name_first_ko,
-                name_last_ko: modData.entry_info[i].name_last_ko,
-                name_first_en: modData.entry_info[i].name_first_en,
-                name_last_en: modData.entry_info[i].name_last_en,
-                people_memo: modData.entry_info[i].people_memo,
-                position: modData.entry_info[i].position,
-                user_idx: modData.entry_info[i].user_idx,
-                relationship_type: modData.entry_info[i].relationship_type_cd,
+                birth: isModData ? modData.entry_info[i].birth : "",
+                birth_yyyy: isModData ? modData.entry_info[i].birth_yyyy : "",
+                birth_mm: isModData ? modData.entry_info[i].birth_mm : "",
+                birth_dd: isModData ? modData.entry_info[i].birth_dd : "",
+                duty: isModData ? modData.entry_info[i].duty : "",
+                email: isModData ? modData.entry_info[i].email : "",
+                gender: isModData ? modData.entry_info[i].gender_cd : "",
+                inter_phone_number: isModData
+                    ? modData.entry_info[i].inter_phone_number
+                    : "82",
+                mobile1: isModData ? modData.entry_info[i].mobile1 : "",
+                mobile2: isModData ? modData.entry_info[i].mobile2 : "",
+                mobile3: isModData ? modData.entry_info[i].mobile3 : "",
+                name_first_ko: isModData
+                    ? modData.entry_info[i].name_first_ko
+                    : "",
+                name_last_ko: isModData
+                    ? modData.entry_info[i].name_last_ko
+                    : "",
+                name_first_en: isModData
+                    ? modData.entry_info[i].name_first_en
+                    : "",
+                name_last_en: isModData
+                    ? modData.entry_info[i].name_last_en
+                    : "",
+                people_memo: isModData ? modData.entry_info[i].people_memo : "",
+                position: isModData ? modData.entry_info[i].position : "",
+                user_idx: isModData ? modData.entry_info[i].user_idx : "",
+                relationship_type: isModData
+                    ? modData.entry_info[i].relationship_type_cd
+                    : "",
                 idx: i + 1,
             };
             newArr.push(newObj);
@@ -266,7 +334,7 @@ const EntryManageModalMain = (props) => {
         setEntryInfo([...entryInfo, newItem]);
     };
 
-    const changeEntry = (e, value, idx, param) => {
+    const changeEntry = (e, idx, param) => {
         let newArr = entryInfo.filter((el) => el.idx !== idx);
         let orgItem = entryInfo.filter((el) => el.idx === idx)[0];
 
@@ -345,12 +413,12 @@ const EntryManageModalMain = (props) => {
             // /v1/reg
             // POST
             // 사전등록 등록
-            url = apiPath.api_admin_reg_regs;
+            url = apiPath.api_admin_reg_reg_user;
         } else if (method === "mod") {
             // /v1/reg
             // PUT
             // 사전등록 수정
-            url = apiPath.api_admin_mod_reg_users;
+            url = apiPath.api_admin_mod_reg_user;
         }
 
         const data = {
@@ -382,11 +450,14 @@ const EntryManageModalMain = (props) => {
             name_last_en: nameLastEn.current.value,
             email: email.current.value,
             institution_memo: institutionMemo.current.value,
-            institution_idx: modData.institution_idx,
+            institution_idx: method === "mod" ? modData.institution_idx : "",
             inter_phone_number: selectedCountry,
             entry_info: entryInfo,
-            show_yn: modData.show_yn,
-            registration_idx: modData.registration_idx,
+            show_yn: method === "mod" ? modData.show_yn : "Y",
+            registration_idx:
+                method === "mod"
+                    ? modData.registration_idx
+                    : registrationInfo.registration_idx,
             interpretation_cost_yn: interpretationCostYn.current.value,
         };
 
@@ -925,7 +996,7 @@ const EntryManageModalMain = (props) => {
                                         <input
                                             type="text"
                                             className="input w140"
-                                            defaultValue={item.name_first_ko}
+                                            value={item.name_first_ko}
                                             placeholder="성"
                                             key={`${item.idx}_name_first_ko`}
                                             onChange={(e) =>
@@ -939,7 +1010,7 @@ const EntryManageModalMain = (props) => {
                                         <input
                                             type="text"
                                             className="input w140"
-                                            defaultValue={item.name_last_ko}
+                                            value={item.name_last_ko}
                                             placeholder="이름"
                                             key={`${item.idx}_name_last_ko`}
                                             onChange={(e) =>
@@ -956,7 +1027,7 @@ const EntryManageModalMain = (props) => {
                                         <input
                                             type="text"
                                             className="input w140"
-                                            defaultValue={item.name_first_en}
+                                            value={item.name_first_en}
                                             placeholder="First Name"
                                             key={`${item.idx}_name_first_en`}
                                             onChange={(e) =>
@@ -970,7 +1041,7 @@ const EntryManageModalMain = (props) => {
                                         <input
                                             type="text"
                                             className="input w140"
-                                            defaultValue={item.name_last_en}
+                                            value={item.name_last_en}
                                             placeholder="Last Name"
                                             key={`${item.idx}_name_last_en`}
                                             onChange={(e) =>
@@ -988,7 +1059,7 @@ const EntryManageModalMain = (props) => {
                                     <td>
                                         <select
                                             className="wp100"
-                                            defaultValue={item.gender}
+                                            value={item.gender}
                                             key={`${item.idx}_gender`}
                                             onChange={(e) =>
                                                 changeEntry(
@@ -998,6 +1069,7 @@ const EntryManageModalMain = (props) => {
                                                 )
                                             }
                                         >
+                                            <option value="">- 선택 -</option>
                                             {genderOption.length !== 0 &&
                                                 genderOption.map(
                                                     (item2, idx2) => (
@@ -1018,7 +1090,7 @@ const EntryManageModalMain = (props) => {
                                         <input
                                             type="date"
                                             className="input wp100"
-                                            defaultValue={item.birth}
+                                            value={item.birth}
                                             key={`${item.idx}_birth`}
                                             onChange={(e) =>
                                                 changeEntry(
@@ -1033,26 +1105,6 @@ const EntryManageModalMain = (props) => {
                                 <tr>
                                     <th>국가코드</th>
                                     <td>
-                                        {/*<Select*/}
-                                        {/*    className="select"*/}
-                                        {/*    id="interPhoneNumber"*/}
-                                        {/*    options={selectCountryOptions}*/}
-                                        {/*    defaultValue={selectCountryOptions.find(*/}
-                                        {/*        (e) =>*/}
-                                        {/*            e.value ===*/}
-                                        {/*            item.inter_phone_number,*/}
-                                        {/*    )}*/}
-                                        {/*    key={`${item.idx}_interPhoneNumber`}*/}
-                                        {/*    // key={selectedCountry}*/}
-                                        {/*    styles={customStyles}*/}
-                                        {/*    onChange={(e) =>*/}
-                                        {/*        changeEntry(*/}
-                                        {/*            e,*/}
-                                        {/*            item.idx,*/}
-                                        {/*            "inter_phone_number",*/}
-                                        {/*        )*/}
-                                        {/*    }*/}
-                                        {/*/>*/}
                                         <CountrySelect
                                             onChange={(e, value) =>
                                                 changeEntryCountry(
@@ -1071,7 +1123,7 @@ const EntryManageModalMain = (props) => {
                                         <input
                                             type="text"
                                             className="input w100"
-                                            defaultValue={item.mobile1}
+                                            value={item.mobile1}
                                             key={`${item.idx}_mobile1`}
                                             onChange={(e) =>
                                                 changeEntry(
@@ -1085,7 +1137,7 @@ const EntryManageModalMain = (props) => {
                                         <input
                                             type="text"
                                             className="input w100"
-                                            defaultValue={item.mobile2}
+                                            value={item.mobile2}
                                             key={`${item.idx}_mobile2`}
                                             onChange={(e) =>
                                                 changeEntry(
@@ -1099,7 +1151,7 @@ const EntryManageModalMain = (props) => {
                                         <input
                                             type="text"
                                             className="input w100"
-                                            defaultValue={item.mobile3}
+                                            value={item.mobile3}
                                             key={`${item.idx}_mobile3`}
                                             onChange={(e) =>
                                                 changeEntry(
@@ -1117,7 +1169,7 @@ const EntryManageModalMain = (props) => {
                                         <input
                                             type="text"
                                             className="input wp100"
-                                            defaultValue={item.position}
+                                            value={item.position}
                                             key={`${item.idx}_position`}
                                             onChange={(e) =>
                                                 changeEntry(
@@ -1133,7 +1185,7 @@ const EntryManageModalMain = (props) => {
                                         <input
                                             type="text"
                                             className="input wp100"
-                                            defaultValue={item.duty}
+                                            value={item.duty}
                                             key={`${item.idx}_duty`}
                                             onChange={(e) =>
                                                 changeEntry(e, item.idx, "duty")
@@ -1146,9 +1198,7 @@ const EntryManageModalMain = (props) => {
                                     <td>
                                         <select
                                             className="wp100"
-                                            defaultValue={
-                                                item.relationship_type
-                                            }
+                                            value={item.relationship_type}
                                             key={`${item.idx}_gender`}
                                             onChange={(e) =>
                                                 changeEntry(
@@ -1158,6 +1208,7 @@ const EntryManageModalMain = (props) => {
                                                 )
                                             }
                                         >
+                                            <option value="">- 선택 -</option>
                                             {relationshipTypeOption.length !==
                                                 0 &&
                                                 relationshipTypeOption.map(
@@ -1194,16 +1245,32 @@ const EntryManageModalMain = (props) => {
                     ))}
 
                 <div className="subbtn_box">
-                    <Link to="" className="subbtn del" onClick={clickRemove}>
-                        삭제
-                    </Link>
-                    <Link
-                        to=""
-                        className="subbtn on"
-                        onClick={() => regModBoard("mod")}
-                    >
-                        수정
-                    </Link>
+                    {isModData ? (
+                        <>
+                            <Link
+                                to=""
+                                className="subbtn del"
+                                onClick={clickRemove}
+                            >
+                                삭제
+                            </Link>
+                            <Link
+                                to=""
+                                className="subbtn on"
+                                onClick={() => regModBoard("mod")}
+                            >
+                                수정
+                            </Link>
+                        </>
+                    ) : (
+                        <Link
+                            to=""
+                            className="subbtn on"
+                            onClick={() => regModBoard("reg")}
+                        >
+                            등록
+                        </Link>
+                    )}
                     <Link
                         to=""
                         className="subbtn off"
