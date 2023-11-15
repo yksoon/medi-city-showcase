@@ -48,6 +48,14 @@ const routerPath = {
     // /signup/signup
     web_signup_signup_url: `${base_url}signup/signup`,
 
+    // 사전등록 참가자 확인
+    // /signup/check_entry
+    web_signup_check_entry_url: `${base_url}signup/check_entry`,
+
+    // 사전등록 확인
+    // /signup/confirmation
+    web_signup_confirmation_url: `${base_url}signup/confirmation`,
+
     // ---------------------- admin -------------------------
     // 메인
     // /admin
@@ -278,6 +286,13 @@ const apiPath = {
     api_admin_remove_reg_users: `${
         base_api_url + slash + version + slash
     }reg/user${slash}`,
+
+    // /v1/reg/_confirm
+    // POST
+    // 참가자 확인
+    api_admin_get_reg_confirm: `${
+        base_api_url + slash + version + slash
+    }reg/_confirm`,
 };
 
 export { routerPath, apiPath };

@@ -1225,8 +1225,26 @@ const EntryManageModalMain = (props) => {
                                                 )}
                                         </select>
                                     </td>
+                                    <th>이메일</th>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            className="input wp100"
+                                            value={item.email}
+                                            key={`${item.idx}_email`}
+                                            onChange={(e) =>
+                                                changeEntry(
+                                                    e,
+                                                    item.idx,
+                                                    "email",
+                                                )
+                                            }
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td
-                                        colSpan={2}
+                                        colSpan={4}
                                         style={{ textAlign: "right" }}
                                     >
                                         <Link

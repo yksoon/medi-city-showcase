@@ -12,6 +12,7 @@ import Forbidden from "Forbidden";
 import Program from "components/web/program/Program";
 import Guideline from "components/web/participation/guideline/Guideline";
 import SignUpMain from "components/web/signUp/signUp/SignUpMain";
+import CheckEntryMain from "components/web/signUp/checkEntry/CheckEntryMain";
 
 // Router
 const Router = () => {
@@ -76,6 +77,22 @@ const Router = () => {
                     <Route
                         path={routerPath.web_signup_signup_url}
                         element={<SignUpMain />}
+                        // render={() => <SignUpMain />}
+                    />
+
+                    {/* 사전등록 참가자 확인 */}
+                    {/* URL : /signup/check_entry */}
+                    <Route
+                        path={routerPath.web_signup_check_entry_url}
+                        element={<CheckEntryMain />}
+                    />
+
+                    {/* 사전등록 확인 */}
+                    {/* URL : /signup/confirmation */}
+                    <Route
+                        path={routerPath.web_signup_confirmation_url}
+                        element={<SignUpMain />}
+                        // render={() => <SignUpMain />}
                     />
 
                     {/* 404 */}

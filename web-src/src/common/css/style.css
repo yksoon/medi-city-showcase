@@ -337,6 +337,14 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .signup .gray{ background-color:#f5f5f5; padding:25px ; font-size:17px; color:#000; line-height:28px;}
 
 
+/* signup aconfirmation login*/
+.nm_login  .loginbox {width:600px; margin:0 auto;}
+.nm_login  .loginbox .inp{width:100%; margin:0 0 10px 0;}
+.nm_login  .loginbox .inp input {width:100%; border:1px solid #ccc; height:60px;font-size:17px; padding-left:20px;font-family: inherit;outline:none;}
+.nm_login  .loginbox .inp input:focus {border-color:#59047f;}
+.nm_login  .loginbox input[type="submit"] {width:100%; height:70px; background-color: #59047f; color:#fff; font-size: 20px; font-weight: 600; font-family: inherit;outline:none; bordeR:none;cursor:pointer;}
+.nm_login .loginbox input[type="submit"]:hover, .nm_login .loginbox input[type="submit"]:focus {background-color: #47005a;}
+
 
 /* IE */
 select::-ms-expand { 
@@ -608,6 +616,10 @@ select {
 	.signup .boxing table tbody tr td.del_td a img {width:21px;}
 	
 
+	/* signup aconfirmation login*/
+	.nm_login  .loginbox {width:90%; }
+	.nm_login  .loginbox .inp input {height:55px;font-size:14px; padding-left:15px;}
+	.nm_login  .loginbox input[type="submit"] {height:65px;font-size:18px;}
 
 
 

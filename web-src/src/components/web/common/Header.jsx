@@ -48,7 +48,13 @@ function Header() {
                                     <Link to={routerPath.web_signup_signup_url}>
                                         Online Sign-up
                                     </Link>
-                                    <Link href="">Sign-up Confirmation</Link>
+                                    <Link
+                                        to={
+                                            routerPath.web_signup_check_entry_url
+                                        }
+                                    >
+                                        Sign-up Confirmation
+                                    </Link>
                                 </div>
                             </li>
                             <li className="left_p">

@@ -518,6 +518,7 @@ select {
 	#subvisual  .sub_txt_in h2 img{width:90%; max-width:350px;}
 	#subvisual  .sub_txt_in > h3{font-size:11px; margin:0 0 30px 0;}
 	#subvisual  .sub_txt_in > h4{font-size:22px;}
+	#subvisual  .sub_txt_in > h4.long {font-size:18px;}
 
 	.sub_quick {height:180px;background:none;}
 	.sub_quick .quick_in {width:100%; height:180px; display:block;}
@@ -602,6 +603,9 @@ select {
 	.signup .btn_box {text-align:center;}
 	.signup .btn_box input[type="submit"]{height:50px;line-height: 50px; padding:0 30px; font-size:20px;min-width:150px;}
 	
+	.signup .boxing table.add_tb {position:relative;}
+	.signup .boxing table tbody tr td.del_td {position:absolute;top:0;right:0;border:none;background-color:#f4f4f4;height:39px;}
+	.signup .boxing table tbody tr td.del_td a img {width:21px;}
 	
 
 
