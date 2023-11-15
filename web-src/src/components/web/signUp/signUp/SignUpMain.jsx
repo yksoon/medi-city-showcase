@@ -16,6 +16,23 @@ import { Checkbox } from "@mui/material";
 import { commaOfNumber } from "common/js/Pattern";
 import { useLocation } from "react-router";
 
+// 결제상태 코드 영어
+const payment_status_en = {
+    "000": "Payment pending",
+    "010": "Payment completed",
+    "020": "Payment canceled",
+    900: "Other",
+};
+
+// 참가상태 코드 영어
+const additional_status_en = {
+    "000": "Registration",
+    100: "Waitlisted",
+    200: "Confirmed participation",
+    300: "Cancellation",
+    900: "Other",
+};
+
 const SignUpMain = (props) => {
     const { alert } = useAlert();
     const { confirm } = useConfirm();
@@ -115,6 +132,8 @@ const SignUpMain = (props) => {
     const fax3 = useRef(null);
     const entryPersonNumber = useRef(null);
     const interpretationCostCheck = useRef(null);
+    const paymentStatus = useRef(null);
+    const additionalStatus = useRef(null);
 
     // 참가자 정보
     const [entryInfo, setEntryInfo] = useState([]);
@@ -145,6 +164,14 @@ const SignUpMain = (props) => {
         // 성별
         const genderArr = codes.filter((el) => el.code_type === "GENDER");
 
+        for (let i = 0; i < genderArr.length; i++) {
+            if (genderArr[i].code_key === "0") {
+                genderArr[i] = { ...genderArr[i], code_value_en: "Man" };
+            } else if (genderArr[i].code_key === "1") {
+                genderArr[i] = { ...genderArr[i], code_value_en: "Woman" };
+            }
+        }
+        // console.log(genderArr);
         setGenderOption(genderArr);
 
         institutionNameEn.current.value = modData.institution_name_en;
@@ -160,11 +187,13 @@ const SignUpMain = (props) => {
         fax1.current.value = modData.fax1;
         fax2.current.value = modData.fax2;
         fax3.current.value = modData.fax3;
+        paymentStatus.current.innerText =
+            payment_status_en[modData.payment_status_cd];
+        additionalStatus.current.innerText =
+            additional_status_en[modData.additional_status_cd];
 
         interpretationCostCheck.current.checked =
             modData.interpretation_cost_yn === "Y";
-
-        console.log(interpretationCostCheck);
 
         setEntryInfo(modData.entry_info);
     };
@@ -217,7 +246,13 @@ const SignUpMain = (props) => {
 
         // 성별
         const genderArr = codes.filter((el) => el.code_type === "GENDER");
-
+        for (let i = 0; i < genderArr.length; i++) {
+            if (genderArr[i].code_key === "0") {
+                genderArr[i] = { ...genderArr[i], code_value_en: "Man" };
+            } else if (genderArr[i].code_key === "1") {
+                genderArr[i] = { ...genderArr[i], code_value_en: "Woman" };
+            }
+        }
         setGenderOption(genderArr);
     };
 
@@ -685,9 +720,12 @@ const SignUpMain = (props) => {
                                 <h3 className="c_tit">
                                     Plastic & Aesthetic Clinics Information
                                 </h3>
-                                <p className="r_noti">
-                                    (<span className="red">*</span>) Required
-                                </p>
+                                {isSignup && (
+                                    <p className="r_noti">
+                                        (<span className="red">*</span>)
+                                        Required
+                                    </p>
+                                )}
                                 <table>
                                     <colgroup>
                                         <col width="30%" />
@@ -697,7 +735,11 @@ const SignUpMain = (props) => {
                                         <tr>
                                             <th>
                                                 Plastic & Aesthetic Clinic Name{" "}
-                                                <span className="red">*</span>
+                                                {isSignup && (
+                                                    <span className="red">
+                                                        *
+                                                    </span>
+                                                )}
                                             </th>
                                             <td>
                                                 <input
@@ -710,7 +752,11 @@ const SignUpMain = (props) => {
                                         <tr>
                                             <th>
                                                 Address{" "}
-                                                <span className="red">*</span>
+                                                {isSignup && (
+                                                    <span className="red">
+                                                        *
+                                                    </span>
+                                                )}
                                             </th>
                                             <td>
                                                 <input
@@ -763,7 +809,11 @@ const SignUpMain = (props) => {
                                         <tr>
                                             <th>
                                                 The name of the contact person{" "}
-                                                <span className="red">*</span>
+                                                {isSignup && (
+                                                    <span className="red">
+                                                        *
+                                                    </span>
+                                                )}
                                             </th>
                                             <td>
                                                 <input
@@ -785,7 +835,11 @@ const SignUpMain = (props) => {
                                         <tr>
                                             <th>
                                                 TEL{" "}
-                                                <span className="red">*</span>
+                                                {isSignup && (
+                                                    <span className="red">
+                                                        *
+                                                    </span>
+                                                )}
                                             </th>
                                             <td>
                                                 <input
@@ -813,7 +867,11 @@ const SignUpMain = (props) => {
                                         <tr>
                                             <th>
                                                 E-mail{" "}
-                                                <span className="red">*</span>
+                                                {isSignup && (
+                                                    <span className="red">
+                                                        *
+                                                    </span>
+                                                )}
                                             </th>
                                             <td>
                                                 <input
@@ -848,6 +906,46 @@ const SignUpMain = (props) => {
                                                 />
                                             </td>
                                         </tr>
+                                        {isConfirmation && (
+                                            <>
+                                                <tr>
+                                                    <th>Payment Status</th>
+                                                    <td>
+                                                        {/*<input*/}
+                                                        {/*    type="text"*/}
+                                                        {/*    className="input_m"*/}
+                                                        {/*    ref={paymentStatus}*/}
+                                                        {/*    readOnly={*/}
+                                                        {/*        isConfirmation*/}
+                                                        {/*    }*/}
+                                                        {/*/>*/}
+                                                        <p
+                                                            ref={paymentStatus}
+                                                        ></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Additional Status</th>
+                                                    <td>
+                                                        {/*<input*/}
+                                                        {/*    type="text"*/}
+                                                        {/*    className="input_m"*/}
+                                                        {/*    ref={*/}
+                                                        {/*        additionalStatus*/}
+                                                        {/*    }*/}
+                                                        {/*    readOnly={*/}
+                                                        {/*        isConfirmation*/}
+                                                        {/*    }*/}
+                                                        {/*/>*/}
+                                                        <p
+                                                            ref={
+                                                                additionalStatus
+                                                            }
+                                                        ></p>
+                                                    </td>
+                                                </tr>
+                                            </>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
@@ -856,9 +954,12 @@ const SignUpMain = (props) => {
                                 <h3 className="c_tit">
                                     Participant Information
                                 </h3>
-                                <p className="r_noti">
-                                    (<span className="red">*</span>) Required
-                                </p>
+                                {isSignup && (
+                                    <p className="r_noti">
+                                        (<span className="red">*</span>)
+                                        Required
+                                    </p>
+                                )}
 
                                 {isSignup && (
                                     <div className="addzone">
@@ -903,9 +1004,11 @@ const SignUpMain = (props) => {
                                                 <tr>
                                                     <th>
                                                         Name{" "}
-                                                        <span className="red">
-                                                            *
-                                                        </span>
+                                                        {isSignup && (
+                                                            <span className="red">
+                                                                *
+                                                            </span>
+                                                        )}
                                                     </th>
                                                     <td>
                                                         <input
@@ -946,18 +1049,22 @@ const SignUpMain = (props) => {
                                                                 isConfirmation
                                                             }
                                                         />
-                                                        <p className="rednoti">
-                                                            {" "}
-                                                            Must Match the
-                                                            English Spelling on
-                                                            the Passport.
-                                                        </p>
+                                                        {isSignup && (
+                                                            <p className="rednoti">
+                                                                {" "}
+                                                                Must Match the
+                                                                English Spelling
+                                                                on the Passport.
+                                                            </p>
+                                                        )}
                                                     </td>
                                                     <th>
                                                         Title{" "}
-                                                        <span className="red">
-                                                            *
-                                                        </span>
+                                                        {isSignup && (
+                                                            <span className="red">
+                                                                *
+                                                            </span>
+                                                        )}
                                                     </th>
                                                     <td>
                                                         <input
@@ -1001,9 +1108,11 @@ const SignUpMain = (props) => {
                                                 <tr>
                                                     <th>
                                                         TEL{" "}
-                                                        <span className="red">
-                                                            *
-                                                        </span>
+                                                        {isSignup && (
+                                                            <span className="red">
+                                                                *
+                                                            </span>
+                                                        )}
                                                     </th>
                                                     <td>
                                                         <input
@@ -1059,9 +1168,11 @@ const SignUpMain = (props) => {
                                                     </td>
                                                     <th>
                                                         E-mail{" "}
-                                                        <span className="red">
-                                                            *
-                                                        </span>
+                                                        {isSignup && (
+                                                            <span className="red">
+                                                                *
+                                                            </span>
+                                                        )}
                                                     </th>
                                                     <td>
                                                         <input
@@ -1084,9 +1195,11 @@ const SignUpMain = (props) => {
                                                 <tr>
                                                     <th>
                                                         Birth{" "}
-                                                        <span className="red">
-                                                            *
-                                                        </span>
+                                                        {isSignup && (
+                                                            <span className="red">
+                                                                *
+                                                            </span>
+                                                        )}
                                                     </th>
                                                     <td>
                                                         <input
@@ -1108,9 +1221,11 @@ const SignUpMain = (props) => {
                                                     </td>
                                                     <th>
                                                         Gender{" "}
-                                                        <span className="red">
-                                                            *
-                                                        </span>
+                                                        {isSignup && (
+                                                            <span className="red">
+                                                                *
+                                                            </span>
+                                                        )}
                                                     </th>
                                                     <td>
                                                         <select
@@ -1148,7 +1263,8 @@ const SignUpMain = (props) => {
                                                                             }
                                                                         >
                                                                             {
-                                                                                item2.code_value
+                                                                                // item2.code_value
+                                                                                item2.code_value_en
                                                                             }
                                                                         </option>
                                                                     ),

@@ -12,6 +12,7 @@ import { registration_idx } from "common/js/static";
 import { successCode } from "resultCode";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
+import { emailPattern } from "common/js/Pattern";
 
 const CheckEntryMain = () => {
     const { alert } = useAlert();
@@ -68,49 +69,105 @@ const CheckEntryMain = () => {
         };
     };
 
+    // 엔터키
+    const handleOnKeyPress = (e) => {
+        if (e.key === "Enter") {
+            doCheck(); // Enter 입력이 되면 클릭 이벤트 실행
+        }
+    };
+
     const doCheck = () => {
-        setIsSpinner(true);
+        if (validation()) {
+            setIsSpinner(true);
 
-        const url = apiPath.api_admin_get_reg_confirm;
-        const data = {
-            institution_name_ko: institutionName.current.value,
-            institution_name_en: institutionName.current.value,
-            email: email.current.value,
+            const url = apiPath.api_admin_get_reg_confirm;
+            const data = {
+                institution_name_ko: institutionName.current.value,
+                institution_name_en: institutionName.current.value,
+                email: email.current.value,
+            };
+
+            // 파라미터
+            const restParams = {
+                method: "post",
+                url: url,
+                data: data,
+                err: err,
+                callback: (res) => responsLogic(res),
+            };
+
+            CommonRest(restParams);
+
+            const responsLogic = (res) => {
+                if (res.headers.result_code === successCode.success) {
+                    const result_info = res.data.result_info;
+
+                    // setRegistrationInfo(result_info);
+                    // console.log(result_info);
+                    setIsSpinner(false);
+
+                    navigate(routerPath.web_signup_confirmation_url, {
+                        state: result_info,
+                    });
+                } else if (res.headers.result_code === successCode.noData) {
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        // message: res.headers.result_message_ko,
+                        message: "No matching information found",
+                    });
+
+                    setIsSpinner(false);
+                } else {
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        // message: res.headers.result_message_ko,
+                        message: "잠시후 다시 시도해주세요",
+                    });
+
+                    setIsSpinner(false);
+                }
+            };
+        }
+    };
+
+    const validation = () => {
+        const noti = (ref, msg) => {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: msg,
+                callback: () => focus(),
+            });
+
+            const focus = () => {
+                ref.current.focus();
+            };
         };
 
-        // 파라미터
-        const restParams = {
-            method: "post",
-            url: url,
-            data: data,
-            err: err,
-            callback: (res) => responsLogic(res),
-        };
+        if (!institutionName.current.value) {
+            noti(
+                institutionName,
+                "Please enter Plastic & Aesthetic Clinic Name",
+            );
 
-        CommonRest(restParams);
+            return false;
+        }
 
-        const responsLogic = (res) => {
-            if (res.headers.result_code === successCode.success) {
-                const result_info = res.data.result_info;
+        if (!email.current.value) {
+            noti(email, "Please enter E-mail");
 
-                // setRegistrationInfo(result_info);
-                // console.log(result_info);
-                setIsSpinner(false);
+            return false;
+        }
 
-                navigate(routerPath.web_signup_confirmation_url, {
-                    state: result_info,
-                });
-            } else {
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    // message: res.headers.result_message_ko,
-                    message: "잠시후 다시 시도해주세요",
-                });
+        if (!emailPattern.test(email.current.value)) {
+            noti(email, "E-mail format is not correct");
 
-                setIsSpinner(false);
-            }
-        };
+            return false;
+        }
+
+        return true;
     };
 
     return (
@@ -167,6 +224,7 @@ const CheckEntryMain = () => {
                                     name=""
                                     placeholder="Plastic & Aesthetic Clinic Name"
                                     ref={institutionName}
+                                    onKeyDown={handleOnKeyPress}
                                 />
                             </p>
                             <p className="inp">
@@ -175,6 +233,7 @@ const CheckEntryMain = () => {
                                     name=""
                                     placeholder="E-mail"
                                     ref={email}
+                                    onKeyDown={handleOnKeyPress}
                                 />
                             </p>
 

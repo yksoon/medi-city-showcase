@@ -274,7 +274,8 @@ const CommonErrorCatch = async (
             CommonNotify({
                 type: "alert",
                 hook: alert,
-                message: error.response.headers.result_message_ko,
+                // message: error.response.headers.result_message_ko
+                message: error.response.headers.result_message_en,
             });
         }
     } else {
