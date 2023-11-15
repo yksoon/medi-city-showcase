@@ -1051,67 +1051,8 @@ img{ outline:none; border:none;}
 	border-left:3px solid #dedede;
 	float:left; 
 }
-.login_area { 
-	/*width:400px;*/
-	height:373px;
-	background:url('../images/common/login_box_bg.png') 0 0 no-repeat;
-	padding:60px 98px 142px 105px;
-}
-.login_area h2 {
-	font-size:26px; 
-	font-weight:800; 
-	color:#fff; 
-	text-align:center;
-	margin:0 0 35px 0;
-}
-.login_area p {
-	
-}
-.login_area input[type="text"], .login_area input[type="password"] {
-	width:350px; 
-	height:50px;
-	border:1px solid #fff;
-	background-color:transparent;
-	padding-left:50px;
-	color:#fff;
-	line-height:50px;
-	font-size:16px;
-	transition:all .5s;
-	-webkit-transition:all .5s;
-	-ms-transition:all .5s;
-	-o-transition:all .5s;
-}
-.login_area input[type="text"]:focus, .login_area input[type="password"]:focus{
-box-shadow:0 0 5px #4b69ff;
--webkit-box-shadow:0 0 5px #06718a;
--ms-box-shadow:0 0 5px #06718a;
--o-box-shadow:0 0 5px #06718a;
-border:1px solid #06718a;
-outline:none;
-}
 
-.login_area .userid input { background:url("../images/common/id_user_icon_white.png") no-repeat 5px 8px}
-.login_area .userpw input { background:url("../images/common/pass_key_icon_white.png") no-repeat 5px 8px}
 
-.login_area .userid label, .userpw label{
-	display:block;
-	color:#fff;
-	padding:0 0 12px 0;
-	font-size:16px;
-	font-weight:600;
-}
- .login_area p.userchk {height:70px; line-height:70px; color:#fff;}
- .login_area p.userchk input {width:18px; height:18px; border:1px solid #fff; background-color:transparent; vertical-align:middle; margin-right:10px;}
- .login_area p.userchk a {color:#fff; text-decoration:none;}
- .login_area .userpw {margin:19px 0 0;}
-
-.login_area .btn input{ width:400px; height:55px;border:none;background-color:#fff; color:#06718a; font-size:20px; transition:all .3s; cursor:pointer;}
-.login_area .btn input:hover, .btn input:focus { background-color:#06718a; color:#fff;}
-.login_area .links {text-align:center; color:#fff; padding:20px 0;}
-.login_area .links a {
-	padding:5px 30px; color:#fff; text-decoration:none;
-}
-.login_area .links a:hover, .links a:focus {text-decoration:underline;}
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 /* QNA 팝업 CSS */
 #password_Div {
