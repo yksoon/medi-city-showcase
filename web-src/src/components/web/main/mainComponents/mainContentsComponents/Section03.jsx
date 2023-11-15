@@ -50,7 +50,7 @@ const Section03 = () => {
                         </p>
                     </div>
                 </div>
-                <div className="hotel_map">
+                <div className="hotelmap">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.306115309706!2d106.83085667581312!3d-6.223307460952207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3f1144aa5e5%3A0x55b5886634b5a317!2sThe%20Westin%20Jakarta!5e0!3m2!1sen!2skr!4v1699330467479!5m2!1sen!2skr"
                         width="100%"
