@@ -169,6 +169,8 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 	-o-transition: all 0.3s ease; /* Opera */
 }
 .section03 .hotel .info .btns a:hover img, .section03 .hotel .info .btns a:focus img{right:20px;}
+.sectino03 .hotel_map {height:420px;}
+
 
 
 /*footer*/
