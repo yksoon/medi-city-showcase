@@ -344,6 +344,8 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .nm_login  .loginbox .inp input:focus {border-color:#59047f;}
 .nm_login  .loginbox input[type="submit"] {width:100%; height:70px; background-color: #59047f; color:#fff; font-size: 20px; font-weight: 600; font-family: inherit;outline:none; bordeR:none;cursor:pointer;}
 .nm_login .loginbox input[type="submit"]:hover, .nm_login .loginbox input[type="submit"]:focus {background-color: #47005a;}
+.nm_login  h4{text-align: center;font-size:19px;line-height:29px;margin:0 0 30px 0;}
+.nm_login  h4 b{text-decoration: underline;color: #ef176a;}
 
 
 /* IE */
@@ -620,7 +622,8 @@ select {
 	.nm_login  .loginbox {width:90%; }
 	.nm_login  .loginbox .inp input {height:55px;font-size:14px; padding-left:15px;}
 	.nm_login  .loginbox input[type="submit"] {height:65px;font-size:18px;}
-
+	.nm_login  h4{font-size:15px;line-height:25px;}
+	.nm_login  h4 br{display:none;}
 
 
 }

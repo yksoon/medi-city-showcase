@@ -217,6 +217,10 @@ const CheckEntryMain = () => {
                     </div>
 
                     <div className="nm_login">
+                         <h4 className="txt">
+                            <b>Please enter the email of the clinic representative you applied with,</b> <br/>
+                            not participant's email
+                        </h4>
                         <div className="loginbox">
                             <p className="inp">
                                 <input
