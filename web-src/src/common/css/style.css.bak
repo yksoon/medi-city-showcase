@@ -168,11 +168,8 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 	-webkit-transition: all 0.3s ease; /* Safari and Chrome */
 	-o-transition: all 0.3s ease; /* Opera */
 }
-
-#section03 .hotelmap {height:420px;}
 .section03 .hotel .info .btns a:hover img, .section03 .hotel .info .btns a:focus img{right:20px;}
-
-
+.sectino03 .hotel_map {height:420px;}
 
 /*footer*/
 #footer {clear:both; padding:35px 0;}
@@ -238,6 +235,7 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 
 #con_area {width:1300px; margin:0 auto; padding:0 0 150px 0; min-height:500px;}
 #con_area .c_tit {font-size:30px; font-weight: 900; color: #000;position:relative;padding:6px 0 0 8px;margin:0 0 20px 0;}
+#con_area .c_tit .s_txt{font-size:20px;}
 #con_area .c_tit:before {content:"";display:block; width:30px;height:30px; border-radius:30px;-webkit-border-radius:30px;-moz-border-radius:30px;background-color:#ffa8ca;
 	position:absolute;left:0;top:0;z-index:-1;
 }
@@ -562,6 +560,7 @@ select {
 
 
 	/* PROGRAM */
+	.program .boxing {margin:0 0 60px 0;}
 	.program .tabbox{margin:0 0 50px 0; text-align: center;}
 	.program .tabbox a{ display:block;height:45px; line-height:45px; width:260px; font-size:15px;margin:5px auto;}
 	.program table.de_tb thead tr th{padding:15px 3px;font-size:14px;}

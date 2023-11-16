@@ -111,8 +111,8 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
   }
 
 
-.section01 .free .free_in h3{width:100%;text-align: center;font-size: 26px; color:#ff004b; font-weight:900;letter-spacing: -0.01em;padding:15px 0;
-    background:url('/public/img/web/main/free_st.png') 100% 0 no-repeat;
+.section01 .free .free_in h3{width:100%;text-align: center;font-size: 28px; color:#ff004b; font-weight:900;letter-spacing: -0.01em;padding:15px 0 7px;
+    background:url('/public/img/web/main/free_st.png') 75% 0 no-repeat;
 }
 .section01 .free .free_in ul li {position:relative;padding: 20px 0 20px 100px;border-bottom:1px solid #ddd;text-align:left;line-height:20px;font-size:20px;font-weight:900;color:#000;}
 .section01 .free .free_in ul li:last-child{bordeR:none;}
@@ -200,6 +200,7 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 
 /* sub-layout */
 #subvisual {position:relative;z-index:1; width:100%; height:453px; background:url('/public/img/web/sub/subvisual.png') center 0 no-repeat;}
+#subvisual.art_subvisual {background:url('/public/img/web/sub/art_subvisual.png') center 0 no-repeat;}
 #subvisual  .sub_txt {width:1300px; margin:0 auto;position:relative; top:150px;}
 #subvisual  .sub_txt_in {width:650px; text-align: center;}
 #subvisual  .sub_txt_in h2{margin:0 0 10px 0;}
@@ -351,6 +352,35 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .nm_login .loginbox input[type="submit"]:hover, .nm_login .loginbox input[type="submit"]:focus {background-color: #47005a;}
 .nm_login  h4{text-align: center;font-size:19px;line-height:29px;margin:0 0 30px 0;}
 .nm_login  h4 b{text-decoration: underline;color: #ef176a;}
+
+
+
+/* GALLEY 뷰페이지 */
+.galleryView .artbox {text-align: center; margin:0 0 40px 0;}
+.galleryView .artbox img{width:100%; height:auto; max-width: 100%;}
+
+.galleryView .artinfo .artist {font-size: 30px; font-weight: 400; color:#000000;;}
+.galleryView .artinfo .artist span {font-size: 15px; color:#59047f;;}
+.galleryView .artinfo .artist:after {content:"";display: block;width:100px;height:1px; background-color:#000; margin:20px 0;}
+.galleryView .artinfo ul {margin:0 0 80px 0;}
+.galleryView .artinfo ul li{line-height: 32px; color:#333333;font-size: 17px;}
+.galleryView .artinfo ul li span{display: inline-block; width:150px; color:#888;}
+.galleryView .artinfo .artnote {margin:0 0 80px 0;}
+.galleryView .artinfo .artnote h4 {font-size: 22px;font-weight: 900;color:#000;margin:0 0 20px 0;}
+.galleryView .artinfo .artnote .txt {font-size: 17px;color:#333333;line-height: 29px; word-break: keep-all;}
+.galleryView .inqbox  h4 {font-size: 22px;font-weight: 900;color:#000;margin:0 0 20px 0;}
+.galleryView .inqbox table{border-top:1px solid #59047f;}
+.galleryView .inqbox table tbody tr th {border-bottom: 1px solid #ddd; padding:20px 0 20px 35px;text-align: left;;font-size: 17px; color:#000;font-weight: 600;}
+.galleryView .inqbox table tbody tr td {border-bottom: 1px solid #ddd; padding:20px 5px;font-size:16px; color:#333;}
+.galleryView .inqbox table tbody tr td input {border:1px solid #ccc; height:45px; line-height: 45px; padding-left:10px;width:300px;outline:none;}
+.galleryView .inqbox table tbody tr td input.input_t {width:120px;}
+.galleryView .inqbox table tbody tr td textarea {border:1px solid #ccc; padding:8px; width:100%; height:100px; resize: none;;outline:none;box-sizing:border-box;}
+.galleryView .inqbox table tbody tr td input:focus,
+.galleryView .inqbox table tbody tr td textarea:focus {border-color:#5e0875;}
+.galleryView .inqbox .btnbox {margin:50px 0 0 0; text-align:center;}
+.galleryView .inqbox .btnbox input[type="submit"] {border:none; height:65px; line-height: 65px; width:300px;outline:none;border:none;background-color: #47005a;color:#fff; font-size:24px; font-family:inherit;cursor:pointer;font-weight: 600;;}
+.galleryView .inqbox .btnbox input[type="submit"]:hover, .galleryView .inqbox .btnbox input[type="submit"]:focus{background-color: #290035;}
+
 
 /* IE */
 select::-ms-expand { 
@@ -631,6 +661,29 @@ select {
 	.nm_login  .loginbox input[type="submit"] {height:65px;font-size:18px;}
 	.nm_login  h4{font-size:15px;line-height:25px;}
 	.nm_login  h4 br{display:none;}
+
+
+		
+	/* GALLEY 뷰페이지 */
+	.galleryView .artinfo .artist {font-size: 25px;}
+	.galleryView .artinfo .artist span {font-size: 13px;}
+	.galleryView .artinfo .artist:after {width:50px;}
+	.galleryView .artinfo ul li{line-height:25px;font-size: 14px;margin:0 0 7px 0;}
+	.galleryView .artinfo ul li span{display: block; width:auto;}
+
+	.galleryView .artinfo .artnote h4 {font-size:18px;}
+	.galleryView .artinfo .artnote .txt {font-size: 13px;line-height: 24px;}
+	.galleryView .inqbox  h4 {font-size:18px;}
+	.galleryView .inqbox table tbody tr th {display:block;padding:15px 0 15px 10px;font-size: 13px;}
+	.galleryView .inqbox table tbody tr td {display:block;padding:15px 10px;font-size:13px;}
+	.galleryView .inqbox table tbody tr td input {width:90%;}
+	.galleryView .inqbox table tbody tr td input.input_t {width:80px;}
+
+	.galleryView .inqbox .btnbox input[type="submit"] {height:55px; line-height: 55px; width:220px;font-size:20px;}
+	
+
+
+
 
 }
 
