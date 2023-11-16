@@ -16,6 +16,7 @@ import useConfirm from "hook/useConfirm";
 import ConsultingBoardModalMain from "components/admin/board/consultingBoard/modal/ConsultingBoardModalMain";
 import RegistrationManageModalMain from "components/admin/registration/registrationManage/modal/RegistrationManageModalMain";
 import EntryManageModalMain from "components/admin/registration/entryManage/modal/EntryManageModalMain";
+import { PieChart } from "@mui/x-charts";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -501,6 +502,38 @@ const CommonErrModule = () => {
     return err;
 };
 
+const CommonPieChart = (props) => {
+    const data = props.data ?? [];
+    const width = props.width ?? 0;
+    const height = props.height ?? 0;
+
+    const size = {
+        width: width,
+        height: height,
+    };
+
+    return (
+        <PieChart
+            series={[
+                {
+                    data: data,
+                    highlightScope: {
+                        faded: "global",
+                        highlighted: "item",
+                    },
+                    faded: {
+                        innerRadius: 30,
+                        additionalRadius: -30,
+                        cornerRadius: 0,
+                        color: "gray",
+                    },
+                },
+            ]}
+            {...size}
+        />
+    );
+};
+
 export {
     CommonModal,
     CommonConsole,
@@ -511,4 +544,5 @@ export {
     CommonOpenUrl,
     CommonCheckDate,
     CommonErrModule,
+    CommonPieChart,
 };

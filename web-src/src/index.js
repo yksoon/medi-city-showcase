@@ -16,6 +16,7 @@ import "common/css/common.css";
 import "common/css/aos.css";
 import "common/css/adm.css";
 import ScrollToTop from "ScrollToTop";
+import { StyledEngineProvider } from "@mui/material";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const app = document.getElementById("app");
@@ -35,7 +36,7 @@ console.log(
 ╚════██║██╔══██║██║   ██║██║███╗██║██║     ██╔══██║╚════██║██╔══╝
 ███████║██║  ██║╚██████╔╝╚███╔███╔╝╚██████╗██║  ██║███████║███████╗
 ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝
-Create by ⓨⓚⓢⓞⓞⓝ_
+Create by 𝒀𝑲𝑺𝒐𝒐𝒏_
 `,
     "color:#1976d2",
 );
@@ -45,7 +46,9 @@ root.render(
         <RecoilRoot>
             <ScrollToTop />
             <RecoilizeDebugger root={app} />
-            <App />
+            <StyledEngineProvider injectFirst>
+                <App />
+            </StyledEngineProvider>
         </RecoilRoot>
     </BrowserRouter>,
 );

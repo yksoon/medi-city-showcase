@@ -55,7 +55,7 @@
     },
     "scripts": {
         "start": "set PORT=30001 && react-scripts start",
-        "build": "set BUILD_PATH=../build&& react-scripts build",
+        "build": "set BUILD_PATH=../build&& react-scripts build --mode production",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
