@@ -1,7 +1,7 @@
 // Create By YKSoon_
 
 import { React } from "react";
-import { CircularProgress, Modal } from "@mui/material";
+import { CircularProgress, Modal, Typography } from "@mui/material";
 import tokenExpire from "./tokenExpire";
 import { RestServer } from "./Rest";
 import { errorCode } from "resultCode";
@@ -16,7 +16,7 @@ import useConfirm from "hook/useConfirm";
 import ConsultingBoardModalMain from "components/admin/board/consultingBoard/modal/ConsultingBoardModalMain";
 import RegistrationManageModalMain from "components/admin/registration/registrationManage/modal/RegistrationManageModalMain";
 import EntryManageModalMain from "components/admin/registration/entryManage/modal/EntryManageModalMain";
-import { PieChart } from "@mui/x-charts";
+import { BarChart, PieChart } from "@mui/x-charts";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -506,6 +506,7 @@ const CommonPieChart = (props) => {
     const data = props.data ?? [];
     const width = props.width ?? 0;
     const height = props.height ?? 0;
+    const title = props.title ?? "";
 
     const size = {
         width: width,
@@ -513,24 +514,64 @@ const CommonPieChart = (props) => {
     };
 
     return (
-        <PieChart
-            series={[
-                {
-                    data: data,
-                    highlightScope: {
-                        faded: "global",
-                        highlighted: "item",
-                    },
-                    faded: {
-                        innerRadius: 30,
-                        additionalRadius: -30,
-                        cornerRadius: 0,
-                        color: "gray",
-                    },
-                },
-            ]}
-            {...size}
-        />
+        <>
+            <div>
+                <Typography variant="h5" align="center">
+                    {title}
+                </Typography>
+                <PieChart
+                    series={[
+                        {
+                            data: data,
+                            highlightScope: {
+                                faded: "global",
+                                highlighted: "item",
+                            },
+                            faded: {
+                                innerRadius: 30,
+                                additionalRadius: -30,
+                                cornerRadius: 0,
+                                color: "gray",
+                            },
+                        },
+                    ]}
+                    {...size}
+                />
+            </div>
+        </>
+    );
+};
+
+const CommonBarChart = (props) => {
+    const data = props.data ?? [];
+    const width = props.width ?? 0;
+    const height = props.height ?? 0;
+    const title = props.title ?? "";
+
+    const size = {
+        width: width,
+        height: height,
+    };
+
+    return (
+        <>
+            <div>
+                <Typography variant="h5" align="center">
+                    {title}
+                </Typography>
+                <BarChart
+                    dataset={data}
+                    xAxis={[{ scaleType: "band", dataKey: "label" }]}
+                    series={[
+                        {
+                            dataKey: "value",
+                            // label: "성별"
+                        },
+                    ]}
+                    {...size}
+                />
+            </div>
+        </>
     );
 };
 
@@ -545,4 +586,5 @@ export {
     CommonCheckDate,
     CommonErrModule,
     CommonPieChart,
+    CommonBarChart,
 };
