@@ -114,7 +114,7 @@ const CheckEntryMain = () => {
                         type: "alert",
                         hook: alert,
                         // message: res.headers.result_message_ko,
-                        message: "No matching information found",
+                        message: "The entered information does not match.",
                     });
 
                     setIsSpinner(false);
@@ -162,7 +162,7 @@ const CheckEntryMain = () => {
         }
 
         if (!emailPattern.test(email.current.value)) {
-            noti(email, "E-mail format is not correct");
+            noti(email, "Enter the E-mail that you applied with.");
 
             return false;
         }

@@ -66,6 +66,7 @@ const EntryManageMain = (props) => {
             page_num: pageNum,
             page_size: pageSize,
             search_keyword: searchKeyword,
+            dashboard_yn: "Y",
         };
 
         // 파라미터
@@ -88,10 +89,10 @@ const EntryManageMain = (props) => {
                 result_code === successCode.success ||
                 result_code === successCode.noData
             ) {
-                const result_info = res.data.result_info.registration_info;
+                const result_info = res.data.result_info;
                 const page_info = res.data.page_info;
 
-                setBoardList(result_info);
+                setBoardList(result_info.registration_info);
                 setPageInfo(page_info);
 
                 setIsSpinner(false);

@@ -111,7 +111,6 @@ const SideNav = (props) => {
 
             // 성공
             if (result_code === successCode.success) {
-
                 setIsSpinner(false);
 
                 setModUserData(result_info);
@@ -160,7 +159,6 @@ const SideNav = (props) => {
             let result_code = res.headers.result_code;
 
             if (result_code === successCode.success) {
-
                 resetUserInfoAdmin();
                 resetUserTokenAdmin();
 
@@ -198,20 +196,22 @@ const SideNav = (props) => {
 
     // 홈페이지 열기
     const openToHomepage = () => {
-        window.open(routerPath.web_main_url, '_blank')
-    }
+        window.open(routerPath.web_main_url, "_blank");
+    };
 
     return (
         <>
             <header>
                 <div className="gnb">
                     <div className="adm_profile">
-                        <Link onClick={(e) => modUser(userInfoAdmin.user_idx)}>
-                            <p>
-                                {userInfoAdmin && userInfoAdmin.user_name_ko}(
-                                {userInfoAdmin && userInfoAdmin.user_id})
-                            </p>
-                        </Link>
+                        {/*<Link*/}
+                        {/*// onClick={(e) => modUser(userInfoAdmin.user_idx)}*/}
+                        {/*>*/}
+                        <p>
+                            {userInfoAdmin && userInfoAdmin.user_name_ko}(
+                            {userInfoAdmin && userInfoAdmin.user_id})
+                        </p>
+                        {/*</Link>*/}
 
                         <div>
                             <Link onClick={signOut} className="font-12">
@@ -250,7 +250,7 @@ const SideNav = (props) => {
                                                         depth2click(e);
                                                         item2.page !== "" &&
                                                             switchPage(
-                                                                item2.page
+                                                                item2.page,
                                                             );
                                                     }}
                                                     id={
@@ -277,12 +277,12 @@ const SideNav = (props) => {
                                                                 >
                                                                     <Link
                                                                         onClick={(
-                                                                            e
+                                                                            e,
                                                                         ) =>
                                                                             item3.page !==
                                                                                 "" &&
                                                                             switchPage(
-                                                                                item3.page
+                                                                                item3.page,
                                                                             )
                                                                         }
                                                                         id={
@@ -296,7 +296,7 @@ const SideNav = (props) => {
                                                                         }
                                                                     </Link>
                                                                 </li>
-                                                            )
+                                                            ),
                                                         )}
                                                 </ul>
                                             </li>
