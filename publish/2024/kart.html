@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+	<meta property="og:type" content="website"> 
+	<meta property="og:title" content="Medi-City Medical Showcase - K-AESTHETIC & ART INDONESIA 2024">
+	<meta property="og:image" content="img/kakao.jpg">
+	<meta property="og:url" content="">
+
+	<title>:: Medi-City Medical Showcase - K-AESTHETIC & ART INDONESIA 2024 ::</title>
+	<link rel="stylesheet" type="text/css" href="css/default.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="css/board.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="css/aos.css" media="all"/>
+	
+	<script type="text/javascript" language="javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" language="javascript" src="js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" language="javascript" src="js/aos.js"></script>    f
+	<script type="text/javascript" language="javascript" src="js/nav.js"></script>
+	</head>
+
+ <body > 
+	<div id="wrapper">
+	
+		<!--header//S-->
+		<div id="header"></div>
+		<!--header//E-->
+        
+
+		<div id="subvisual" class="art_subvisual">
+            <div class="sub_txt">
+                <div class="sub_txt_in">
+                    <h3>K-AESTHETIC & ART INDONESIA 2024</h3>
+                    <h4>ARTBUDDY, K-ART</h4>           
+                </div>
+            </div>
+		</div>
+
+
+		<!-- 서브 container //S-->
+		<div id="container" class="sub_container">
+           <div id="con_area" class="wide_conarea">
+
+                <div id="leftmenu">
+                    <a href="guideline.html" class="active">K-ART Exhibition</a>
+                    <a href="signup.html">Gallery</a>
+                </div>
+
+                <div id="subtitle">
+                    <h3>K-ART Exhibition</h3>
+                </div>
+
+                <div class="kart">
+                    <div class="boxing">
+                        <p class="left" data-aos="fade-right" data-aos-duration="1200"><img src="img/sub/artbuddy_logo.jpg" alt=""/></p>
+                        <div class="right">
+                            <dl>
+                                <dt>ARTBUDDY is </dt>
+                                <dd>
+                                    dedicated to mitigating the barriers to the art market, allowing everyone to become friends with art.<br/>
+                                    As an art business group, we engage in various activities to support and encourage emerging artists in South Korea.<br/>
+                                    Through the discovery of new talents and the utilization of copyrights for product and content development,<br/>
+                                    we strive to breathe life into the Korean art market, providing fresh stimulation.  
+                              </dd>
+                            </dl>
+                            <dl>
+                                <dt>In this Medi-City Medical Showcase,</dt>
+                                <dd>
+                                    we will highlight the works of creative and fresh Korean artists who play a key role in K-Culture.<br/>
+                                    This showcase not only raises awareness of K-medical but also elevates the interest in K-ART,<br/>
+                                    laying the groundwork for promising Korean artists to venture into the international market.
+                              </dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <p class="bimg"><img src="img/sub/artbuddy_bg.jpg" alt=""/></p>
+
+                </div>
+           </div>
+        </div>
+		<!-- 서브 container //E-->
+
+
+        
+		<!--footer //S-->
+		<div id="footer_wrap"></div>
+		<!-- footer //E-->
+
+	</div>
+    
+<script>
+    AOS.init();
+</script>
+
+<script>
+    // 상단으로이동 퀵버튼 등장 , html 인클루드에선 script 작동안해서 여기에도 둔것임!!
+    document.addEventListener('scroll', function() {
+        var currentScrollValue = document.documentElement.scrollTop;
+        var gotop = document.getElementById("go_top");
+
+        if( currentScrollValue > 100){
+            gotop.style.opacity="1";
+        } else {
+            gotop.style.opacity="0";
+        }
+
+    });
+</script>
+
+<script>
+    // header
+        const header = document.querySelector('#header');
+        fetch('include/header.html')
+        .then(res => res.text())
+        .then(data => header.innerHTML = data);
+    
+        //footer
+        const footer = document.querySelector('#footer_wrap');
+        fetch('include/footer.html')
+        .then(res => res.text())
+        .then(data => footer.innerHTML = data);
+    </script>
+
+</body>
+</html>
