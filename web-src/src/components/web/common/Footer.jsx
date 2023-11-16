@@ -3,12 +3,14 @@ import React, { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
 
 function Footer() {
     const isSpinner = useRecoilValue(isSpinnerAtom);
-
+    const location = useLocation();
     useEffect(() => {
         // 상단으로이동 퀵버튼 등장
+        // if (location.pathname === "/") {
         document.addEventListener("scroll", function () {
             let currentScrollValue = document.documentElement.scrollTop;
             let gotop = document.getElementById("go_top");
@@ -19,6 +21,7 @@ function Footer() {
                 gotop.style.opacity = "0";
             }
         });
+        // }
     }, []);
 
     const goToTop = () => {

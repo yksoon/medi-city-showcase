@@ -29,7 +29,7 @@ export default function CountrySelect(props) {
             const countryCode = country[i].code_key.split("-")[1];
             let newObj = {
                 value: value,
-                label: country[i].code_value,
+                label: `${country[i].code_value_ko} (${country[i].code_value_en})`,
                 countryCode: countryCode,
             };
 

@@ -653,7 +653,10 @@ const EntryManageModalMain = (props) => {
                                                 key={`paymentStatusOption_${idx}`}
                                                 value={item.code_key}
                                             >
-                                                {item.code_value}
+                                                {`${item.code_value_ko} ${
+                                                    item.code_value_en &&
+                                                    `(${item.code_value_en})`
+                                                }`}
                                             </option>
                                         ))}
                                 </select>
@@ -671,7 +674,10 @@ const EntryManageModalMain = (props) => {
                                                     key={`additionalStatusOption_${idx}`}
                                                     value={item.code_key}
                                                 >
-                                                    {item.code_value}
+                                                    {`${item.code_value_ko} ${
+                                                        item.code_value_en &&
+                                                        `(${item.code_value_en})`
+                                                    }`}
                                                 </option>
                                             ),
                                         )}
@@ -693,7 +699,10 @@ const EntryManageModalMain = (props) => {
                                                     key={`institutionTypeOption_${idx}`}
                                                     value={item.code_key}
                                                 >
-                                                    {item.code_value}
+                                                    {`${item.code_value_ko} ${
+                                                        item.code_value_en &&
+                                                        `(${item.code_value_en})`
+                                                    }`}
                                                 </option>
                                             ),
                                         )}
@@ -1079,7 +1088,12 @@ const EntryManageModalMain = (props) => {
                                                                 item2.code_key
                                                             }
                                                         >
-                                                            {item2.code_value}
+                                                            {`${
+                                                                item2.code_value_ko
+                                                            } ${
+                                                                item2.code_value_en &&
+                                                                `(${item2.code_value_en})`
+                                                            }`}
                                                         </option>
                                                     ),
                                                 )}
@@ -1219,7 +1233,12 @@ const EntryManageModalMain = (props) => {
                                                                 item2.code_key
                                                             }
                                                         >
-                                                            {item2.code_value}
+                                                            {`${
+                                                                item2.code_value_ko
+                                                            } ${
+                                                                item2.code_value_en &&
+                                                                `(${item2.code_value_en})`
+                                                            }`}
                                                         </option>
                                                     ),
                                                 )}

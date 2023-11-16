@@ -464,7 +464,7 @@ const RegistrationManageModalMain = (props) => {
                                                 key={`paymentTypeOption_${idx}`}
                                                 value={item.code_key}
                                             >
-                                                {item.code_value}
+                                                {`${item.code_value_ko} (${item.code_value_en})`}
                                             </option>
                                         ))}
                                     </select>
@@ -485,7 +485,10 @@ const RegistrationManageModalMain = (props) => {
                                                 key={`bankOption_${idx}`}
                                                 value={item.code_key}
                                             >
-                                                {item.code_value}
+                                                {`${item.code_value_ko} ${
+                                                    item.code_value_en &&
+                                                    `(${item.code_value_en})`
+                                                }`}
                                             </option>
                                         ))}
                                     </select>

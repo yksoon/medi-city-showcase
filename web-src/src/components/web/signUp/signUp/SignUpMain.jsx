@@ -39,24 +39,19 @@ const SignUpMain = (props) => {
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
-    // const [modData, setModData] = useState({});
+    const [modData, setModData] = useState({});
     // 페이지 정보
     const location = useLocation();
     const isSignup = location.pathname === "/signup/signup";
     const isConfirmation = location.pathname === "/signup/confirmation";
 
-    // console.log(location);
-
-    let modData;
-    let isModData;
-
-    if (isConfirmation) {
-        modData = location.state ?? {};
-        isModData = Object.keys(modData).length !== 0;
-    } else {
-        modData = {};
-        isModData = Object.keys(modData).length !== 0;
-    }
+    // let modData;
+    //
+    // if (isConfirmation) {
+    //     modData = location.state ?? {};
+    // } else {
+    //     modData = {};
+    // }
 
     const navigate = useNavigate();
 
@@ -68,6 +63,7 @@ const SignUpMain = (props) => {
     const [registrationInfo, setRegistrationInfo] = useState([]);
 
     useEffect(() => {
+        // isConfirmation && setModData(location.state ?? {});
         getRegistration();
     }, []);
 
@@ -147,12 +143,13 @@ const SignUpMain = (props) => {
 
     useEffect(() => {
         if (isConfirmation) {
-            if (isModData) {
+            if (Object.keys(location.state).length !== 0) {
                 setDefaultEntryInfoFunc();
             } else {
                 navigate(routerPath.web_signup_check_entry_url);
             }
         } else {
+            setModData({});
             setEntryInfoFunc();
         }
     }, [location.pathname]);
@@ -164,38 +161,33 @@ const SignUpMain = (props) => {
         // 성별
         const genderArr = codes.filter((el) => el.code_type === "GENDER");
 
-        for (let i = 0; i < genderArr.length; i++) {
-            if (genderArr[i].code_key === "0") {
-                genderArr[i] = { ...genderArr[i], code_value_en: "Man" };
-            } else if (genderArr[i].code_key === "1") {
-                genderArr[i] = { ...genderArr[i], code_value_en: "Woman" };
-            }
-        }
         // console.log(genderArr);
         setGenderOption(genderArr);
 
-        institutionNameEn.current.value = modData.institution_name_en;
-        zipcode.current.value = modData.zipcode;
-        addr1En.current.value = modData.addr1_en;
-        addr2En.current.value = modData.addr2_en;
-        nameFirstEn.current.value = modData.name_first_en;
-        nameLastEn.current.value = modData.name_last_en;
-        mobile1.current.value = modData.mobile1;
-        mobile2.current.value = modData.mobile2;
-        mobile3.current.value = modData.mobile3;
-        email.current.value = modData.email;
-        fax1.current.value = modData.fax1;
-        fax2.current.value = modData.fax2;
-        fax3.current.value = modData.fax3;
-        paymentStatus.current.innerText =
-            payment_status_en[modData.payment_status_cd];
-        additionalStatus.current.innerText =
-            additional_status_en[modData.additional_status_cd];
+        // institutionNameEn.current.value = modData.institution_name_en;
+        // zipcode.current.value = modData.zipcode;
+        // addr1En.current.value = modData.addr1_en;
+        // addr2En.current.value = modData.addr2_en;
+        // nameFirstEn.current.value = modData.name_first_en;
+        // nameLastEn.current.value = modData.name_last_en;
+        // mobile1.current.value = modData.mobile1;
+        // mobile2.current.value = modData.mobile2;
+        // mobile3.current.value = modData.mobile3;
+        // email.current.value = modData.email;
+        // fax1.current.value = modData.fax1;
+        // fax2.current.value = modData.fax2;
+        // fax3.current.value = modData.fax3;
+        // paymentStatus.current.innerText =
+        //     payment_status_en[modData.payment_status_cd];
+        // additionalStatus.current.innerText =
+        //     additional_status_en[modData.additional_status_cd];
+        //
+        // interpretationCostCheck.current.checked =
+        //     modData.interpretation_cost_yn === "Y";
 
-        interpretationCostCheck.current.checked =
-            modData.interpretation_cost_yn === "Y";
+        setModData(location.state ?? {});
 
-        setEntryInfo(modData.entry_info);
+        setEntryInfo(location.state.entry_info);
     };
 
     const handle = {
@@ -657,874 +649,1030 @@ const SignUpMain = (props) => {
         return true;
     };
 
+    const handleRegistrationInput = (e, inputName) => {
+        setModData({
+            ...modData,
+            [inputName]: e.target.value,
+        });
+    };
+
     return (
         <>
-            <div key={location.key}>
-                {/*header//S*/}
-                <Header />
-                {/*header//E*/}
+            {/*<div key={location.key}>*/}
+            {/*header//S*/}
+            <Header />
+            {/*header//E*/}
 
-                <div id="subvisual">
-                    <div className="sub_txt">
-                        <div className="sub_txt_in">
-                            <h2>
-                                <img
-                                    src="img/web/sub/sub_txt.png"
-                                    alt="Medi-City Medical Showcase"
-                                />
-                            </h2>
-                            <h3>
-                                {registrationInfo.registration_sub_title_en}
-                            </h3>
-                            <h4 className="long">
-                                Plastic & Aesthetic Clinics
-                                <br />
-                                SIGN-UP
-                            </h4>
-                        </div>
+            <div id="subvisual">
+                <div className="sub_txt">
+                    <div className="sub_txt_in">
+                        <h2>
+                            <img
+                                src="img/web/sub/sub_txt.png"
+                                alt="Medi-City Medical Showcase"
+                            />
+                        </h2>
+                        <h3>{registrationInfo.registration_sub_title_en}</h3>
+                        <h4 className="long">
+                            Plastic & Aesthetic Clinics
+                            <br />
+                            SIGN-UP
+                        </h4>
                     </div>
                 </div>
+            </div>
 
-                {/*서브 container //S*/}
-                <div id="container" className="sub_container">
-                    <div id="con_area">
-                        <div id="leftmenu">
-                            <Link
-                                to={routerPath.web_participation_guideline_url}
-                            >
-                                Guideline
-                            </Link>
-                            <Link
-                                to={routerPath.web_signup_signup_url}
-                                className={isSignup ? "active" : ""}
-                            >
-                                Online Sign-up
-                            </Link>
-                            <Link
-                                to={
-                                    isSignup
-                                        ? routerPath.web_signup_check_entry_url
-                                        : ""
-                                }
-                                className={isConfirmation ? "active" : ""}
-                            >
-                                Sign-up Confirmation
-                            </Link>
-                        </div>
-                        <div id="subtitle">
-                            <h3>ONLINE SIGN-UP</h3>
-                        </div>
+            {/*서브 container //S*/}
+            <div id="container" className="sub_container">
+                <div id="con_area">
+                    <div id="leftmenu">
+                        <Link to={routerPath.web_participation_guideline_url}>
+                            Guideline
+                        </Link>
+                        <Link
+                            to={routerPath.web_signup_signup_url}
+                            className={isSignup ? "active" : ""}
+                        >
+                            Online Sign-up
+                        </Link>
+                        <Link
+                            to={
+                                isSignup
+                                    ? routerPath.web_signup_check_entry_url
+                                    : ""
+                            }
+                            className={isConfirmation ? "active" : ""}
+                        >
+                            Sign-up Confirmation
+                        </Link>
+                    </div>
+                    <div id="subtitle">
+                        <h3>ONLINE SIGN-UP</h3>
+                    </div>
 
-                        <div className="signup">
-                            <div className="boxing">
-                                <h3 className="c_tit">
-                                    Plastic & Aesthetic Clinics Information
-                                </h3>
-                                {isSignup && (
-                                    <p className="r_noti">
-                                        (<span className="red">*</span>)
-                                        Required
-                                    </p>
-                                )}
-                                <table>
-                                    <colgroup>
-                                        <col width="30%" />
-                                        <col width="*" />
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>
-                                                Plastic & Aesthetic Clinic Name{" "}
-                                                {isSignup && (
-                                                    <span className="red">
-                                                        *
-                                                    </span>
-                                                )}
-                                            </th>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    ref={institutionNameEn}
-                                                    readOnly={isConfirmation}
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                Address{" "}
-                                                {isSignup && (
-                                                    <span className="red">
-                                                        *
-                                                    </span>
-                                                )}
-                                            </th>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    className="input_m hold"
-                                                    id="zipcode"
-                                                    ref={zipcode}
-                                                    onClick={
-                                                        isSignup
-                                                            ? handle.openPost
-                                                            : () => {}
-                                                    }
-                                                    readOnly={true}
-                                                />
-                                                {isSignup && (
-                                                    <Link
-                                                        to=""
-                                                        className="normal_btn"
-                                                        onClick={
-                                                            handle.openPost
-                                                        }
-                                                    >
-                                                        Search
-                                                    </Link>
-                                                )}
-                                                <br />
-                                                <input
-                                                    type="text"
-                                                    ref={addr1En}
-                                                    onClick={
-                                                        isSignup
-                                                            ? handle.openPost
-                                                            : () => {}
-                                                    }
-                                                    readOnly={true}
-                                                />
-                                                <input
-                                                    type="hidden"
-                                                    ref={addr1Ko}
-                                                    readOnly
-                                                />
-                                                <br />
-                                                <input
-                                                    type="text"
-                                                    ref={addr2En}
-                                                    readOnly={isConfirmation}
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                The name of the contact person{" "}
-                                                {isSignup && (
-                                                    <span className="red">
-                                                        *
-                                                    </span>
-                                                )}
-                                            </th>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    className="input_n"
-                                                    placeholder="First Name"
-                                                    ref={nameFirstEn}
-                                                    readOnly={isConfirmation}
-                                                />{" "}
-                                                <input
-                                                    type="text"
-                                                    className="input_n"
-                                                    placeholder="Last Name"
-                                                    ref={nameLastEn}
-                                                    readOnly={isConfirmation}
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                TEL{" "}
-                                                {isSignup && (
-                                                    <span className="red">
-                                                        *
-                                                    </span>
-                                                )}
-                                            </th>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    className="input_m"
-                                                    ref={mobile1}
-                                                    readOnly={isConfirmation}
-                                                />{" "}
-                                                -{" "}
-                                                <input
-                                                    type="text"
-                                                    className="input_m"
-                                                    ref={mobile2}
-                                                    readOnly={isConfirmation}
-                                                />{" "}
-                                                -{" "}
-                                                <input
-                                                    type="text"
-                                                    className="input_m"
-                                                    ref={mobile3}
-                                                    readOnly={isConfirmation}
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                E-mail{" "}
-                                                {isSignup && (
-                                                    <span className="red">
-                                                        *
-                                                    </span>
-                                                )}
-                                            </th>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    ref={email}
-                                                    readOnly={isConfirmation}
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>FAX</th>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    className="input_m"
-                                                    ref={fax1}
-                                                    readOnly={isConfirmation}
-                                                />{" "}
-                                                -{" "}
-                                                <input
-                                                    type="text"
-                                                    className="input_m"
-                                                    ref={fax2}
-                                                    readOnly={isConfirmation}
-                                                />{" "}
-                                                -{" "}
-                                                <input
-                                                    type="text"
-                                                    className="input_m"
-                                                    ref={fax3}
-                                                    readOnly={isConfirmation}
-                                                />
-                                            </td>
-                                        </tr>
-                                        {isConfirmation && (
-                                            <>
-                                                <tr>
-                                                    <th>Payment Status</th>
-                                                    <td>
-                                                        {/*<input*/}
-                                                        {/*    type="text"*/}
-                                                        {/*    className="input_m"*/}
-                                                        {/*    ref={paymentStatus}*/}
-                                                        {/*    readOnly={*/}
-                                                        {/*        isConfirmation*/}
-                                                        {/*    }*/}
-                                                        {/*/>*/}
-                                                        <p
-                                                            ref={paymentStatus}
-                                                        ></p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Additional Status</th>
-                                                    <td>
-                                                        {/*<input*/}
-                                                        {/*    type="text"*/}
-                                                        {/*    className="input_m"*/}
-                                                        {/*    ref={*/}
-                                                        {/*        additionalStatus*/}
-                                                        {/*    }*/}
-                                                        {/*    readOnly={*/}
-                                                        {/*        isConfirmation*/}
-                                                        {/*    }*/}
-                                                        {/*/>*/}
-                                                        <p
-                                                            ref={
-                                                                additionalStatus
-                                                            }
-                                                        ></p>
-                                                    </td>
-                                                </tr>
-                                            </>
-                                        )}
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className="boxing">
-                                <h3 className="c_tit">
-                                    Participant Information
-                                </h3>
-                                {isSignup && (
-                                    <p className="r_noti">
-                                        (<span className="red">*</span>)
-                                        Required
-                                    </p>
-                                )}
-
-                                {isSignup && (
-                                    <div className="addzone">
-                                        <label htmlFor="sameInfo">
-                                            If the above information is same,
-                                            please check{" "}
-                                            <Checkbox
-                                                id="sameInfo"
-                                                onChange={changeSameInfoChk}
+                    <div className="signup">
+                        <div className="boxing">
+                            <h3 className="c_tit">
+                                Plastic & Aesthetic Clinics Information
+                            </h3>
+                            {isSignup && (
+                                <p className="r_noti">
+                                    (<span className="red">*</span>) Required
+                                </p>
+                            )}
+                            <table>
+                                <colgroup>
+                                    <col width="30%" />
+                                    <col width="*" />
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            Plastic & Aesthetic Clinic Name{" "}
+                                            {isSignup && (
+                                                <span className="red">*</span>
+                                            )}
+                                        </th>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                ref={institutionNameEn}
+                                                readOnly={isConfirmation}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.institution_name_en
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "institution_name_en",
+                                                    )
+                                                }
                                             />
-                                        </label>
-                                    </div>
-                                )}
-
-                                {isSignup && (
-                                    <div className="morezone">
-                                        <Link to="" onClick={addEntry}>
-                                            Adding participants &nbsp;
-                                            <img
-                                                src="img/web/sub/add_p.png"
-                                                alt=""
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Address{" "}
+                                            {isSignup && (
+                                                <span className="red">*</span>
+                                            )}
+                                        </th>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className="input_m hold"
+                                                id="zipcode"
+                                                ref={zipcode}
+                                                onClick={
+                                                    isSignup
+                                                        ? handle.openPost
+                                                        : () => {}
+                                                }
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.zipcode
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "zipcode",
+                                                    )
+                                                }
+                                                readOnly={true}
                                             />
-                                        </Link>
-                                    </div>
-                                )}
+                                            {isSignup && (
+                                                <Link
+                                                    to=""
+                                                    className="normal_btn"
+                                                    onClick={handle.openPost}
+                                                >
+                                                    Search
+                                                </Link>
+                                            )}
+                                            <br />
+                                            <input
+                                                type="text"
+                                                ref={addr1En}
+                                                onClick={
+                                                    isSignup
+                                                        ? handle.openPost
+                                                        : () => {}
+                                                }
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.addr1_en
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "addr1_en",
+                                                    )
+                                                }
+                                                readOnly={true}
+                                            />
+                                            <input
+                                                type="hidden"
+                                                ref={addr1Ko}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.addr1_ko
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "addr1_ko",
+                                                    )
+                                                }
+                                                readOnly
+                                            />
+                                            <br />
+                                            <input
+                                                type="text"
+                                                ref={addr2En}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.addr2_en
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "addr2_en",
+                                                    )
+                                                }
+                                                readOnly={isConfirmation}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            The name of the contact person{" "}
+                                            {isSignup && (
+                                                <span className="red">*</span>
+                                            )}
+                                        </th>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className="input_n"
+                                                placeholder="First Name"
+                                                ref={nameFirstEn}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.name_first_en
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "name_first_en",
+                                                    )
+                                                }
+                                                readOnly={isConfirmation}
+                                            />{" "}
+                                            <input
+                                                type="text"
+                                                className="input_n"
+                                                placeholder="Last Name"
+                                                ref={nameLastEn}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.name_last_en
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "name_last_en",
+                                                    )
+                                                }
+                                                readOnly={isConfirmation}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            TEL{" "}
+                                            {isSignup && (
+                                                <span className="red">*</span>
+                                            )}
+                                        </th>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className="input_m"
+                                                ref={mobile1}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.mobile1
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "mobile1",
+                                                    )
+                                                }
+                                                readOnly={isConfirmation}
+                                            />{" "}
+                                            -{" "}
+                                            <input
+                                                type="text"
+                                                className="input_m"
+                                                ref={mobile2}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.mobile2
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "mobile2",
+                                                    )
+                                                }
+                                                readOnly={isConfirmation}
+                                            />{" "}
+                                            -{" "}
+                                            <input
+                                                type="text"
+                                                className="input_m"
+                                                ref={mobile3}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.mobile3
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "mobile3",
+                                                    )
+                                                }
+                                                readOnly={isConfirmation}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            E-mail{" "}
+                                            {isSignup && (
+                                                <span className="red">*</span>
+                                            )}
+                                        </th>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                ref={email}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.email
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "email",
+                                                    )
+                                                }
+                                                readOnly={isConfirmation}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>FAX</th>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className="input_m"
+                                                ref={fax1}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.fax1
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "fax1",
+                                                    )
+                                                }
+                                                readOnly={isConfirmation}
+                                            />{" "}
+                                            -{" "}
+                                            <input
+                                                type="text"
+                                                className="input_m"
+                                                ref={fax2}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.fax2
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "fax2",
+                                                    )
+                                                }
+                                                readOnly={isConfirmation}
+                                            />{" "}
+                                            -{" "}
+                                            <input
+                                                type="text"
+                                                className="input_m"
+                                                ref={fax3}
+                                                value={
+                                                    Object.keys(modData)
+                                                        .length !== 0
+                                                        ? modData.fax3
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleRegistrationInput(
+                                                        e,
+                                                        "fax3",
+                                                    )
+                                                }
+                                                readOnly={isConfirmation}
+                                            />
+                                        </td>
+                                    </tr>
+                                    {isConfirmation && (
+                                        <>
+                                            <tr>
+                                                <th>Payment Status</th>
+                                                <td>
+                                                    {/*<input*/}
+                                                    {/*    type="text"*/}
+                                                    {/*    className="input_m"*/}
+                                                    {/*    ref={paymentStatus}*/}
+                                                    {/*    readOnly={*/}
+                                                    {/*        isConfirmation*/}
+                                                    {/*    }*/}
+                                                    {/*/>*/}
+                                                    <p ref={paymentStatus}>
+                                                        {Object.keys(modData)
+                                                            .length !== 0
+                                                            ? payment_status_en[
+                                                                  modData
+                                                                      .payment_status_cd
+                                                              ]
+                                                            : ""}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Additional Status</th>
+                                                <td>
+                                                    {/*<input*/}
+                                                    {/*    type="text"*/}
+                                                    {/*    className="input_m"*/}
+                                                    {/*    ref={*/}
+                                                    {/*        additionalStatus*/}
+                                                    {/*    }*/}
+                                                    {/*    readOnly={*/}
+                                                    {/*        isConfirmation*/}
+                                                    {/*    }*/}
+                                                    {/*/>*/}
+                                                    <p ref={additionalStatus}>
+                                                        {Object.keys(modData)
+                                                            .length !== 0
+                                                            ? additional_status_en[
+                                                                  modData
+                                                                      .additional_status_cd
+                                                              ]
+                                                            : ""}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
 
-                                {entryInfo.length !== 0 &&
-                                    entryInfo.map((item, idx) => (
-                                        <table
-                                            className="add_tb"
-                                            key={`entryInfo_${idx}`}
-                                        >
-                                            <colgroup>
-                                                <col width="10%" />
-                                                <col width="38.5%" />
-                                                <col width="10%" />
-                                                <col width="38.5%" />
-                                                <col width="3%" />
-                                            </colgroup>
-
-                                            <tbody>
-                                                <tr>
-                                                    <th>
-                                                        Name{" "}
-                                                        {isSignup && (
-                                                            <span className="red">
-                                                                *
-                                                            </span>
-                                                        )}
-                                                    </th>
-                                                    <td>
-                                                        <input
-                                                            type="text"
-                                                            className="input_n"
-                                                            placeholder="First Name"
-                                                            value={
-                                                                item.name_first_en
-                                                            }
-                                                            key={`${item.idx}_name_first_en`}
-                                                            onChange={(e) =>
-                                                                changeEntry(
-                                                                    e,
-                                                                    item.idx,
-                                                                    "name_first_en",
-                                                                )
-                                                            }
-                                                            readOnly={
-                                                                isConfirmation
-                                                            }
-                                                        />{" "}
-                                                        <input
-                                                            type="text"
-                                                            className="input_n"
-                                                            placeholder="Last Name"
-                                                            value={
-                                                                item.name_last_en
-                                                            }
-                                                            key={`${item.idx}_name_last_en`}
-                                                            onChange={(e) =>
-                                                                changeEntry(
-                                                                    e,
-                                                                    item.idx,
-                                                                    "name_last_en",
-                                                                )
-                                                            }
-                                                            readOnly={
-                                                                isConfirmation
-                                                            }
-                                                        />
-                                                        {isSignup && (
-                                                            <p className="rednoti">
-                                                                {" "}
-                                                                Must Match the
-                                                                English Spelling
-                                                                on the Passport.
-                                                            </p>
-                                                        )}
-                                                    </td>
-                                                    <th>
-                                                        Title{" "}
-                                                        {isSignup && (
-                                                            <span className="red">
-                                                                *
-                                                            </span>
-                                                        )}
-                                                    </th>
-                                                    <td>
-                                                        <input
-                                                            type="text"
-                                                            value={item.duty}
-                                                            key={`${item.idx}_duty`}
-                                                            onChange={(e) =>
-                                                                changeEntry(
-                                                                    e,
-                                                                    item.idx,
-                                                                    "duty",
-                                                                )
-                                                            }
-                                                            readOnly={
-                                                                isConfirmation
-                                                            }
-                                                        />
-                                                    </td>
-                                                    {isSignup && (
-                                                        <td
-                                                            rowSpan="3"
-                                                            className="del_td"
-                                                        >
-                                                            <Link
-                                                                to=""
-                                                                title="Delete"
-                                                                onClick={() =>
-                                                                    removeEntry(
-                                                                        item.idx,
-                                                                    )
-                                                                }
-                                                            >
-                                                                <img
-                                                                    src="img/web/sub/del_p.png"
-                                                                    alt=""
-                                                                />
-                                                            </Link>
-                                                        </td>
-                                                    )}
-                                                </tr>
-                                                <tr>
-                                                    <th>
-                                                        TEL{" "}
-                                                        {isSignup && (
-                                                            <span className="red">
-                                                                *
-                                                            </span>
-                                                        )}
-                                                    </th>
-                                                    <td>
-                                                        <input
-                                                            type="text"
-                                                            className="input_m"
-                                                            value={item.mobile1}
-                                                            key={`${item.idx}_mobile1`}
-                                                            onChange={(e) =>
-                                                                changeEntry(
-                                                                    e,
-                                                                    item.idx,
-                                                                    "mobile1",
-                                                                )
-                                                            }
-                                                            readOnly={
-                                                                isConfirmation
-                                                            }
-                                                        />{" "}
-                                                        -{" "}
-                                                        <input
-                                                            type="text"
-                                                            className="input_m"
-                                                            value={item.mobile2}
-                                                            key={`${item.idx}_mobile2`}
-                                                            onChange={(e) =>
-                                                                changeEntry(
-                                                                    e,
-                                                                    item.idx,
-                                                                    "mobile2",
-                                                                )
-                                                            }
-                                                            readOnly={
-                                                                isConfirmation
-                                                            }
-                                                        />{" "}
-                                                        -{" "}
-                                                        <input
-                                                            type="text"
-                                                            className="input_m"
-                                                            value={item.mobile3}
-                                                            key={`${item.idx}_mobile3`}
-                                                            onChange={(e) =>
-                                                                changeEntry(
-                                                                    e,
-                                                                    item.idx,
-                                                                    "mobile3",
-                                                                )
-                                                            }
-                                                            readOnly={
-                                                                isConfirmation
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <th>
-                                                        E-mail{" "}
-                                                        {isSignup && (
-                                                            <span className="red">
-                                                                *
-                                                            </span>
-                                                        )}
-                                                    </th>
-                                                    <td>
-                                                        <input
-                                                            type="text"
-                                                            value={item.email}
-                                                            key={`${item.idx}_email`}
-                                                            onChange={(e) =>
-                                                                changeEntry(
-                                                                    e,
-                                                                    item.idx,
-                                                                    "email",
-                                                                )
-                                                            }
-                                                            readOnly={
-                                                                isConfirmation
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>
-                                                        Birth{" "}
-                                                        {isSignup && (
-                                                            <span className="red">
-                                                                *
-                                                            </span>
-                                                        )}
-                                                    </th>
-                                                    <td>
-                                                        <input
-                                                            type="date"
-                                                            placeholder="YYYY-MM-DD"
-                                                            value={item.birth}
-                                                            key={`${item.idx}_birth`}
-                                                            onChange={(e) =>
-                                                                changeEntry(
-                                                                    e,
-                                                                    item.idx,
-                                                                    "birth",
-                                                                )
-                                                            }
-                                                            readOnly={
-                                                                isConfirmation
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <th>
-                                                        Gender{" "}
-                                                        {isSignup && (
-                                                            <span className="red">
-                                                                *
-                                                            </span>
-                                                        )}
-                                                    </th>
-                                                    <td>
-                                                        <select
-                                                            value={
-                                                                isConfirmation
-                                                                    ? item.gender_cd
-                                                                    : item.gender
-                                                            }
-                                                            key={`${item.idx}_gender`}
-                                                            onChange={(e) =>
-                                                                changeEntry(
-                                                                    e,
-                                                                    item.idx,
-                                                                    "gender",
-                                                                )
-                                                            }
-                                                            disabled={
-                                                                isConfirmation
-                                                            }
-                                                        >
-                                                            <option value="">
-                                                                - Select -
-                                                            </option>
-                                                            {genderOption.length !==
-                                                                0 &&
-                                                                genderOption.map(
-                                                                    (
-                                                                        item2,
-                                                                        idx2,
-                                                                    ) => (
-                                                                        <option
-                                                                            key={`genderOption_${idx}_${idx2}`}
-                                                                            value={
-                                                                                item2.code_key
-                                                                            }
-                                                                        >
-                                                                            {
-                                                                                // item2.code_value
-                                                                                item2.code_value_en
-                                                                            }
-                                                                        </option>
-                                                                    ),
-                                                                )}
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    ))}
-                            </div>
-
-                            <div className="boxing">
-                                <h3 className="c_tit">Sign-up details</h3>
-                                <table>
-                                    <colgroup>
-                                        <col width="60%" />
-                                        <col width="20%" />
-                                        <col width="20%" />
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th colSpan="3">
-                                                Provided Information
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th className="center gray">
-                                                Contents
-                                            </th>
-                                            <th className="center gray">
-                                                Amount (KRW)
-                                                <br />
-                                                (Including VAT)
-                                            </th>
-                                            <th className="center gray">
-                                                Select Check
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <b className="per">
-                                                    Per person basis
-                                                </b>
-                                                <p>
-                                                    1. Round-trip Airfare
-                                                    (January 22nd to January
-                                                    26th)
-                                                </p>
-                                                <p>
-                                                    2. 4 Nights 5Days
-                                                    Accommodation (5-Star Hotel
-                                                    Mulia Senayan)
-                                                    <br />
-                                                    <span>
-                                                        - Includes Breakfast and
-                                                        Additional Facilities
-                                                    </span>
-                                                </p>
-                                                <p>
-                                                    3. Meals <br />
-                                                    <span>
-                                                        - January 24th: Lunch
-                                                        and Dinner provided{" "}
-                                                        <br />- January 25th:
-                                                        Dinner provided
-                                                    </span>
-                                                </p>
-                                                <p>
-                                                    4. An Exclusive Consultation
-                                                    Desk
-                                                </p>
-                                                <p>
-                                                    5. Transportation: <br />
-                                                    <span>
-                                                        - Jakarta Airport ↔
-                                                        Accommodation (Hotel
-                                                        Mulia Senayan)
-                                                        <br />- Accommodation ↔
-                                                        Exhibition Venue (The
-                                                        Westin Jakarta)
-                                                    </span>
-                                                </p>
-                                            </td>
-                                            <td className="center">
-                                                {registrationInfo.length !==
-                                                    0 &&
-                                                    registrationInfo.entry_cost
-                                                        .toString()
-                                                        .replace(
-                                                            commaOfNumber,
-                                                            ",",
-                                                        )}
-                                            </td>
-                                            <td className="center">
-                                                <Checkbox
-                                                    checked={true}
-                                                    disabled={true}
-                                                />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <table>
-                                    <colgroup>
-                                        <col width="60%" />
-                                        <col width="20%" />
-                                        <col width="20%" />
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th colSpan="3">
-                                                Selected Options
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th className="center gray">
-                                                Contents
-                                            </th>
-                                            <th className="center gray">
-                                                Amount (KRW)
-                                                <br />
-                                                (Including VAT)
-                                            </th>
-                                            <th className="center gray">
-                                                Select Check
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th className="center">
-                                                Additional Participants (per
-                                                person)
-                                            </th>
-                                            <td className="center">
-                                                {registrationInfo.length !==
-                                                    0 &&
-                                                    registrationInfo.additional_cost
-                                                        .toString()
-                                                        .replace(
-                                                            commaOfNumber,
-                                                            ",",
-                                                        )}
-                                            </td>
-                                            <td className="center">
-                                                {/*<select*/}
-                                                {/*    name=""*/}
-                                                {/*    id=""*/}
-                                                {/*    value={entryInfo.length - 1}*/}
-                                                {/*>*/}
-                                                {/*    /!*<option value="">0</option>*!/*/}
-                                                {/*    /!*<option value="">1</option>*!/*/}
-                                                {/*    /!*<option value="">2</option>*!/*/}
-                                                {/*    /!*<option value="">3</option>*!/*/}
-                                                {/*</select>*/}
-                                                <input
-                                                    type="text"
-                                                    className="input_m"
-                                                    readOnly={true}
-                                                    ref={entryPersonNumber}
-                                                    value={entryInfo.length - 1}
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th className="center">
-                                                Interpretation
-                                                (Korean-Indonesian) - 2 days
-                                            </th>
-                                            <td className="center">
-                                                {registrationInfo.length !==
-                                                    0 &&
-                                                    registrationInfo.interpretation_cost
-                                                        .toString()
-                                                        .replace(
-                                                            commaOfNumber,
-                                                            ",",
-                                                        )}
-                                            </td>
-                                            <td className="center">
-                                                <Checkbox
-                                                    inputRef={
-                                                        interpretationCostCheck
-                                                    }
-                                                    onChange={
-                                                        interpretationCostHandler
-                                                    }
-                                                    defaultChecked={
-                                                        isConfirmation &&
-                                                        modData.interpretation_cost_yn ===
-                                                            "Y"
-                                                    }
-                                                    disabled={isConfirmation}
-                                                />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className="boxing">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Total price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td className="center">
-                                                <p className="total">
-                                                    {totalPriceState
-                                                        .toString()
-                                                        .replace(
-                                                            commaOfNumber,
-                                                            ",",
-                                                        )}
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className="boxing">
-                                <h3 className="c_tit">Payment Information</h3>
-                                <div className="gray">
-                                    E-mail : {registrationInfo.email}
-                                    <br />
-                                    Bank Information :{" "}
-                                    <b>
-                                        {`${registrationInfo.payment_bank_name} ${registrationInfo.payment_account} (예금주: ${registrationInfo.name_first_ko} ${registrationInfo.name_last_ko})`}
-                                    </b>
-                                </div>
-                            </div>
+                        <div className="boxing">
+                            <h3 className="c_tit">Participant Information</h3>
+                            {isSignup && (
+                                <p className="r_noti">
+                                    (<span className="red">*</span>) Required
+                                </p>
+                            )}
 
                             {isSignup && (
-                                <div className="btn_box">
-                                    <input
-                                        type="submit"
-                                        value="SUBMIT"
-                                        name=""
-                                        onClick={() => regEntry("reg")}
-                                    />
+                                <div className="addzone">
+                                    <label htmlFor="sameInfo">
+                                        If the above information is same, please
+                                        check{" "}
+                                        <Checkbox
+                                            id="sameInfo"
+                                            onChange={changeSameInfoChk}
+                                        />
+                                    </label>
                                 </div>
                             )}
+
+                            {isSignup && (
+                                <div className="morezone">
+                                    <Link to="" onClick={addEntry}>
+                                        Adding participants &nbsp;
+                                        <img
+                                            src="img/web/sub/add_p.png"
+                                            alt=""
+                                        />
+                                    </Link>
+                                </div>
+                            )}
+
+                            {entryInfo.length !== 0 &&
+                                entryInfo.map((item, idx) => (
+                                    <table
+                                        className="add_tb"
+                                        key={`entryInfo_${idx}`}
+                                    >
+                                        <colgroup>
+                                            <col width="10%" />
+                                            <col width="38.5%" />
+                                            <col width="10%" />
+                                            <col width="38.5%" />
+                                            <col width="3%" />
+                                        </colgroup>
+
+                                        <tbody>
+                                            <tr>
+                                                <th>
+                                                    Name{" "}
+                                                    {isSignup && (
+                                                        <span className="red">
+                                                            *
+                                                        </span>
+                                                    )}
+                                                </th>
+                                                <td>
+                                                    <input
+                                                        type="text"
+                                                        className="input_n"
+                                                        placeholder="First Name"
+                                                        value={
+                                                            item.name_first_en
+                                                        }
+                                                        key={`${item.idx}_name_first_en`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "name_first_en",
+                                                            )
+                                                        }
+                                                        readOnly={
+                                                            isConfirmation
+                                                        }
+                                                    />{" "}
+                                                    <input
+                                                        type="text"
+                                                        className="input_n"
+                                                        placeholder="Last Name"
+                                                        value={
+                                                            item.name_last_en
+                                                        }
+                                                        key={`${item.idx}_name_last_en`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "name_last_en",
+                                                            )
+                                                        }
+                                                        readOnly={
+                                                            isConfirmation
+                                                        }
+                                                    />
+                                                    {isSignup && (
+                                                        <p className="rednoti">
+                                                            {" "}
+                                                            Must Match the
+                                                            English Spelling on
+                                                            the Passport.
+                                                        </p>
+                                                    )}
+                                                </td>
+                                                <th>
+                                                    Title{" "}
+                                                    {isSignup && (
+                                                        <span className="red">
+                                                            *
+                                                        </span>
+                                                    )}
+                                                </th>
+                                                <td>
+                                                    <input
+                                                        type="text"
+                                                        value={item.duty}
+                                                        key={`${item.idx}_duty`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "duty",
+                                                            )
+                                                        }
+                                                        readOnly={
+                                                            isConfirmation
+                                                        }
+                                                    />
+                                                </td>
+                                                {isSignup && (
+                                                    <td
+                                                        rowSpan="3"
+                                                        className="del_td"
+                                                    >
+                                                        <Link
+                                                            to=""
+                                                            title="Delete"
+                                                            onClick={() =>
+                                                                removeEntry(
+                                                                    item.idx,
+                                                                )
+                                                            }
+                                                        >
+                                                            <img
+                                                                src="img/web/sub/del_p.png"
+                                                                alt=""
+                                                            />
+                                                        </Link>
+                                                    </td>
+                                                )}
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    TEL{" "}
+                                                    {isSignup && (
+                                                        <span className="red">
+                                                            *
+                                                        </span>
+                                                    )}
+                                                </th>
+                                                <td>
+                                                    <input
+                                                        type="text"
+                                                        className="input_m"
+                                                        value={item.mobile1}
+                                                        key={`${item.idx}_mobile1`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "mobile1",
+                                                            )
+                                                        }
+                                                        readOnly={
+                                                            isConfirmation
+                                                        }
+                                                    />{" "}
+                                                    -{" "}
+                                                    <input
+                                                        type="text"
+                                                        className="input_m"
+                                                        value={item.mobile2}
+                                                        key={`${item.idx}_mobile2`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "mobile2",
+                                                            )
+                                                        }
+                                                        readOnly={
+                                                            isConfirmation
+                                                        }
+                                                    />{" "}
+                                                    -{" "}
+                                                    <input
+                                                        type="text"
+                                                        className="input_m"
+                                                        value={item.mobile3}
+                                                        key={`${item.idx}_mobile3`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "mobile3",
+                                                            )
+                                                        }
+                                                        readOnly={
+                                                            isConfirmation
+                                                        }
+                                                    />
+                                                </td>
+                                                <th>
+                                                    E-mail{" "}
+                                                    {isSignup && (
+                                                        <span className="red">
+                                                            *
+                                                        </span>
+                                                    )}
+                                                </th>
+                                                <td>
+                                                    <input
+                                                        type="text"
+                                                        value={item.email}
+                                                        key={`${item.idx}_email`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "email",
+                                                            )
+                                                        }
+                                                        readOnly={
+                                                            isConfirmation
+                                                        }
+                                                    />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    Birth{" "}
+                                                    {isSignup && (
+                                                        <span className="red">
+                                                            *
+                                                        </span>
+                                                    )}
+                                                </th>
+                                                <td>
+                                                    <input
+                                                        type="date"
+                                                        placeholder="YYYY-MM-DD"
+                                                        value={item.birth}
+                                                        key={`${item.idx}_birth`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "birth",
+                                                            )
+                                                        }
+                                                        readOnly={
+                                                            isConfirmation
+                                                        }
+                                                    />
+                                                </td>
+                                                <th>
+                                                    Gender{" "}
+                                                    {isSignup && (
+                                                        <span className="red">
+                                                            *
+                                                        </span>
+                                                    )}
+                                                </th>
+                                                <td>
+                                                    <select
+                                                        value={
+                                                            isConfirmation
+                                                                ? item.gender_cd
+                                                                : item.gender
+                                                        }
+                                                        key={`${item.idx}_gender`}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "gender",
+                                                            )
+                                                        }
+                                                        disabled={
+                                                            isConfirmation
+                                                        }
+                                                    >
+                                                        <option value="">
+                                                            - Select -
+                                                        </option>
+                                                        {genderOption.length !==
+                                                            0 &&
+                                                            genderOption.map(
+                                                                (
+                                                                    item2,
+                                                                    idx2,
+                                                                ) => (
+                                                                    <option
+                                                                        key={`genderOption_${idx}_${idx2}`}
+                                                                        value={
+                                                                            item2.code_key
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            item2.code_value_en
+                                                                        }
+                                                                    </option>
+                                                                ),
+                                                            )}
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                ))}
                         </div>
+
+                        <div className="boxing">
+                            <h3 className="c_tit">Sign-up details</h3>
+                            <table>
+                                <colgroup>
+                                    <col width="60%" />
+                                    <col width="20%" />
+                                    <col width="20%" />
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th colSpan="3">
+                                            Provided Information
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th className="center gray">
+                                            Contents
+                                        </th>
+                                        <th className="center gray">
+                                            Amount (KRW)
+                                            <br />
+                                            (Including VAT)
+                                        </th>
+                                        <th className="center gray">
+                                            Select Check
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b className="per">
+                                                Per person basis
+                                            </b>
+                                            <p>
+                                                1. Round-trip Airfare (January
+                                                22nd to January 26th)
+                                            </p>
+                                            <p>
+                                                2. 4 Nights 5Days Accommodation
+                                                (5-Star Hotel Mulia Senayan)
+                                                <br />
+                                                <span>
+                                                    - Includes Breakfast and
+                                                    Additional Facilities
+                                                </span>
+                                            </p>
+                                            <p>
+                                                3. Meals <br />
+                                                <span>
+                                                    - January 24th: Lunch and
+                                                    Dinner provided <br />-
+                                                    January 25th: Dinner
+                                                    provided
+                                                </span>
+                                            </p>
+                                            <p>
+                                                4. An Exclusive Consultation
+                                                Desk
+                                            </p>
+                                            <p>
+                                                5. Transportation: <br />
+                                                <span>
+                                                    - Jakarta Airport ↔
+                                                    Accommodation (Hotel Mulia
+                                                    Senayan)
+                                                    <br />- Accommodation ↔
+                                                    Exhibition Venue (The Westin
+                                                    Jakarta)
+                                                </span>
+                                            </p>
+                                        </td>
+                                        <td className="center">
+                                            {registrationInfo.length !== 0 &&
+                                                registrationInfo.entry_cost
+                                                    .toString()
+                                                    .replace(
+                                                        commaOfNumber,
+                                                        ",",
+                                                    )}
+                                        </td>
+                                        <td className="center">
+                                            <Checkbox
+                                                checked={true}
+                                                disabled={true}
+                                            />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table>
+                                <colgroup>
+                                    <col width="60%" />
+                                    <col width="20%" />
+                                    <col width="20%" />
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th colSpan="3">Selected Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th className="center gray">
+                                            Contents
+                                        </th>
+                                        <th className="center gray">
+                                            Amount (KRW)
+                                            <br />
+                                            (Including VAT)
+                                        </th>
+                                        <th className="center gray">
+                                            Select Check
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th className="center">
+                                            Additional Participants (per person)
+                                        </th>
+                                        <td className="center">
+                                            {registrationInfo.length !== 0 &&
+                                                registrationInfo.additional_cost
+                                                    .toString()
+                                                    .replace(
+                                                        commaOfNumber,
+                                                        ",",
+                                                    )}
+                                        </td>
+                                        <td className="center">
+                                            {/*<select*/}
+                                            {/*    name=""*/}
+                                            {/*    id=""*/}
+                                            {/*    value={entryInfo.length - 1}*/}
+                                            {/*>*/}
+                                            {/*    /!*<option value="">0</option>*!/*/}
+                                            {/*    /!*<option value="">1</option>*!/*/}
+                                            {/*    /!*<option value="">2</option>*!/*/}
+                                            {/*    /!*<option value="">3</option>*!/*/}
+                                            {/*</select>*/}
+                                            <input
+                                                type="text"
+                                                className="input_m"
+                                                readOnly={true}
+                                                ref={entryPersonNumber}
+                                                value={entryInfo.length - 1}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th className="center">
+                                            Interpretation (Korean-Indonesian) -
+                                            2 days
+                                        </th>
+                                        <td className="center">
+                                            {registrationInfo.length !== 0 &&
+                                                registrationInfo.interpretation_cost
+                                                    .toString()
+                                                    .replace(
+                                                        commaOfNumber,
+                                                        ",",
+                                                    )}
+                                        </td>
+                                        <td className="center">
+                                            <Checkbox
+                                                inputRef={
+                                                    interpretationCostCheck
+                                                }
+                                                onChange={
+                                                    interpretationCostHandler
+                                                }
+                                                defaultChecked={
+                                                    isConfirmation &&
+                                                    modData.interpretation_cost_yn ===
+                                                        "Y"
+                                                }
+                                                disabled={isConfirmation}
+                                            />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="boxing">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Total price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="center">
+                                            <p className="total">
+                                                {totalPriceState
+                                                    .toString()
+                                                    .replace(
+                                                        commaOfNumber,
+                                                        ",",
+                                                    )}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="boxing">
+                            <h3 className="c_tit">Payment Information</h3>
+                            <div className="gray">
+                                E-mail : {registrationInfo.email}
+                                <br />
+                                Bank Information :{" "}
+                                <b>
+                                    {`${registrationInfo.payment_bank_name} ${registrationInfo.payment_account} (예금주: ${registrationInfo.name_first_ko} ${registrationInfo.name_last_ko})`}
+                                </b>
+                            </div>
+                        </div>
+
+                        {isSignup && (
+                            <div className="btn_box">
+                                <input
+                                    type="submit"
+                                    value="SUBMIT"
+                                    name=""
+                                    onClick={() => regEntry("reg")}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
-                {/*서브 container //E*/}
-
-                {/*footer //S*/}
-                <FooterSub />
-                <Footer />
-                {/*footer //E*/}
             </div>
+            {/*서브 container //E*/}
+
+            {/*footer //S*/}
+            <FooterSub />
+            <Footer />
+            {/*footer //E*/}
+            {/*</div>*/}
         </>
     );
 };
