@@ -205,6 +205,20 @@
 <script>
     AOS.init();
 </script>
+<script>
+    // 상단으로이동 퀵버튼 등장 , html 인클루드에선 script 작동안해서 여기에도 둔것임!!
+    document.addEventListener('scroll', function() {
+        var currentScrollValue = document.documentElement.scrollTop;
+        var gotop = document.getElementById("go_top");
+
+        if( currentScrollValue > 100){
+            gotop.style.opacity="1";
+        } else {
+            gotop.style.opacity="0";
+        }
+
+    });
+</script>
 
 <script>
     // header
