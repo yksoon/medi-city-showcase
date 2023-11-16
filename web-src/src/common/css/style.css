@@ -253,6 +253,8 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 
 /* PROGRAM */
 .program .boxing {margin:0 0 60px 0;}
+.program .tabbox{margin:0 0 50px 0; text-align: center;}
+.program .tabbox a{ display:inline-block;height:60px; line-height:60px; width:300px; border:1px solid #59047f;color:#59047f;border-radius:60px;font-size:20px;font-weight:600;margin:0 6px;}
 .program table.de_tb thead tr th{background-color:#5e0875;padding:20px 0;font-size:19px;font-weight: 900;color: #fff;;}
 .program table.de_tb thead tr th:first-child {border-radius:62px 0 0 62px;}
 .program table.de_tb thead tr th:last-child {border-radius:0 62px 62px 0;}
@@ -281,6 +283,8 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .program table.glance_tb tbody tr td .c02 {background-color:#f6e2fd;}
 .program table.glance_tb tbody tr td .c03 {background-color:#e2e8fd;}
 .program table.glance_tb tbody tr td .c04 {background-color:#f9fde2;}
+.program .noti {text-align:right; font-size:16px; color:Red;margin:10px 0 0 0; line-height:22px;}
+
 
 
 /* Guideline */
@@ -558,6 +562,8 @@ select {
 
 
 	/* PROGRAM */
+	.program .tabbox{margin:0 0 50px 0; text-align: center;}
+	.program .tabbox a{ display:block;height:45px; line-height:45px; width:260px; font-size:15px;margin:5px auto;}
 	.program table.de_tb thead tr th{padding:15px 3px;font-size:14px;}
 	.program table.de_tb tbody tr td{padding:15px 3px;font-size:13px;}
 
