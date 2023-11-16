@@ -394,8 +394,31 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .galleryView .inqbox .btnbox input[type="submit"]:hover, .galleryView .inqbox .btnbox input[type="submit"]:focus{background-color: #290035;}
 
 
+/* GALLERY 리스트 페이지 */
+.galleryList .gfilter {text-align: center;margin:0 0 60px 0;}
+.galleryList .gfilter a{display:inline-block;height:25px; line-height: 25px; border:1px solid #ddd; border-radius: 25px;padding:0 20px;font-size:15px;color:#333;}
+.galleryList .gfilter a:hover, .galleryList .gfilter a.active{border:1px solid #59047f;color:#59047f;;}
+.galleryList .grid .grid-item { width: 390px;  }
 
+.listbox{
+	margin:0 50px;
+	column-width:390px;
+	column-gap: 10px;
+  }
+.listbox figure{
+	display: inline-block;
+	margin:0;
+	margin-bottom: 50px;	
+}
 
+.listbox  figure a .thumb img {max-width:100%;height:auto;}
+.listbox  figure a .name {font-size:20px; color:#000;margin:20px 0 10px;font-weight: 600;;}
+.listbox  figure a .info {font-size:16px; color:#333; line-height:30px;}
+.listbox  figure a .info p span {display:inline-block;width:80px;color:#888;}
+.listbox  figure a:hover .thumb img {opacity: 0.5;}
+.listbox  figure a:hover .name {color:#5e0875;}
+
+  .galleryList figure a p{display: inline-block=;}
 
 
 /* IE */
