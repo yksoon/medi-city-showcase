@@ -14,6 +14,7 @@ import {
 import ConsultingBoardMain from "components/admin/board/consultingBoard/ConsultingBoardMain";
 import RegistraionManageMain from "components/admin/registration/registrationManage/RegistraionManageMain";
 import EntryManageMain from "components/admin/registration/entryManage/EntryManageMain";
+import PopupManageMain from "components/admin/popupManage/PopupManageMain";
 
 const Admin = () => {
     const err = CommonErrModule();
@@ -176,6 +177,10 @@ const Admin = () => {
             // 참가자관리
             case "entryMng":
                 return <EntryManageMain isRefresh={isRefresh} />;
+
+            // 팝업관리
+            case "popupMng":
+                return <PopupManageMain isRefresh={isRefresh} />;
 
             default:
                 return <RegistraionManageMain isRefresh={isRefresh} />;
