@@ -56,6 +56,10 @@ const routerPath = {
     // /signup/confirmation
     web_signup_confirmation_url: `${base_url}signup/confirmation`,
 
+    // 아트버디 - 갤러리
+    // /artbuddy/gallery
+    web_artbuddy_gallery_url: `${base_url}artbuddy/gallery`,
+
     // ---------------------- admin -------------------------
     // 메인
     // /admin

@@ -61,7 +61,11 @@ function Header() {
                                 <Link href="">ARTBUDDY, K-ART</Link>
                                 <div className="submenu">
                                     <Link href="">K-ART Exhibition</Link>
-                                    <Link href="">Gallery</Link>
+                                    <Link
+                                        to={routerPath.web_artbuddy_gallery_url}
+                                    >
+                                        Gallery
+                                    </Link>
                                 </div>
                             </li>
                             {/* <li>

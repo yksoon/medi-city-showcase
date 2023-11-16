@@ -118,7 +118,11 @@ function MobileNav() {
                                     <Link to="">K-ART Exhibition</Link>
                                 </li>
                                 <li>
-                                    <Link href="">Gallery</Link>
+                                    <Link
+                                        to={routerPath.web_artbuddy_gallery_url}
+                                    >
+                                        Gallery
+                                    </Link>
                                 </li>
                             </ul>
                         </li>

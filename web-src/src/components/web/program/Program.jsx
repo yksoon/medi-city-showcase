@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useRef } from "react";
 import Header from "components/web/common/Header";
 import Footer from "components/web/common/Footer";
 import FooterSub from "components/web/common/FooterSub";
+import { Link } from "react-router-dom";
 
 const Program = () => {
+    const glanceRef = useRef(null);
+    const specialRef = useRef(null);
+
+    const onGlanceClick = () => {
+        glanceRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    const onSpecialClick = () => {
+        specialRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
     return (
         <>
             {/*header*/}
@@ -31,7 +42,16 @@ const Program = () => {
                         <h3>PROGRAM</h3>
                     </div>
                     <div className="program">
-                        <div className="boxing">
+                        <div className="tabbox">
+                            <Link to="" onClick={onGlanceClick}>
+                                Program at a Glance
+                            </Link>
+                            <Link to="" onClick={onSpecialClick}>
+                                Special Program
+                            </Link>
+                        </div>
+
+                        <div className="boxing" id="glance" ref={glanceRef}>
                             <h3 className="c_tit">Program at a Glance</h3>
                             <table className="glance_tb">
                                 <colgroup>
@@ -53,9 +73,11 @@ const Program = () => {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td className="time">10:00 ~ 11:30</td>
+                                        <td className="time">09:00 ~ 11:30</td>
                                         <td>
-                                            <div className="c01">Showcase</div>
+                                            <div className="c01">
+                                                K-Aesthetic Consultation
+                                            </div>
                                         </td>
                                         <td>
                                             <div className="c02">
@@ -72,7 +94,9 @@ const Program = () => {
                                     <tr>
                                         <td className="time">13:00 ~ 14:00</td>
                                         <td rowSpan="5">
-                                            <div className="c01">Showcase</div>
+                                            <div className="c01">
+                                                K-Aesthetic Consultation
+                                            </div>
                                         </td>
                                         <td>
                                             <div className="c02">
@@ -110,9 +134,12 @@ const Program = () => {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="time">18:00 ~18:30</td>
+                                        <td className="time">18:00 ~ 18:30</td>
                                         <td colSpan="2" className="normal">
-                                            <b>Gala Dinner</b>
+                                            <b>
+                                                Gala Dinner (Invited guests
+                                                only)
+                                            </b>
                                         </td>
                                     </tr>
                                     <tr>
@@ -123,9 +150,58 @@ const Program = () => {
                                     </tr>
                                 </tbody>
                             </table>
+                            <p className="noti">
+                                * Coffee Breaks : 1st - 09:30 AM / 2nd - 3:00 PM
+                            </p>
+
+                            <br />
+                            <br />
+                            <br />
+
+                            <table className="glance_tb">
+                                <colgroup>
+                                    <col width="20%" />
+                                    <col width="40%" />
+                                    <col width="40%" />
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th className="pur" colSpan="3">
+                                            Day 2 - Jan. 25 (Thu)
+                                        </th>
+                                    </tr>
+                                    <tr className="gray">
+                                        <th>Time</th>
+                                        <th>Room A</th>
+                                        <th>Room B</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="time">10:00 ~ 14:00</td>
+                                        <td>
+                                            <div className="c01">
+                                                K-Aesthetic Consultation
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="c02">
+                                                ART Exhibition
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p className="noti">* Coffee Break : 12:00 PM</p>
                         </div>
-                        <div className="boxing">
-                            <h3 className="c_tit">January 24 (Wed) 2024</h3>
+
+                        <div className="boxing" id="special" ref={specialRef}>
+                            <h3 className="c_tit">
+                                Special Program{" "}
+                                <span className="s_txt">
+                                    / January 24 (Wed) 2024
+                                </span>
+                            </h3>
                             <table className="de_tb">
                                 <colgroup>
                                     <col width="26%" />

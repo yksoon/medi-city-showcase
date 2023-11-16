@@ -21,6 +21,7 @@ const EntryManageChart = (props) => {
                 label: "총 참가자 수",
             },
         ];
+        console.log(totalDataArr);
         setTotalData(totalDataArr);
     };
 
@@ -32,22 +33,25 @@ const EntryManageChart = (props) => {
     return (
         <>
             <div>
-                {/*<PieChart*/}
-                {/*    series={[*/}
-                {/*        {*/}
-                {/*            arcLabel: (item) => `${item.label} (${item.value})`,*/}
-                {/*            arcLabelMinAngle: 45,*/}
-                {/*            totalData,*/}
-                {/*        },*/}
-                {/*    ]}*/}
-                {/*    sx={{*/}
-                {/*        [`& .${pieArcLabelClasses.root}`]: {*/}
-                {/*            fill: "white",*/}
-                {/*            fontWeight: "bold",*/}
-                {/*        },*/}
-                {/*    }}*/}
-                {/*    {...size}*/}
-                {/*/>*/}
+                {/*{totalData.length !== 0 && (*/}
+                {/*    <PieChart*/}
+                {/*        series={[*/}
+                {/*            {*/}
+                {/*                totalData,*/}
+                {/*                highlightScope: {*/}
+                {/*                    faded: "global",*/}
+                {/*                    highlighted: "item",*/}
+                {/*                },*/}
+                {/*                faded: {*/}
+                {/*                    innerRadius: 30,*/}
+                {/*                    additionalRadius: -30,*/}
+                {/*                    color: "gray",*/}
+                {/*                },*/}
+                {/*            },*/}
+                {/*        ]}*/}
+                {/*        height={200}*/}
+                {/*    />*/}
+                {/*)}*/}
             </div>
         </>
     );

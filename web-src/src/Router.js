@@ -13,6 +13,7 @@ import Program from "components/web/program/Program";
 import Guideline from "components/web/participation/guideline/Guideline";
 import SignUpMain from "components/web/signUp/signUp/SignUpMain";
 import CheckEntryMain from "components/web/signUp/checkEntry/CheckEntryMain";
+import ArtbuddyGalleryMain from "components/web/artbuddy/gallery/ArtbuddyGalleryMain";
 
 // Router
 const Router = () => {
@@ -92,6 +93,14 @@ const Router = () => {
                     <Route
                         path={routerPath.web_signup_confirmation_url}
                         element={<SignUpMain />}
+                        // render={() => <SignUpMain />}
+                    />
+
+                    {/* 아트버디 - 갤러리 */}
+                    {/* URL : /artbuddy/gallery */}
+                    <Route
+                        path={routerPath.web_artbuddy_gallery_url}
+                        element={<ArtbuddyGalleryMain />}
                         // render={() => <SignUpMain />}
                     />
 
