@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { routerPath } from "webPath";
 
 const FooterSub = () => {
+    const { pathname } = useLocation();
+
+    const toTop = () => {
+        window.scrollTo(0, 0);
+    };
     return (
         <>
             <div className="sub_hostbox">
@@ -24,7 +29,13 @@ const FooterSub = () => {
 
             <div className="section02">
                 <div className="sec02_in">
-                    <Link to={routerPath.web_program_url} className="btn01">
+                    <Link
+                        to={routerPath.web_program_url}
+                        className="btn01"
+                        onClick={
+                            pathname === routerPath.web_program_url && toTop
+                        }
+                    >
                         Program Overview
                         <p className="cbox">
                             GO
@@ -39,6 +50,10 @@ const FooterSub = () => {
                     <Link
                         to={routerPath.web_signup_signup_url}
                         className="btn02"
+                        onClick={
+                            pathname === routerPath.web_signup_signup_url &&
+                            toTop
+                        }
                     >
                         Online Sign-up
                         <p className="cbox">

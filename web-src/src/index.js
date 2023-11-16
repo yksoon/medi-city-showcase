@@ -15,6 +15,7 @@ import "common/css/style.css";
 import "common/css/common.css";
 import "common/css/aos.css";
 import "common/css/adm.css";
+import ScrollToTop from "ScrollToTop";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const app = document.getElementById("app");
@@ -42,6 +43,7 @@ Create by ⓨⓚⓢⓞⓞⓝ_
 root.render(
     <BrowserRouter>
         <RecoilRoot>
+            <ScrollToTop />
             <RecoilizeDebugger root={app} />
             <App />
         </RecoilRoot>

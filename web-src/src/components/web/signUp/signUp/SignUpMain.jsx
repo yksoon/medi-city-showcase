@@ -611,11 +611,11 @@ const SignUpMain = (props) => {
                 return false;
             }
 
-            if (!entryInfo[i]["duty"]) {
-                notiEntry("Please enter participant title");
-
-                return false;
-            }
+            // if (!entryInfo[i]["duty"]) {
+            //     notiEntry("Please enter participant title");
+            //
+            //     return false;
+            // }
 
             if (
                 !entryInfo[i]["mobile1"] ||
@@ -1215,14 +1215,7 @@ const SignUpMain = (props) => {
                                                         </p>
                                                     )}
                                                 </td>
-                                                <th>
-                                                    Title{" "}
-                                                    {isSignup && (
-                                                        <span className="red">
-                                                            *
-                                                        </span>
-                                                    )}
-                                                </th>
+                                                <th>Title</th>
                                                 <td>
                                                     <input
                                                         type="text"

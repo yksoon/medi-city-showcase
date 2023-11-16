@@ -24,6 +24,8 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Checkbox, Pagination } from "@mui/material";
 import CountrySelect from "common/js/countryAutocomplete";
+import EntryManageChart from "components/admin/registration/entryManage/EntryManageChart";
+import SearchBar from "components/admin/common/SearchBar";
 
 const EntryManageMain = (props) => {
     const { confirm } = useConfirm();
@@ -37,6 +39,7 @@ const EntryManageMain = (props) => {
     const [boardList, setBoardList] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
     const [checkItems, setCheckItems] = useState([]);
+    const [dashboardInfo, setDashboardInfo] = useState([]);
 
     // 모달
     const [isOpen, setIsOpen] = useState(false);
@@ -93,6 +96,7 @@ const EntryManageMain = (props) => {
                 const page_info = res.data.page_info;
 
                 setBoardList(result_info.registration_info);
+                setDashboardInfo(result_info.dashboard_info);
                 setPageInfo(page_info);
 
                 setIsSpinner(false);
@@ -486,57 +490,26 @@ const EntryManageMain = (props) => {
                     <h3>참가자 관리</h3>
                 </div>
                 <div className="con_area">
-                    <div className="adm_search">
-                        <div>
-                            {/* <select name="" id="">
-                                        <option value="">구분</option>
-                                        <option value="">이름</option>
-                                        <option value="">소속</option>
-                                    </select> */}
-                            <input
-                                type="text"
-                                className="input"
-                                ref={searchKeyword}
-                            />
-                            <Link
-                                to=""
-                                className="subbtn off"
-                                onClick={doSearch}
-                            >
-                                검색
-                            </Link>
-                        </div>
-                        <div
-                            className="btn_box btn_right"
-                            style={{ margin: 0 }}
-                        >
-                            <Link
-                                to=""
-                                className="subbtn on"
-                                onClick={regBoard}
-                            >
-                                등록
-                            </Link>
-                            <Link
-                                to=""
-                                className="subbtn del"
-                                onClick={clickRemove}
-                            >
-                                삭제
-                            </Link>
-                            {/*<Link className="btn btn01" onClick={downloadExcel} to="">*/}
-                            {/*    엑셀 다운로드*/}
-                            {/*</Link>*/}
-                            {/*{userInfoAdmin.user_role_cd === "000" && (*/}
-                            {/*    <Link*/}
-                            {/*        className="btn btn02"*/}
-                            {/*        onClick={removeBoard}*/}
-                            {/*     to="">*/}
-                            {/*        삭제*/}
-                            {/*    </Link>*/}
-                            {/*)}*/}
-                        </div>
-                    </div>
+                    {/*검색 바*/}
+                    <SearchBar
+                        searchKeyword={searchKeyword}
+                        doSearch={doSearch}
+                        regBoard={regBoard}
+                        clickRemove={clickRemove}
+                    />
+
+                    {/*차트*/}
+                    {dashboardInfo.length !== 0 && (
+                        <EntryManageChart dashboardInfo={dashboardInfo} />
+                    )}
+
+                    {/*검색 바*/}
+                    <SearchBar
+                        searchKeyword={searchKeyword}
+                        doSearch={doSearch}
+                        regBoard={regBoard}
+                        clickRemove={clickRemove}
+                    />
                     <div
                         style={{
                             display: "flex",
@@ -654,6 +627,7 @@ const EntryManageMain = (props) => {
                     {/*    onChange={selectedCountry}*/}
                     {/*    defaultValue={"82"}*/}
                     {/*/>*/}
+
                     {Object.keys(pageInfo).length !== 0 && (
                         <div className="pagenation">
                             <Pagination
