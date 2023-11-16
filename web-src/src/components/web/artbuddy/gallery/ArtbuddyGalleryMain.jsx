@@ -2,6 +2,8 @@ import React from "react";
 import Header from "components/web/common/Header";
 import FooterSub from "components/web/common/FooterSub";
 import Footer from "components/web/common/Footer";
+import { Link } from "react-router-dom";
+import { routerPath } from "webPath";
 
 const ArtbuddyGalleryMain = () => {
     return (
@@ -22,10 +24,15 @@ const ArtbuddyGalleryMain = () => {
             <div id="container" className="sub_container">
                 <div id="con_area">
                     <div id="leftmenu">
-                        <a href="guideline.html">K-ART Exhibition</a>
-                        <a href="signup.html" className="active">
+                        <Link to={routerPath.web_artbuddy_exhibition_url}>
+                            K-ART Exhibition
+                        </Link>
+                        <Link
+                            to={routerPath.web_artbuddy_gallery_url}
+                            className="active"
+                        >
                             Gallery
-                        </a>
+                        </Link>
                     </div>
 
                     <div id="subtitle">

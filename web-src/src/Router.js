@@ -14,6 +14,7 @@ import Guideline from "components/web/participation/guideline/Guideline";
 import SignUpMain from "components/web/signUp/signUp/SignUpMain";
 import CheckEntryMain from "components/web/signUp/checkEntry/CheckEntryMain";
 import ArtbuddyGalleryMain from "components/web/artbuddy/gallery/ArtbuddyGalleryMain";
+import ArtbuddyExhibitionMain from "components/web/artbuddy/exhibition/ArtbuddyExhibitionMain";
 
 // Router
 const Router = () => {
@@ -101,6 +102,14 @@ const Router = () => {
                     <Route
                         path={routerPath.web_artbuddy_gallery_url}
                         element={<ArtbuddyGalleryMain />}
+                        // render={() => <SignUpMain />}
+                    />
+
+                    {/* 아트버디 - 소개 */}
+                    {/* URL : /artbuddy/exhibition */}
+                    <Route
+                        path={routerPath.web_artbuddy_exhibition_url}
+                        element={<ArtbuddyExhibitionMain />}
                         // render={() => <SignUpMain />}
                     />
 

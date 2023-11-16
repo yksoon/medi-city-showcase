@@ -60,7 +60,13 @@ function Header() {
                             <li className="left_p">
                                 <Link href="">ARTBUDDY, K-ART</Link>
                                 <div className="submenu">
-                                    <Link href="">K-ART Exhibition</Link>
+                                    <Link
+                                        to={
+                                            routerPath.web_artbuddy_exhibition_url
+                                        }
+                                    >
+                                        K-ART Exhibition
+                                    </Link>
                                     <Link
                                         to={routerPath.web_artbuddy_gallery_url}
                                     >

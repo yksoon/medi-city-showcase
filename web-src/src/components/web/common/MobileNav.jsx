@@ -115,7 +115,13 @@ function MobileNav() {
                                 style={{ display: "block" }}
                             >
                                 <li>
-                                    <Link to="">K-ART Exhibition</Link>
+                                    <Link
+                                        to={
+                                            routerPath.web_artbuddy_exhibition_url
+                                        }
+                                    >
+                                        K-ART Exhibition
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link
