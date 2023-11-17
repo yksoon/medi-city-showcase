@@ -15,6 +15,10 @@ const EntryManageChart = (props) => {
     const [entryAgeInfo, setEntryAgeInfo] = useState([]);
     const [institutionEntryStatusInfo, setInstitutionEntryStatusInfo] =
         useState([]);
+    const [institutionPaymentStatusInfo, setInstitutionPaymentStatusInfo] =
+        useState([]);
+    const [entryDutyInfo, setEntryDutyInfo] = useState([]);
+    const [institutionTypeInfo, setInstitutionTypeInfo] = useState([]);
 
     useEffect(() => {
         Object.keys(dashboardInfo).length !== 0 && setDataFunc();
@@ -36,8 +40,20 @@ const EntryManageChart = (props) => {
         // 연령
         entryAgeInfoFunc();
 
-        // 직책
+        // 직급
         entryPositionInfoFunc();
+
+        // 참가상태
+        institutionEntryStatusInfoFunc();
+
+        // 결제상태
+        institutionPaymentStatusInfoFunc();
+
+        // 직책
+        entryDutyInfoFunc();
+
+        // 기관 타입
+        institutionTypeInfoFunc();
     };
 
     // total
@@ -122,7 +138,7 @@ const EntryManageChart = (props) => {
         setInstitutionEntryInfo(newArr);
     };
 
-    // 직책
+    // 직급
     const entryPositionInfoFunc = () => {
         const entryPositionInfoArr = dashboardInfo.entry_position_info;
         const length = entryPositionInfoArr.length;
@@ -136,6 +152,72 @@ const EntryManageChart = (props) => {
             newArr.push(newObj);
         }
         setEntryPositionInfo(newArr);
+    };
+
+    // 참가상태
+    const institutionEntryStatusInfoFunc = () => {
+        const institutionEntryStatusInfoArr =
+            dashboardInfo.institution_entry_status_info;
+        const length = institutionEntryStatusInfoArr.length;
+        let newArr = [];
+        for (let i = 0; i < length; i++) {
+            let newObj = {
+                label: institutionEntryStatusInfoArr[i].institution_entry,
+                value: institutionEntryStatusInfoArr[i].count,
+            };
+
+            newArr.push(newObj);
+        }
+        setInstitutionEntryStatusInfo(newArr);
+    };
+
+    // 결제상태
+    const institutionPaymentStatusInfoFunc = () => {
+        const institutionPaymentStatusInfoArr =
+            dashboardInfo.institution_payment_status_info;
+        const length = institutionPaymentStatusInfoArr.length;
+        let newArr = [];
+        for (let i = 0; i < length; i++) {
+            let newObj = {
+                label: institutionPaymentStatusInfoArr[i].institution_payment,
+                value: institutionPaymentStatusInfoArr[i].count,
+            };
+
+            newArr.push(newObj);
+        }
+        setInstitutionPaymentStatusInfo(newArr);
+    };
+
+    // 직책
+    const entryDutyInfoFunc = () => {
+        const entryDutyInfoArr = dashboardInfo.entry_duty_info;
+        const length = entryDutyInfoArr.length;
+        let newArr = [];
+        for (let i = 0; i < length; i++) {
+            let newObj = {
+                label: entryDutyInfoArr[i].entry_duty,
+                value: entryDutyInfoArr[i].count,
+            };
+
+            newArr.push(newObj);
+        }
+        setEntryDutyInfo(newArr);
+    };
+
+    // 기관타입
+    const institutionTypeInfoFunc = () => {
+        const institutionTypeInfoArr = dashboardInfo.institution_type_info;
+        const length = institutionTypeInfoArr.length;
+        let newArr = [];
+        for (let i = 0; i < length; i++) {
+            let newObj = {
+                label: institutionTypeInfoArr[i].institution_type,
+                value: institutionTypeInfoArr[i].count,
+            };
+
+            newArr.push(newObj);
+        }
+        setInstitutionTypeInfo(newArr);
     };
 
     return (
@@ -194,7 +276,42 @@ const EntryManageChart = (props) => {
                     />
                 )}
             </div>
-            <div style={{ display: "flex" }}></div>
+            <div style={{ display: "flex" }}>
+                {institutionEntryStatusInfo.length !== 0 && (
+                    <CommonPieChart
+                        data={institutionEntryStatusInfo}
+                        width={550}
+                        height={300}
+                        title={"참가 상태"}
+                    />
+                )}
+                {institutionPaymentStatusInfo.length !== 0 && (
+                    <CommonPieChart
+                        data={institutionPaymentStatusInfo}
+                        width={550}
+                        height={300}
+                        title={"결제 상태"}
+                    />
+                )}
+                {entryDutyInfo.length !== 0 && (
+                    <CommonPieChart
+                        data={entryDutyInfo}
+                        width={550}
+                        height={300}
+                        title={"직책"}
+                    />
+                )}
+            </div>
+            <div style={{ display: "flex" }}>
+                {institutionTypeInfo.length !== 0 && (
+                    <CommonPieChart
+                        data={institutionTypeInfo}
+                        width={550}
+                        height={300}
+                        title={"기관타입"}
+                    />
+                )}
+            </div>
         </>
     );
 };
