@@ -16,6 +16,7 @@ import useConfirm from "hook/useConfirm";
 import ConsultingBoardModalMain from "components/admin/board/consultingBoard/modal/ConsultingBoardModalMain";
 import RegistrationManageModalMain from "components/admin/registration/registrationManage/modal/RegistrationManageModalMain";
 import EntryManageModalMain from "components/admin/registration/entryManage/modal/EntryManageModalMain";
+import PopupManageModalMain from "components/admin/popupManage/modal/PopupManageModalMain";
 import { BarChart, PieChart } from "@mui/x-charts";
 
 // Alert (props)
@@ -74,6 +75,16 @@ const CommonModal = (props) => {
             case "EntryManageModalMain":
                 return (
                     <EntryManageModalMain
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modData={props.modData}
+                    />
+                );
+
+            // 팝업 관리
+            case "PopupManageModalMain":
+                return (
+                    <PopupManageModalMain
                         handleNeedUpdate={handleNeedUpdate}
                         handleModalClose={modalOption.handleModalClose}
                         modData={props.modData}

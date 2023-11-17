@@ -301,6 +301,17 @@ const apiPath = {
     api_admin_get_reg_confirm: `${
         base_api_url + slash + version + slash
     }reg/_confirm`,
+
+    // ------------------ Popup Management API 팝업 관리 API ------------------
+    // /v1/_popups
+    // POST
+    // 팝업 정보 목록
+    api_admin_popups: `${base_api_url + slash + version + slash}_popups`,
+
+    // /v1/_popup/{popup_idx}
+    // GET
+    // 팝업 정보 상세
+    api_admin_get_popup: `${base_api_url + slash + version + slash}_popup${slash}`,
 };
 
 export { routerPath, apiPath };
