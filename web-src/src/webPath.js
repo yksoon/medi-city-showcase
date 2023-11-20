@@ -56,7 +56,11 @@ const routerPath = {
     // /signup/confirmation
     web_signup_confirmation_url: `${base_url}signup/confirmation`,
 
-    // 아트버디 - 갤러리
+    // 아트버디 - 갤러리 리스트
+    // /artbuddy/gallery_list
+    web_artbuddy_gallery_list_url: `${base_url}artbuddy/gallery_list`,
+
+    // 아트버디 - 갤러리 상세
     // /artbuddy/gallery
     web_artbuddy_gallery_url: `${base_url}artbuddy/gallery`,
 
@@ -311,7 +315,9 @@ const apiPath = {
     // /v1/_popup/{popup_idx}
     // GET
     // 팝업 정보 상세
-    api_admin_get_popup: `${base_api_url + slash + version + slash}_popup${slash}`,
+    api_admin_get_popup: `${
+        base_api_url + slash + version + slash
+    }_popup${slash}`,
 
     // /v1/popup
     // POST MULTI

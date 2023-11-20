@@ -312,6 +312,90 @@ const EntryManageMain = (props) => {
         console.log(value);
     };
 
+    const downloadExcel = () => {
+        setIsSpinner(true);
+
+        // /v1/reg/_users
+        // POST
+        // 참가자관리 목록
+        const url = apiPath.api_admin_list_reg_users;
+        const data = {
+            page_num: 1,
+            page_size: 10,
+            search_keyword: "",
+            file_down_yn: "Y",
+        };
+
+        // 파라미터
+        const restParams = {
+            method: "post",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+            admin: "Y",
+        };
+        CommonRest(restParams);
+
+        // 완료 로직
+        const responsLogic = (res) => {
+            const result_code = res.headers.result_code;
+
+            console.log(res);
+
+            // 성공
+            if (
+                result_code === successCode.success ||
+                result_code === successCode.noData
+            ) {
+                // window 객체의 createObjuctURL을 이용해서 blob:http://~~~ 식의 url을 만들어 준다.
+                const url = window.URL.createObjectURL(
+                    // Blob은 배열 객체 안의 모든 데이터를 합쳐 blob으로 반환하기 때문에 []안에 담는다!
+                    new Blob([res.data], {
+                        type: res.headers["content-type"],
+                    }),
+                );
+
+                // link 안에 위에서 만든 url을 가지고 있는 a 태그를 만들고 보이지 않도록 해준다.
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", excelName());
+                document.body.appendChild(link);
+                link.style.display = "none";
+                link.click();
+
+                setIsSpinner(false);
+            } else {
+                // 에러
+                CommonConsole("log", res);
+
+                setIsSpinner(false);
+            }
+        };
+    };
+
+    // 엑셀 이름
+    const excelName = () => {
+        const now = new Date();
+        const year = String(now.getFullYear());
+
+        let month = String(now.getMonth() + 1);
+        if (month.length === 1) {
+            month = "0" + month;
+        }
+
+        let day = String(now.getDate());
+        if (day.length === 1) {
+            day = "0" + day;
+        }
+
+        const nowDate = `${year}${month}${day}`;
+
+        const xlsName = `${nowDate}_Showcase_참가자_통계자료`;
+
+        return xlsName;
+    };
+
     // --------------------------------- 테이블 세팅 -------------------------------------
 
     // 컬럼 세팅
@@ -491,12 +575,12 @@ const EntryManageMain = (props) => {
                 </div>
                 <div className="con_area">
                     {/*검색 바*/}
-                    <SearchBar
-                        searchKeyword={searchKeyword}
-                        doSearch={doSearch}
-                        regBoard={regBoard}
-                        clickRemove={clickRemove}
-                    />
+                    {/*<SearchBar*/}
+                    {/*    searchKeyword={searchKeyword}*/}
+                    {/*    doSearch={doSearch}*/}
+                    {/*    regBoard={regBoard}*/}
+                    {/*    clickRemove={clickRemove}*/}
+                    {/*/>*/}
 
                     {/*차트*/}
                     {dashboardInfo.length !== 0 && (
@@ -508,6 +592,7 @@ const EntryManageMain = (props) => {
                         searchKeyword={searchKeyword}
                         doSearch={doSearch}
                         regBoard={regBoard}
+                        downloadExcel={downloadExcel}
                         clickRemove={clickRemove}
                     />
                     <div

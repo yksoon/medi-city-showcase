@@ -68,7 +68,9 @@ function Header() {
                                         K-ART Exhibition
                                     </Link>
                                     <Link
-                                        to={routerPath.web_artbuddy_gallery_url}
+                                        to={
+                                            routerPath.web_artbuddy_gallery_list_url
+                                        }
                                     >
                                         Gallery
                                     </Link>

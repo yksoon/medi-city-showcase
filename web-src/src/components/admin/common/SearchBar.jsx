@@ -5,6 +5,7 @@ const SearchBar = (props) => {
     const searchKeyword = props.searchKeyword;
     const doSearch = props.doSearch;
     const regBoard = props.regBoard;
+    const downloadExcel = props.downloadExcel;
     const clickRemove = props.clickRemove;
 
     return (
@@ -22,12 +23,29 @@ const SearchBar = (props) => {
                     </Link>
                 </div>
                 <div className="btn_box btn_right" style={{ margin: 0 }}>
-                    <Link to="" className="subbtn on" onClick={regBoard}>
-                        등록
-                    </Link>
-                    <Link to="" className="subbtn del" onClick={clickRemove}>
-                        삭제
-                    </Link>
+                    {downloadExcel && (
+                        <Link
+                            to=""
+                            className="subbtn on"
+                            onClick={downloadExcel}
+                        >
+                            엑셀 다운로드
+                        </Link>
+                    )}
+                    {regBoard && (
+                        <Link to="" className="subbtn on" onClick={regBoard}>
+                            등록
+                        </Link>
+                    )}
+                    {clickRemove && (
+                        <Link
+                            to=""
+                            className="subbtn del"
+                            onClick={clickRemove}
+                        >
+                            삭제
+                        </Link>
+                    )}
                     {/*<Link className="btn btn01" onClick={downloadExcel} to="">*/}
                     {/*    엑셀 다운로드*/}
                     {/*</Link>*/}

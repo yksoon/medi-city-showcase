@@ -169,7 +169,8 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 	-o-transition: all 0.3s ease; /* Opera */
 }
 .section03 .hotel .info .btns a:hover img, .section03 .hotel .info .btns a:focus img{right:20px;}
-.sectino03 .hotel_map {height:420px;}
+.section03 .hotelmap {height:420px;}
+
 
 /*footer*/
 #footer {clear:both; padding:35px 0;}
@@ -235,6 +236,9 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .sub_hostbox  span.logobox {margin:0 70px 0 0;}
 
 #con_area {width:1300px; margin:0 auto; padding:0 0 150px 0; min-height:500px;}
+#con_area.wide_conarea {width:100%; }
+
+
 #con_area .c_tit {font-size:30px; font-weight: 900; color: #000;position:relative;padding:6px 0 0 8px;margin:0 0 20px 0;}
 #con_area .c_tit .s_txt{font-size:20px;}
 #con_area .c_tit:before {content:"";display:block; width:30px;height:30px; border-radius:30px;-webkit-border-radius:30px;-moz-border-radius:30px;background-color:#ffa8ca;
@@ -389,6 +393,33 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .galleryView .inqbox .btnbox {margin:50px 0 0 0; text-align:center;}
 .galleryView .inqbox .btnbox input[type="submit"] {border:none; height:65px; line-height: 65px; width:300px;outline:none;border:none;background-color: #47005a;color:#fff; font-size:24px; font-family:inherit;cursor:pointer;font-weight: 600;;}
 .galleryView .inqbox .btnbox input[type="submit"]:hover, .galleryView .inqbox .btnbox input[type="submit"]:focus{background-color: #290035;}
+
+
+/* GALLERY 리스트 페이지 */
+.galleryList .gfilter {text-align: center;margin:0 0 60px 0;}
+.galleryList .gfilter a{display:inline-block;height:25px; line-height: 25px; border:1px solid #ddd; border-radius: 25px;padding:0 20px;font-size:15px;color:#333;}
+.galleryList .gfilter a:hover, .galleryList .gfilter a.active{border:1px solid #59047f;color:#59047f;;}
+.galleryList .grid .grid-item { width: 390px;  }
+
+.listbox{
+	margin:0 50px;
+	column-width:390px;
+	column-gap: 10px;
+  }
+.listbox figure{
+	display: inline-block;
+	margin:0;
+	margin-bottom: 50px;	
+}
+
+.listbox  figure a .thumb img {max-width:100%;height:auto;}
+.listbox  figure a .name {font-size:20px; color:#000;margin:20px 0 10px;font-weight: 600;;}
+.listbox  figure a .info {font-size:16px; color:#333; line-height:30px;}
+.listbox  figure a .info p span {display:inline-block;width:80px;color:#888;}
+.listbox  figure a:hover .thumb img {opacity: 0.5;}
+.listbox  figure a:hover .name {color:#5e0875;}
+
+  .galleryList figure a p{display: inline-block=;}
 
 
 /* IE */
@@ -593,6 +624,7 @@ select {
 	#subtitle h3 {font-size:27px; padding:0 10px;}
 
 	#con_area {width:auto; padding:0 20px 100px; }
+	#con_area.wide_conarea {width:auto; padding:0 20px 100px; }
 	#con_area .c_tit {font-size:20px; }
 	#con_area .c_tit:before {width:26px;height:26px;}
 

@@ -30,7 +30,7 @@ const ArtbuddyExhibitionMain = () => {
                         >
                             K-ART Exhibition
                         </Link>
-                        <Link to={routerPath.web_artbuddy_gallery_url}>
+                        <Link to={routerPath.web_artbuddy_gallery_list_url}>
                             Gallery
                         </Link>
                     </div>
@@ -46,7 +46,10 @@ const ArtbuddyExhibitionMain = () => {
                                 data-aos="fade-right"
                                 data-aos-duration="1200"
                             >
-                                <img src="img/sub/artbuddy_logo.jpg" alt="" />
+                                <img
+                                    src="img/web/sub/artbuddy_logo.jpg"
+                                    alt=""
+                                />
                             </p>
                             <div className="right">
                                 <dl>
