@@ -7,7 +7,7 @@ let token;
 const timeOut = 20000;
 
 // Header Prefix
-const prefix = "Showcase"
+const prefix = "Showcase";
 
 /*
     REST CONNECTION 시 Request 를 가로채서
@@ -35,7 +35,26 @@ Instance.interceptors.request.use(
     },
     (err) => {
         return Promise.reject(err);
-    }
+    },
+);
+
+// 파일
+const Instance_file = axios.create({
+    responseType: "blob",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    timeout: timeOut,
+});
+
+Instance_file.interceptors.request.use(
+    (config) => {
+        setInterceptors(config);
+        return config;
+    },
+    (err) => {
+        return Promise.reject(err);
+    },
 );
 
 // application/json
@@ -56,7 +75,26 @@ Instance_admin.interceptors.request.use(
     },
     (err) => {
         return Promise.reject(err);
-    }
+    },
+);
+
+// 파일
+const Instance_admin_file = axios.create({
+    responseType: "blob",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    timeout: timeOut,
+});
+
+Instance_admin_file.interceptors.request.use(
+    (config) => {
+        setInterceptors(config);
+        return config;
+    },
+    (err) => {
+        return Promise.reject(err);
+    },
 );
 
 // multipart/form-data
@@ -74,7 +112,26 @@ Instance_multi.interceptors.request.use(
     },
     (err) => {
         return Promise.reject(err);
-    }
+    },
+);
+
+// 파일
+const Instance_multi_file = axios.create({
+    responseType: "blob",
+    headers: {
+        "Content-Type": "multipart/form-data",
+    },
+    timeout: timeOut,
+});
+
+Instance_multi_file.interceptors.request.use(
+    (config) => {
+        setInterceptors(config);
+        return config;
+    },
+    (err) => {
+        return Promise.reject(err);
+    },
 );
 
 // multipart/form-data
@@ -93,7 +150,28 @@ Instance_admin_multi.interceptors.request.use(
     },
     (err) => {
         return Promise.reject(err);
-    }
+    },
+);
+
+// 파일
+// multipart/form-data
+// admin
+const Instance_admin_file_multi = axios.create({
+    responseType: "blob",
+    headers: {
+        "Content-Type": "multipart/form-data",
+    },
+    timeout: timeOut,
+});
+
+Instance_admin_file_multi.interceptors.request.use(
+    (config) => {
+        setInterceptorsAdmin(config);
+        return config;
+    },
+    (err) => {
+        return Promise.reject(err);
+    },
 );
 
 const setInterceptors = (config) => {
@@ -126,4 +204,13 @@ const setInterceptorsAdmin = (config) => {
     return config;
 };
 
-export { Instance, Instance_multi, Instance_admin, Instance_admin_multi };
+export {
+    Instance,
+    Instance_multi,
+    Instance_file,
+    Instance_multi_file,
+    Instance_admin,
+    Instance_admin_multi,
+    Instance_admin_file,
+    Instance_admin_file_multi,
+};

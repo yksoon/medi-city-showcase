@@ -396,8 +396,9 @@ const CommonRest = async (restParams = {}) => {
     const url = restParams.url;
     const data = restParams.data;
     const admin = restParams.admin;
+    const file = restParams.file;
 
-    await RestServer(method, url, data, admin)
+    await RestServer(method, url, data, admin, file)
         .then((response) => {
             restParams.callback(response);
         })

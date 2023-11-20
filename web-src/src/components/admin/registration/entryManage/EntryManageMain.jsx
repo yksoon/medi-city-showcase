@@ -334,6 +334,7 @@ const EntryManageMain = (props) => {
             err: err,
             callback: (res) => responsLogic(res),
             admin: "Y",
+            file: "Y",
         };
         CommonRest(restParams);
 
