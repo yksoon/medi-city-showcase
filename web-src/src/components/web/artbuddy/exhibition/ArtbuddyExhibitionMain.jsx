@@ -30,7 +30,7 @@ const ArtbuddyExhibitionMain = () => {
                         >
                             K-ART Exhibition
                         </Link>
-                        <Link to={routerPath.web_artbuddy_gallery_url}>
+                        <Link to={routerPath.web_artbuddy_gallery_list_url}>
                             Gallery
                         </Link>
                     </div>
