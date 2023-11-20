@@ -58,10 +58,7 @@ const ArtbuddyGalleryListMain = () => {
 
                         <div className="listbox">
                             <figure>
-                                <Link
-                                    to={routerPath.web_artbuddy_gallery_url}
-                                    //
-                                >
+                                <Link to={routerPath.web_artbuddy_gallery_url}>
                                     <p className="thumb">
                                         <img
                                             src="img/web/sub/thumb01.jpg"
