@@ -46,7 +46,10 @@ const ArtbuddyExhibitionMain = () => {
                                 data-aos="fade-right"
                                 data-aos-duration="1200"
                             >
-                                <img src="img/sub/artbuddy_logo.jpg" alt="" />
+                                <img
+                                    src="img/web/sub/artbuddy_logo.jpg"
+                                    alt=""
+                                />
                             </p>
                             <div className="right">
                                 <dl>

@@ -99,6 +99,61 @@ const EntryManageMain = (props) => {
                 setDashboardInfo(result_info.dashboard_info);
                 setPageInfo(page_info);
 
+                getFileList(1, 10, "");
+
+                setIsSpinner(false);
+            } else {
+                // 에러
+                CommonConsole("log", res);
+
+                setIsSpinner(false);
+            }
+        };
+    };
+
+    // 리스트 가져오기
+    const getFileList = (pageNum, pageSize, searchKeyword) => {
+        setIsSpinner(true);
+
+        // /v1/reg/_users
+        // POST
+        // 참가자관리 목록
+        const url = apiPath.api_admin_list_reg_users;
+        const data = {
+            page_num: pageNum,
+            page_size: pageSize,
+            search_keyword: searchKeyword,
+            file_down_yn: "Y",
+        };
+
+        // 파라미터
+        const restParams = {
+            method: "post",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+            admin: "Y",
+        };
+        CommonRest(restParams);
+
+        // 완료 로직
+        const responsLogic = (res) => {
+            const result_code = res.headers.result_code;
+
+            // 성공
+            if (
+                result_code === successCode.success ||
+                result_code === successCode.noData
+            ) {
+                console.log(res);
+                const result_info = res.data.result_info;
+                // const page_info = res.data.page_info;
+
+                // setBoardList(result_info.registration_info);
+                // setDashboardInfo(result_info.dashboard_info);
+                // setPageInfo(page_info);
+
                 setIsSpinner(false);
             } else {
                 // 에러
@@ -491,12 +546,12 @@ const EntryManageMain = (props) => {
                 </div>
                 <div className="con_area">
                     {/*검색 바*/}
-                    <SearchBar
-                        searchKeyword={searchKeyword}
-                        doSearch={doSearch}
-                        regBoard={regBoard}
-                        clickRemove={clickRemove}
-                    />
+                    {/*<SearchBar*/}
+                    {/*    searchKeyword={searchKeyword}*/}
+                    {/*    doSearch={doSearch}*/}
+                    {/*    regBoard={regBoard}*/}
+                    {/*    clickRemove={clickRemove}*/}
+                    {/*/>*/}
 
                     {/*차트*/}
                     {dashboardInfo.length !== 0 && (
