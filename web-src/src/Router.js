@@ -16,6 +16,7 @@ import CheckEntryMain from "components/web/signUp/checkEntry/CheckEntryMain";
 import ArtbuddyGalleryMain from "components/web/artbuddy/gallery/ArtbuddyGalleryMain";
 import ArtbuddyExhibitionMain from "components/web/artbuddy/exhibition/ArtbuddyExhibitionMain";
 import ArtbuddyGalleryListMain from "components/web/artbuddy/gallery/ArtbuddyGalleryListMain";
+import MainPopupModal from "components/web/main/mainComponents/mainContentsComponents/modal/MainPopupModal";
 
 // Router
 const Router = () => {
@@ -45,6 +46,10 @@ const Router = () => {
                     {/* 메인 */}
                     {/* URL : / */}
                     <Route path={routerPath.web_main_url} element={<Main />} />
+
+                    {/* 메인 팝업 */}
+                    {/* URL : /popup/:id */}
+                    <Route path={routerPath.web_popup_url + ':id'} element={<MainPopupModal />} />
 
                     {/* 프로그램 */}
                     {/* URL : /program */}

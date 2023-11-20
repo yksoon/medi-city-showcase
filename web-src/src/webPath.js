@@ -36,6 +36,10 @@ const routerPath = {
     // /
     web_main_url: `${base_url}`,
 
+    // 메인 팝업
+    // /popup/:id
+    web_popup_url: `${base_url}popup${slash}`,
+
     // 프로그램
     // /program
     web_program_url: `${base_url}program`,
