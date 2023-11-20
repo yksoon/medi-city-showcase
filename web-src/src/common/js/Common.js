@@ -516,18 +516,11 @@ const CommonErrModule = () => {
 
 const CommonPieChart = (props) => {
     const data = props.data ?? [];
-    const width = props.width ?? 0;
-    const height = props.height ?? 0;
     const title = props.title ?? "";
-
-    const size = {
-        width: width,
-        height: height,
-    };
 
     return (
         <>
-            <div>
+            <div style={{ margin: "20px 0" }}>
                 <Typography variant="h5" align="center">
                     {title}
                 </Typography>
@@ -547,7 +540,23 @@ const CommonPieChart = (props) => {
                             },
                         },
                     ]}
-                    {...size}
+                    slotProps={{
+                        legend: {
+                            direction: "row",
+                            position: {
+                                vertical: "bottom",
+                                horizontal: "middle",
+                            },
+                            padding: 0,
+                        },
+                    }}
+                    margin={{
+                        top: 20,
+                        bottom: 100,
+                        left: 50,
+                        right: 50,
+                    }}
+                    {...props}
                 />
             </div>
         </>
@@ -556,18 +565,11 @@ const CommonPieChart = (props) => {
 
 const CommonBarChart = (props) => {
     const data = props.data ?? [];
-    const width = props.width ?? 0;
-    const height = props.height ?? 0;
     const title = props.title ?? "";
-
-    const size = {
-        width: width,
-        height: height,
-    };
 
     return (
         <>
-            <div>
+            <div style={{ margin: "20px 0" }}>
                 <Typography variant="h5" align="center">
                     {title}
                 </Typography>
@@ -580,7 +582,13 @@ const CommonBarChart = (props) => {
                             // label: "성별"
                         },
                     ]}
-                    {...size}
+                    margin={{
+                        top: 20,
+                        bottom: 60,
+                        left: 100,
+                        right: 100,
+                    }}
+                    {...props}
                 />
             </div>
         </>

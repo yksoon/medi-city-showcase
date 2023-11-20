@@ -334,7 +334,7 @@ const EntryManageMain = (props) => {
             err: err,
             callback: (res) => responsLogic(res),
             admin: "Y",
-            file: "Y",
+            file: "Y", // file: "Y" 로 하면 엑셀 다운로드 가능
         };
         CommonRest(restParams);
 
