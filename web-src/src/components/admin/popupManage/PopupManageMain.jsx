@@ -209,6 +209,68 @@ const PopupManageMain = (props) => {
         setIsOpen(true);
     };
 
+    // 삭제
+    const clickRemove = () => {
+        //선택여부 확인
+        checkItems.length === 0
+            ? CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "삭제할 항목을 선택해주세요",
+                })
+            : CommonNotify({
+                    type: "confirm",
+                    hook: confirm,
+                    message: "선택된 항목을 삭제 하시겠습니까?",
+                    callback: () => removePopup(),
+                });
+    };
+
+    const removePopup = async () => {
+        let checkItemsStr = checkItems.join();
+        setIsSpinner(true);
+
+        const url = `${apiPath.api_admin_delete_popup}${checkItemsStr}`;
+
+        const restParams = {
+            method: "delete",
+            url: url,
+            data: {},
+            err: err,
+            admin: "Y",
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            const result_code = res.headers.result_code;
+            if (result_code === successCode.success) {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "삭제가 완료 되었습니다",
+                    callback: () => pageUpdate(),
+                });
+            } else {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "잠시 후 다시 시도해주세요",
+                });
+            }
+
+            const pageUpdate = () => {
+                setCheckItems([]);
+                handleNeedUpdate();
+            };
+        };
+    };
+
     // --------------------------------- 테이블 세팅 -------------------------------------
 
     // 컬럼 세팅
@@ -269,6 +331,13 @@ const PopupManageMain = (props) => {
             id: "end_date",
             cell: (info) => info.getValue(),
             header: "종료일",
+            sortingFn: "alphanumericCaseSensitive",
+        }),
+
+        columnHelper.accessor((row) => row.show_yn, {
+            id: "show_yn",
+            cell: (info) => (info.getValue() === "Y" ? "노출" : "비노출"),
+            header: "노출여부",
             sortingFn: "alphanumericCaseSensitive",
         }),
 
@@ -339,15 +408,19 @@ const PopupManageMain = (props) => {
                             style={{ margin: 0 }}
                         >
                             <Link
-                                href=""
-                                className="btn btn01"
+                                to=""
+                                className="subbtn on"
                                 onClick={regPopup}
                             >
-                                팝업 추가
+                                팝업 등록
                             </Link>
-                            {/* <Link href="" className="btn btn02">
-                                        삭제
-                                    </Link> */}
+                            <Link
+                                to=""
+                                className="subbtn del"
+                                onClick={clickRemove}
+                            >
+                                삭제
+                            </Link>
                             {/*<Link className="btn btn01" onClick={downloadExcel} to="">*/}
                             {/*    엑셀 다운로드*/}
                             {/*</Link>*/}
@@ -380,6 +453,7 @@ const PopupManageMain = (props) => {
                                 <col width="*" />
                                 <col width="10%" />
                                 <col width="10%" />
+                                <col width="7%" />
                                 <col width="7%" />
                                 <col width="10%" />
                                 <col width="5%" />

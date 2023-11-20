@@ -312,6 +312,23 @@ const apiPath = {
     // GET
     // 팝업 정보 상세
     api_admin_get_popup: `${base_api_url + slash + version + slash}_popup${slash}`,
+
+    // /v1/popup
+    // POST MULTI
+    // 팝업 정보 등록
+    api_admin_reg_popup: `${base_api_url + slash + version + slash}popup`,
+
+    // /v1/popup
+    // PUT MULTI
+    // 팝업 정보 수정
+    api_admin_mod_popup: `${base_api_url + slash + version + slash}popup`,
+
+    // /v1/popup/{popup_idxs}
+    // DELETE
+    // 팝업 정보 삭제
+    api_admin_delete_popup: `${
+        base_api_url + slash + version + slash
+    }popup${slash}`,
 };
 
 export { routerPath, apiPath };

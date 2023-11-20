@@ -1,20 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import useAlert from "hook/useAlert";
 import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { codesAtom, countryBankAtom, isSpinnerAtom } from "recoils/atoms";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
-import CountrySelect from "common/js/countryAutocomplete";
+import { popupModel } from "models/popup/popup";
 
 const PopupManageModalMain = (props) => {
     const { alert } = useAlert();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
-
-    const countryBank = useRecoilValue(countryBankAtom);
-    const codes = useRecoilValue(codesAtom);
 
     // 상세보기 데이터
     const modData = props.modData;
@@ -23,11 +20,8 @@ const PopupManageModalMain = (props) => {
     const handleModalClose = props.handleModalClose;
     const handleNeedUpdate = props.handleNeedUpdate;
 
-    const [paymentTypeOption, setPaymentTypeOption] = useState([]);
-    const [bankOption, setBankOption] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState("82");
-
     // refs
+    const selectShowYn = useRef(null);
     const popupTitle = useRef(null);
     const popupContent = useRef(null);
     const popupWidth = useRef(null);
@@ -40,63 +34,18 @@ const PopupManageModalMain = (props) => {
     const startTime = useRef(null);
     const endDate = useRef(null);
     const endTime = useRef(null);
-
-
-
-
-    const registrationSubTitleKo = useRef(null);
-    const registrationSubTitleEn = useRef(null);
-    // const startDate = useRef(null);
-    // const startTime = useRef(null);
-    // const endDate = useRef(null);
-    // const endTime = useRef(null);
-    const entryCost = useRef(null);
-    const additionalCost = useRef(null);
-    const interpretationCost = useRef(null);
-    const paymentType = useRef("000");
-    const paymentBankCd = useRef(null);
-    const paymentAccount = useRef(null);
-    const nameFirstKo = useRef(null);
-    const nameLastKo = useRef(null);
-    const nameFirstEn = useRef(null);
-    const nameLastEn = useRef(null);
-    const email = useRef(null);
-    const mobile1 = useRef(null);
-    const mobile2 = useRef(null);
-    const mobile3 = useRef(null);
-    const registrationMemo = useRef(null);
-    const targetDate = useRef(null);
-    const targetScale = useRef(null);
-    const targetPlace = useRef(null);
-    const targetHost = useRef(null);
-    const targetSupervision = useRef(null);
-    const targetContactus = useRef(null);
+    const inputAttachmentFile = useRef(null);
+    
+    const fileBaseUrl = apiPath.api_file;
+    const [fileList, setFileList] = useState([]);
 
     useEffect(() => {
-        // 결제타입, 은행 초기화
-        setPaymentSelectOption();
-    }, [countryBank, codes]);
-
-    useEffect(() => {
-        if (paymentTypeOption.length !== 0 && bankOption.length !== 0) {
-            // 수정일 경우 디폴트 세팅
-            isModData && setDefaultValue();
-        }
-    }, [paymentTypeOption, bankOption]);
-
-    const setPaymentSelectOption = () => {
-        const paymentTypeArr = codes.filter(
-            (el) => el.code_type === "PAYMENT_TYPE",
-        );
-        const paymentBankArr = countryBank.filter(
-            (el) => el.code_type === "BANK_TYPE",
-        );
-
-        setPaymentTypeOption(paymentTypeArr);
-        setBankOption(paymentBankArr);
-    };
+        // 수정일 경우 디폴트 세팅
+        isModData && setDefaultValue();
+    });
 
     const setDefaultValue = () => {
+        selectShowYn.current.value = modData.show_yn;
         popupTitle.current.value = modData.title ?? "";
         popupContent.current.value = modData.content ?? "";
         popupWidth.current.value = modData.size_width;
@@ -109,108 +58,107 @@ const PopupManageModalMain = (props) => {
         startTime.current.value = modData.start_date.split(' ')[1];
         endDate.current.value = modData.end_date.split(' ')[0];
         endTime.current.value = modData.end_date.split(' ')[1];
-        // startDate.current.value = modData.start_date ?? "";
-        // startTime.current.value = modData.start_time ?? "";
-        // endDate.current.value = modData.end_date ?? "";
-        // endTime.current.value = modData.end_time ?? "";
-
-        registrationSubTitleKo.current.value =
-            modData.registration_sub_title_ko ?? "";
-        registrationSubTitleEn.current.value =
-            modData.registration_sub_title_en ?? "";
-
-        entryCost.current.value = modData.entry_cost ?? "";
-        additionalCost.current.value = modData.additional_cost ?? "";
-        interpretationCost.current.value = modData.interpretation_cost ?? "";
-        paymentType.current.value = modData.payment_type_cd ?? "";
-        paymentBankCd.current.value = modData.payment_bank_cd ?? "";
-        paymentAccount.current.value = modData.payment_account ?? "";
-        nameFirstKo.current.value = modData.name_first_ko ?? "";
-        nameLastKo.current.value = modData.name_last_ko ?? "";
-        nameFirstEn.current.value = modData.name_first_en ?? "";
-        nameLastEn.current.value = modData.name_last_en ?? "";
-        email.current.value = modData.email ?? "";
-        mobile1.current.value = modData.mobile1 ?? "";
-        mobile2.current.value = modData.mobile2 ?? "";
-        mobile3.current.value = modData.mobile3 ?? "";
-        registrationMemo.current.value = modData.registration_memo ?? "";
-        targetDate.current.value = modData.target_date ?? "";
-        targetScale.current.value = modData.target_scale ?? "";
-        targetPlace.current.value = modData.target_place ?? "";
-        targetHost.current.value = modData.target_host ?? "";
-        targetSupervision.current.value = modData.target_supervision ?? "";
-        targetContactus.current.value = modData.target_contactus ?? "";
-
-        setSelectedCountry(modData.inter_phone_number);
+        setFileList(modData.file_info);
     };
+
+    // 파일 첨부시
+    const attachFile = (input) => {
+        // console.log(input.files);
+        const maxFileCnt = 1; // 첨부파일 최대 개수
+        if (isFileImage(input.files)) {
+            if (input.files.length > maxFileCnt) {
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "이미지는 5장까지 업로드 가능합니다.",
+                });
+
+                input.value = "";
+
+                return false;
+            }
+        } else {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: "이미지만 업로드 가능합니다.",
+            });
+
+            input.value = "";
+
+            return false;
+        }
+    };
+
+    // 이미지파일인지
+    function isFileImage(file) {
+        if (file) {
+            for (let i = 0; i < file.length; i++) {
+                return file[i] && file[i]["type"].split("/")[0] === "image";
+            }
+        }
+    }
 
     // 등록
     const regModBoard = (method) => {
         if (validation()) {
             setIsSpinner(true);
 
+            const model = popupModel;
+            const formData = new FormData();
             let url;
+            let data = {};
+            let fileArr = [];
+
+            let startDateVal = startTime.current.value ? startDate.current.value + ' ' + startTime.current.value : startDate.current.value + ' 00:00';
+            let endDateVal = endTime.current.value ? endDate.current.value + ' ' + endTime.current.value : endDate.current.value + ' 23:59';
+            let popupIdxVal = method === "mod" ? modData.popup_idx : "";
+
             if (method === "reg") {
-                // /v1/reg
-                // POST
-                // 사전등록 등록
-                url = apiPath.api_admin_reg_regs;
+                // /v1/popup
+                // POST MULTI
+                // 팝업 정보 등록
+                url = apiPath.api_admin_reg_popup;
             } else if (method === "mod") {
-                // /v1/reg
-                // PUT
-                // 사전등록 수정
-                url = apiPath.api_admin_mod_regs;
+                // /v1/popup
+                // PUT MULTI
+                // 팝업 정보 수정
+                url = apiPath.api_admin_mod_popup;
             }
 
-            const data = {
+            data = {
+                ...model,
+                showYn: selectShowYn.current.value,
                 title: popupTitle.current.value,
                 content: popupContent.current.value,
-                size_width: popupWidth.value.value,
-                size_height: popupHeight.value.value,
-                position_top: popupTop.value.value,
-                position_left: popupLeft.value.value,
-                option_scroll_yn: selectScrollYn.value.value,
-                option_24_hours_yn: select24HoursYn.value.value,
-                start_date: startTime.value.value ? startDate.value.value + ' ' + startTime.value.value : startDate.value.value + ' 00:00',
-                end_date: endTime.value.value ? endDate.value.value + ' ' + endTime.value.value : endDate.value.value + ' 23:59',
-
-                registration_sub_title_ko: registrationSubTitleKo.current.value,
-                registration_sub_title_en: registrationSubTitleEn.current.value,
-                // start_date: startDate.current.value,
-                start_time: startTime.current.value,
-                // end_date: endDate.current.value,
-                end_time: endTime.current.value,
-                entry_cost: entryCost.current.value,
-                additional_cost: additionalCost.current.value,
-                interpretation_cost: interpretationCost.current.value,
-                payment_type: paymentType.current.value,
-                payment_bank_cd: paymentBankCd.current.value,
-                payment_account: paymentAccount.current.value,
-                name_first_ko: nameFirstKo.current.value,
-                name_last_ko: nameLastKo.current.value,
-                name_first_en: nameFirstEn.current.value,
-                name_last_en: nameLastEn.current.value,
-                email: email.current.value,
-                inter_phone_number: selectedCountry,
-                mobile1: mobile1.current.value,
-                mobile2: mobile2.current.value,
-                mobile3: mobile3.current.value,
-                registration_memo: registrationMemo.current.value,
-                target_date: targetDate.current.value,
-                target_scale: targetScale.current.value,
-                target_place: targetPlace.current.value,
-                target_host: targetHost.current.value,
-                target_supervision: targetSupervision.current.value,
-                target_contactus: targetContactus.current.value,
-                registration_idx:
-                    method === "mod" ? modData.registration_idx : "",
+                sizeWidth: popupWidth.current.value,
+                sizeHeight: popupHeight.current.value,
+                positionTop: popupTop.current.value,
+                positionLeft: popupLeft.current.value,
+                optionScrollYn: selectScrollYn.current.value,
+                option24HoursYn: select24HoursYn.current.value,
+                startDate: startDateVal,
+                endDate: endDateVal,
+                popupIdx: popupIdxVal,
             };
+
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            // 파일 formData append
+            fileArr = Array.from(inputAttachmentFile.current.files);
+            let len = fileArr.length;
+            for (let i = 0; i < len; i++) {
+                formData.append("attachmentFile", fileArr[i]);
+            }
 
             const restParams = {
                 method:
-                    method === "reg" ? "post" : method === "mod" ? "put" : "",
+                    method === "reg" ? "post_multi" : method === "mod" ? "put_multi" : "",
                 url: url,
-                data: data,
+                data: formData,
                 err: err,
                 admin: "Y",
                 callback: (res) => responseLogic(res),
@@ -228,9 +176,9 @@ const PopupManageModalMain = (props) => {
                         hook: alert,
                         message:
                             method === "reg"
-                                ? "사전등록 등록이 완료 되었습니다"
+                                ? "팝업 등록이 완료 되었습니다"
                                 : method === "mod"
-                                ? "사전등록 수정이 완료 되었습니다"
+                                ? "팝업 수정이 완료 되었습니다"
                                 : "",
                         callback: () => handleNeedUpdate(),
                     });
@@ -245,33 +193,6 @@ const PopupManageModalMain = (props) => {
                 }
             };
         }
-    };
-
-    // 국적 SELECT 스타일
-    const customStyles = {
-        control: () => ({
-            width: "inherit",
-            height: "inherit",
-            lineHeight: "28px",
-        }),
-        valueContainer: () => ({
-            height: "28px",
-            lineHeight: "28px",
-            padding: "0",
-            display: "block",
-        }),
-        indicatorsContainer: () => ({
-            display: "none",
-        }),
-        input: () => ({
-            height: "inherit",
-            lineHeight: "28px",
-            gridArea: "0",
-            display: "block",
-            position: "absolute",
-            top: "0",
-            width: "85%",
-        }),
     };
 
     // 검증
@@ -295,7 +216,7 @@ const PopupManageModalMain = (props) => {
             return false;
         }
 
-        if (!popupContent.current.value) {
+        if (!popupContent.current.value && inputAttachmentFile.current.files.length === 0) {
             noti(popupContent, "내용을 입력해주세요");
 
             return false;
@@ -329,6 +250,17 @@ const PopupManageModalMain = (props) => {
                     <tbody>
                         <tr>
                             <th>
+                                노출여부
+                            </th>
+                            <td colSpan="3">
+                                <select class="wp100" ref={selectShowYn}>
+                                    <option value="Y">노출</option>
+                                    <option value="N">비노출</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
                                 제목 <span className="red">*</span>
                             </th>
                             <td colSpan="3">
@@ -344,11 +276,46 @@ const PopupManageModalMain = (props) => {
                                 내용 <span className="red">*</span>
                             </th>
                             <td colSpan="3">
-                                <input
-                                    type="text"
-                                    className="input wp100"
+                                <textarea
+                                    class="textarea_basic"
                                     ref={popupContent}
-                                />
+                                ></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>파일</th>
+                            <td colSpan="3" className="fileicon">
+                                <div style={{ marginBottom: 5 }}>
+                                    <b>
+                                        여러 파일 선택이 가능합니다. 여러 파일 선택
+                                        시 ctrl 누른 후 선택하시면 됩니다.
+                                    </b>
+                                </div>
+                                <div>
+                                    <input
+                                        type="file"
+                                        ref={inputAttachmentFile}
+                                        multiple
+                                        accept="image/*"
+                                        onChange={(e) => attachFile(e.target)}
+                                    />
+                                </div>
+                                <div>
+                                    {fileList.length !== 0 &&
+                                        fileList.map((item, idx) => (
+                                            <div key={`fileList_${idx}`}>
+                                                <Link
+                                                    to={`${fileBaseUrl}${item.file_path_enc}`}
+                                                >
+                                                    <img
+                                                        src="/img/common_old/file.svg"
+                                                        alt=""
+                                                    />
+                                                    {item.file_name}
+                                                </Link>
+                                            </div>
+                                        ))}
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -454,6 +421,14 @@ const PopupManageModalMain = (props) => {
                                 <tr>
                                     <th>등록일</th>
                                     <td colSpan="3">{ modData.reg_dttm }</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        View Content
+                                    </th>
+                                    <td colSpan="3">
+                                        <div>{ modData.view_content }</div>
+                                    </td>
                                 </tr>
                             </>
                         )}
