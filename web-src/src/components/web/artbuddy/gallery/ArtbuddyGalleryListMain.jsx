@@ -4,13 +4,8 @@ import { Link } from "react-router-dom";
 import { routerPath } from "webPath";
 import FooterSub from "components/web/common/FooterSub";
 import Footer from "components/web/common/Footer";
-import { useNavigate } from "react-router";
 
 const ArtbuddyGalleryListMain = () => {
-    const navigate = useNavigate();
-    const goDetail = () => {
-        navigate(routerPath.web_artbuddy_gallery_url);
-    };
     return (
         <>
             {/*header//S*/}
