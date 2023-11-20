@@ -1,12 +1,22 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {Link} from "react-router-dom";
-import {CommonConsole, CommonErrModule, CommonModal, CommonNotify, CommonRest} from "common/js/Common";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import {
+    CommonConsole,
+    CommonErrModule,
+    CommonModal,
+    CommonNotify,
+    CommonRest,
+} from "common/js/Common";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
-import {useRecoilValue, useSetRecoilState} from "recoil";
-import {isSpinnerAtom, userInfoAdminAtom, userTokenAdminAtom} from "recoils/atoms";
-import {apiPath} from "webPath";
-import {successCode} from "resultCode";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+    isSpinnerAtom,
+    userInfoAdminAtom,
+    userTokenAdminAtom,
+} from "recoils/atoms";
+import { apiPath } from "webPath";
+import { successCode } from "resultCode";
 import {
     createColumnHelper,
     flexRender,
@@ -17,6 +27,7 @@ import {
 import { Pagination } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import SearchBar from "components/admin/common/SearchBar";
 
 const ConsultingBoardMain = (props) => {
     const { confirm } = useConfirm();
@@ -61,7 +72,7 @@ const ConsultingBoardMain = (props) => {
             page_num: pageNum,
             page_size: pageSize,
             search_keyword: searchKeyword,
-            board_type: "100",  // 상담문의
+            board_type: "100", // 상담문의
         };
 
         // 파라미터
@@ -219,9 +230,7 @@ const ConsultingBoardMain = (props) => {
                     onChange={(e) =>
                         handleSingleCheck(e.target.checked, info.getValue())
                     }
-                    checked={
-                        checkItems.includes(info.getValue())
-                    }
+                    checked={checkItems.includes(info.getValue())}
                 />
             ),
             header: () => (
@@ -289,7 +298,7 @@ const ConsultingBoardMain = (props) => {
                 cell: (info) => info.getValue(),
                 header: "상세보기",
                 enableSorting: false,
-            }
+            },
         ),
     ]);
 
@@ -312,47 +321,15 @@ const ConsultingBoardMain = (props) => {
                     <h3>상담문의</h3>
                 </div>
                 <div className="con_area">
-                    <div className="adm_search">
-                        <div>
-                            {/* <select name="" id="">
-                                        <option value="">구분</option>
-                                        <option value="">이름</option>
-                                        <option value="">소속</option>
-                                    </select> */}
-                            <input
-                                type="text"
-                                className="input"
-                                ref={searchKeyword}
-                            />
-                            <Link to="" className="subbtn off" onClick={doSearch}>검색</Link>
-                        </div>
-                        <div
-                            className="btn_box btn_right"
-                            style={{ margin: 0 }}
-                        >
-                            {/* <Link
-                                        href=""
-                                        className="btn btn01"
-                                        onClick={regBoard}
-                                    >
-                                        글쓰기
-                                    </Link> */}
-                            {/* <Link href="" className="btn btn02">
-                                        삭제
-                                    </Link> */}
-                            {/*<Link className="btn btn01" onClick={downloadExcel} to="">*/}
-                            {/*    엑셀 다운로드*/}
-                            {/*</Link>*/}
-                            {/*{userInfoAdmin.user_role_cd === "000" && (*/}
-                            {/*    <Link*/}
-                            {/*        className="btn btn02"*/}
-                            {/*        onClick={removeBoard}*/}
-                            {/*     to="">*/}
-                            {/*        삭제*/}
-                            {/*    </Link>*/}
-                            {/*)}*/}
-                        </div>
-                    </div>
+                    {/*검색 바*/}
+                    <SearchBar
+                        searchKeyword={searchKeyword}
+                        doSearch={doSearch}
+                        // regBoard={regBoard}
+                        // downloadExcel={downloadExcel}
+                        // clickRemove={clickRemove}
+                    />
+
                     <div
                         style={{
                             display: "flex",
@@ -376,90 +353,90 @@ const ConsultingBoardMain = (props) => {
                                 <col width="5%" />
                             </colgroup>
                             <thead>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <tr key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => {
-                                        return (
-                                            <th
-                                                key={header.id}
-                                                colSpan={header.colSpan}
-                                            >
-                                                {header.isPlaceholder ? null : (
-                                                    <div
-                                                        {...{
-                                                            className:
-                                                                header.column.getCanSort()
-                                                                    ? "cursor-pointer select-none table_sort"
-                                                                    : "",
-                                                            onClick:
-                                                                header.column.getToggleSortingHandler(),
-                                                        }}
-                                                    >
-                                                        {flexRender(
-                                                            header.column
-                                                                .columnDef
-                                                                .header,
-                                                            header.getContext()
-                                                        )}
-                                                        {header.column.getCanSort() &&
-                                                            ({
-                                                                asc: (
-                                                                    <div className="sort_asc">
-                                                                        <ArrowDropUpIcon />
-                                                                        <ArrowDropDownIcon />
-                                                                    </div>
-                                                                ),
-                                                                desc: (
-                                                                    <div className="sort_desc">
-                                                                        <ArrowDropUpIcon />
-                                                                        <ArrowDropDownIcon />
-                                                                    </div>
-                                                                ),
-                                                            }[
-                                                                header.column.getIsSorted()
+                                {table.getHeaderGroups().map((headerGroup) => (
+                                    <tr key={headerGroup.id}>
+                                        {headerGroup.headers.map((header) => {
+                                            return (
+                                                <th
+                                                    key={header.id}
+                                                    colSpan={header.colSpan}
+                                                >
+                                                    {header.isPlaceholder ? null : (
+                                                        <div
+                                                            {...{
+                                                                className:
+                                                                    header.column.getCanSort()
+                                                                        ? "cursor-pointer select-none table_sort"
+                                                                        : "",
+                                                                onClick:
+                                                                    header.column.getToggleSortingHandler(),
+                                                            }}
+                                                        >
+                                                            {flexRender(
+                                                                header.column
+                                                                    .columnDef
+                                                                    .header,
+                                                                header.getContext(),
+                                                            )}
+                                                            {header.column.getCanSort() &&
+                                                                ({
+                                                                    asc: (
+                                                                        <div className="sort_asc">
+                                                                            <ArrowDropUpIcon />
+                                                                            <ArrowDropDownIcon />
+                                                                        </div>
+                                                                    ),
+                                                                    desc: (
+                                                                        <div className="sort_desc">
+                                                                            <ArrowDropUpIcon />
+                                                                            <ArrowDropDownIcon />
+                                                                        </div>
+                                                                    ),
+                                                                }[
+                                                                    header.column.getIsSorted()
                                                                 ] ?? (
-                                                                <div>
-                                                                    <ArrowDropUpIcon />
-                                                                    <ArrowDropDownIcon />
-                                                                </div>
-                                                            ))}
-                                                    </div>
-                                                )}
-                                            </th>
-                                        );
-                                    })}
-                                </tr>
-                            ))}
+                                                                    <div>
+                                                                        <ArrowDropUpIcon />
+                                                                        <ArrowDropDownIcon />
+                                                                    </div>
+                                                                ))}
+                                                        </div>
+                                                    )}
+                                                </th>
+                                            );
+                                        })}
+                                    </tr>
+                                ))}
                             </thead>
                             <tbody>
-                            {boardList.length !== 0 ? (
-                                table.getRowModel().rows.map((row) => (
-                                    <tr key={row.id}>
-                                        {row
-                                            .getVisibleCells()
-                                            .map((cell) => (
-                                                <td key={cell.id}>
-                                                    {flexRender(
-                                                        cell.column
-                                                            .columnDef.cell,
-                                                        cell.getContext()
-                                                    )}
-                                                </td>
-                                            ))}
-                                    </tr>
-                                ))
-                            ) : (
-                                <>
-                                    <tr>
-                                        <td
-                                            colSpan="100%"
-                                            style={{ height: "55px" }}
-                                        >
-                                            <b>데이터가 없습니다.</b>
-                                        </td>
-                                    </tr>
-                                </>
-                            )}
+                                {boardList.length !== 0 ? (
+                                    table.getRowModel().rows.map((row) => (
+                                        <tr key={row.id}>
+                                            {row
+                                                .getVisibleCells()
+                                                .map((cell) => (
+                                                    <td key={cell.id}>
+                                                        {flexRender(
+                                                            cell.column
+                                                                .columnDef.cell,
+                                                            cell.getContext(),
+                                                        )}
+                                                    </td>
+                                                ))}
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <>
+                                        <tr>
+                                            <td
+                                                colSpan="100%"
+                                                style={{ height: "55px" }}
+                                            >
+                                                <b>데이터가 없습니다.</b>
+                                            </td>
+                                        </tr>
+                                    </>
+                                )}
                             </tbody>
                         </table>
                     </div>
@@ -473,7 +450,6 @@ const ConsultingBoardMain = (props) => {
                             />
                         </div>
                     )}
-
                 </div>
             </div>
             <CommonModal

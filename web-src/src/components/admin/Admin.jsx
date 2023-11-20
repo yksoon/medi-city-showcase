@@ -15,6 +15,7 @@ import ConsultingBoardMain from "components/admin/board/consultingBoard/Consulti
 import RegistraionManageMain from "components/admin/registration/registrationManage/RegistraionManageMain";
 import EntryManageMain from "components/admin/registration/entryManage/EntryManageMain";
 import PopupManageMain from "components/admin/popupManage/PopupManageMain";
+import PhotoBoardMain from "components/admin/board/photoBoard/PhotoBoardMain";
 
 const Admin = () => {
     const err = CommonErrModule();
@@ -182,8 +183,12 @@ const Admin = () => {
             case "popupMng":
                 return <PopupManageMain isRefresh={isRefresh} />;
 
+            // 팝업관리
+            case "photoBoard":
+                return <PhotoBoardMain isRefresh={isRefresh} />;
+
             default:
-                return <RegistraionManageMain isRefresh={isRefresh} />;
+                return <EntryManageMain isRefresh={isRefresh} />;
         }
     };
     return (

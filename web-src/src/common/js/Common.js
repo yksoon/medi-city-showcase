@@ -579,7 +579,6 @@ const CommonBarChart = (props) => {
                     series={[
                         {
                             dataKey: "value",
-                            // label: "성별"
                         },
                     ]}
                     margin={{
