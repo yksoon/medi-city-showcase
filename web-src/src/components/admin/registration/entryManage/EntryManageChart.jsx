@@ -224,10 +224,10 @@ const EntryManageChart = (props) => {
         <>
             <div style={{ display: "flex" }}>
                 {total.length !== 0 && (
-                    <CommonPieChart
+                    <CommonBarChart
                         data={total}
                         width={550}
-                        height={300}
+                        height={330}
                         title={"총 사전등록/참가자 수"}
                     />
                 )}
@@ -236,7 +236,7 @@ const EntryManageChart = (props) => {
                     <CommonBarChart
                         data={genderInfo}
                         width={550}
-                        height={300}
+                        height={330}
                         title={"성별"}
                     />
                 )}
@@ -245,7 +245,7 @@ const EntryManageChart = (props) => {
                     <CommonPieChart
                         data={entryAgeInfo}
                         width={550}
-                        height={300}
+                        height={330}
                         title={"연령"}
                     />
                 )}
@@ -255,7 +255,7 @@ const EntryManageChart = (props) => {
                     <CommonPieChart
                         data={institutionInfo}
                         width={550}
-                        height={300}
+                        height={330}
                         title={"참가기관"}
                     />
                 )}
@@ -263,51 +263,55 @@ const EntryManageChart = (props) => {
                     <CommonPieChart
                         data={institutionEntryInfo}
                         width={550}
-                        height={300}
+                        height={330}
                         title={"참가기관 (인원)"}
                     />
                 )}
-                {entryPositionInfo.length !== 0 && (
-                    <CommonPieChart
-                        data={entryPositionInfo}
-                        width={550}
-                        height={300}
-                        title={"직급"}
-                    />
-                )}
-            </div>
-            <div style={{ display: "flex" }}>
-                {institutionEntryStatusInfo.length !== 0 && (
-                    <CommonPieChart
-                        data={institutionEntryStatusInfo}
-                        width={550}
-                        height={300}
-                        title={"참가 상태"}
-                    />
-                )}
-                {institutionPaymentStatusInfo.length !== 0 && (
-                    <CommonPieChart
-                        data={institutionPaymentStatusInfo}
-                        width={550}
-                        height={300}
-                        title={"결제 상태"}
-                    />
-                )}
+                {/*{entryPositionInfo.length !== 0 && (*/}
+                {/*    <CommonPieChart*/}
+                {/*        data={entryPositionInfo}*/}
+                {/*        width={550}*/}
+                {/*        height={330}*/}
+                {/*        margin={{*/}
+                {/*            top: 20,*/}
+                {/*            bottom: 60,*/}
+                {/*            left: 30,*/}
+                {/*            right: 30,*/}
+                {/*        }}*/}
+                {/*        title={"직급"}*/}
+                {/*    />*/}
+                {/*)}*/}
                 {entryDutyInfo.length !== 0 && (
                     <CommonPieChart
                         data={entryDutyInfo}
                         width={550}
-                        height={300}
+                        height={330}
                         title={"직책"}
                     />
                 )}
             </div>
             <div style={{ display: "flex" }}>
+                {institutionEntryStatusInfo.length !== 0 && (
+                    <CommonBarChart
+                        data={institutionEntryStatusInfo}
+                        width={550}
+                        height={330}
+                        title={"참가 상태"}
+                    />
+                )}
+                {institutionPaymentStatusInfo.length !== 0 && (
+                    <CommonBarChart
+                        data={institutionPaymentStatusInfo}
+                        width={550}
+                        height={330}
+                        title={"결제 상태"}
+                    />
+                )}
                 {institutionTypeInfo.length !== 0 && (
                     <CommonPieChart
                         data={institutionTypeInfo}
                         width={550}
-                        height={300}
+                        height={330}
                         title={"기관타입"}
                     />
                 )}

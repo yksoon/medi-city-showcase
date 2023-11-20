@@ -3,9 +3,13 @@ import {
     Instance_multi,
     Instance_admin,
     Instance_admin_multi,
+    Instance_admin_file,
+    Instance_file,
+    Instance_admin_file_multi,
+    Instance_multi_file,
 } from "./Instance";
 
-const RestServer = (method, url, data, admin) => {
+const RestServer = (method, url, data, admin, file) => {
     switch (method) {
         case "get":
             const retGet =
@@ -17,7 +21,11 @@ const RestServer = (method, url, data, admin) => {
         case "post":
             const retPost =
                 admin === "Y"
-                    ? Instance_admin.post(url, data)
+                    ? file === "Y"
+                        ? Instance_admin_file.post(url, data)
+                        : Instance_admin.post(url, data)
+                    : file === "Y"
+                    ? Instance_file(url, data)
                     : Instance.post(url, data);
             return retPost;
 
@@ -36,18 +44,22 @@ const RestServer = (method, url, data, admin) => {
             return retDelete;
 
         case "post_multi":
-            const retAdminPost =
+            const retMultiPost =
                 admin === "Y"
-                    ? Instance_admin_multi.post(url, data)
+                    ? file === "Y"
+                        ? Instance_admin_file_multi.post(url, data)
+                        : Instance_admin_multi.post(url, data)
+                    : file === "Y"
+                    ? Instance_multi_file.post(url, data)
                     : Instance_multi.post(url, data);
-            return retAdminPost;
+            return retMultiPost;
 
         case "put_multi":
-            const retAdminPut =
+            const retMultiPut =
                 admin === "Y"
                     ? Instance_admin_multi.put(url, data)
                     : Instance_multi.put(url, data);
-            return retAdminPut;
+            return retMultiPut;
 
         default:
             break;
