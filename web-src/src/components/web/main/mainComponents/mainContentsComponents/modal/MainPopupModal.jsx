@@ -21,7 +21,7 @@ const MainPopupModal = (props) => {
     const popupStyle = {
         width: props.width ? props.width : 300,
         height: props.height ? props.height: 500,
-        position: 'fixed',
+        position: 'absolute',
         top: props.top ? props.top : 0,
         left: props.left ? props.left : 0,
     };
