@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useAlert from "hook/useAlert";
 import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
-import { useSetRecoilState } from "recoil";
-import { isSpinnerAtom } from "recoils/atoms";
-import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
 
@@ -15,7 +11,6 @@ const MainPopupModal = (props) => {
     };
 
     const err = CommonErrModule();
-    const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const fileBaseUrl = apiPath.api_file;
 
@@ -33,7 +28,6 @@ const MainPopupModal = (props) => {
 
     // 팝업 정보 상세
     const getPopupDetail = (popup_idx) => {
-        // setIsSpinner(true);
 
         // /v1/_popup/{popup_idx}
         // GET
@@ -56,11 +50,7 @@ const MainPopupModal = (props) => {
                 const result_info = res.data.result_info;
 
                 setPopupInfo(result_info);
-
-                // setIsSpinner(false);
             } else {
-                // setIsSpinner(false);
-
                 CommonNotify({
                     type: "alert",
                     hook: alert,
@@ -70,24 +60,12 @@ const MainPopupModal = (props) => {
         };
     };
 
-    // 쿠키 설정 함수
-    const setCookie = (name, value, days) => {
-        // const expires = new Date();
-
-        // expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
-        // document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
-
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        const expires = `expires=${date.toUTCString()}`;
-        document.cookie = `${name}=${value};${expires};path=/`;
-    };
-
     const closePopup = (popupIdx) => {
-        // 사용자가 '24시간동안 보지 않기'를 클릭한 경우, 해당 팝업을 본 시각을 쿠키에 저장
-        const currentTime = Date.now();
-        setCookie(`popup_viewed_${popupIdx}`, currentTime, 1); // 쿠키에 1일 동안 저장
-        // window.close();
+        let closeTime = new Date().getTime(); // 현재 시간
+        let expires = closeTime + 24 * 60 * 60 * 1000; // 현재 시간으로부터 24시간 뒤
+
+        localStorage.setItem(`popup_viewed_${popupIdx}`, expires);
+
         handleClose();
     };
 
@@ -99,23 +77,25 @@ const MainPopupModal = (props) => {
                         <div className="form">
                             {/* 팝업 컨텐츠 START */}
                             <div id="transition-modal-description">
-                                { popupInfo.content }
+                                { popupInfo.content && popupInfo.content }
                                 { popupInfo.file_info && popupInfo.file_info.map((file) => <img src={`${fileBaseUrl + file.file_path_enc}`} alt={file.file_name} key={file.file_idx} />)}
                             </div>
                             {/* 팝업 컨텐츠 END */}
                         </div>
                         <div className="popup_btm">
-                            <div>
-                                <input
-                                    type="checkbox"
-                                    id="popup_24"
-                                    value="Y"
-                                    onClick={() => closePopup(props.popupIdx)}
-                                />
-                                <label htmlFor="popup_24">
-                                    24시간동안 보지 않기
-                                </label>
-                            </div>
+                            { popupInfo.option_24_hours_yn === "Y" ? (
+                                <div>
+                                    <input
+                                        type="checkbox"
+                                        id="popup_24"
+                                        value="Y"
+                                        onClick={() => closePopup(props.popupIdx)}
+                                    />
+                                    <label htmlFor="popup_24">
+                                        24시간동안 보지 않기
+                                    </label>
+                                </div>
+                            ) : <div></div> }
                             <div onClick={handleClose}>
                                 {/* <img src="img/common/modal_close.png" alt="" /> */}
                                 X 닫기

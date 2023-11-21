@@ -88,47 +88,32 @@ function Main() {
         const responsLogic = (res) => {
             if (res.headers.result_code === successCode.success) {
                 const result_info = res.data.result_info;
+                
+                let renderPopupList = result_info.filter((popup) => (renderPopup(popup)));
 
-                setPopupList(result_info);
+                console.log(renderPopupList);
+                setPopupList(renderPopupList);
             } else {
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    // message: res.headers.result_message_ko,
-                    message: "잠시후 다시 시도해주세요",
-                });
+                // CommonNotify({
+                //     type: "alert",
+                //     hook: alert,
+                //     // message: res.headers.result_message_ko,
+                //     message: "잠시후 다시 시도해주세요",
+                // });
             }
         };
     };
 
-    // 팝업을 렌더링하는 함수
+    // 팝업을 필터링하는 함수
     const renderPopup = (popup) => {
         const today = new Date();
         const startDate = new Date(popup.start_date);
         const endDate = new Date(popup.end_date);
+        const storageCheck = popupOpenTime(popup.popup_idx, popup.option_24_hours_yn)
 
-        if (
-            popup.show_yn === 'Y' &&
-            startDate <= today &&
-            endDate >= today &&
-            popup.isOpen !== false &&
-        (
-            (popup.option_24_hours_yn === 'Y' && shouldDisplayPopup(popup.popup_idx)) ||
-            popup.option_24_hours_yn === 'N'
-        )
-        ) {
-            return (
-                <MainPopupModal
-                    key={popup.popup_idx}
-                    popupIdx={popup.popup_idx}
-                    onClose={() => closePopup(popup.popup_idx)}
-                    width={popup.size_width}
-                    height={popup.size_height}
-                    top={popup.position_top}
-                    left={popup.position_left}
-                    scrollbars={popup.option_scroll_yn}
-                />
-            );
+        // 노출여부, 시작일&종료일 기간체크, 24시간보지않기 기능 사용 중일 경우 로컬스토리지 기간체크
+        if (popup.show_yn === 'Y' && startDate <= today && endDate >= today && storageCheck) {
+            return popup;
         } else {
             return false;
         }
@@ -145,40 +130,19 @@ function Main() {
         ));
     };
 
-    const shouldDisplayPopup = (popupIdx) => {
-        // 사용자가 해당 팝업을 24시간 이내에 보지 않기 선택하지 않은 경우 true 반환
-        return !hasViewedRecently(popupIdx);
-    };
+    // 메인 팝업 시간
+    const popupOpenTime = (popupIdx, option24HoursYn) => {
+        const viewedTime = localStorage.getItem(`popup_viewed_${popupIdx}`);
 
-    const hasViewedRecently = (popupIdx) => {
-        // 쿠키에서 사용자의 팝업 조회 기록을 확인
-        const viewedCookie = getCookie(`popup_viewed_${popupIdx}`);
-
-        console.log(viewedCookie);
-    
-        if (viewedCookie) {
-            // 팝업을 이미 본 경우, 저장된 시각을 파싱하여 24시간 이내인지 확인
-            const viewedTimestamp = parseInt(viewedCookie, 10);
-            const currentTime = Date.now();
-    
-            return currentTime - viewedTimestamp <= 24 * 60 * 60 * 1000; // 24시간(밀리초) 이내
+        console.log(viewedTime);
+        
+        if (option24HoursYn === "N" || !viewedTime) {
+            return true; // 저장된 시간이 없으면 팝업을 보여줌
+        } else {
+            const currentTime = new Date().getTime();
+            // 현재 시간과 저장된 시간을 비교하여 24시간이 지났는지 확인
+            return currentTime - parseInt(viewedTime, 10) > 24 * 60 * 60 * 1000;
         }
-        return false;
-    };
-    
-    // 쿠키 읽기 함수
-    const getCookie = (name) => {
-        const cookies = document.cookie.split(';');
-
-        for (const cookie of cookies) {
-            const [cookieName, cookieValue] = cookie.trim().split('=');
-    
-            if (cookieName === name) {
-                return decodeURIComponent(cookieValue);
-            }
-        }
-    
-        return null;
     };
 
     return (
@@ -196,7 +160,19 @@ function Main() {
             <Footer />
 
             {/* 팝업 렌더링 */}
-            {popupList.length && popupList.map((popup) => (renderPopup(popup)))}
+            {popupList.length && popupList.map((popup) => (
+                popup.isOpen !== false && (
+                    <MainPopupModal
+                        key={popup.popup_idx}
+                        popupIdx={popup.popup_idx}
+                        onClose={() => closePopup(popup.popup_idx)}
+                        width={popup.size_width}
+                        height={popup.size_height}
+                        top={popup.position_top}
+                        left={popup.position_left}
+                        scrollbars={popup.option_scroll_yn}
+                    />
+            )))}
         </>
     );
 }
