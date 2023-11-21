@@ -339,6 +339,20 @@ const apiPath = {
     api_admin_delete_popup: `${
         base_api_url + slash + version + slash
     }popup${slash}`,
+
+    // /v1/_mapper/peoples
+    // POST
+    // 아티스트 리스트
+    api_admin_list_people: `${
+        base_api_url + slash + version + slash
+    }_mapper/peoples`,
+
+    // /v1/_mapper/people/{people_idx}/
+    // GET
+    // 아티스트 상세
+    api_admin_detail_people: `${
+        base_api_url + slash + version + slash
+    }_mapper/people${slash}`,
 };
 
 export { routerPath, apiPath };

@@ -37,7 +37,7 @@ const ArtbuddyGalleryListMain = () => {
                     </div>
 
                     <div id="subtitle">
-                        <h3>Galley</h3>
+                        <h3>Gallery</h3>
                     </div>
 
                     <div className="galleryList">

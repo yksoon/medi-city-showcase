@@ -93,7 +93,7 @@ const EntryManageMain = (props) => {
                 result_code === successCode.noData
             ) {
                 const result_info = res.data.result_info;
-                const page_info = res.data.page_info;
+                const page_info = res.data.page_info ?? {};
 
                 setBoardList(result_info.registration_info);
                 setDashboardInfo(result_info.dashboard_info);
@@ -306,10 +306,6 @@ const EntryManageMain = (props) => {
     const modBoard = () => {
         setModalTitle("참가자 상세보기");
         setIsOpen(true);
-    };
-
-    const selectedCountry = (e, value) => {
-        console.log(value);
     };
 
     const downloadExcel = () => {
@@ -584,7 +580,7 @@ const EntryManageMain = (props) => {
                     {/*/>*/}
 
                     {/*차트*/}
-                    {dashboardInfo.length !== 0 && (
+                    {dashboardInfo.entry_total_count !== 0 && (
                         <EntryManageChart dashboardInfo={dashboardInfo} />
                     )}
 

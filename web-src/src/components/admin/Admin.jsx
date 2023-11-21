@@ -16,6 +16,10 @@ import RegistraionManageMain from "components/admin/registration/registrationMan
 import EntryManageMain from "components/admin/registration/entryManage/EntryManageMain";
 import PopupManageMain from "components/admin/popupManage/PopupManageMain";
 import PhotoBoardMain from "components/admin/board/photoBoard/PhotoBoardMain";
+import ArtistManageMain from "components/admin/gallery/artist/ArtistManageMain";
+import NoticeMain from "components/admin/board/notice/NoticeMain";
+import VideoBoardMain from "components/admin/board/videoBoard/VideoBoardMain";
+import GalleryMain from "components/admin/gallery/gallery/GalleryMain";
 
 const Admin = () => {
     const err = CommonErrModule();
@@ -186,6 +190,22 @@ const Admin = () => {
             // 팝업관리
             case "photoBoard":
                 return <PhotoBoardMain isRefresh={isRefresh} />;
+
+            // 갤러리관리 - 아티스트
+            case "artistMng":
+                return <ArtistManageMain isRefresh={isRefresh} />;
+
+            // 게시판관리 - 공지사항
+            case "noticeBoard":
+                return <NoticeMain isRefresh={isRefresh} />;
+
+            // 게시판관리 - 영상갤러리
+            case "movieBoard":
+                return <VideoBoardMain isRefresh={isRefresh} />;
+
+            // 갤러리관리 - 갤러리
+            case "galleryMng":
+                return <GalleryMain isRefresh={isRefresh} />;
 
             default:
                 return <EntryManageMain isRefresh={isRefresh} />;

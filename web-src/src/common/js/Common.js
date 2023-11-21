@@ -18,6 +18,7 @@ import RegistrationManageModalMain from "components/admin/registration/registrat
 import EntryManageModalMain from "components/admin/registration/entryManage/modal/EntryManageModalMain";
 import PopupManageModalMain from "components/admin/popupManage/modal/PopupManageModalMain";
 import { BarChart, PieChart } from "@mui/x-charts";
+import ArtistManageModalMain from "components/admin/gallery/artist/modal/ArtistManageModalMain";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -85,6 +86,16 @@ const CommonModal = (props) => {
             case "PopupManageModalMain":
                 return (
                     <PopupManageModalMain
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modData={props.modData}
+                    />
+                );
+
+            // 팝업 관리
+            case "ArtistManageModalMain":
+                return (
+                    <ArtistManageModalMain
                         handleNeedUpdate={handleNeedUpdate}
                         handleModalClose={modalOption.handleModalClose}
                         modData={props.modData}

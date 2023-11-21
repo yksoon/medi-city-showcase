@@ -17,7 +17,7 @@ const PhotoBoardMain = (props) => {
         <>
             <div className="content">
                 <div className="title">
-                    <h3>포토 갤러리</h3>
+                    <h3>게시판 관리 - 포토 갤러리</h3>
                 </div>
             </div>
         </>

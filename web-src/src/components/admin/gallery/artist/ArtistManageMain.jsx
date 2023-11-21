@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import SearchBar from "components/admin/common/SearchBar";
+import useConfirm from "hook/useConfirm";
+import useAlert from "hook/useAlert";
 import {
     CommonConsole,
     CommonErrModule,
@@ -7,16 +9,8 @@ import {
     CommonNotify,
     CommonRest,
 } from "common/js/Common";
-import useConfirm from "hook/useConfirm";
-import useAlert from "hook/useAlert";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-    isSpinnerAtom,
-    userInfoAdminAtom,
-    userTokenAdminAtom,
-} from "recoils/atoms";
-import { apiPath } from "webPath";
-import { successCode } from "resultCode";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 import {
     createColumnHelper,
     flexRender,
@@ -24,19 +18,19 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { Pagination } from "@mui/material";
+import { apiPath } from "webPath";
+import { successCode } from "resultCode";
+import { Checkbox, Pagination } from "@mui/material";
+import { Link } from "react-router-dom";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import SearchBar from "components/admin/common/SearchBar";
+import ArtistManageModalMain from "components/admin/gallery/artist/modal/ArtistManageModalMain";
 
-const ConsultingBoardMain = (props) => {
+const ArtistManageMain = (props) => {
     const { confirm } = useConfirm();
     const { alert } = useAlert();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
-
-    const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
-    const userInfoAdmin = useRecoilValue(userInfoAdminAtom);
 
     const isRefresh = props.isRefresh;
 
@@ -55,6 +49,7 @@ const ConsultingBoardMain = (props) => {
     const [sorting, setSorting] = useState([]);
     const columnHelper = createColumnHelper();
 
+    // 검색 키워드
     const searchKeyword = useRef(null);
 
     useEffect(() => {
@@ -65,14 +60,14 @@ const ConsultingBoardMain = (props) => {
     const getBoardList = (pageNum, pageSize, searchKeyword) => {
         setIsSpinner(true);
 
-        // /v1/boards
+        // /v1/_regs
         // POST
-        const url = apiPath.api_admin_boards;
+        // 사전등록 목록
+        const url = apiPath.api_admin_list_people;
         const data = {
             page_num: pageNum,
             page_size: pageSize,
             search_keyword: searchKeyword,
-            board_type: "100", // 상담문의
         };
 
         // 파라미터
@@ -88,15 +83,15 @@ const ConsultingBoardMain = (props) => {
 
         // 완료 로직
         const responsLogic = (res) => {
-            let result_code = res.headers.result_code;
+            const result_code = res.headers.result_code;
 
             // 성공
             if (
                 result_code === successCode.success ||
                 result_code === successCode.noData
             ) {
-                let result_info = res.data.result_info;
-                let page_info = res.data.page_info;
+                const result_info = res.data.result_info;
+                const page_info = res.data.page_info;
 
                 setBoardList(result_info);
                 setPageInfo(page_info);
@@ -109,13 +104,6 @@ const ConsultingBoardMain = (props) => {
                 setIsSpinner(false);
             }
         };
-    };
-
-    // 검색
-    const doSearch = () => {
-        const keyword = searchKeyword.current.value;
-
-        getBoardList(1, 10, keyword);
     };
 
     // 모달창 닫기
@@ -134,6 +122,13 @@ const ConsultingBoardMain = (props) => {
         };
     };
 
+    // 검색
+    const doSearch = () => {
+        const keyword = searchKeyword.current.value;
+
+        getBoardList(1, 10, keyword);
+    };
+
     // 리스트 새로고침
     const handleNeedUpdate = () => {
         setModalTitle("");
@@ -145,7 +140,16 @@ const ConsultingBoardMain = (props) => {
     const handleSingleCheck = (checked, id) => {
         if (checked) {
             // 단일 선택 시 체크된 아이템을 배열에 추가
-            setCheckItems((prev) => [...prev, id]);
+
+            let newArr = checkItems;
+            newArr.push(id);
+
+            newArr = newArr.filter((element, index) => {
+                return newArr.indexOf(element) === index;
+            });
+
+            console.log([...newArr]);
+            setCheckItems(newArr);
         } else {
             // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
             setCheckItems(checkItems.filter((el) => el !== id));
@@ -157,7 +161,11 @@ const ConsultingBoardMain = (props) => {
         if (checked) {
             // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
             const idArray = [];
-            boardList.forEach((el) => idArray.push(el.board_idx));
+            // boardList.forEach((el) => idArray.push(el.institution_idx));
+            boardList.forEach((el) =>
+                idArray.push(`${el.registration_idx}-${el.institution_idx}`),
+            );
+
             setCheckItems(idArray);
         } else {
             // 전체 선택 해제 시 checkItems 를 빈 배열로 상태 업데이트
@@ -170,11 +178,40 @@ const ConsultingBoardMain = (props) => {
         getBoardList(value, 10, searchKeyword.current.value);
     };
 
-    // 약관 상세
-    const detailBoard = (board_idx) => {
+    // 약관 신규 등록 모달
+    const regBoard = () => {
+        setModalTitle("사전등록 신규 등록");
+        setIsOpen(true);
+    };
+
+    // 삭제
+    const clickRemove = () => {
+        //선택여부 확인
+        checkItems.length === 0
+            ? CommonNotify({
+                  type: "alert",
+                  hook: alert,
+                  message: "삭제할 항목을 선택해주세요",
+              })
+            : CommonNotify({
+                  type: "confirm",
+                  hook: confirm,
+                  message: "선택된 항목을 삭제 하시겠습니까?",
+                  // callback: () => removeBoard(),
+              });
+    };
+
+    // 수정
+    const modBoard = () => {
+        setModalTitle("참가자 상세보기");
+        setIsOpen(true);
+    };
+
+    // 상세
+    const detailBoard = (people_idx) => {
         setIsSpinner(true);
 
-        const url = apiPath.api_admin_get_board + board_idx;
+        const url = apiPath.api_admin_detail_people + people_idx;
         const data = {};
 
         // 파라미터
@@ -183,6 +220,7 @@ const ConsultingBoardMain = (props) => {
             url: url,
             data: data,
             err: err,
+            admin: "Y",
             callback: (res) => responsLogic(res),
         };
 
@@ -208,23 +246,16 @@ const ConsultingBoardMain = (props) => {
             }
         };
     };
-
-    // 상세보기 모달
-    const modBoard = () => {
-        setModalTitle("문의내용 상세보기");
-        setIsOpen(true);
-    };
-
     // --------------------------------- 테이블 세팅 -------------------------------------
 
     // 컬럼 세팅
     const columns = useMemo(() => [
         {
-            accessorKey: "board_idx",
+            accessorKey: "people_idx",
             cell: (info) => (
                 <input
                     type="checkbox"
-                    name={`board_idx_${info.getValue()}`}
+                    name={`people_idx_${info.getValue()}`}
                     id={info.getValue()}
                     value={info.getValue()}
                     onChange={(e) =>
@@ -248,33 +279,58 @@ const ConsultingBoardMain = (props) => {
             enableSorting: false,
         },
 
-        columnHelper.accessor((row) => row.process_status, {
-            id: "process_status",
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {row.file_path_enc && (
+                        <img
+                            src={apiPath.api_file + row.file_path_enc}
+                            alt=""
+                            style={{ width: "100px" }}
+                        />
+                    )}
+                </>
+            ),
+            {
+                id: "file_path_enc",
+                cell: (info) => info.getValue(),
+                header: "사진",
+                enableSorting: "alphanumericCaseSensitive",
+            },
+        ),
+
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {`${row.name_first_ko} ${row.name_last_ko}`}
+                    <br />
+                    {`${row.name_first_en} ${row.name_last_en}`}
+                </>
+            ),
+            {
+                id: "name",
+                cell: (info) => info.getValue(),
+                header: "이름",
+                enableSorting: "alphanumericCaseSensitive",
+            },
+        ),
+
+        columnHelper.accessor((row) => row.email, {
+            id: "email",
             cell: (info) => info.getValue(),
-            header: "처리상태",
+            header: "이메일",
             sortingFn: "alphanumericCaseSensitive",
         }),
 
-        columnHelper.accessor((row) => row.subject, {
-            id: "subject",
-            cell: (info) => info.getValue(),
-            header: "제목",
-            sortingFn: "alphanumericCaseSensitive",
-        }),
-
-        columnHelper.accessor((row) => row.content, {
-            id: "content",
-            cell: (info) => info.getValue(),
-            header: "내용",
-            sortingFn: "alphanumericCaseSensitive",
-        }),
-
-        columnHelper.accessor((row) => row.reg_user_name_ko, {
-            id: "reg_user_name_ko",
-            cell: (info) => info.getValue(),
-            header: "등록자",
-            sortingFn: "alphanumericCaseSensitive",
-        }),
+        columnHelper.accessor(
+            (row) => <>{`${row.mobile1}-${row.mobile2}-${row.mobile3}`}</>,
+            {
+                id: "mobile",
+                cell: (info) => info.getValue(),
+                header: "연락처",
+                sortingFn: "alphanumericCaseSensitive",
+            },
+        ),
 
         columnHelper.accessor((row) => row.reg_dttm.split(" ")[0], {
             id: "reg_dttm",
@@ -288,7 +344,7 @@ const ConsultingBoardMain = (props) => {
                 <Link
                     to=""
                     className="tablebtn"
-                    onClick={() => detailBoard(row.board_idx)}
+                    onClick={() => detailBoard(row.people_idx)}
                 >
                     상세보기
                 </Link>
@@ -314,20 +370,22 @@ const ConsultingBoardMain = (props) => {
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
     });
+
     return (
         <>
             <div className="content">
                 <div className="title">
-                    <h3>게시판 관리 - 상담문의</h3>
+                    <h3>갤러리 관리 - 아티스트</h3>
                 </div>
+
                 <div className="con_area">
                     {/*검색 바*/}
                     <SearchBar
                         searchKeyword={searchKeyword}
                         doSearch={doSearch}
-                        // regBoard={regBoard}
+                        regBoard={regBoard}
                         // downloadExcel={downloadExcel}
-                        // clickRemove={clickRemove}
+                        clickRemove={clickRemove}
                     />
 
                     <div
@@ -346,7 +404,7 @@ const ConsultingBoardMain = (props) => {
                             <colgroup>
                                 <col width="5%" />
                                 <col width="10%" />
-                                <col width="20%" />
+                                <col width="15%" />
                                 <col width="*" />
                                 <col width="10%" />
                                 <col width="10%" />
@@ -455,9 +513,9 @@ const ConsultingBoardMain = (props) => {
             <CommonModal
                 isOpen={isOpen}
                 title={modalTitle}
-                width={"800"}
+                width={"1400"}
                 handleModalClose={handleModalClose}
-                component={"ConsultingBoardModalMain"}
+                component={"ArtistManageModalMain"}
                 handleNeedUpdate={handleNeedUpdate}
                 modData={modData}
             />
@@ -465,4 +523,4 @@ const ConsultingBoardMain = (props) => {
     );
 };
 
-export default ConsultingBoardMain;
+export default ArtistManageMain;

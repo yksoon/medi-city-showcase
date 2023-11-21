@@ -52,7 +52,9 @@ export default function CountrySelect(props) {
                     }
                     // autoHighlight
                     getOptionLabel={(option) => option.label}
-                    onChange={(e, newValue) => onChange(e, newValue)}
+                    onChange={(e, newValue) =>
+                        onChange(e, newValue ? newValue.value : "")
+                    }
                     renderOption={(props, option) => (
                         <Box
                             component="li"
