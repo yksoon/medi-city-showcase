@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
-import { CommonErrModule } from "common/js/Common";
+import { CommonErrModule, CommonNotify } from "common/js/Common";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { codesAtom, countryBankAtom, isSpinnerAtom } from "recoils/atoms";
 import { Link } from "react-router-dom";
@@ -41,6 +41,10 @@ const ArtistManageModalMain = (props) => {
     const mobile1 = useRef(null);
     const mobile2 = useRef(null);
     const mobile3 = useRef(null);
+    const inputThumbFile = useRef(null);
+    const inputAttachmentFile = useRef(null);
+    const previewThumb = useRef(null);
+    const previewAttachment = useRef(null);
     // refs End
 
     useEffect(() => {
@@ -55,6 +59,67 @@ const ArtistManageModalMain = (props) => {
         );
 
         setPeopleTypeOptions(peopleTypeArr);
+    };
+
+    // 이미지 업로드 시 미리보기
+    const readURL = (input, imageType) => {
+        if (isFileImage(input.files)) {
+            if (imageType === "thumb" && !fileSize(input.files)) {
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "1mb 이하의 이미지만 업로드 가능합니다.",
+                });
+                input.value = "";
+
+                return false;
+            } else {
+                if (input.files && input.files[0]) {
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        // 썸네일일경우
+                        if (imageType === "thumb") {
+                            previewThumb.current.src = e.target.result;
+                        } else if (imageType === "origin") {
+                            previewAttachment.current.src = e.target.result;
+                        }
+                        // document.getElementById("preview").src = e.target.result;
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    document.getElementById("preview").src = "";
+                }
+            }
+        } else {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: "이미지만 업로드 가능합니다.",
+            });
+
+            input.value = "";
+
+            return false;
+        }
+    };
+
+    const isFileImage = (file) => {
+        if (file) {
+            for (let i = 0; i < file.length; i++) {
+                return file[i] && file[i]["type"].split("/")[0] === "image";
+            }
+        }
+    };
+
+    const fileSize = (file) => {
+        let maxSize = 1024 * 1024;
+        if (file) {
+            for (let i = 0; i < file.length; i++) {
+                const fileSize = file[i] && file[i]["size"];
+
+                return maxSize > fileSize;
+            }
+        }
     };
 
     return (
@@ -153,6 +218,50 @@ const ArtistManageModalMain = (props) => {
                                     type="text"
                                     className="input w120"
                                     ref={mobile3}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>썸네일 사진</th>
+                            <td>
+                                <div className="hotel_thumb_wrap">
+                                    <span className="hotel_thumb">
+                                        <img
+                                            src=""
+                                            alt=""
+                                            id="preview"
+                                            ref={previewThumb}
+                                        />
+                                    </span>
+                                </div>
+                                <input
+                                    type="file"
+                                    onChange={(e) => readURL(e.target, "thumb")}
+                                    accept="image/*"
+                                    id="inputThumbFile"
+                                    ref={inputThumbFile}
+                                />
+                            </td>
+                            <th>원본 사진</th>
+                            <td>
+                                <div className="hotel_thumb_wrap">
+                                    <span className="hotel_thumb">
+                                        <img
+                                            src=""
+                                            alt=""
+                                            id="preview"
+                                            ref={previewAttachment}
+                                        />
+                                    </span>
+                                </div>
+                                <input
+                                    type="file"
+                                    onChange={(e) =>
+                                        readURL(e.target, "origin")
+                                    }
+                                    accept="image/*"
+                                    id="inputAttachmentFile"
+                                    ref={inputAttachmentFile}
                                 />
                             </td>
                         </tr>

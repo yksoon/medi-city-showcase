@@ -180,7 +180,7 @@ const ArtistManageMain = (props) => {
 
     // 약관 신규 등록 모달
     const regBoard = () => {
-        setModalTitle("사전등록 신규 등록");
+        setModalTitle("아티스트 신규 등록");
         setIsOpen(true);
     };
 
