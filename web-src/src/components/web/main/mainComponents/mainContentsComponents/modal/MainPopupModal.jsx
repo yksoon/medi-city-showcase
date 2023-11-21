@@ -5,6 +5,7 @@ import { successCode } from "resultCode";
 
 const MainPopupModal = (props) => {
     const [popupInfo, setPopupInfo] = useState({});
+    const [isMobile, setIsMobile] = useState(false);
 
     const handleClose = () => {
         props.onClose(); // 부모 컴포넌트에서 전달된 닫기 함수 호출
@@ -14,17 +15,31 @@ const MainPopupModal = (props) => {
 
     const fileBaseUrl = apiPath.api_file;
 
+    // 브라우저의 창 크기를 기반으로 모바일 여부를 확인
+    const handleResize = () => {
+        setIsMobile(props.windowSize < 768); // 예시로 768px 미만을 모바일로 간주
+    };
+
     useEffect(() => {
         getPopupDetail(props.popupIdx);
     }, []);
+    
+    useEffect(() => {
+        handleResize();
+    }, [props.windowSize])
 
     const popupStyle = {
-        width: props.width ? props.width : 300,
-        height: props.height ? props.height: 500,
+        width: isMobile ? '90%' : (props.width ? props.width : 300),
+        height: isMobile ? 'auto' : (props.height ? props.height : 500),
         position: 'absolute',
-        top: props.top ? props.top : 0,
-        left: props.left ? props.left : 0,
+        top: isMobile ? 100 : (props.top ? props.top : 0),
+        left: isMobile ? '5%' : (props.left ? props.left : 0),
     };
+
+    const mobileImgStyle = {
+        width: '100%',
+        height: 'auto',
+    }
 
     // 팝업 정보 상세
     const getPopupDetail = (popup_idx) => {
@@ -48,6 +63,14 @@ const MainPopupModal = (props) => {
         const responsLogic = (res) => {
             if (res.headers.result_code === successCode.success) {
                 const result_info = res.data.result_info;
+                
+                // html 변환
+                const div = document.createElement('div');
+                div.innerHTML = result_info.content;
+                
+                const decodedHTML = div.innerText;
+
+                result_info.content = decodedHTML;
 
                 setPopupInfo(result_info);
             } else {
@@ -76,9 +99,12 @@ const MainPopupModal = (props) => {
                     <div className="popup" style={{display: "flex", flexDirection: "column", justifyContent: "space-between", widht: "100%", height: "100%"}}>
                         <div className="form">
                             {/* 팝업 컨텐츠 START */}
-                            <div id="transition-modal-description">
-                                { popupInfo.content && popupInfo.content }
-                                { popupInfo.file_info && popupInfo.file_info.map((file) => <img src={`${fileBaseUrl + file.file_path_enc}`} alt={file.file_name} key={file.file_idx} />)}
+                            {/* <div id="transition-modal-description"> */}
+                            <div dangerouslySetInnerHTML={{ __html: popupInfo.content }}>
+                            </div>
+                            <div id="transition-modal-popup-content">
+                                {/* { popupInfo.content && popupInfo.content } */}
+                                { popupInfo.file_info && popupInfo.file_info.map((file) => <img style={isMobile ? mobileImgStyle : {}} src={`${fileBaseUrl + file.file_path_enc}`} alt={file.file_name} key={file.file_idx} />)}
                             </div>
                             {/* 팝업 컨텐츠 END */}
                         </div>

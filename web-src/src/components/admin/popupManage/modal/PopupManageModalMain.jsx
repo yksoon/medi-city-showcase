@@ -35,9 +35,11 @@ const PopupManageModalMain = (props) => {
     const endDate = useRef(null);
     const endTime = useRef(null);
     const inputAttachmentFile = useRef(null);
+    const viewContent = useRef(null);
     
     const fileBaseUrl = apiPath.api_file;
     const [fileList, setFileList] = useState([]);
+    const [htmlContent, sethtmlContent] = useState([]);
 
     useEffect(() => {
         // 수정일 경우 디폴트 세팅
@@ -59,7 +61,18 @@ const PopupManageModalMain = (props) => {
         endDate.current.value = modData.end_date.split(' ')[0];
         endTime.current.value = modData.end_date.split(' ')[1];
         setFileList(modData.file_info);
+        htmlConversion(modData.content);
     };
+
+    // html 변환
+    const htmlConversion = (content) => {
+        const div = document.createElement('div');
+        div.innerHTML = content;
+        
+        const decodedHTML = div.innerText;
+
+        sethtmlContent(decodedHTML);
+    }
 
     // 파일 첨부시
     const attachFile = (input) => {
@@ -412,6 +425,7 @@ const PopupManageModalMain = (props) => {
                                 />
                             </td>
                         </tr>
+                        
                         {isModData && (
                             <>
                                 <tr>
@@ -427,7 +441,10 @@ const PopupManageModalMain = (props) => {
                                         View Content
                                     </th>
                                     <td colSpan="3">
-                                        <div>{ modData.view_content }</div>
+                                        <div dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
+                                        <div>
+                                            { fileList.length !== 0 && fileList.map((file) => <img src={`${fileBaseUrl + file.file_path_enc}`} alt={file.file_name} key={file.file_idx} style={{width: '100%', height: 'auto'}} />)}
+                                        </div>
                                     </td>
                                 </tr>
                             </>

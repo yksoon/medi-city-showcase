@@ -24,9 +24,27 @@ function Main() {
     const [registrationInfo, setRegistrationInfo] = useState([]);
     const [popupList, setPopupList] = useState([]);
 
+    // 브라우저 창 크기 변화를 상태로 관리
+    const [windowSize, setWindowSize] = useState(window.innerWidth);
+
+    // 브라우저 창 크기 변화시 상태 업데이트 핸들러
+    const handleResize = () => {
+        setWindowSize(window.innerWidth);
+    };
+
     useEffect(() => {
         getRegistration();
         getPopupList(1, 20, "");
+
+        window.addEventListener('resize', handleResize);
+    
+        handleResize(); // 초기 렌더링 시 한번 실행
+    
+        window.addEventListener('resize', handleResize); // 창 크기 변화 감지
+    
+        return () => {
+            window.removeEventListener('resize', handleResize); // 컴포넌트 언마운트 시 리스너 제거
+        };
     }, []);
 
     // 정보 받아오기 REST
@@ -171,6 +189,7 @@ function Main() {
                         top={popup.position_top}
                         left={popup.position_left}
                         scrollbars={popup.option_scroll_yn}
+                        windowSize={windowSize}
                     />
             )))}
         </>
