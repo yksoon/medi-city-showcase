@@ -728,9 +728,9 @@ select {
 
 
 	/* GALLEY 뷰페이지 */
-	.galleryView .artbox {height:auto;padding:80px 0; background:url('../img/sub/artbox_bg.jpg') 0 100%; background-size:cover;}
-	.galleryView .artbox img{width:70%; max-width:300px; min-width:180px;padding:6px;bordeR:6px solid #d1bfa8;}
 
+	.galleryView .artbox {height:auto;padding:80px 0; background:url('/public/img/web/sub/artbox_bg.jpg') 0 100%; background-size:cover;}
+	.galleryView .artbox img{width:70%; max-width:300px; min-width:180px;padding:6px;bordeR:6px solid #d1bfa8;}
 
 	.galleryView .artinfo .artist {font-size: 25px;}
 	.galleryView .artinfo .artist span {font-size: 13px;}
