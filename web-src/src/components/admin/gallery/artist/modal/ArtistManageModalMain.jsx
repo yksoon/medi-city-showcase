@@ -25,10 +25,11 @@ const ArtistManageModalMain = (props) => {
 
     // select box options
     const [peopleTypeOptions, setPeopleTypeOptions] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState("82");
     // select box options End
 
     // state
-    const [selectedCountry, setSelectedCountry] = useState("82");
+    const [profileInfo, setProfileInfo] = useState([]);
     // state End
 
     // refs
@@ -267,6 +268,9 @@ const ArtistManageModalMain = (props) => {
                         </tr>
                     </tbody>
                 </table>
+
+                <h4 className="mo_subtitle">프로필 정보</h4>
+
                 <div className="subbtn_box">
                     <Link
                         to=""
