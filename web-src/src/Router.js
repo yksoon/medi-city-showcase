@@ -17,6 +17,8 @@ import ArtbuddyGalleryMain from "components/web/artbuddy/gallery/ArtbuddyGallery
 import ArtbuddyExhibitionMain from "components/web/artbuddy/exhibition/ArtbuddyExhibitionMain";
 import ArtbuddyGalleryListMain from "components/web/artbuddy/gallery/ArtbuddyGalleryListMain";
 import MainPopupModal from "components/web/main/mainComponents/mainContentsComponents/modal/MainPopupModal";
+import SignUpIndonesia from "components/web/indonesiaSignup/signup/SignUpIndonesia";
+import CheckEntryIndonesia from "components/web/indonesiaSignup/checkEntry/CheckEntryIndonesia";
 
 // Router
 const Router = () => {
@@ -49,7 +51,10 @@ const Router = () => {
 
                     {/* 메인 팝업 */}
                     {/* URL : /popup/:id */}
-                    <Route path={routerPath.web_popup_url + ':id'} element={<MainPopupModal />} />
+                    <Route
+                        path={routerPath.web_popup_url + ":id"}
+                        element={<MainPopupModal />}
+                    />
 
                     {/* 프로그램 */}
                     {/* URL : /program */}
@@ -100,7 +105,6 @@ const Router = () => {
                     <Route
                         path={routerPath.web_signup_confirmation_url}
                         element={<SignUpMain />}
-                        // render={() => <SignUpMain />}
                     />
 
                     {/* 아트버디 - 갤러리 */}
@@ -108,7 +112,6 @@ const Router = () => {
                     <Route
                         path={routerPath.web_artbuddy_gallery_list_url}
                         element={<ArtbuddyGalleryListMain />}
-                        // render={() => <SignUpMain />}
                     />
 
                     {/* 아트버디 - 갤러리 */}
@@ -116,7 +119,6 @@ const Router = () => {
                     <Route
                         path={routerPath.web_artbuddy_gallery_url}
                         element={<ArtbuddyGalleryMain />}
-                        // render={() => <SignUpMain />}
                     />
 
                     {/* 아트버디 - 소개 */}
@@ -124,7 +126,20 @@ const Router = () => {
                     <Route
                         path={routerPath.web_artbuddy_exhibition_url}
                         element={<ArtbuddyExhibitionMain />}
-                        // render={() => <SignUpMain />}
+                    />
+
+                    {/* 사전등록 - 인도네시아 */}
+                    {/* URL : /local/signup */}
+                    <Route
+                        path={routerPath.web_local_signup_url}
+                        element={<SignUpIndonesia />}
+                    />
+
+                    {/* 사전등록 참가자 확인 - 인도네시아 */}
+                    {/* URL : /local/check_entry */}
+                    <Route
+                        path={routerPath.web_local_check_entry_url}
+                        element={<CheckEntryIndonesia />}
                     />
 
                     {/* 404 */}

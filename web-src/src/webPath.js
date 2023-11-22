@@ -72,6 +72,14 @@ const routerPath = {
     // /artbuddy/exhibition
     web_artbuddy_exhibition_url: `${base_url}artbuddy/exhibition`,
 
+    // 사전등록 - 인도네시아
+    // /local/signup
+    web_local_signup_url: `${base_url}local/signup`,
+
+    // 사전등록 참가자 확인 - 인도네시아
+    // /local/check_entry
+    web_local_check_entry_url: `${base_url}local/check_entry`,
+
     // ---------------------- admin -------------------------
     // 메인
     // /admin
