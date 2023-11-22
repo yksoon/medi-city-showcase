@@ -63,14 +63,6 @@ const MainPopupModal = (props) => {
         const responsLogic = (res) => {
             if (res.headers.result_code === successCode.success) {
                 const result_info = res.data.result_info;
-                
-                // html 변환
-                const div = document.createElement('div');
-                div.innerHTML = result_info.content;
-                
-                const decodedHTML = div.innerText;
-
-                result_info.content = decodedHTML;
 
                 setPopupInfo(result_info);
             } else {
@@ -100,8 +92,7 @@ const MainPopupModal = (props) => {
                         <div className="form">
                             {/* 팝업 컨텐츠 START */}
                             {/* <div id="transition-modal-description"> */}
-                            <div dangerouslySetInnerHTML={{ __html: popupInfo.content }}>
-                            </div>
+                            <div dangerouslySetInnerHTML={{ __html: popupInfo.view_content }}></div>
                             <div id="transition-modal-popup-content">
                                 {/* { popupInfo.content && popupInfo.content } */}
                                 { popupInfo.file_info && popupInfo.file_info.map((file) => <img style={isMobile ? mobileImgStyle : {}} src={`${fileBaseUrl + file.file_path_enc}`} alt={file.file_name} key={file.file_idx} />)}

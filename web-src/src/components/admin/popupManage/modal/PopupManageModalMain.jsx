@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import useAlert from "hook/useAlert";
+import useConfirm from "hook/useConfirm";
 import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import { useSetRecoilState } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
@@ -10,6 +11,7 @@ import { popupModel } from "models/popup/popup";
 
 const PopupManageModalMain = (props) => {
     const { alert } = useAlert();
+    const { confirm } = useConfirm();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
@@ -35,16 +37,14 @@ const PopupManageModalMain = (props) => {
     const endDate = useRef(null);
     const endTime = useRef(null);
     const inputAttachmentFile = useRef(null);
-    const viewContent = useRef(null);
     
     const fileBaseUrl = apiPath.api_file;
     const [fileList, setFileList] = useState([]);
-    const [htmlContent, sethtmlContent] = useState([]);
 
     useEffect(() => {
         // 수정일 경우 디폴트 세팅
         isModData && setDefaultValue();
-    });
+    }, [isModData]);
 
     const setDefaultValue = () => {
         selectShowYn.current.value = modData.show_yn;
@@ -61,18 +61,7 @@ const PopupManageModalMain = (props) => {
         endDate.current.value = modData.end_date.split(' ')[0];
         endTime.current.value = modData.end_date.split(' ')[1];
         setFileList(modData.file_info);
-        htmlConversion(modData.content);
     };
-
-    // html 변환
-    const htmlConversion = (content) => {
-        const div = document.createElement('div');
-        div.innerHTML = content;
-        
-        const decodedHTML = div.innerText;
-
-        sethtmlContent(decodedHTML);
-    }
 
     // 파일 첨부시
     const attachFile = (input) => {
@@ -83,7 +72,7 @@ const PopupManageModalMain = (props) => {
                 CommonNotify({
                     type: "alert",
                     hook: alert,
-                    message: "이미지는 5장까지 업로드 가능합니다.",
+                    message: `이미지는 ${maxFileCnt}장까지 업로드 가능합니다.`,
                 });
 
                 input.value = "";
@@ -110,6 +99,18 @@ const PopupManageModalMain = (props) => {
                 return file[i] && file[i]["type"].split("/")[0] === "image";
             }
         }
+    }
+
+    // 첨부파일 삭제
+    const resetFileList = () => {
+        // 각각 배열에 담긴 데이터가 있을 경우에만 초기화
+        if (fileList.length) {
+            setFileList(prevFileList => ([...prevFileList].splice(0, 0)));
+        }
+        if (inputAttachmentFile.current.files.length) {
+            inputAttachmentFile.current.value = "";
+        }
+        return;
     }
 
     // 등록
@@ -208,6 +209,62 @@ const PopupManageModalMain = (props) => {
         }
     };
 
+    // 삭제 확인
+    const clickRemove = () => {
+        //선택여부 확인
+        CommonNotify({
+            type: "confirm",
+            hook: confirm,
+            message: "팝업을 삭제 하시겠습니까?",
+            callback: () => removeBoard(),
+        });
+    };
+
+    // 삭제
+    const removeBoard = () => {
+        setIsSpinner(true);
+
+        // /v1/popup/{popup_idx}
+        // DELETE
+        // 팝업 정보 삭제
+        let url = apiPath.api_admin_delete_popup + modData.popup_idx;
+
+        let data = {};
+
+        // 파라미터
+        const restParams = {
+            method: "delete",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+            admin: "Y",
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            if (res.headers.result_code === successCode.success) {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "팝업이 삭제 되었습니다.",
+                    callback: () => handleNeedUpdate(),
+                });
+            } else {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "잠시 후 다시 시도해주세요",
+                });
+            }
+        }
+    };
+
     // 검증
     const validation = () => {
         const noti = (ref, msg) => {
@@ -298,13 +355,15 @@ const PopupManageModalMain = (props) => {
                         <tr>
                             <th>파일</th>
                             <td colSpan="3" className="fileicon">
-                                <div style={{ marginBottom: 5 }}>
+                                {/* 현재 파일 1개만 업로드 가능하기 때문에 안내문구가 적절하지 않아 주석처리함 */}
+                                {/* <div style={{ marginBottom: 5, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <b>
                                         여러 파일 선택이 가능합니다. 여러 파일 선택
                                         시 ctrl 누른 후 선택하시면 됩니다.
                                     </b>
-                                </div>
-                                <div>
+                                    
+                                </div> */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <input
                                         type="file"
                                         ref={inputAttachmentFile}
@@ -312,6 +371,12 @@ const PopupManageModalMain = (props) => {
                                         accept="image/*"
                                         onChange={(e) => attachFile(e.target)}
                                     />
+                                    <Link
+                                        className="subbtn off"
+                                        onClick={resetFileList}
+                                    >
+                                        초기화
+                                    </Link>
                                 </div>
                                 <div>
                                     {fileList.length !== 0 &&
@@ -440,8 +505,8 @@ const PopupManageModalMain = (props) => {
                                     <th>
                                         View Content
                                     </th>
-                                    <td colSpan="3">
-                                        <div dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
+                                    <td colSpan="3" style={{maxWidth: '24vw', overflow: 'hidden'}}>
+                                        <div dangerouslySetInnerHTML={{ __html: modData.view_content }}></div>
                                         <div>
                                             { fileList.length !== 0 && fileList.map((file) => <img src={`${fileBaseUrl + file.file_path_enc}`} alt={file.file_name} key={file.file_idx} style={{width: '100%', height: 'auto'}} />)}
                                         </div>
@@ -457,7 +522,7 @@ const PopupManageModalMain = (props) => {
                             <Link
                                 to=""
                                 className="subbtn del"
-                                // onClick={clickRemove}
+                                onClick={clickRemove}
                             >
                                 삭제
                             </Link>

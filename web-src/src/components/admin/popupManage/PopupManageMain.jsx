@@ -521,7 +521,14 @@ const PopupManageMain = (props) => {
                                         {row
                                             .getVisibleCells()
                                             .map((cell) => (
-                                                <td key={cell.id}>
+                                                <td key={cell.id} 
+                                                    style={{
+                                                        whiteSpace: 'nowrap',
+                                                        textOverflow: 'ellipsis', // 넘치는 텍스트에 ... 처리
+                                                        overflow: 'hidden', // 넘치는 영역 숨김
+                                                        maxWidth: '200px'
+                                                    }}
+                                                >
                                                     {flexRender(
                                                         cell.column
                                                             .columnDef.cell,
@@ -562,7 +569,7 @@ const PopupManageMain = (props) => {
             <CommonModal
                 isOpen={isOpen}
                 title={modalTitle}
-                width={"800"}
+                width={"1400"}
                 handleModalClose={handleModalClose}
                 component={"PopupManageModalMain"}
                 handleNeedUpdate={handleNeedUpdate}

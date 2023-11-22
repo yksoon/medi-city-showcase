@@ -340,6 +340,7 @@ const apiPath = {
         base_api_url + slash + version + slash
     }popup${slash}`,
 
+    // ------------------ People Management API 인물 관리 API ------------------
     // /v1/_mapper/peoples
     // POST
     // 아티스트 리스트
