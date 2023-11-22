@@ -369,8 +369,16 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .kart .bimg img{position:absolute; left:50%; margin-left:-1000px;}
 
 /* GALLEY 뷰페이지 */
-.galleryView .artbox {text-align: center; margin:0 0 40px 0;}
-.galleryView .artbox img{width:100%; height:auto; max-width: 100%;}
+.galleryView .artbox {display:flex; justify-content:center; align-items:center;height:auto;padding:150px 0;text-align: center; margin:0 0 40px 0;
+	background:url('/public/img/web/sub/artbox_bg.jpg') center center no-repeat;}
+.galleryView .artbox img{width:500px; height:auto;padding:6px;bordeR:11px solid #d1bfa8;
+	box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);
+	-webkit-box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);
+	-moz-box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);
+	-o-box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);
+}
+
+
 
 .galleryView .artinfo .artist {font-size: 30px; font-weight: 400; color:#000000;;}
 .galleryView .artinfo .artist span {font-size: 15px; color:#59047f;;}
@@ -397,7 +405,7 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 
 /* GALLERY 리스트 페이지 */
 .galleryList .gfilter {text-align: center;margin:0 0 60px 0;}
-.galleryList .gfilter a{display:inline-block;height:25px; line-height: 25px; border:1px solid #ddd; border-radius: 25px;padding:0 20px;font-size:15px;color:#333;}
+.galleryList .gfilter a{display:inline-block;height:25px; line-height: 25px; border:1px solid #ddd; border-radius: 25px;padding:0 20px;font-size:15px;color:#333;margin:3px;}
 .galleryList .gfilter a:hover, .galleryList .gfilter a.active{border:1px solid #59047f;color:#59047f;;}
 .galleryList .grid .grid-item { width: 390px;  }
 
@@ -720,6 +728,12 @@ select {
 
 
 	/* GALLEY 뷰페이지 */
+
+	.galleryView .artbox {height:auto;padding:80px 0; background:url('/public/img/web/sub/artbox_bg.jpg') 0 100%; background-size:cover;}
+	.galleryView .artbox img{width:70%; max-width:300px; min-width:180px;padding:6px;bordeR:6px solid #d1bfa8;}
+
+
+
 	.galleryView .artinfo .artist {font-size: 25px;}
 	.galleryView .artinfo .artist span {font-size: 13px;}
 	.galleryView .artinfo .artist:after {width:50px;}

@@ -42,10 +42,12 @@ const ArtbuddyGalleryMain = () => {
                     <div className="galleryView">
                         <p
                             className="artbox"
-                            data-aos="fade-up"
-                            data-aos-duration="1000"
+                           
                         >
-                            <img src="img/web/sub/test_art.jpg" alt="" />
+                            <img src="img/web/sub/thumb03.jpg" alt="" 
+                             data-aos="fade-up"
+                             data-aos-duration="1000"
+                            />
                         </p>
                         <div className="artinfo">
                             <h4 className="artist">
