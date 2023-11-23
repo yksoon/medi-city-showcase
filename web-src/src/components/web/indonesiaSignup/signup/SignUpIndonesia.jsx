@@ -519,7 +519,7 @@ const SignUpIndonesia = (props) => {
                         <Link
                             to={
                                 isSignup
-                                    ? routerPath.web_signup_check_entry_url
+                                    ? routerPath.web_local_check_entry_url
                                     : ""
                             }
                             className={isConfirmation ? "active" : ""}
