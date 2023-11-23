@@ -35,7 +35,7 @@ function Header() {
                                         routerPath.web_participation_guideline_url
                                     }
                                 >
-                                    PLASTIC&AESTHETIC CLINICS SIGN-UP
+                                    PLASTIC&AESTHETIC CLINICS
                                 </Link>
                                 <div className="submenu">
                                     <Link
@@ -57,7 +57,33 @@ function Header() {
                                     </Link>
                                 </div>
                             </li>
-                            <li className="left_p">
+                            <li>
+                                <Link
+                                    href=""
+                                >
+                                    PESERTA PAMERAN
+                                </Link>
+                                <div className="submenu">
+                                    <Link
+                                        
+                                     href=""
+                                    >
+                                        Guideline
+                                    </Link>
+                                    <Link 
+                                      href=""
+                                    >
+                                        Online Sign-up
+                                    </Link>
+                                    <Link
+                                     href=""
+                                    >
+                                        Sign-up Confirmation
+                                    </Link>
+                                </div>
+                            </li>
+                            
+                            <li>
                                 <Link 
                                    to={
                                      routerPath.web_artbuddy_exhibition_url

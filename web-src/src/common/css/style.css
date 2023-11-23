@@ -13,8 +13,8 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 #gnb {position:relative;top:0; height:130px;display: flex;}
 #gnb ul {display:flex;justify-content:flex-end; width:1300px; margin: 0 auto;text-align:center; align-items: center;}
 #gnb ul:after {content:" "; display:block; clear:both;}
-#gnb ul li {height:130px;line-height:130px;margin: 0 0 0 50px; text-align:center; box-sizing:border-box;position:relative;}
-#gnb ul li > a {display:block; color:#ffffff; font-size:19px;font-weight: 900;}
+#gnb ul li {height:130px;line-height:130px;margin: 0 0 0 35px; text-align:center; box-sizing:border-box;position:relative;}
+#gnb ul li > a {display:block; color:#ffffff; font-size:18px;font-weight: 900;}
 #gnb ul li:hover > a  {color:#ffa5c8;}
 #gnb ul li:hover .submenu { display:block;}
 
