@@ -247,14 +247,14 @@ const CheckEntryIndonesia = () => {
                     </div>
 
                     <div className="nm_login">
-                        <h4 className="txt">
+                      {/*  <h4 className="txt">
                             <b>
                                 Please enter the email of the clinic
                                 representative you applied with,
                             </b>{" "}
                             <br />
                             not participant's email
-                        </h4>
+                        </h4>*/}
                         <div className="loginbox">
                             <p className="inp">
                                 <input
@@ -263,6 +263,7 @@ const CheckEntryIndonesia = () => {
                                     placeholder="First Name"
                                     ref={firstName}
                                     onKeyDown={handleOnKeyPress}
+                                    className="input_n"
                                 />
                                 <input
                                     type="text"
@@ -270,6 +271,7 @@ const CheckEntryIndonesia = () => {
                                     placeholder="Last Name"
                                     ref={lastName}
                                     onKeyDown={handleOnKeyPress}
+                                    className="input_n"
                                 />
                             </p>
                             <p className="inp">
@@ -279,20 +281,23 @@ const CheckEntryIndonesia = () => {
                                     placeholder="mobile1"
                                     ref={mobile1}
                                     onKeyDown={handleOnKeyPress}
-                                />
+                                    className="input_m"
+                                />&nbsp; - &nbsp;
                                 <input
                                     type="text"
                                     name=""
                                     placeholder="mobile2"
                                     ref={mobile2}
                                     onKeyDown={handleOnKeyPress}
-                                />
+                                    className="input_m"
+                                />&nbsp; - &nbsp;
                                 <input
                                     type="text"
                                     name=""
                                     placeholder="mobile3"
                                     ref={mobile3}
                                     onKeyDown={handleOnKeyPress}
+                                    className="input_m"
                                 />
                             </p>
 
