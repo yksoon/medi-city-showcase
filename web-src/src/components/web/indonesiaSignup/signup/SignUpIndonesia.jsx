@@ -15,6 +15,16 @@ import { successCode } from "resultCode";
 import { Checkbox } from "@mui/material";
 import { commaOfNumber } from "common/js/Pattern";
 import { useLocation } from "react-router";
+import CountrySelect from "common/js/countryAutocomplete";
+
+// 참가상태 코드 영어
+const additional_status_en = {
+    "000": "Registration",
+    100: "Waitlisted",
+    200: "Confirmed participation",
+    300: "Cancellation",
+    900: "Other",
+};
 
 const interestsItems = [
     {
@@ -60,7 +70,6 @@ const SignUpIndonesia = (props) => {
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const [modData, setModData] = useState({});
-    const [checkItems, setCheckItems] = useState([]);
     // 페이지 정보
     const location = useLocation();
     const isSignup = location.pathname === "/local/signup";
@@ -128,37 +137,19 @@ const SignUpIndonesia = (props) => {
 
     // ------------------------------------------------------------------------------------------------------------------------
 
-    const institutionNameKo = useRef(null);
-    const institutionNameEn = useRef(null);
-    const addr1Ko = useRef(null);
-    const addr2Ko = useRef(null);
-    const addr1En = useRef(null);
-    const addr2En = useRef(null);
-    const zipcode = useRef(null);
-    const nameFirstKo = useRef(null);
-    const nameLastKo = useRef(null);
-    const nameFirstEn = useRef(null);
-    const nameLastEn = useRef(null);
-    const interPhoneNumber = useRef("82");
-    const mobile1 = useRef(null);
-    const mobile2 = useRef(null);
-    const mobile3 = useRef(null);
-    const email = useRef(null);
-    const fax1 = useRef(null);
-    const fax2 = useRef(null);
-    const fax3 = useRef(null);
-    const entryPersonNumber = useRef(null);
-    const interpretationCostCheck = useRef(null);
-    const paymentStatus = useRef(null);
-    const additionalStatus = useRef(null);
-
     const interestsOther = useRef(null);
+    const additionalStatus = useRef(null);
 
     // 참가자 정보
     const [entryInfo, setEntryInfo] = useState([]);
 
     // 성별 옵션
     const [genderOption, setGenderOption] = useState([]);
+
+    const [checkItems, setCheckItems] = useState([]);
+    const [otherItem, setOtherItem] = useState("");
+
+    const [selectedCountry, setSelectedCountry] = useState("62");
 
     useEffect(() => {
         if (isConfirmation) {
@@ -169,6 +160,13 @@ const SignUpIndonesia = (props) => {
             }
         } else {
             setModData({});
+            setEntryInfo([]);
+            setCheckItems([]);
+            setOtherItem("");
+            /**
+             * @TODO: 이거 마무리 해야됨
+             */
+            // interestsOther.current.value = "";
             setEntryInfoFunc();
         }
     }, [location.pathname]);
@@ -183,32 +181,26 @@ const SignUpIndonesia = (props) => {
         // console.log(genderArr);
         setGenderOption(genderArr);
 
-        // institutionNameEn.current.value = modData.institution_name_en;
-        // zipcode.current.value = modData.zipcode;
-        // addr1En.current.value = modData.addr1_en;
-        // addr2En.current.value = modData.addr2_en;
-        // nameFirstEn.current.value = modData.name_first_en;
-        // nameLastEn.current.value = modData.name_last_en;
-        // mobile1.current.value = modData.mobile1;
-        // mobile2.current.value = modData.mobile2;
-        // mobile3.current.value = modData.mobile3;
-        // email.current.value = modData.email;
-        // fax1.current.value = modData.fax1;
-        // fax2.current.value = modData.fax2;
-        // fax3.current.value = modData.fax3;
-        // paymentStatus.current.innerText =
-        //     payment_status_en[modData.payment_status_cd];
-        // additionalStatus.current.innerText =
-        //     additional_status_en[modData.additional_status_cd];
-        //
-        // interpretationCostCheck.current.checked =
-        //     modData.interpretation_cost_yn === "Y";
-
         setModData(location.state ?? {});
 
         setEntryInfo(location.state.entry_info);
 
         setCheckItems(location.state.entry_info[0].position.split(","));
+
+        const lastIndex =
+            location.state.entry_info[0].position.split(",").length - 1;
+        if (
+            location.state.entry_info[0].position
+                .split(",")
+                [lastIndex].includes("|")
+        ) {
+            let other =
+                location.state.entry_info[0].position.split(",")[lastIndex];
+
+            other = other.replace("|", "");
+
+            setOtherItem(other);
+        }
     };
 
     // 참가자 인덱스 재정의
@@ -310,34 +302,8 @@ const SignUpIndonesia = (props) => {
             return a.idx - b.idx;
         });
 
-        console.log(newArr);
+        // console.log(newArr);
         setEntryInfo([...newArr]);
-    };
-
-    // 참가자 정보 삭제
-    const removeEntry = (idx) => {
-        if (entryInfo.length <= 1) {
-            CommonNotify({
-                type: "alert",
-                hook: alert,
-                message: "At least one participant is required.",
-            });
-
-            return false;
-        } else {
-            const newItem = entryInfo.filter((el) => el.idx !== idx);
-
-            let newArr = [];
-
-            const len = newItem.length;
-            for (let i = 0; i < len; i++) {
-                let newObj = { ...newItem[i] };
-
-                newArr.push(newObj);
-            }
-
-            setEntryInfo(newArr);
-        }
     };
 
     // 사전등록 버튼
@@ -384,7 +350,7 @@ const SignUpIndonesia = (props) => {
                 }
 
                 const data = {
-                    payment_status: "000", // 결제상태 000: 결제대기
+                    payment_status: "010", // 결제상태 000: 결제대기, 010: 결제완료
                     additional_status: "000", // 참가상태 000: 참가등록
                     institution_type: "400", // 000: 병원, 400: 개인
                     institution_name_ko: "Local Personal Institution",
@@ -405,7 +371,7 @@ const SignUpIndonesia = (props) => {
                     name_first_en: "Local Personal name",
                     name_last_en: "Local Personal name",
                     email: "Local Personal email",
-                    inter_phone_number: "62",
+                    inter_phone_number: selectedCountry,
                     show_yn: "Y",
                     registration_idx: registrationInfo.registration_idx,
                     interpretation_cost_yn: "N",
@@ -747,6 +713,37 @@ const SignUpIndonesia = (props) => {
                                                     )}
                                                 </th>
                                                 <td>
+                                                    {!isConfirmation ? (
+                                                        <CountrySelect
+                                                            onChange={(
+                                                                e,
+                                                                value,
+                                                            ) =>
+                                                                setSelectedCountry(
+                                                                    value
+                                                                        ? value.value
+                                                                        : "",
+                                                                )
+                                                            }
+                                                            defaultValue={
+                                                                selectedCountry ??
+                                                                ""
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        <>
+                                                            <input
+                                                                type="text"
+                                                                className="input_m"
+                                                                value={`+${modData.inter_phone_number}`}
+                                                                key={`${item.idx}_inter_phone_number`}
+                                                                readOnly={
+                                                                    isConfirmation
+                                                                }
+                                                            />{" "}
+                                                            -{" "}
+                                                        </>
+                                                    )}
                                                     <input
                                                         type="text"
                                                         className="input_m"
@@ -833,7 +830,11 @@ const SignUpIndonesia = (props) => {
                                                         </span>
                                                     )}
                                                 </th>
-                                                <td colSpan={3}>
+                                                <td
+                                                    colSpan={
+                                                        isConfirmation ? 0 : 3
+                                                    }
+                                                >
                                                     <input
                                                         type="date"
                                                         placeholder="YYYY-MM-DD"
@@ -851,35 +852,61 @@ const SignUpIndonesia = (props) => {
                                                         }
                                                     />
                                                 </td>
+                                                {isConfirmation && (
+                                                    <>
+                                                        <th>
+                                                            Additional Status
+                                                        </th>
+                                                        <td>
+                                                            <p
+                                                                ref={
+                                                                    additionalStatus
+                                                                }
+                                                            >
+                                                                {Object.keys(
+                                                                    modData,
+                                                                ).length !== 0
+                                                                    ? additional_status_en[
+                                                                          modData
+                                                                              .additional_status_cd
+                                                                      ]
+                                                                    : ""}
+                                                            </p>
+                                                        </td>
+                                                    </>
+                                                )}
                                             </tr>
                                             <tr>
                                                 <th>Interests</th>
                                                 <td colSpan="3">
                                                     {interestsItems.map(
-                                                        (item, idx) => (
+                                                        (item2, idx) => (
                                                             <div
                                                                 className="interbox"
                                                                 key={`interests_items_${idx}`}
                                                             >
                                                                 <b>
-                                                                    {item.title}
+                                                                    {
+                                                                        item2.title
+                                                                    }
                                                                 </b>
                                                                 <div className="op_box">
-                                                                    {item.values
+                                                                    {item2
+                                                                        .values
                                                                         .length !==
                                                                         0 &&
-                                                                        item.values.map(
+                                                                        item2.values.map(
                                                                             (
-                                                                                item2,
+                                                                                item3,
                                                                                 idx2,
                                                                             ) => (
                                                                                 <div
-                                                                                    key={`${item.title}_${item2}`}
+                                                                                    key={`${item.title}_${item3}`}
                                                                                 >
                                                                                     <label>
                                                                                         <Checkbox
                                                                                             value={
-                                                                                                item2
+                                                                                                item3
                                                                                             }
                                                                                             onChange={(
                                                                                                 e,
@@ -888,18 +915,18 @@ const SignUpIndonesia = (props) => {
                                                                                                     e
                                                                                                         .target
                                                                                                         .checked,
-                                                                                                    item2,
+                                                                                                    item3,
                                                                                                 )
                                                                                             }
                                                                                             checked={checkItems.includes(
-                                                                                                item2,
+                                                                                                item3,
                                                                                             )}
                                                                                             disabled={
                                                                                                 isConfirmation
                                                                                             }
                                                                                         />{" "}
                                                                                         {
-                                                                                            item2
+                                                                                            item3
                                                                                         }
                                                                                     </label>
                                                                                     <br />
@@ -919,8 +946,15 @@ const SignUpIndonesia = (props) => {
                                                                     ref={
                                                                         interestsOther
                                                                     }
+                                                                    // readOnly={
+                                                                    //     isConfirmation
+                                                                    // }
                                                                     disabled={
                                                                         isConfirmation
+                                                                    }
+                                                                    defaultValue={
+                                                                        otherItem ??
+                                                                        ""
                                                                     }
                                                                 />
                                                             </label>
