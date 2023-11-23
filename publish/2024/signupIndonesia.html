@@ -61,29 +61,28 @@
                         <p class="r_noti">
                             (<span class="red">*</span>) Required
                         </p>
-                        <table>
+
+                        <table class="add_tb">
                             <colgroup>
-                                <col width="30%"/>
-                                <col width="*"/>
+                                <col width="10%"/>
+                                <col width="38.5%"/>
+                                <col width="10%"/>
+                                <col width="38.5%"/>
+                                <col width="3%"/>
                             </colgroup>
+                            
                             <tbody>
                                 <tr>
-                                    <th>Plastic & Aesthetic Clinic Name <span class="red">*</span></th>
-                                    <td><input type="text" value="" name="" required /></td>
-                                </tr>
-                                <tr>
-                                    <th>Address <span class="red">*</span></th>
-                                    <td>
-                                        <input type="text" value="" name="" class="input_m" required/><a href="" class="normal_btn">Search</a><Br/>
-                                        <input type="text" value="" name="" required /><Br/>
-                                        <input type="text" value="" name="" required />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>The name of the contact person <span class="red">*</span></th>
+                                    <th>Name <span class="red">*</span></th>
                                     <td>
                                         <input type="text" value="" name="" class="input_n" placeholder="First Name" required/>
                                         <input type="text" value="" name="" class="input_n"  placeholder="Last Name" required/>
+                                    </td>
+                                    
+                                    <th>Gender <span class="red">*</span></th>
+                                    <td>
+                                        <label for="man"><input type="radio" value="" name="gender" id="man"> Man</label> &nbsp;&nbsp;
+                                        <label for="woman"><input type="radio" value="" name="gender" id="woman"> Woman</label> 
                                     </td>
                                 </tr>
                                 <tr>
@@ -93,246 +92,78 @@
                                         <input type="text" value="" name="" class="input_m" required/> -
                                         <input type="text" value="" name="" class="input_m" required/>
                                     </td>
-                                </tr>
-                                <tr>
                                     <th>E-mail <span class="red">*</span></th>
                                     <td><input type="text" name="" required /></td>
                                 </tr>
                                 <tr>
-                                    <th>FAX</th>
-                                    <td>
-                                        <input type="text" value="" name="" class="input_m" /> - 
-                                        <input type="text" value="" name="" class="input_m" /> -
-                                        <input type="text" value="" name="" class="input_m" />
+                                    <th>Birth <span class="red">*</span></th>
+                                    <td colspan="3">
+                                        <input type="date" value="" name="" required/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Interests</th>
+                                    <td colspan="3" >
+                                        <div class="interbox">
+                                           <b>Mata (Eyes)</b>
+                                            <div class="op_box">
+                                                <label><input type="checkbox" /> Operasi Mata jahitan</label><br/>
+                                                <label><input type="checkbox" /> Operasi Mata Sayatan</label><br/>
+                                                <label><input type="checkbox" /> Upper Blepharoplasty</label><br/>
+                                                <label><input type="checkbox" /> Koreksi Otot Mata</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="interbox">
+                                           <b>Operasi Hidung (Nose)</b>
+                                            <div class="op_box">
+                                                <label><input type="checkbox" /> Augmentasi Hidung</label><br/>
+                                                <label><input type="checkbox" /> Jenis Operasi Hidung</label><br/>
+                                                <label><input type="checkbox" /> Reduksi Hidung</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="interbox">
+                                            <b>ANTI-AGING</b>
+                                            <div class="op_box">
+                                                <label><input type="checkbox" /> Elastic Band Lifting</label><br/>
+                                                <label><input type="checkbox" /> Lifting Dahi Endoskopi</label><br/>
+                                                <label><input type="checkbox" /> Lifting Wajah Area Tengah</label><br/>
+                                                <label><input type="checkbox" /> Lifting Wajah</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="interbox">
+                                            <b>Payudara (BREAST)</b>
+                                            <div class="op_box">
+                                                <label><input type="checkbox" /> Augmentasi Payudara</label><br/>
+                                                <label><input type="checkbox" /> Reduksi Payudara</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="interbox">
+                                            <b>Tubuh(Body)</b>
+                                            <div class="op_box">
+                                                <label><input type="checkbox" /> Liposuction Seluruh Tubuh</label><br/>
+                                                <label><input type="checkbox" /> Liposuction Individual</label><br/>
+                                                <label><input type="checkbox" /> Dual-Slim</label><br/>
+                                                <label><input type="checkbox" /> Lifting Tubuh</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="interbox">
+                                            <b>OTHER</b>
+                                            <div class="op_box">
+                                                <label><input type="checkbox" /> Free format</label>
+                                            </div>
+                                        </div>
+
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     
-                    <div class="boxing">
-                        <h3 class="c_tit">Participant Information</h3>
-                        <p class="r_noti">
-                            (<span class="red">*</span>) Required
-                        </p>
-
-                        <div class="addzone">
-                            <label for="sameInfo">If the above information is same, please check <input type="checkbox" id="sameInfo"/></label>
-                        </div>
-                        <div class="morezone">
-                            <a href="">Adding participants &nbsp;<img src="img/sub/add_p.png" alt=""/></a>
-                            <!-- <a href=""><img src="img/sub/add_p.png" alt=""></a>
-                            <a href=""><img src="img/sub/del_p.png" alt=""></a> -->
-                        </div>
-
-                        <!-- 추가할경우 이 테이블이 늘어나면 됩니다.-->
-                        <table class="add_tb">
-                            <colgroup>
-                                <col width="10%"/>
-                                <col width="38.5%"/>
-                                <col width="10%"/>
-                                <col width="38.5%"/>
-                                <col width="3%"/>
-                            </colgroup>
-                            
-                            <tbody>
-                                <tr>
-                                    <th>Name <span class="red">*</span></th>
-                                    <td>
-                                        <input type="text" value="" name="" class="input_n" placeholder="First Name" required/>
-                                        <input type="text" value="" name="" class="input_n"  placeholder="Last Name" required/>
-                                        <p class="rednoti"> Must Match the English Spelling on the Passport.</p>
-                                    </td>
-                                    <th>Title <span class="red">*</span></th>
-                                    <td><input type="text" value="" name="" required /></td>
-                                    <td rowspan="2" class="del_td">
-                                        <a href="" title="Delete"><img src="img/sub/del_p.png" alt=""></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>TEL <span class="red">*</span></th>
-                                    <td>
-                                        <input type="text" value="" name="" class="input_m" required/> - 
-                                        <input type="text" value="" name="" class="input_m" required/> -
-                                        <input type="text" value="" name="" class="input_m" required/>
-                                    </td>
-                                    <th>E-mail <span class="red">*</span></th>
-                                    <td><input type="text" name="" required /></td>
-                                </tr>
-                                <tr>
-                                    <th>Birth <span class="red">*</span></th>
-                                    <td>
-                                        <input type="date" value="" name="" required/>
-                                    </td>
-                                    <th>Gender <span class="red">*</span></th>
-                                    <td>
-                                        <label for="man"><input type="radio" value="" name="gender" id="man"> Man</label> &nbsp;&nbsp;
-                                        <label for="woman"><input type="radio" value="" name="gender" id="woman"> Woman</label> 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <!-- 추가할경우 이 테이블이 늘어나면 됩니다.-->
-                        <table class="add_tb">
-                            <colgroup>
-                                <col width="10%"/>
-                                <col width="38.5%"/>
-                                <col width="10%"/>
-                                <col width="38.5%"/>
-                                <col width="3%"/>
-                            </colgroup>
-                            
-                            <tbody>
-                                <tr>
-                                    <th>Name <span class="red">*</span></th>
-                                    <td>
-                                        <input type="text" value="" name="" class="input_n" placeholder="First Name" required/>
-                                        <input type="text" value="" name="" class="input_n"  placeholder="Last Name" required/>
-                                        <p class="rednoti"> Must Match the English Spelling on the Passport.</p>
-                                    </td>
-                                    <th>Title <span class="red">*</span></th>
-                                    <td><input type="text" value="" name="" required /></td>
-                                    <td rowspan="3" class="del_td">
-                                        <a href="" title="Delete"><img src="img/sub/del_p.png" alt=""></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>TEL <span class="red">*</span></th>
-                                    <td>
-                                        <input type="text" value="" name="" class="input_m" required/> - 
-                                        <input type="text" value="" name="" class="input_m" required/> -
-                                        <input type="text" value="" name="" class="input_m" required/>
-                                    </td>
-                                    <th>E-mail <span class="red">*</span></th>
-                                    <td><input type="text" name="" required /></td>
-                                </tr>
-                                <tr>
-                                    <th>Birth <span class="red">*</span></th>
-                                    <td>
-                                        <input type="date" value="" name="" required/>
-                                    </td>
-                                    <th>Gender <span class="red">*</span></th>
-                                    <td>
-                                        <label for="man"><input type="radio" value="" name="gender" id="man"> Man</label> &nbsp;&nbsp;
-                                        <label for="woman"><input type="radio" value="" name="gender" id="woman"> Woman</label> 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-
-                    </div>
-
-                    <div class="boxing">
-                        <h3 class="c_tit">Sign-up details</h3>
-                        <table>
-                            <colgroup>
-                                <col width="60%"/>
-                                <col width="20%"/>
-                                <col width="20%"/>
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th colspan="3">Provided Information</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="center gray">Contents</th>
-                                    <th class="center gray">Amount (KRW)<Br/>(Including VAT)</th>
-                                    <th class="center gray">Select Check</th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <b class="per">Per person basis</b>
-                                        <p>1. Round-trip Airfare (January 22nd to January 26th)</p>
-                                        <p>2. 4 Nights 5Days Accommodation (5-Star Hotel Mulia Senayan)<br/>
-                                            <span>
-                                            - Includes Breakfast and Additional Facilities
-                                            </span>
-                                        </p>
-                                        <p>
-                                           3. Meals <br/>
-                                            <span>
-                                                - January 24th: Lunch and Dinner provided <br/>
-                                                - January 25th: Dinner provided 
-                                            </span>
-                                        </p>
-                                        <p>4. An Exclusive Consultation Desk</p>
-                                        <p>5. Transportation: <br/>
-                                            <span>
-                                            - Jakarta Airport ↔ Accommodation (Hotel Mulia Senayan)<br/>
-                                            - Accommodation ↔ Exhibition Venue (The Westin Jakarta)
-                                            </span>
-                                        </p>
-                                    </td>
-                                    <td class="center">12,000,000</td>
-                                    <td class="center"><input type="checkbox" value=""/></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <table>
-                            <colgroup>
-                                <col width="60%"/>
-                                <col width="20%"/>
-                                <col width="20%"/>
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th colspan="3">Selected Options</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="center gray">Contents</th>
-                                    <th class="center gray">Amount (KRW)<br/>(Including VAT)</th>
-                                    <th class="center gray">Select Check</th>
-                                </tr>
-                                <tr>
-                                    <th class="center">Additional Participants (per person)</th>
-                                    <td class="center">2,500,000</td>
-                                    <td class="center">
-                                        <select name="" id="">
-                                            <option value="">1</option>
-                                            <option value="">2</option>
-                                            <option value="">3</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="center">Interpretation (Korean-Indonesian) - 2 days</th>
-                                    <td class="center">600,000</td>
-                                    <td class="center"><input type="checkbox" value=""/></td>
-                                </tr>
-                            </tbody>
-                        </table>                        
-
-                    </div>
-
-                    <div class="boxing">                        
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Total price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="center"><p class="total">15,500,000</p></td>
-                                </tr>
-                            </tbody>
-                        </table>      
-                    </div>
-
-                    <div class="boxing">
-                        <h3 class="c_tit">Payment Information</h3>
-                        <div class="gray">
-                            E-mail : sunyoung.eom@medi-city.co.kr<br/>
-                            Bank Information  : <b>신한 140-013-748158 (예금주: 주식회사 메디씨티 박성민)</b>
-                        </div>
-                    </div>
 
                     <div class="btn_box">
                         <input type="submit" value="SUBMIT" name=""/>
