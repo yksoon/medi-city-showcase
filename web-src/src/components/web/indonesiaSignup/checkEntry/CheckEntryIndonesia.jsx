@@ -24,8 +24,11 @@ const CheckEntryIndonesia = () => {
 
     const [registrationInfo, setRegistrationInfo] = useState([]);
 
-    const institutionName = useRef(null);
-    const email = useRef(null);
+    const firstName = useRef(null);
+    const lastName = useRef(null);
+    const mobile1 = useRef(null);
+    const mobile2 = useRef(null);
+    const mobile3 = useRef(null);
 
     useEffect(() => {
         getRegistration();
@@ -82,9 +85,14 @@ const CheckEntryIndonesia = () => {
 
             const url = apiPath.api_admin_get_reg_confirm;
             const data = {
-                institution_name_ko: institutionName.current.value,
-                institution_name_en: institutionName.current.value,
-                email: email.current.value,
+                name_first_ko: firstName.current.value,
+                name_last_ko: lastName.current.value,
+                name_first_en: firstName.current.value,
+                name_last_en: lastName.current.value,
+                // inter_phone_number: "62",
+                mobile1: mobile1.current.value,
+                mobile2: mobile2.current.value,
+                mobile3: mobile3.current.value,
             };
 
             // 파라미터
@@ -146,23 +154,30 @@ const CheckEntryIndonesia = () => {
             };
         };
 
-        if (!institutionName.current.value) {
-            noti(
-                institutionName,
-                "Please enter Plastic & Aesthetic Clinic Name",
-            );
+        if (!firstName.current.value) {
+            noti(firstName, "Please enter your name");
 
             return false;
         }
 
-        if (!email.current.value) {
-            noti(email, "Please enter E-mail");
+        if (!lastName.current.value) {
+            noti(lastName, "Please enter your name");
 
             return false;
         }
 
-        if (!emailPattern.test(email.current.value)) {
-            noti(email, "Enter the E-mail that you applied with.");
+        if (!mobile1.current.value) {
+            noti(mobile1, "Please enter mobile number");
+
+            return false;
+        }
+        if (!mobile2.current.value) {
+            noti(mobile2, "Please enter mobile number");
+
+            return false;
+        }
+        if (!mobile3.current.value) {
+            noti(mobile3, "Please enter mobile number");
 
             return false;
         }
@@ -230,8 +245,15 @@ const CheckEntryIndonesia = () => {
                                 <input
                                     type="text"
                                     name=""
-                                    placeholder="Plastic & Aesthetic Clinic Name"
-                                    ref={institutionName}
+                                    placeholder="First Name"
+                                    ref={firstName}
+                                    onKeyDown={handleOnKeyPress}
+                                />
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Last Name"
+                                    ref={lastName}
                                     onKeyDown={handleOnKeyPress}
                                 />
                             </p>
@@ -239,8 +261,22 @@ const CheckEntryIndonesia = () => {
                                 <input
                                     type="text"
                                     name=""
-                                    placeholder="E-mail"
-                                    ref={email}
+                                    placeholder="mobile1"
+                                    ref={mobile1}
+                                    onKeyDown={handleOnKeyPress}
+                                />
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="mobile2"
+                                    ref={mobile2}
+                                    onKeyDown={handleOnKeyPress}
+                                />
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="mobile3"
+                                    ref={mobile3}
                                     onKeyDown={handleOnKeyPress}
                                 />
                             </p>
