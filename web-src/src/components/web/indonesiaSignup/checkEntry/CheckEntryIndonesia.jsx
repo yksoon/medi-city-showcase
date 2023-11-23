@@ -155,29 +155,44 @@ const CheckEntryIndonesia = () => {
         };
 
         if (!firstName.current.value) {
-            noti(firstName, "Please enter your name");
+            noti(
+                firstName,
+                "Please enter the name of the person making the reservation",
+            );
 
             return false;
         }
 
         if (!lastName.current.value) {
-            noti(lastName, "Please enter your name");
+            noti(
+                lastName,
+                "Please enter the name of the person making the reservation",
+            );
 
             return false;
         }
 
         if (!mobile1.current.value) {
-            noti(mobile1, "Please enter mobile number");
+            noti(
+                mobile1,
+                "Please enter the mobile phone number of the person making the reservation",
+            );
 
             return false;
         }
         if (!mobile2.current.value) {
-            noti(mobile2, "Please enter mobile number");
+            noti(
+                mobile2,
+                "Please enter the mobile phone number of the person making the reservation",
+            );
 
             return false;
         }
         if (!mobile3.current.value) {
-            noti(mobile3, "Please enter mobile number");
+            noti(
+                mobile3,
+                "Please enter the mobile phone number of the person making the reservation",
+            );
 
             return false;
         }

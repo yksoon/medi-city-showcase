@@ -16,6 +16,43 @@ import { Checkbox } from "@mui/material";
 import { commaOfNumber } from "common/js/Pattern";
 import { useLocation } from "react-router";
 
+const interestsItems = [
+    {
+        title: "Mata (Eyes)",
+        values: [
+            "Operasi Mata jahitan",
+            "Operasi Mata Sayatan",
+            "Upper Blepharoplasty",
+            "Koreksi Otot Mata",
+        ],
+    },
+    {
+        title: "Operasi Hidung (Nose)",
+        values: ["Augmentasi Hidung", "Jenis Operasi Hidung", "Reduksi Hidung"],
+    },
+    {
+        title: "ANTI-AGING",
+        values: [
+            "Elastic Band Lifting",
+            "Lifting Dahi Endoskopi",
+            "Lifting Wajah Area Tengah",
+            "Lifting Wajah",
+        ],
+    },
+    {
+        title: "Payudara (BREAST)",
+        values: ["Augmentasi Payudara", "Reduksi Payudara"],
+    },
+    {
+        title: "Tubuh (Body)",
+        values: [
+            "Liposuction Seluruh Tubuh",
+            "Liposuction Individual",
+            "Dual-Slim",
+            "Lifting Tubuh",
+        ],
+    },
+];
 const SignUpIndonesia = (props) => {
     const { alert } = useAlert();
     const { confirm } = useConfirm();
@@ -23,6 +60,7 @@ const SignUpIndonesia = (props) => {
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     const [modData, setModData] = useState({});
+    const [checkItems, setCheckItems] = useState([]);
     // 페이지 정보
     const location = useLocation();
     const isSignup = location.pathname === "/local/signup";
@@ -113,6 +151,8 @@ const SignUpIndonesia = (props) => {
     const interpretationCostCheck = useRef(null);
     const paymentStatus = useRef(null);
     const additionalStatus = useRef(null);
+
+    const interestsOther = useRef(null);
 
     // 참가자 정보
     const [entryInfo, setEntryInfo] = useState([]);
@@ -311,6 +351,18 @@ const SignUpIndonesia = (props) => {
             const doRegEntry = () => {
                 setIsSpinner(true);
 
+                let checkItemsArr = checkItems;
+                checkItemsArr = [
+                    ...checkItemsArr,
+                    interestsOther.current.value,
+                ];
+
+                let entryInfoArr = entryInfo[0];
+                entryInfoArr = {
+                    ...entryInfoArr,
+                    position: checkItemsArr.join(),
+                };
+
                 let url;
                 if (method === "reg") {
                     // /v1/reg
@@ -347,10 +399,10 @@ const SignUpIndonesia = (props) => {
                     name_last_en: "Local Personal name",
                     email: "Local Personal email",
                     inter_phone_number: "62",
-                    entry_info: entryInfo,
                     show_yn: "Y",
                     registration_idx: registrationInfo.registration_idx,
                     interpretation_cost_yn: "N",
+                    entry_info: entryInfoArr,
                 };
 
                 const restParams = {
@@ -432,12 +484,6 @@ const SignUpIndonesia = (props) => {
                 return false;
             }
 
-            // if (!entryInfo[i]["duty"]) {
-            //     notiEntry("Please enter participant title");
-            //
-            //     return false;
-            // }
-
             if (
                 !entryInfo[i]["mobile1"] ||
                 !entryInfo[i]["mobile2"] ||
@@ -475,6 +521,26 @@ const SignUpIndonesia = (props) => {
             ...modData,
             [inputName]: e.target.value,
         });
+    };
+
+    // 체크박스 단일 선택
+    const handleSingleCheck = (checked, id) => {
+        if (checked) {
+            // 단일 선택 시 체크된 아이템을 배열에 추가
+
+            let newArr = checkItems;
+            newArr.push(id);
+
+            newArr = newArr.filter((element, index) => {
+                return newArr.indexOf(element) === index;
+            });
+
+            console.log([...newArr]);
+            setCheckItems(newArr);
+        } else {
+            // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
+            setCheckItems(checkItems.filter((el) => el !== id));
+        }
     };
 
     return (
@@ -539,18 +605,6 @@ const SignUpIndonesia = (props) => {
                                     (<span className="red">*</span>) Required
                                 </p>
                             )}
-
-                            {/*{isSignup && (*/}
-                            {/*    <div className="morezone">*/}
-                            {/*        <Link to="" onClick={addEntry}>*/}
-                            {/*            Adding participants &nbsp;*/}
-                            {/*            <img*/}
-                            {/*                src="img/web/sub/add_p.png"*/}
-                            {/*                alt=""*/}
-                            {/*            />*/}
-                            {/*        </Link>*/}
-                            {/*    </div>*/}
-                            {/*)}*/}
 
                             {entryInfo.length !== 0 &&
                                 entryInfo.map((item, idx) => (
@@ -675,27 +729,6 @@ const SignUpIndonesia = (props) => {
                                                             )}
                                                     </select>
                                                 </td>
-                                                {/*{isSignup && (*/}
-                                                {/*    <td*/}
-                                                {/*        rowSpan="3"*/}
-                                                {/*        className="del_td"*/}
-                                                {/*    >*/}
-                                                {/*        <Link*/}
-                                                {/*            to=""*/}
-                                                {/*            title="Delete"*/}
-                                                {/*            onClick={() =>*/}
-                                                {/*                removeEntry(*/}
-                                                {/*                    item.idx,*/}
-                                                {/*                )*/}
-                                                {/*            }*/}
-                                                {/*        >*/}
-                                                {/*            <img*/}
-                                                {/*                src="img/web/sub/del_p.png"*/}
-                                                {/*                alt=""*/}
-                                                {/*            />*/}
-                                                {/*        </Link>*/}
-                                                {/*    </td>*/}
-                                                {/*)}*/}
                                             </tr>
                                             <tr>
                                                 <th>
@@ -814,66 +847,72 @@ const SignUpIndonesia = (props) => {
                                             </tr>
                                             <tr>
                                                 <th>Interests</th>
-                                                <td colSpan={3}>
-                                                    {/*<input*/}
-                                                    {/*    type="text"*/}
-                                                    {/*    value={item.position}*/}
-                                                    {/*    key={`${item.idx}_position`}*/}
-                                                    {/*    onChange={(e) =>*/}
-                                                    {/*        changeEntry(*/}
-                                                    {/*            e,*/}
-                                                    {/*            item.idx,*/}
-                                                    {/*            "position",*/}
-                                                    {/*        )*/}
-                                                    {/*    }*/}
-                                                    {/*    readOnly={*/}
-                                                    {/*        isConfirmation*/}
-                                                    {/*    }*/}
-                                                    {/*/>*/}
-                                                    <span
-                                                        style={{
-                                                            margin: "0 10px",
-                                                        }}
-                                                    >
-                                                        <Checkbox
-                                                        // id="sameInfo"
-                                                        // onChange={changeSameInfoChk}
-                                                        />
-                                                        Eyes
-                                                    </span>
-                                                    <span
-                                                        style={{
-                                                            margin: "0 10px",
-                                                        }}
-                                                    >
-                                                        <Checkbox
-                                                        // id="sameInfo"
-                                                        // onChange={changeSameInfoChk}
-                                                        />
-                                                        Nose
-                                                    </span>
-                                                    <span
-                                                        style={{
-                                                            margin: "0 10px",
-                                                        }}
-                                                    >
-                                                        <Checkbox
-                                                        // id="sameInfo"
-                                                        // onChange={changeSameInfoChk}
-                                                        />
-                                                        Facial Contouring
-                                                    </span>
-                                                    <span
-                                                        style={{
-                                                            margin: "0 10px",
-                                                        }}
-                                                    >
-                                                        Other{" "}
-                                                        <input
-                                                            type="text"
-                                                            className="input_n"
-                                                        />
-                                                    </span>
+                                                <td colSpan="3">
+                                                    {interestsItems.map(
+                                                        (item, idx) => (
+                                                            <div
+                                                                className="interbox"
+                                                                key={`interests_items_${idx}`}
+                                                            >
+                                                                <b>
+                                                                    {item.title}
+                                                                </b>
+                                                                <div className="op_box">
+                                                                    {item.values
+                                                                        .length !==
+                                                                        0 &&
+                                                                        item.values.map(
+                                                                            (
+                                                                                item2,
+                                                                                idx2,
+                                                                            ) => (
+                                                                                <div
+                                                                                    key={`${item.title}_${item2}`}
+                                                                                >
+                                                                                    <label>
+                                                                                        <Checkbox
+                                                                                            value={
+                                                                                                item2
+                                                                                            }
+                                                                                            onChange={(
+                                                                                                e,
+                                                                                            ) =>
+                                                                                                handleSingleCheck(
+                                                                                                    e
+                                                                                                        .target
+                                                                                                        .checked,
+                                                                                                    item2,
+                                                                                                )
+                                                                                            }
+                                                                                            checked={checkItems.includes(
+                                                                                                item2,
+                                                                                            )}
+                                                                                        />{" "}
+                                                                                        {
+                                                                                            item2
+                                                                                        }
+                                                                                    </label>
+                                                                                    <br />
+                                                                                </div>
+                                                                            ),
+                                                                        )}
+                                                                </div>
+                                                            </div>
+                                                        ),
+                                                    )}
+                                                    <div className="interbox">
+                                                        <b>OTHER</b>
+                                                        <div className="op_box">
+                                                            <label>
+                                                                <input
+                                                                    type="text"
+                                                                    ref={
+                                                                        interestsOther
+                                                                    }
+                                                                />
+                                                            </label>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>

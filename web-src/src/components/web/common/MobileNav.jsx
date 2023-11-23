@@ -99,7 +99,6 @@ function MobileNav() {
                             </ul>
                         </li>
 
-
                         <li>
                             <Link
                                 to=""
@@ -117,25 +116,24 @@ function MobileNav() {
                                 style={{ display: "block" }}
                             >
                                 <li>
-                                    <Link
-                                       href=""
-                                    >
-                                        Guideline
-                                    </Link>
+                                    <Link to="">Guideline</Link>
                                 </li>
                                 <li>
-                                    <Link href="" >
+                                    <Link to={routerPath.web_local_signup_url}>
                                         Online Sign-up
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="" >
+                                    <Link
+                                        to={
+                                            routerPath.web_local_check_entry_url
+                                        }
+                                    >
                                         Sign-up Confirmation
                                     </Link>
                                 </li>
                             </ul>
                         </li>
-
 
                         <li>
                             <Link

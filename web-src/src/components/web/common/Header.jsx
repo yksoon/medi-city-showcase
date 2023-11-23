@@ -58,36 +58,25 @@ function Header() {
                                 </div>
                             </li>
                             <li>
-                                <Link
-                                    href=""
-                                >
-                                    PESERTA PAMERAN
-                                </Link>
+                                <Link to="">PESERTA PAMERAN</Link>
                                 <div className="submenu">
-                                    <Link
-                                        
-                                     href=""
-                                    >
-                                        Guideline
-                                    </Link>
-                                    <Link 
-                                      href=""
-                                    >
+                                    <Link to="">Guideline</Link>
+                                    <Link to={routerPath.web_local_signup_url}>
                                         Online Sign-up
                                     </Link>
                                     <Link
-                                     href=""
+                                        to={
+                                            routerPath.web_local_check_entry_url
+                                        }
                                     >
                                         Sign-up Confirmation
                                     </Link>
                                 </div>
                             </li>
-                            
+
                             <li>
-                                <Link 
-                                   to={
-                                     routerPath.web_artbuddy_exhibition_url
-                                   }
+                                <Link
+                                    to={routerPath.web_artbuddy_exhibition_url}
                                 >
                                     ARTBUDDY, K-ART
                                 </Link>
