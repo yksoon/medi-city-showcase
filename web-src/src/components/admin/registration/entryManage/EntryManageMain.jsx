@@ -39,7 +39,7 @@ const EntryManageMain = (props) => {
     const [boardList, setBoardList] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
     const [checkItems, setCheckItems] = useState([]);
-    const [dashboardInfo, setDashboardInfo] = useState([]);
+    const [dashboardInfo, setDashboardInfo] = useState({});
 
     // 모달
     const [isOpen, setIsOpen] = useState(false);
@@ -461,12 +461,23 @@ const EntryManageMain = (props) => {
             enableSorting: "alphanumericCaseSensitive",
         }),
 
+        columnHelper.accessor((row) => row.institution_type, {
+            id: "institution_type",
+            cell: (info) => info.getValue(),
+            header: "유형",
+            enableSorting: "alphanumericCaseSensitive",
+        }),
+
         columnHelper.accessor(
             (row) => (
                 <>
-                    {row.institution_name_ko}
-                    <br />
-                    {row.institution_name_en}
+                    {row.institution_type_cd !== "400" && (
+                        <>
+                            {row.institution_name_ko}
+                            <br />
+                            {row.institution_name_en}
+                        </>
+                    )}
                 </>
             ),
             {
@@ -480,9 +491,13 @@ const EntryManageMain = (props) => {
         columnHelper.accessor(
             (row) => (
                 <>
-                    {`${row.addr1_ko} ${row.addr2_ko}`}
-                    <br />
-                    {`${row.addr2_en}, ${row.addr1_en}`}
+                    {row.institution_type_cd !== "400" && (
+                        <>
+                            {`${row.addr1_ko} ${row.addr2_ko}`}
+                            <br />
+                            {`${row.addr2_en}, ${row.addr1_en}`}
+                        </>
+                    )}
                 </>
             ),
             {
@@ -496,9 +511,13 @@ const EntryManageMain = (props) => {
         columnHelper.accessor(
             (row) => (
                 <>
-                    {`${row.name_first_ko} ${row.name_last_ko}`}
-                    <br />
-                    {`${row.name_first_en} ${row.name_last_en}`}
+                    {row.institution_type_cd !== "400" && (
+                        <>
+                            {`${row.name_first_ko} ${row.name_last_ko}`}
+                            <br />
+                            {`${row.name_first_en} ${row.name_last_en}`}
+                        </>
+                    )}
                 </>
             ),
             {
@@ -607,6 +626,7 @@ const EntryManageMain = (props) => {
                         <table className="table_a">
                             <colgroup>
                                 <col width="5%" />
+                                <col width="7%" />
                                 <col width="7%" />
                                 <col width="7%" />
                                 <col width="15%" />

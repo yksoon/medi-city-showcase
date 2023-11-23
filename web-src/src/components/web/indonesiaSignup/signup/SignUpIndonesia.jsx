@@ -64,7 +64,7 @@ const SignUpIndonesia = (props) => {
     // 페이지 정보
     const location = useLocation();
     const isSignup = location.pathname === "/local/signup";
-    const isConfirmation = location.pathname === "/signup/confirmation";
+    const isConfirmation = location.pathname === "/local/confirmation";
 
     // let modData;
     //
@@ -207,6 +207,8 @@ const SignUpIndonesia = (props) => {
         setModData(location.state ?? {});
 
         setEntryInfo(location.state.entry_info);
+
+        setCheckItems(location.state.entry_info[0].position.split(","));
     };
 
     // 참가자 인덱스 재정의
@@ -354,7 +356,9 @@ const SignUpIndonesia = (props) => {
                 let checkItemsArr = checkItems;
                 checkItemsArr = [
                     ...checkItemsArr,
-                    interestsOther.current.value,
+                    interestsOther.current.value
+                        ? "|" + interestsOther.current.value
+                        : "",
                 ];
 
                 let entryInfoArr = entryInfo[0];
@@ -362,6 +366,9 @@ const SignUpIndonesia = (props) => {
                     ...entryInfoArr,
                     position: checkItemsArr.join(),
                 };
+
+                let newArr = [];
+                newArr.push(entryInfoArr);
 
                 let url;
                 if (method === "reg") {
@@ -402,7 +409,7 @@ const SignUpIndonesia = (props) => {
                     show_yn: "Y",
                     registration_idx: registrationInfo.registration_idx,
                     interpretation_cost_yn: "N",
-                    entry_info: entryInfoArr,
+                    entry_info: newArr,
                 };
 
                 const restParams = {
@@ -442,7 +449,7 @@ const SignUpIndonesia = (props) => {
                         CommonNotify({
                             type: "alert",
                             hook: alert,
-                            message: "Please try again in a few minutes",
+                            message: res.headers.result_message_en,
                         });
                     }
                 };
@@ -887,6 +894,9 @@ const SignUpIndonesia = (props) => {
                                                                                             checked={checkItems.includes(
                                                                                                 item2,
                                                                                             )}
+                                                                                            disabled={
+                                                                                                isConfirmation
+                                                                                            }
                                                                                         />{" "}
                                                                                         {
                                                                                             item2
@@ -908,6 +918,9 @@ const SignUpIndonesia = (props) => {
                                                                     type="text"
                                                                     ref={
                                                                         interestsOther
+                                                                    }
+                                                                    disabled={
+                                                                        isConfirmation
                                                                     }
                                                                 />
                                                             </label>

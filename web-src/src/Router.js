@@ -142,6 +142,13 @@ const Router = () => {
                         element={<CheckEntryIndonesia />}
                     />
 
+                    {/* 사전등록 확인 - 인도네시아 */}
+                    {/* URL : /signup/confirmation */}
+                    <Route
+                        path={routerPath.web_local_confirmation_url}
+                        element={<SignUpIndonesia />}
+                    />
+
                     {/* 404 */}
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>

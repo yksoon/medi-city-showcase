@@ -114,7 +114,7 @@ const CheckEntryIndonesia = () => {
                     // console.log(result_info);
                     setIsSpinner(false);
 
-                    navigate(routerPath.web_signup_confirmation_url, {
+                    navigate(routerPath.web_local_confirmation_url, {
                         state: result_info,
                     });
                 } else if (res.headers.result_code === successCode.noData) {

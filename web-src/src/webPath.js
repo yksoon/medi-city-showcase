@@ -80,6 +80,10 @@ const routerPath = {
     // /local/check_entry
     web_local_check_entry_url: `${base_url}local/check_entry`,
 
+    // 사전등록 확인 - 인도네시아
+    // /local/confirmation
+    web_local_confirmation_url: `${base_url}local/confirmation`,
+
     // ---------------------- admin -------------------------
     // 메인
     // /admin

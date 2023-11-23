@@ -1178,7 +1178,7 @@ const EntryManageModalMain = (props) => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>직급</th>
+                                    <th>관심분야</th>
                                     <td>
                                         <input
                                             type="text"

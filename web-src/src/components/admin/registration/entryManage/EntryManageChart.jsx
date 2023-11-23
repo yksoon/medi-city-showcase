@@ -21,8 +21,9 @@ const EntryManageChart = (props) => {
     const [institutionTypeInfo, setInstitutionTypeInfo] = useState([]);
 
     useEffect(() => {
+        console.log("111111111112222");
         Object.keys(dashboardInfo).length !== 0 && setDataFunc();
-    }, []);
+    }, [dashboardInfo]);
 
     const setDataFunc = () => {
         // total
@@ -222,100 +223,106 @@ const EntryManageChart = (props) => {
 
     return (
         <>
-            <div style={{ display: "flex" }}>
-                {total.length !== 0 && (
-                    <CommonBarChart
-                        data={total}
-                        width={550}
-                        height={330}
-                        title={"총 사전등록/참가자 수"}
-                    />
-                )}
+            {Object.keys(dashboardInfo).length !== 0 && (
+                <>
+                    <div style={{ display: "flex" }}>
+                        {total.length !== 0 && (
+                            <CommonBarChart
+                                data={total}
+                                width={550}
+                                height={330}
+                                title={"총 사전등록/참가자 수"}
+                            />
+                        )}
 
-                {genderInfo.length !== 0 && (
-                    <CommonBarChart
-                        data={genderInfo}
-                        width={550}
-                        height={330}
-                        title={"성별"}
-                    />
-                )}
+                        {genderInfo.length !== 0 && (
+                            <CommonBarChart
+                                data={genderInfo}
+                                width={550}
+                                height={330}
+                                title={"성별"}
+                            />
+                        )}
 
-                {entryAgeInfo.length !== 0 && (
-                    <CommonPieChart
-                        data={entryAgeInfo}
-                        width={550}
-                        height={330}
-                        title={"연령"}
-                    />
-                )}
-            </div>
-            <div style={{ display: "flex" }}>
-                {institutionInfo.length !== 0 && (
-                    <CommonPieChart
-                        data={institutionInfo}
-                        width={550}
-                        height={330}
-                        title={"참가기관"}
-                    />
-                )}
-                {institutionEntryInfo.length !== 0 && (
-                    <CommonPieChart
-                        data={institutionEntryInfo}
-                        width={550}
-                        height={330}
-                        title={"참가기관 (인원)"}
-                    />
-                )}
-                {/*{entryPositionInfo.length !== 0 && (*/}
-                {/*    <CommonPieChart*/}
-                {/*        data={entryPositionInfo}*/}
-                {/*        width={550}*/}
-                {/*        height={330}*/}
-                {/*        margin={{*/}
-                {/*            top: 20,*/}
-                {/*            bottom: 60,*/}
-                {/*            left: 30,*/}
-                {/*            right: 30,*/}
-                {/*        }}*/}
-                {/*        title={"직급"}*/}
-                {/*    />*/}
-                {/*)}*/}
-                {entryDutyInfo.length !== 0 && (
-                    <CommonPieChart
-                        data={entryDutyInfo}
-                        width={550}
-                        height={330}
-                        title={"직책"}
-                    />
-                )}
-            </div>
-            <div style={{ display: "flex" }}>
-                {institutionEntryStatusInfo.length !== 0 && (
-                    <CommonBarChart
-                        data={institutionEntryStatusInfo}
-                        width={550}
-                        height={330}
-                        title={"참가 상태"}
-                    />
-                )}
-                {institutionPaymentStatusInfo.length !== 0 && (
-                    <CommonBarChart
-                        data={institutionPaymentStatusInfo}
-                        width={550}
-                        height={330}
-                        title={"결제 상태"}
-                    />
-                )}
-                {institutionTypeInfo.length !== 0 && (
-                    <CommonPieChart
-                        data={institutionTypeInfo}
-                        width={550}
-                        height={330}
-                        title={"기관타입"}
-                    />
-                )}
-            </div>
+                        {entryAgeInfo.length !== 0 && (
+                            <CommonPieChart
+                                data={entryAgeInfo}
+                                width={550}
+                                height={330}
+                                title={"연령"}
+                            />
+                        )}
+                    </div>
+                    <div style={{ display: "flex" }}>
+                        {institutionInfo.length !== 0 && (
+                            <CommonPieChart
+                                data={institutionInfo}
+                                width={550}
+                                height={330}
+                                title={"참가기관"}
+                            />
+                        )}
+                        {institutionEntryInfo.length !== 0 && (
+                            <CommonPieChart
+                                data={institutionEntryInfo}
+                                width={550}
+                                height={330}
+                                title={"참가기관 (인원)"}
+                            />
+                        )}
+                        {entryDutyInfo.length !== 0 && (
+                            <CommonPieChart
+                                data={entryDutyInfo}
+                                width={550}
+                                height={330}
+                                title={"직책"}
+                            />
+                        )}
+                    </div>
+                    <div style={{ display: "flex" }}>
+                        {institutionEntryStatusInfo.length !== 0 && (
+                            <CommonBarChart
+                                data={institutionEntryStatusInfo}
+                                width={550}
+                                height={330}
+                                title={"참가 상태"}
+                            />
+                        )}
+                        {institutionPaymentStatusInfo.length !== 0 && (
+                            <CommonBarChart
+                                data={institutionPaymentStatusInfo}
+                                width={550}
+                                height={330}
+                                title={"결제 상태"}
+                            />
+                        )}
+                        {institutionTypeInfo.length !== 0 && (
+                            <CommonPieChart
+                                data={institutionTypeInfo}
+                                width={550}
+                                height={330}
+                                title={"기관타입"}
+                            />
+                        )}
+                    </div>
+                    <div style={{ display: "flex" }}>
+                        {entryPositionInfo.length !== 0 && (
+                            <CommonPieChart
+                                data={entryPositionInfo}
+                                width={550}
+                                height={330}
+                                margin={{
+                                    top: 20,
+                                    bottom: 60,
+                                    left: 30,
+                                    right: 30,
+                                }}
+                                title={"관심분야"}
+                            />
+                        )}
+                    </div>
+                </>
+            )}
         </>
     );
 };
