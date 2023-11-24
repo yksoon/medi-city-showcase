@@ -49,6 +49,11 @@ const Section01 = (props) => {
                                 </li>
                                 <li>
                                     <span className="date">1/24-25</span>Gifts
+                                    <br />
+                                    <b className="long">
+                                        (Only for Sign-up Participants)
+                                    </b>
+
                                     <span className="icon">
                                         <img
                                             src="img/web/main/f_icon03.png"
