@@ -718,7 +718,10 @@ const SignUpIndonesia = (props) => {
                                                         </span>
                                                     )}
                                                 </th>
-                                                <td>
+                                                <td colSpan={
+                                                        isConfirmation ? 0 : 3
+                                                    }
+                                                >
                                                     {!isConfirmation ? (
                                                         <CountrySelect
                                                             onChange={(
@@ -801,6 +804,9 @@ const SignUpIndonesia = (props) => {
                                                         }
                                                     />
                                                 </td>
+
+                                            </tr>
+                                            <tr>
                                                 <th>
                                                     E-mail{" "}
                                                     {isSignup && (
@@ -809,7 +815,11 @@ const SignUpIndonesia = (props) => {
                                                         </span>
                                                     )}
                                                 </th>
-                                                <td>
+                                                <td 
+                                                     colSpan={
+                                                        isConfirmation ? 0 : 3
+                                                    }
+                                                >
                                                     <input
                                                         type="text"
                                                         value={item.email}
