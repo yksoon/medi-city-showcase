@@ -329,9 +329,9 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .guideline_indo .boxing .steps li.c02 p {background:url('/public/img/web/sub/step02_q.png') center center no-repeat;}
 .guideline_indo .boxing .steps li.c03 p {background:url('/public/img/web/sub/step03_q.png') center center no-repeat;}
 .guideline_indo .boxing .steps li.c04 p {background:url('/public/img/web/sub/step04_q.png') center center no-repeat;}
-.guideline_indo .boxing .check li {line-height: 60px; bor/public/img/web/sub/1px solid #ddd; padding-left: 35px; background:url('/public/img/web/sub/check_icon.png') 0 center no-repeat;
-	font-size: 18px;font-weight: 600;color:#000;;
-}
+.guideline_indo .boxing .check li {line-height: 60px; border:1px solid #ddd; padding-left: 35px; background:url('/public/img/web/sub/check_icon.png') 0 center no-repeat;
+	font-size: 18px;font-weight: 600;color:#000;}
+
 .guideline_indo .boxing .check li:last=child {bordeR:none;}
 .guideline_indo  mark {display:inline;color:#f60040;background-color:#fffaac;}
 
