@@ -163,13 +163,19 @@ const SignUpIndonesia = (props) => {
             setEntryInfo([]);
             setCheckItems([]);
             setOtherItem("");
-            /**
-             * @TODO: 이거 마무리 해야됨
-             */
+
             // interestsOther.current.value = "";
             setEntryInfoFunc();
         }
     }, [location.pathname]);
+
+    useEffect(() => {
+        if (!isConfirmation) {
+            if (interestsOther.current) {
+                interestsOther.current.value = "";
+            }
+        }
+    }, [otherItem]);
 
     // 사전등록 확인일 경우
     const setDefaultEntryInfoFunc = () => {
