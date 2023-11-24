@@ -311,6 +311,46 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .guideline .boxing b.pink{color:#f82062;}
 
 
+
+
+
+/* Guideline Indonesia */
+.guideline_indo .top {text-align: center; font-size: 20px; color:#000; line-height:31px; font-weight:900;margin:0 0 70px 0;}
+.guideline_indo .top h4{font-size: 23px; line-height: 28px;font-weight: 900;color:#ed0743;margin:10px 0 0 0;}
+.guideline_indo .top h4 .big{font-size: 40px;font-family: serif;}
+.guideline_indo .boxing {margin:0 0 70px 0;}
+.guideline_indo .boxing .pbox {background-color:#faf2f5; padding:25px;margin:0 0 15px 0;font-size: 22px; font-weight: 900;color: #ed0743;;}
+.guideline_indo .boxing .pbox .black{font-size:18px; color:#000; display:inline-block; width:170px;}
+.guideline_indo .boxing .l_noti {text-align:right; color:#333; font-size: 16px;}
+.guideline_indo .boxing .steps {background:url('/public/img/web/sub/step_line.png') 0  40% repeat-x;display:flex;justify-content: space-between;margin:0 0 50px 0;}
+.guideline_indo .boxing .steps li{width:190px;text-align :center;  font-size:17px; font-weight: 900; color:#000;}
+.guideline_indo .boxing .steps li p{width:190px;height:190px;display:flex;align-items: center;justify-content: center;margin:0 0 15px 0;}
+.guideline_indo .boxing .steps li.c01 p {background:url('/public/img/web/sub/step01_q.png') center center no-repeat;}
+.guideline_indo .boxing .steps li.c02 p {background:url('/public/img/web/sub/step02_q.png') center center no-repeat;}
+.guideline_indo .boxing .steps li.c03 p {background:url('/public/img/web/sub/step03_q.png') center center no-repeat;}
+.guideline_indo .boxing .steps li.c04 p {background:url('/public/img/web/sub/step04_q.png') center center no-repeat;}
+.guideline_indo .boxing .check li {line-height: 60px; bor/public/img/web/sub/1px solid #ddd; padding-left: 35px; background:url('/public/img/web/sub/check_icon.png') 0 center no-repeat;
+	font-size: 18px;font-weight: 600;color:#000;;
+}
+.guideline_indo .boxing .check li:last=child {bordeR:none;}
+.guideline_indo  mark {display:inline;color:#f60040;background-color:#fffaac;}
+
+.guideline_indo .boxing .pbox_free {background-color:#faf2f5; padding:25px 25px 20px 150px;margin:0 0 15px 0;font-size:18px; font-weight: 600;color: #000;position:relative;}
+.guideline_indo .boxing .pbox_free .free_tit {position:absolute;top:0;left:0;}
+
+
+.guideline_indo .boxing .blist li {position:Relative;background-color:#faf2f5; font-size:18px;line-height:20px;color:#000000;font-weight: 600; padding:18px 25px 18px 80px;
+	margin:0 0 8px 0;
+	border-radius: 80px;
+	-webkit-border-radius: 80px;
+	-moz-border-radius: 80px;
+}
+.guideline_indo .boxing .blist li .icon {position:absolute;top: 23%; left:30px;}
+.guideline_indo .boxing .pink{color:#f82062;}
+
+
+
+
 /* Online Sign-up */
 .signup .boxing{margin:0 0 60px 0;}
 .signup .boxing .r_noti{text-align:right;font-size:14px; color:#000;margin:0 0 5px 0;font-weight:900;}
@@ -687,6 +727,42 @@ select {
 	.guideline .boxing dl dt {font-size:16px;}
 	.guideline .boxing .dot {font-size:13px; line-height:18px; margin:7px 0;word-break: keep-all;}
 	.guideline .boxing .dot:before {top:8px;}
+
+	
+	/* Guideline Indonesia */
+	.guideline_indo .top {font-size:14px; line-height:23px;margin:0 0 50px 0;word-break: keep-all;}
+	.guideline_indo .top h4{font-size:16px; line-height:23px;}
+	.guideline_indo .top h4 .big{font-size: 15px;font-family: serif;}
+	.guideline_indo .boxing {margin:0 0 50px 0;}
+	.guideline_indo .boxing .pbox{padding:20px;font-size:18px;}
+	.guideline_indo .boxing .pbox .black{font-size:14px;line-height:18px; display:block; width:auto;}
+	.guideline_indo .boxing .l_noti {text-align:right; color:#333; font-size: 16px;}
+	.guideline_indo .boxing .steps {background:none;align-items: center; flex-direction:column;margin:0 0 20px 0;}
+	.guideline_indo .boxing .steps li{width:auto; font-size:14px; line-height: 20px; margin:0 0 20px 0;;}
+	.guideline_indo .boxing .steps li p{width:130px;height:130px;margin:0 auto 15px ;}
+	.guideline_indo .boxing .steps li p img{width:35%;}
+	.guideline_indo .boxing .steps li.c01 p  {background-size:130px 130px;}
+	.guideline_indo .boxing .steps li.c02 p  {background-size:130px 130px;}
+	.guideline_indo .boxing .steps li.c03 p  {background-size:130px 130px;}
+	.guideline_indo .boxing .steps li.c04 p  {background-size:130px 130px;}
+	.guideline_indo .boxing .check li {line-height:17px;padding:10px 6px 10px 30px; background:url('../img/sub/check_icon.png') 0 10px no-repeat;
+		font-size: 13px;background-size:20px;word-break: keep-all;
+	}
+	
+	.guideline_indo .boxing .pbox_free {padding:25px 25px 20px 75px;font-size:14px;word-break: keep-all;}
+	.guideline_indo .boxing .pbox_free .free_tit {top:10px;left:-5px;width:70px;}
+
+
+
+	.guideline_indo .boxing .blist li {font-size:13px;line-height:16px;padding:18px 25px 18px 60px;word-break: keep-all;
+		margin:0 0 8px 0;
+		border-radius: 8px;
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+	}
+	.guideline_indo .boxing .blist li .icon {top: 18px; left:20px;}
+	.guideline_indo .boxing .blist li .icon img {width:25px;}
+	
 
 
 	/* Online Sign-up */
