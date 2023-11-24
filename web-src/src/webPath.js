@@ -84,6 +84,10 @@ const routerPath = {
     // /local/confirmation
     web_local_confirmation_url: `${base_url}local/confirmation`,
 
+    // 가이드라인 - 인도네시아
+    // /participation/guideline
+    web_local_guideline_url: `${base_url}local/guideline`,
+
     // ---------------------- admin -------------------------
     // 메인
     // /admin

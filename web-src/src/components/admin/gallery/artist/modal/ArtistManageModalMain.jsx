@@ -199,6 +199,7 @@ const ArtistManageModalMain = (props) => {
                                         setSelectedCountry(value)
                                     }
                                     defaultValue={selectedCountry}
+                                    mode={"full"}
                                 />
                             </td>
                             <th>휴대전화</th>

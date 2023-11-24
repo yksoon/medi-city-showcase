@@ -19,6 +19,7 @@ import ArtbuddyGalleryListMain from "components/web/artbuddy/gallery/ArtbuddyGal
 import MainPopupModal from "components/web/main/mainComponents/mainContentsComponents/modal/MainPopupModal";
 import SignUpIndonesia from "components/web/indonesiaSignup/signup/SignUpIndonesia";
 import CheckEntryIndonesia from "components/web/indonesiaSignup/checkEntry/CheckEntryIndonesia";
+import GuidelineIndonesia from "components/web/indonesiaSignup/guideline/GuidelineIndonesia";
 
 // Router
 const Router = () => {
@@ -68,21 +69,6 @@ const Router = () => {
                     <Route
                         path={routerPath.web_participation_guideline_url}
                         element={<Guideline />}
-                    />
-
-                    {/* -------------------------------admin------------------------------- */}
-                    {/* 메인 */}
-                    {/* URL : /admin */}
-                    <Route
-                        path={routerPath.admin_main_url}
-                        element={<Admin />}
-                    />
-
-                    {/* 로그인 */}
-                    {/* URL : /admin/signin */}
-                    <Route
-                        path={routerPath.admin_signin_url}
-                        element={<SignIn />}
                     />
 
                     {/* 사전등록 */}
@@ -147,6 +133,28 @@ const Router = () => {
                     <Route
                         path={routerPath.web_local_confirmation_url}
                         element={<SignUpIndonesia />}
+                    />
+
+                    {/* 가이드라인 - 인도네시아 */}
+                    {/* URL : /local/guideline */}
+                    <Route
+                        path={routerPath.web_local_guideline_url}
+                        element={<GuidelineIndonesia />}
+                    />
+
+                    {/* -------------------------------admin------------------------------- */}
+                    {/* 메인 */}
+                    {/* URL : /admin */}
+                    <Route
+                        path={routerPath.admin_main_url}
+                        element={<Admin />}
+                    />
+
+                    {/* 로그인 */}
+                    {/* URL : /admin/signin */}
+                    <Route
+                        path={routerPath.admin_signin_url}
+                        element={<SignIn />}
                     />
 
                     {/* 404 */}

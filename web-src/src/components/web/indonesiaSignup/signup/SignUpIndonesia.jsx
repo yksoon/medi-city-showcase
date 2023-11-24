@@ -314,6 +314,7 @@ const SignUpIndonesia = (props) => {
 
     // 사전등록 버튼
     const regEntry = (method) => {
+        console.log(selectedCountry);
         if (validation()) {
             CommonNotify({
                 type: "confirm",
@@ -552,7 +553,7 @@ const SignUpIndonesia = (props) => {
             <div id="container" className="sub_container">
                 <div id="con_area">
                     <div id="leftmenu">
-                        <Link to={routerPath.web_participation_guideline_url}>
+                        <Link to={routerPath.web_local_guideline_url}>
                             Guideline
                         </Link>
                         <Link
@@ -718,7 +719,8 @@ const SignUpIndonesia = (props) => {
                                                         </span>
                                                     )}
                                                 </th>
-                                                <td colSpan={
+                                                <td
+                                                    colSpan={
                                                         isConfirmation ? 0 : 3
                                                     }
                                                 >
@@ -730,7 +732,7 @@ const SignUpIndonesia = (props) => {
                                                             ) =>
                                                                 setSelectedCountry(
                                                                     value
-                                                                        ? value.value
+                                                                        ? value
                                                                         : "",
                                                                 )
                                                             }
@@ -738,6 +740,7 @@ const SignUpIndonesia = (props) => {
                                                                 selectedCountry ??
                                                                 ""
                                                             }
+                                                            mode={"en"}
                                                         />
                                                     ) : (
                                                         <>
@@ -804,7 +807,6 @@ const SignUpIndonesia = (props) => {
                                                         }
                                                     />
                                                 </td>
-
                                             </tr>
                                             <tr>
                                                 <th>
@@ -815,8 +817,8 @@ const SignUpIndonesia = (props) => {
                                                         </span>
                                                     )}
                                                 </th>
-                                                <td 
-                                                     colSpan={
+                                                <td
+                                                    colSpan={
                                                         isConfirmation ? 0 : 3
                                                     }
                                                 >

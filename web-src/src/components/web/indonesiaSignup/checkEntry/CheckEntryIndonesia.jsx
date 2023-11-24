@@ -229,7 +229,7 @@ const CheckEntryIndonesia = () => {
             <div id="container" className="sub_container">
                 <div id="con_area">
                     <div id="leftmenu">
-                        <Link to={routerPath.web_participation_guideline_url}>
+                        <Link to={routerPath.web_local_guideline_url}>
                             Guideline
                         </Link>
                         <Link to={routerPath.web_local_signup_url}>
@@ -247,7 +247,7 @@ const CheckEntryIndonesia = () => {
                     </div>
 
                     <div className="nm_login">
-                      {/*  <h4 className="txt">
+                        {/*  <h4 className="txt">
                             <b>
                                 Please enter the email of the clinic
                                 representative you applied with,
@@ -282,7 +282,8 @@ const CheckEntryIndonesia = () => {
                                     ref={mobile1}
                                     onKeyDown={handleOnKeyPress}
                                     className="input_m"
-                                />&nbsp; - &nbsp;
+                                />
+                                &nbsp; - &nbsp;
                                 <input
                                     type="text"
                                     name=""
@@ -290,7 +291,8 @@ const CheckEntryIndonesia = () => {
                                     ref={mobile2}
                                     onKeyDown={handleOnKeyPress}
                                     className="input_m"
-                                />&nbsp; - &nbsp;
+                                />
+                                &nbsp; - &nbsp;
                                 <input
                                     type="text"
                                     name=""

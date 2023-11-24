@@ -9,6 +9,7 @@ import { countryBankAtom } from "recoils/atoms";
 export default function CountrySelect(props) {
     const onChange = props.onChange;
     const defaultValue = props.defaultValue;
+    const mode = props.mode;
 
     const countryBank = useRecoilValue(countryBankAtom);
 
@@ -27,11 +28,32 @@ export default function CountrySelect(props) {
         for (let i = 0; i < country.length; i++) {
             const value = country[i].code_key.split("-")[0];
             const countryCode = country[i].code_key.split("-")[1];
-            let newObj = {
-                value: value,
-                label: `${country[i].code_value_ko} (${country[i].code_value_en})`,
-                countryCode: countryCode,
-            };
+            let newObj = {};
+            if (mode === "full") {
+                newObj = {
+                    value: value,
+                    label: `${country[i].code_value_ko} (${country[i].code_value_en}) (+${value})`,
+                    countryCode: countryCode,
+                };
+            } else if (mode === "en") {
+                newObj = {
+                    value: value,
+                    label: `${country[i].code_value_en} (+${value})`,
+                    countryCode: countryCode,
+                };
+            } else if (mode === "ko") {
+                newObj = {
+                    value: value,
+                    label: `${country[i].code_value_ko} (+${value})`,
+                    countryCode: countryCode,
+                };
+            } else {
+                newObj = {
+                    value: value,
+                    label: `${country[i].code_value_ko} (${country[i].code_value_en})`,
+                    countryCode: countryCode,
+                };
+            }
 
             options.push(newObj);
         }
@@ -50,6 +72,7 @@ export default function CountrySelect(props) {
                     value={
                         countries.filter((el) => el.value === defaultValue)[0]
                     }
+                    // disableCloseOnSelect
                     // autoHighlight
                     getOptionLabel={(option) => option.label}
                     onChange={(e, newValue) =>
@@ -68,18 +91,20 @@ export default function CountrySelect(props) {
                                 src={`https://flagcdn.com/w20/${option.countryCode.toLowerCase()}.png`}
                                 alt=""
                             />
-                            {option.label} (+{option.value})
+                            {option.label}
                         </Box>
                     )}
                     renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            // label="Choose a country"
-                            inputProps={{
-                                ...params.inputProps,
-                                autoComplete: "new-password", // disable autocomplete and autofill
-                            }}
-                        />
+                        <>
+                            <TextField
+                                {...params}
+                                // label="Choose a country"
+                                inputProps={{
+                                    ...params.inputProps,
+                                    label: "Choose a country", // disable autocomplete and autofill
+                                }}
+                            />
+                        </>
                     )}
                 />
             )}

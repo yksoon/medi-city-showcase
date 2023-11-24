@@ -116,7 +116,11 @@ function MobileNav() {
                                 style={{ display: "block" }}
                             >
                                 <li>
-                                    <Link to="">Guideline</Link>
+                                    <Link
+                                        to={routerPath.web_local_guideline_url}
+                                    >
+                                        Guideline
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link to={routerPath.web_local_signup_url}>

@@ -582,11 +582,10 @@ const RegistrationManageModalMain = (props) => {
                                 {/*/>*/}
                                 <CountrySelect
                                     onChange={(e, value) =>
-                                        setSelectedCountry(
-                                            value ? value.value : "",
-                                        )
+                                        setSelectedCountry(value)
                                     }
                                     defaultValue={selectedCountry}
+                                    mode={"full"}
                                 />
                             </td>
                         </tr>

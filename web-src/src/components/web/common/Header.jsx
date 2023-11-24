@@ -60,7 +60,11 @@ function Header() {
                             <li>
                                 <Link to="">PESERTA PAMERAN</Link>
                                 <div className="submenu">
-                                    <Link to="">Guideline</Link>
+                                    <Link
+                                        to={routerPath.web_local_guideline_url}
+                                    >
+                                        Guideline
+                                    </Link>
                                     <Link to={routerPath.web_local_signup_url}>
                                         Online Sign-up
                                     </Link>

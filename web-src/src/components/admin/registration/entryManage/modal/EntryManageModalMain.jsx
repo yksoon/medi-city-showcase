@@ -373,7 +373,7 @@ const EntryManageModalMain = (props) => {
         let orgItem = entryInfo.filter((el) => el.idx === idx)[0];
 
         orgItem = { ...orgItem };
-        orgItem["inter_phone_number"] = value ? value.value : "";
+        orgItem["inter_phone_number"] = value ? value : "";
 
         newArr = [...newArr, orgItem];
 
@@ -893,18 +893,18 @@ const EntryManageModalMain = (props) => {
                                     {isModData ? (
                                         <CountrySelect
                                             onChange={(e, value) =>
-                                                setSelectedCountry(
-                                                    value ? value.value : "",
-                                                )
+                                                setSelectedCountry(value)
                                             }
-                                            defaultValue={selectedCountry ?? ""}
+                                            defaultValue={selectedCountry}
+                                            mode={"full"}
                                         />
                                     ) : (
                                         <CountrySelect
                                             onChange={(e, value) =>
                                                 setSelectedCountry(value)
                                             }
-                                            defaultValue={"82"}
+                                            defaultValue={selectedCountry}
+                                            mode={"full"}
                                         />
                                     )}
                                 </td>
@@ -1213,6 +1213,7 @@ const EntryManageModalMain = (props) => {
                                             defaultValue={
                                                 item.inter_phone_number ?? "82"
                                             }
+                                            mode={"full"}
                                         />
                                     </td>
                                     <th>휴대전화</th>
