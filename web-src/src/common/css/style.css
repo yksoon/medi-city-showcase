@@ -745,7 +745,7 @@ select {
 	.guideline_indo .boxing .steps li.c02 p  {background-size:130px 130px;}
 	.guideline_indo .boxing .steps li.c03 p  {background-size:130px 130px;}
 	.guideline_indo .boxing .steps li.c04 p  {background-size:130px 130px;}
-	.guideline_indo .boxing .check li {line-height:17px;padding:10px 6px 10px 30px; background:url('../img/sub/check_icon.png') 0 10px no-repeat;
+	.guideline_indo .boxing .check li {line-height:17px;padding:10px 6px 10px 30px; background:url('/public/img/web/sub/check_icon.png') 0 10px no-repeat;
 		font-size: 13px;background-size:20px;word-break: keep-all;
 	}
 	
