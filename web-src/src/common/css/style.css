@@ -380,6 +380,7 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .signup .boxing table tbody tr td .interbox {margin:0 0 10px 0;}
 .signup .boxing table tbody tr td .interbox b{font-weight:600;color:#000;font-size:15px; display:inline-block; width:100%;line-height: 28px;}
 .signup .boxing table tbody tr td .interbox .op_box {padding:8px; background-color: #f4f4f4;font-size:14px;line-height:24px;}
+.signup .boxing table tbody tr td .interbox .op_box > div{width:50%;display:inline-block;}
 
 
 .signup .btn_box {text-align:center;}
@@ -395,6 +396,7 @@ body {min-width:1300px;max-width: 1920px;margin:0 auto;}
 .signup .boxing table tbody tr td .MuiAutocomplete-root {width:270px; display:inline-block;vertical-align: middle;margin-right:7px;}
 .signup .boxing table tbody tr td .css-1xnbq41-MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall{padding:2px 35px 2px 2px;border-radius: 0;}
 .signup .boxing table tbody tr td .MuiAutocomplete-root input {height: 30px;font-size: 14px;;}
+.signup #country-select-demo {border:none;}
 
 
 /* signup confirmation login*/
@@ -795,10 +797,10 @@ select {
 
 	.signup .boxing table tbody tr td .interbox b{font-size:13px; }
 	.signup .boxing table tbody tr td .interbox .op_box{font-size:13px; }
+	.signup .boxing table tbody tr td .interbox .op_box > div{width:100%;display:block;}
 
-	.signup .boxing table tbody tr td .MuiAutocomplete-root {width:200px; display:block;vertical-align: middle;margin:0 0 3px 0;}
 	.signup .boxing table tbody tr td .MuiAutocomplete-root input {height: 30px;}
-	
+	.signup .boxing table tbody tr td .MuiAutocomplete-root {width:200px; display:block;vertical-align: middle;margin:0 0 3px 0;}
 
 
 
@@ -811,6 +813,7 @@ select {
 	.nm_login  .loginbox .inp input.input_n {width:47%;}
 	.nm_login  .loginbox .inp input.input_n:first-child {margin-right:2%;}
 	.nm_login  .loginbox .inp input.input_m {width:27%;}
+	
 
 		
 
