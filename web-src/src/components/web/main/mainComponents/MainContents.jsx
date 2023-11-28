@@ -9,7 +9,7 @@ const MainContents = (props) => {
         <>
             <div id="container">
                 {/*section01*/}
-                <Section01 registrationInfo={registrationInfo} />
+                <Section01 registrationInfo ={registrationInfo} />
 
                 {/*section02*/}
                 <Section02 />

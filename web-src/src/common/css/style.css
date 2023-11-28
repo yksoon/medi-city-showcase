@@ -805,14 +805,14 @@ select {
 
 
 	/* signup aconfirmation login*/
-	.nm_login  .loginbox {width:90%; }
-	.nm_login  .loginbox .inp input {height:50px;font-size:14px; padding-left:15px;}
-	.nm_login  .loginbox input[type="submit"] {height:65px;font-size:18px;}
-	.nm_login  h4{font-size:15px;line-height:25px;}
-	.nm_login  h4 br{display:none;}
-	.nm_login  .loginbox .inp input.input_n {width:47%;}
-	.nm_login  .loginbox .inp input.input_n:first-child {margin-right:2%;}
-	.nm_login  .loginbox .inp input.input_m {width:27%;}
+	.nm_login .loginbox {width:90%; }
+	.nm_login .loginbox .inp input {height:50px;font-size:14px; padding-left:15px;}
+	.nm_login .loginbox input[type="submit"] {height:65px;font-size:18px;}
+	.nm_login h4{font-size:15px;line-height:25px;}
+	.nm_login h4 br{display:none;}
+	.nm_login .loginbox .inp input.input_n {width:47%;}
+	.nm_login .loginbox .inp input.input_n:first-child {margin-right:2%;}
+	.nm_login .loginbox .inp input.input_m {width:27%;}
 	
 
 		
