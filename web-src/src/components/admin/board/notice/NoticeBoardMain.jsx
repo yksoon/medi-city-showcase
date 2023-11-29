@@ -21,7 +21,7 @@ import SearchBar from "components/admin/common/SearchBar";
 
 // ------------------- import End --------------------
 
-const PopupManageMain = (props) => {
+const NoticeManageMain = (props) => {
     const { confirm } = useConfirm();
     const { alert } = useAlert();
     const err = CommonErrModule();
@@ -30,7 +30,7 @@ const PopupManageMain = (props) => {
     const isRefresh = props.isRefresh;
 
     // 리스트
-    const [popupList, setPopupList] = useState([]);
+    const [boardList, setBoardList] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
     const [checkItems, setCheckItems] = useState([]);
 
@@ -48,16 +48,16 @@ const PopupManageMain = (props) => {
     const searchKeyword = useRef(null);
 
     useEffect(() => {
-        getPopupList(1, 10, "");
+        getBoardList(1, 10, "");
     }, [isNeedUpdate, isRefresh]);
 
     // 리스트 가져오기
-    const getPopupList = (pageNum, pageSize, searchKeyword) => {
+    const getBoardList = (pageNum, pageSize, searchKeyword) => {
         setIsSpinner(true);
 
-        // /v1/_popups
+        // /v1/_boards
         // POST
-        const url = apiPath.api_admin_popups;
+        const url = apiPath.api_admin_boards;
         const data = {
             page_num: pageNum,
             page_size: pageSize,
@@ -87,7 +87,7 @@ const PopupManageMain = (props) => {
                 let result_info = res.data.result_info;
                 let page_info = res.data.page_info;
 
-                setPopupList(result_info);
+                setBoardList(result_info);
                 setPageInfo(page_info);
 
                 setIsSpinner(false);
@@ -104,7 +104,7 @@ const PopupManageMain = (props) => {
     const doSearch = () => {
         const keyword = searchKeyword.current.value;
 
-        getPopupList(1, 10, keyword);
+        getBoardList(1, 10, keyword);
     };
 
     // 모달창 닫기
@@ -147,7 +147,7 @@ const PopupManageMain = (props) => {
         if (checked) {
             // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
             const idArray = [];
-            popupList.forEach((el) => idArray.push(el.popup_idx));
+            boardList.forEach((el) => idArray.push(el.board_idx));
             setCheckItems(idArray);
         } else {
             // 전체 선택 해제 시 checkItems 를 빈 배열로 상태 업데이트
@@ -157,14 +157,14 @@ const PopupManageMain = (props) => {
 
     // 페이지네이션 이동
     const handleChange = (e, value) => {
-        getPopupList(value, 10, searchKeyword.current.value);
+        getBoardList(value, 10, searchKeyword.current.value);
     };
     
-    // 팝업 정보 상세
-    const detailPopup = (popup_idx) => {
+    // 공지사항 정보 상세
+    const detailBoard = (board_idx) => {
         setIsSpinner(true);
 
-        const url = apiPath.api_admin_get_popup + popup_idx;
+        const url = apiPath.api_admin_get_board + board_idx;
         const data = {};
 
         // 파라미터
@@ -183,8 +183,7 @@ const PopupManageMain = (props) => {
                 const result_info = res.data.result_info;
                 setModData(result_info);
 
-                // console.log(result_info)
-                modPopup();
+                modBoard();
 
                 setIsSpinner(false);
             } else {
@@ -199,20 +198,15 @@ const PopupManageMain = (props) => {
         };
     };
 
-    // 팝업 등록 모달
-    const regPopup = () => {
-        setModalTitle("팝업정보 등록하기");
+    // 공지사항 등록 모달
+    const regBoard = () => {
+        setModalTitle("공지사항 등록하기");
         setIsOpen(true);
     };
-    // 팝업 등록 모달
-    // const regPopup = () => {
-    //     setModalTitle("팝업정보 등록하기");
-    //     setIsOpen(true);
-    // };
 
-    // 팝업 상세 모달
-    const modPopup = () => {
-        setModalTitle("팝업정보 상세보기");
+    // 공지사항 상세 모달
+    const modBoard = () => {
+        setModalTitle("공지사항 상세보기");
         setIsOpen(true);
     };
 
@@ -229,15 +223,15 @@ const PopupManageMain = (props) => {
                     type: "confirm",
                     hook: confirm,
                     message: "선택된 항목을 삭제 하시겠습니까?",
-                    callback: () => removePopup(),
+                    callback: () => removeBoard(),
                 });
     };
 
-    const removePopup = async () => {
+    const removeBoard = async () => {
         let checkItemsStr = checkItems.join();
         setIsSpinner(true);
 
-        const url = `${apiPath.api_admin_delete_popup}${checkItemsStr}`;
+        const url = `${apiPath.api_admin_remove_board}${checkItemsStr}`;
 
         const restParams = {
             method: "delete",
@@ -283,11 +277,11 @@ const PopupManageMain = (props) => {
     // 컬럼 세팅
     const columns = useMemo(() => [
         {
-            accessorKey: "popup_idx",
+            accessorKey: "board_idx",
             cell: (info) => (
                 <input
                     type="checkbox"
-                    name={`popup_idx_${info.getValue()}`}
+                    name={`board_idx_${info.getValue()}`}
                     id={info.getValue()}
                     value={info.getValue()}
                     onChange={(e) =>
@@ -305,39 +299,25 @@ const PopupManageMain = (props) => {
                     onChange={(e) => handleAllCheck(e.target.checked)}
                     checked={
                         checkItems &&
-                        popupList &&
-                        checkItems.length === popupList.length
+                        boardList &&
+                        checkItems.length === boardList.length
                     }
                 />
             ),
             enableSorting: false,
         },
 
-        columnHelper.accessor((row) => row.title, {
-            id: "title",
+        columnHelper.accessor((row) => row.subject_ko, {
+            id: "subject_ko",
             cell: (info) => info.getValue(),
             header: "제목",
             sortingFn: "alphanumericCaseSensitive",
         }),
 
-        columnHelper.accessor((row) => row.content, {
-            id: "content",
+        columnHelper.accessor((row) => row.content_ko, {
+            id: "content_ko",
             cell: (info) => info.getValue(),
             header: "내용",
-            sortingFn: "alphanumericCaseSensitive",
-        }),
-
-        columnHelper.accessor((row) => row.start_date, {
-            id: "start_date",
-            cell: (info) => info.getValue(),
-            header: "시작일",
-            sortingFn: "alphanumericCaseSensitive",
-        }),
-
-        columnHelper.accessor((row) => row.end_date, {
-            id: "end_date",
-            cell: (info) => info.getValue(),
-            header: "종료일",
             sortingFn: "alphanumericCaseSensitive",
         }),
 
@@ -367,7 +347,7 @@ const PopupManageMain = (props) => {
                 <Link
                     to=""
                     className="tablebtn"
-                    onClick={() => detailPopup(row.popup_idx)}
+                    onClick={() => detailBoard(row.board_idx)}
                 >
                     상세보기
                 </Link>
@@ -381,7 +361,7 @@ const PopupManageMain = (props) => {
         ),
     ]);
 
-    const data = useMemo(() => popupList, [popupList]);
+    const data = useMemo(() => boardList, [boardList]);
 
     const table = useReactTable({
         data,
@@ -398,159 +378,153 @@ const PopupManageMain = (props) => {
         <>
             <div className="content">
                 <div className="title">
-                    <h3>팝업 관리</h3>
+                    <h3>게시판 관리 - 공지사항</h3>
                 </div>
                 <div className="con_area">
                     {/*검색 바*/}
                     <SearchBar
                         searchKeyword={searchKeyword}
                         doSearch={doSearch}
-                        regBoard={regPopup}
+                        regBoard={regBoard}
                         // downloadExcel={downloadExcel}
                         clickRemove={clickRemove}
                     />
                     <div
-                        className="btn_box btn_right"
-                        style={{ margin: 0 }}
+                        style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            marginBottom: "10px",
+                        }}
                     >
+                        총 : <b>&nbsp; {pageInfo && pageInfo.total} &nbsp;</b>{" "}
+                        건
                     </div>
-                </div>
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        marginBottom: "10px",
-                    }}
-                >
-                    총 : <b>&nbsp; {pageInfo && pageInfo.total} &nbsp;</b>{" "}
-                    건
-                </div>
 
-                <div className="adm_table">
-                    <table className="table_a">
-                        <colgroup>
-                            <col width="5%" />
-                            <col width="20%" />
-                            <col width="*" />
-                            <col width="10%" />
-                            <col width="10%" />
-                            <col width="7%" />
-                            <col width="7%" />
-                            <col width="10%" />
-                            <col width="5%" />
-                        </colgroup>
-                        <thead>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <tr key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <th
-                                            key={header.id}
-                                            colSpan={header.colSpan}
-                                        >
-                                            {header.isPlaceholder ? null : (
-                                                <div
-                                                    {...{
-                                                        className:
-                                                            header.column.getCanSort()
-                                                                ? "cursor-pointer select-none table_sort"
-                                                                : "",
-                                                        onClick:
-                                                            header.column.getToggleSortingHandler(),
+                    <div className="adm_table">
+                        <table className="table_a">
+                            <colgroup>
+                                <col width="5%" />
+                                <col width="20%" />
+                                <col width="*" />
+                                <col width="10%" />
+                                <col width="10%" />
+                                <col width="10%" />
+                                <col width="5%" />
+                            </colgroup>
+                            <thead>
+                            {table.getHeaderGroups().map((headerGroup) => (
+                                <tr key={headerGroup.id}>
+                                    {headerGroup.headers.map((header) => {
+                                        return (
+                                            <th
+                                                key={header.id}
+                                                colSpan={header.colSpan}
+                                            >
+                                                {header.isPlaceholder ? null : (
+                                                    <div
+                                                        {...{
+                                                            className:
+                                                                header.column.getCanSort()
+                                                                    ? "cursor-pointer select-none table_sort"
+                                                                    : "",
+                                                            onClick:
+                                                                header.column.getToggleSortingHandler(),
+                                                        }}
+                                                    >
+                                                        {flexRender(
+                                                            header.column
+                                                                .columnDef
+                                                                .header,
+                                                            header.getContext()
+                                                        )}
+                                                        {header.column.getCanSort() &&
+                                                            ({
+                                                                asc: (
+                                                                    <div className="sort_asc">
+                                                                        <ArrowDropUpIcon />
+                                                                        <ArrowDropDownIcon />
+                                                                    </div>
+                                                                ),
+                                                                desc: (
+                                                                    <div className="sort_desc">
+                                                                        <ArrowDropUpIcon />
+                                                                        <ArrowDropDownIcon />
+                                                                    </div>
+                                                                ),
+                                                            }[
+                                                                header.column.getIsSorted()
+                                                                ] ?? (
+                                                                <div>
+                                                                    <ArrowDropUpIcon />
+                                                                    <ArrowDropDownIcon />
+                                                                </div>
+                                                            ))}
+                                                    </div>
+                                                )}
+                                            </th>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+                            </thead>
+                            <tbody>
+                            {boardList.length !== 0 ? (
+                                table.getRowModel().rows.map((row) => (
+                                    <tr key={row.id}>
+                                        {row
+                                            .getVisibleCells()
+                                            .map((cell) => (
+                                                <td key={cell.id} 
+                                                    style={{
+                                                        whiteSpace: 'nowrap',
+                                                        textOverflow: 'ellipsis', // 넘치는 텍스트에 ... 처리
+                                                        overflow: 'hidden', // 넘치는 영역 숨김
+                                                        maxWidth: '200px'
                                                     }}
                                                 >
                                                     {flexRender(
-                                                        header.column
-                                                            .columnDef
-                                                            .header,
-                                                        header.getContext()
+                                                        cell.column
+                                                            .columnDef.cell,
+                                                        cell.getContext()
                                                     )}
-                                                    {header.column.getCanSort() &&
-                                                        ({
-                                                            asc: (
-                                                                <div className="sort_asc">
-                                                                    <ArrowDropUpIcon />
-                                                                    <ArrowDropDownIcon />
-                                                                </div>
-                                                            ),
-                                                            desc: (
-                                                                <div className="sort_desc">
-                                                                    <ArrowDropUpIcon />
-                                                                    <ArrowDropDownIcon />
-                                                                </div>
-                                                            ),
-                                                        }[
-                                                            header.column.getIsSorted()
-                                                            ] ?? (
-                                                            <div>
-                                                                <ArrowDropUpIcon />
-                                                                <ArrowDropDownIcon />
-                                                            </div>
-                                                        ))}
-                                                </div>
-                                            )}
-                                        </th>
-                                    );
-                                })}
-                            </tr>
-                        ))}
-                        </thead>
-                        <tbody>
-                        {popupList.length !== 0 ? (
-                            table.getRowModel().rows.map((row) => (
-                                <tr key={row.id}>
-                                    {row
-                                        .getVisibleCells()
-                                        .map((cell) => (
-                                            <td key={cell.id} 
-                                                style={{
-                                                    whiteSpace: 'nowrap',
-                                                    textOverflow: 'ellipsis', // 넘치는 텍스트에 ... 처리
-                                                    overflow: 'hidden', // 넘치는 영역 숨김
-                                                    maxWidth: '200px'
-                                                }}
-                                            >
-                                                {flexRender(
-                                                    cell.column
-                                                        .columnDef.cell,
-                                                    cell.getContext()
-                                                )}
-                                            </td>
-                                        ))}
-                                </tr>
-                            ))
-                        ) : (
-                            <>
-                                <tr>
-                                    <td
-                                        colSpan="100%"
-                                        style={{ height: "55px" }}
-                                    >
-                                        <b>데이터가 없습니다.</b>
-                                    </td>
-                                </tr>
-                            </>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
-                {Object.keys(pageInfo).length !== 0 && (
-                    <div className="pagenation">
-                        <Pagination
-                            count={pageInfo.pages}
-                            onChange={handleChange}
-                            shape="rounded"
-                            color="primary"
-                        />
+                                                </td>
+                                            ))}
+                                    </tr>
+                                ))
+                            ) : (
+                                <>
+                                    <tr>
+                                        <td
+                                            colSpan="100%"
+                                            style={{ height: "55px" }}
+                                        >
+                                            <b>데이터가 없습니다.</b>
+                                        </td>
+                                    </tr>
+                                </>
+                            )}
+                            </tbody>
+                        </table>
                     </div>
-                )}
+                    {Object.keys(pageInfo).length !== 0 && (
+                        <div className="pagenation">
+                            <Pagination
+                                count={pageInfo.pages}
+                                onChange={handleChange}
+                                shape="rounded"
+                                color="primary"
+                            />
+                        </div>
+                    )}
+
+                </div>
             </div>
             <CommonModal
                 isOpen={isOpen}
                 title={modalTitle}
                 width={"1400"}
                 handleModalClose={handleModalClose}
-                component={"PopupManageModalMain"}
+                component={"NoticeBoardModalMain"}
                 handleNeedUpdate={handleNeedUpdate}
                 modData={modData}
             />
@@ -558,4 +532,4 @@ const PopupManageMain = (props) => {
     );
 };
 
-export default PopupManageMain;
+export default NoticeManageMain;

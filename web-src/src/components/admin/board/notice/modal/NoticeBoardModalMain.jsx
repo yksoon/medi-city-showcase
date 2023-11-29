@@ -7,9 +7,10 @@ import { isSpinnerAtom } from "recoils/atoms";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
-import { popupModel } from "models/popup/popup";
+import { boardModel } from "models/board/board";
+import { boardType } from "common/js/static";
 
-const PopupManageModalMain = (props) => {
+const NoticeBoardModalMain = (props) => {
     const { alert } = useAlert();
     const { confirm } = useConfirm();
     const err = CommonErrModule();
@@ -24,18 +25,9 @@ const PopupManageModalMain = (props) => {
 
     // refs
     const selectShowYn = useRef(null);
-    const popupTitle = useRef(null);
-    const popupContent = useRef(null);
-    const popupWidth = useRef(null);
-    const popupHeight = useRef(null);
-    const popupTop = useRef(null);
-    const popupLeft = useRef(null);
-    const selectScrollYn = useRef(null);
-    const select24HoursYn = useRef(null);
-    const startDate = useRef(null);
-    const startTime = useRef(null);
-    const endDate = useRef(null);
-    const endTime = useRef(null);
+    const inputTitleKo = useRef(null);
+    const inputSubTitleKo = useRef(null);
+    const inputContentKo = useRef(null);
     const inputAttachmentFile = useRef(null);
     
     const fileBaseUrl = apiPath.api_file;
@@ -48,25 +40,16 @@ const PopupManageModalMain = (props) => {
 
     const setDefaultValue = () => {
         selectShowYn.current.value = modData.show_yn;
-        popupTitle.current.value = modData.title ?? "";
-        popupContent.current.value = modData.content ?? "";
-        popupWidth.current.value = modData.size_width;
-        popupHeight.current.value = modData.size_height;
-        popupTop.current.value = modData.position_top;
-        popupLeft.current.value = modData.position_left;
-        selectScrollYn.current.value = modData.option_scroll_yn;
-        select24HoursYn.current.value = modData.option_24_hours_yn;
-        startDate.current.value = modData.start_date.split(' ')[0];
-        startTime.current.value = modData.start_date.split(' ')[1];
-        endDate.current.value = modData.end_date.split(' ')[0];
-        endTime.current.value = modData.end_date.split(' ')[1];
+        inputTitleKo.current.value = modData.subject_ko;
+        inputSubTitleKo.current.value = modData.sub_title_ko;
+        inputContentKo.current.value = modData.content_ko;
         setFileList(modData.file_info);
     };
 
     // 파일 첨부시
     const attachFile = (input) => {
-        // console.log(input.files);
         const maxFileCnt = 1; // 첨부파일 최대 개수
+
         if (isFileImage(input.files)) {
             if (input.files.length > maxFileCnt) {
                 CommonNotify({
@@ -118,42 +101,35 @@ const PopupManageModalMain = (props) => {
         if (validation()) {
             setIsSpinner(true);
 
-            const model = popupModel;
+            const model = boardModel;
             const formData = new FormData();
             let url;
             let data = {};
             let fileArr = [];
-
-            let startDateVal = startTime.current.value ? startDate.current.value + ' ' + startTime.current.value : startDate.current.value + ' 00:00';
-            let endDateVal = endTime.current.value ? endDate.current.value + ' ' + endTime.current.value : endDate.current.value + ' 23:59';
-            let popupIdxVal = method === "mod" ? modData.popup_idx : "";
+            let boardIdxVal = method === "mod" ? modData.board_idx : "";
+            let categoryTypeVal = method === "mod" ? modData.category_type_cd : "";
 
             if (method === "reg") {
-                // /v1/popup
+                // /v1/_board
                 // POST MULTI
-                // 팝업 정보 등록
-                url = apiPath.api_admin_reg_popup;
+                // 게시판 등록
+                url = apiPath.api_admin_reg_board;
             } else if (method === "mod") {
-                // /v1/popup
+                // /v1/board/
                 // PUT MULTI
-                // 팝업 정보 수정
-                url = apiPath.api_admin_mod_popup;
+                // 게시판 수정
+                url = apiPath.api_admin_mod_board;
             }
 
             data = {
                 ...model,
+                boardIdx: boardIdxVal,
                 showYn: selectShowYn.current.value,
-                title: popupTitle.current.value,
-                content: popupContent.current.value,
-                sizeWidth: popupWidth.current.value,
-                sizeHeight: popupHeight.current.value,
-                positionTop: popupTop.current.value,
-                positionLeft: popupLeft.current.value,
-                optionScrollYn: selectScrollYn.current.value,
-                option24HoursYn: select24HoursYn.current.value,
-                startDate: startDateVal,
-                endDate: endDateVal,
-                popupIdx: popupIdxVal,
+                boardType: boardType.notice,
+                categoryType: categoryTypeVal,
+                subjectKo: inputTitleKo.current.value,
+                subTitleKo: inputSubTitleKo.current.value,
+                contentKo: inputContentKo.current.value,
             };
 
             // 기본 formData append
@@ -190,9 +166,9 @@ const PopupManageModalMain = (props) => {
                         hook: alert,
                         message:
                             method === "reg"
-                                ? "팝업 등록이 완료 되었습니다"
+                                ? "게시글 등록이 완료 되었습니다"
                                 : method === "mod"
-                                ? "팝업 수정이 완료 되었습니다"
+                                ? "게시글 수정이 완료 되었습니다"
                                 : "",
                         callback: () => handleNeedUpdate(),
                     });
@@ -215,7 +191,7 @@ const PopupManageModalMain = (props) => {
         CommonNotify({
             type: "confirm",
             hook: confirm,
-            message: "팝업을 삭제 하시겠습니까?",
+            message: "게시글을 삭제 하시겠습니까?",
             callback: () => removeBoard(),
         });
     };
@@ -224,10 +200,10 @@ const PopupManageModalMain = (props) => {
     const removeBoard = () => {
         setIsSpinner(true);
 
-        // /v1/popup/{popup_idx}
+        // /v1/board/{board_idx}
         // DELETE
-        // 팝업 정보 삭제
-        let url = apiPath.api_admin_delete_popup + modData.popup_idx;
+        // 게시판 삭제
+        let url = apiPath.api_admin_remove_board + modData.board_idx;
 
         let data = {};
 
@@ -250,7 +226,7 @@ const PopupManageModalMain = (props) => {
                 CommonNotify({
                     type: "alert",
                     hook: alert,
-                    message: "팝업이 삭제 되었습니다.",
+                    message: "게시글이 삭제 되었습니다.",
                     callback: () => handleNeedUpdate(),
                 });
             } else {
@@ -280,26 +256,14 @@ const PopupManageModalMain = (props) => {
             };
         };
 
-        if (!popupTitle.current.value) {
-            noti(popupTitle, "제목을 입력해주세요");
+        if (!inputTitleKo.current.value) {
+            noti(inputTitleKo, "제목을 입력해주세요");
 
             return false;
         }
 
-        if (!popupContent.current.value && inputAttachmentFile.current.files.length === 0) {
-            noti(popupContent, "내용을 입력해주세요");
-
-            return false;
-        }
-
-        if (!startDate.current.value) {
-            noti(startDate, "시작일을 입력해주세요");
-
-            return false;
-        }
-
-        if (!endDate.current.value) {
-            noti(endDate, "종료일을 입력해주세요");
+        if (!inputContentKo.current.value && inputAttachmentFile.current.files.length === 0) {
+            noti(inputContentKo, "내용을 입력해주세요");
 
             return false;
         }
@@ -323,7 +287,7 @@ const PopupManageModalMain = (props) => {
                                 노출여부
                             </th>
                             <td colSpan="3">
-                                <select class="wp100" ref={selectShowYn}>
+                                <select className="wp100" ref={selectShowYn}>
                                     <option value="Y">노출</option>
                                     <option value="N">비노출</option>
                                 </select>
@@ -337,7 +301,17 @@ const PopupManageModalMain = (props) => {
                                 <input
                                     type="text"
                                     className="input wp100"
-                                    ref={popupTitle}
+                                    ref={inputTitleKo}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>부제목</th>
+                            <td colSpan="3">
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={inputSubTitleKo}
                                 />
                             </td>
                         </tr>
@@ -347,22 +321,20 @@ const PopupManageModalMain = (props) => {
                             </th>
                             <td colSpan="3">
                                 <textarea
-                                    class="textarea_basic"
-                                    ref={popupContent}
+                                    className="textarea_basic"
+                                    ref={inputContentKo}
                                 ></textarea>
                             </td>
                         </tr>
                         <tr>
                             <th>파일</th>
                             <td colSpan="3" className="fileicon">
-                                {/* 현재 파일 1개만 업로드 가능하기 때문에 안내문구가 적절하지 않아 주석처리함 */}
-                                {/* <div style={{ marginBottom: 5, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div style={{ marginBottom: 5, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <b>
                                         여러 파일 선택이 가능합니다. 여러 파일 선택
                                         시 ctrl 누른 후 선택하시면 됩니다.
                                     </b>
-                                    
-                                </div> */}
+                                </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <input
                                         type="file"
@@ -371,12 +343,12 @@ const PopupManageModalMain = (props) => {
                                         accept="image/*"
                                         onChange={(e) => attachFile(e.target)}
                                     />
-                                    <Link
+                                    {/* <Link
                                         className="subbtn off"
                                         onClick={resetFileList}
                                     >
                                         초기화
-                                    </Link>
+                                    </Link> */}
                                 </div>
                                 <div>
                                     {fileList.length !== 0 &&
@@ -392,102 +364,8 @@ const PopupManageModalMain = (props) => {
                                                     {item.file_name}
                                                 </Link>
                                             </div>
-                                    ))}
+                                        ))}
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>팝업 너비</th>
-                            <td>
-                                <input
-                                    type="text"
-                                    className="input wp100"
-                                    ref={popupWidth}
-                                />
-                            </td>
-                            <th>팝업 높이</th>
-                            <td>
-                                <input
-                                    type="text"
-                                    className="input wp100"
-                                    ref={popupHeight}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>팝업 Top</th>
-                            <td>
-                                <input
-                                    type="text"
-                                    className="input wp100"
-                                    ref={popupTop}
-                                />
-                            </td>
-                            <th>팝업 Left</th>
-                            <td>
-                                <input
-                                    type="text"
-                                    className="input wp100"
-                                    ref={popupLeft}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>스크롤 사용</th>
-                            <td colSpan="3">
-                                <select class="wp100" ref={selectScrollYn}>
-                                    <option value="N">사용안함</option>
-                                    <option value="Y">사용함</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>24시간동안 띄우지 않기</th>
-                            <td colSpan="3">
-                                <select class="wp100" ref={select24HoursYn}>
-                                    <option value="N">사용안함</option>
-                                    <option value="Y">사용함</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                시작일 <span className="red">*</span>
-                            </th>
-                            <td>
-                                <input
-                                    type="date"
-                                    className="input w140"
-                                    ref={startDate}
-                                />
-                            </td>
-                            <th>시작시간</th>
-                            <td>
-                                <input
-                                    type="time"
-                                    className="input w140"
-                                    ref={startTime}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                종료일 <span className="red">*</span>
-                            </th>
-                            <td>
-                                <input
-                                    type="date"
-                                    className="input w140"
-                                    ref={endDate}
-                                />
-                            </td>
-                            <th>종료시간</th>
-                            <td>
-                                <input
-                                    type="time"
-                                    className="input w140"
-                                    ref={endTime}
-                                />
                             </td>
                         </tr>
                         
@@ -500,17 +378,6 @@ const PopupManageModalMain = (props) => {
                                 <tr>
                                     <th>등록일</th>
                                     <td colSpan="3">{ modData.reg_dttm }</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        View Content
-                                    </th>
-                                    <td colSpan="3" style={{maxWidth: '24vw', overflow: 'hidden'}}>
-                                        <div dangerouslySetInnerHTML={{ __html: modData.view_content }}></div>
-                                        <div>
-                                            { fileList.length !== 0 && fileList.map((file) => <img src={`${fileBaseUrl + file.file_path_enc}`} alt={file.file_name} key={file.file_idx} style={{width: '100%', height: 'auto'}} />)}
-                                        </div>
-                                    </td>
                                 </tr>
                             </>
                         )}
@@ -557,4 +424,4 @@ const PopupManageModalMain = (props) => {
     );
 };
 
-export default PopupManageModalMain;
+export default NoticeBoardModalMain;

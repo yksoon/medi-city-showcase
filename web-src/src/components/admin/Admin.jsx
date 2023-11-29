@@ -17,7 +17,7 @@ import EntryManageMain from "components/admin/registration/entryManage/EntryMana
 import PopupManageMain from "components/admin/popupManage/PopupManageMain";
 import PhotoBoardMain from "components/admin/board/photoBoard/PhotoBoardMain";
 import ArtistManageMain from "components/admin/gallery/artist/ArtistManageMain";
-import NoticeMain from "components/admin/board/notice/NoticeMain";
+import NoticeBoardMain from "components/admin/board/notice/NoticeBoardMain";
 import VideoBoardMain from "components/admin/board/videoBoard/VideoBoardMain";
 import GalleryMain from "components/admin/gallery/gallery/GalleryMain";
 
@@ -30,22 +30,11 @@ const Admin = () => {
 
     const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
     const userInfoAdmin = useRecoilValue(userInfoAdminAtom);
-    // const userInfoAdmin = useSelector(
-    //     (state) => state.userInfoAdmin.userInfoAdmin
-    // );
-    // const userTokenAdmin = useSelector(
-    //     (state) => state.userInfoAdmin.userTokenAdmin
-    // );
+
     // recoil
     const [page, setPage] = useRecoilState(pageAtom);
 
     const [menuList, setMenuList] = useState([]);
-
-    // (() => {
-    //     if (!userInfo) {
-    //         navigate(routerPath.login_url);
-    //     }
-    // })();
 
     useEffect(() => {
         if (!userTokenAdmin) {
@@ -79,12 +68,6 @@ const Admin = () => {
             let resData = [];
 
             if (result_code === successCode.success) {
-                // dispatch(
-                //     set_spinner({
-                //         isLoading: false,
-                //     })
-                // );
-
                 resData = res.data.result_info;
 
                 createMenuList(resData);
@@ -97,8 +80,6 @@ const Admin = () => {
         let depth1 = [];
         let depth2 = [];
         let depth3 = [];
-
-        // console.log(menuData);
 
         menuData.map((item) => {
             let menuOnce = {};
@@ -152,15 +133,8 @@ const Admin = () => {
             return item1;
         });
 
-        // console.log(depth1);
         menuArr = depth1;
         setMenuList(menuArr);
-
-        // dispatch(
-        //     set_spinner({
-        //         isLoading: false,
-        //     })
-        // );
     };
 
     const switchPage = (page) => {
@@ -197,7 +171,7 @@ const Admin = () => {
 
             // 게시판관리 - 공지사항
             case "noticeBoard":
-                return <NoticeMain isRefresh={isRefresh} />;
+                return <NoticeBoardMain isRefresh={isRefresh} />;
 
             // 게시판관리 - 영상갤러리
             case "movieBoard":

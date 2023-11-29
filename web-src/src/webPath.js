@@ -220,18 +220,18 @@ const apiPath = {
     // POST
     // 게시판 목록
     api_admin_boards: `${base_api_url + slash + version + slash}_boards`,
-
-    // /v1/_board
-    // POST MULTI
-    // 게시판 등록
-    api_admin_board: `${base_api_url + slash + version + slash}_board`,
-
+    
     // /v1/board/{board_idx}
     // GET
     // 게시판 상세
     api_admin_get_board: `${
         base_api_url + slash + version + slash
     }board${slash}`,
+
+    // /v1/_board
+    // POST MULTI
+    // 게시판 등록
+    api_admin_reg_board: `${base_api_url + slash + version + slash}_board`,
 
     // /v1/board/
     // PUT MULTI
@@ -259,7 +259,7 @@ const apiPath = {
 
     // /v1/_comment
     // PUT MULTI
-    // 문의 답변 등록
+    // 문의 답변 수정
     api_admin_mod_comment: `${base_api_url + slash + version + slash}_comment`,
 
     // ------------------ Registration Management API 사전등록 관리 API ------------------
