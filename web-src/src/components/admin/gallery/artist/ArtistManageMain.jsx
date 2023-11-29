@@ -52,6 +52,11 @@ const ArtistManageMain = (props) => {
     // 검색 키워드
     const searchKeyword = useRef(null);
 
+    // qr모달
+    const [isOpenQr, setIsOpenQr] = useState(false);
+    const [modalTitleQr, setModalTitleQr] = useState("");
+    const [modDataQr, setModDataQr] = useState({});
+
     useEffect(() => {
         getBoardList(1, 10, "");
     }, [isNeedUpdate, isRefresh]);
@@ -162,9 +167,7 @@ const ArtistManageMain = (props) => {
             // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
             const idArray = [];
             // boardList.forEach((el) => idArray.push(el.institution_idx));
-            boardList.forEach((el) =>
-                idArray.push(`${el.registration_idx}-${el.institution_idx}`),
-            );
+            boardList.forEach((el) => idArray.push(el.people_idx));
 
             setCheckItems(idArray);
         } else {
@@ -197,8 +200,53 @@ const ArtistManageMain = (props) => {
                   type: "confirm",
                   hook: confirm,
                   message: "선택된 항목을 삭제 하시겠습니까?",
-                  // callback: () => removeBoard(),
+                  callback: () => removeBoard(),
               });
+    };
+
+    const removeBoard = async () => {
+        let checkItemsStr = checkItems.join();
+        setIsSpinner(true);
+
+        const url = `${apiPath.api_admin_remove_people}${checkItemsStr}`;
+
+        const restParams = {
+            method: "delete",
+            url: url,
+            data: {},
+            err: err,
+            admin: "Y",
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            const result_code = res.headers.result_code;
+            if (result_code === successCode.success) {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "삭제가 완료 되었습니다",
+                    callback: () => pageUpdate(),
+                });
+            } else {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "잠시 후 다시 시도해주세요",
+                });
+            }
+
+            const pageUpdate = () => {
+                setCheckItems([]);
+                handleNeedUpdate();
+            };
+        };
     };
 
     // 수정
@@ -245,6 +293,52 @@ const ArtistManageMain = (props) => {
                 });
             }
         };
+    };
+
+    const qrModalHandler = () => {
+        setIsSpinner(true);
+
+        const url = apiPath.api_admin_get_qrcodes;
+        const data = {
+            qr_type: "000", // 인물정보 : 000
+        };
+
+        // 파라미터
+        const restParams = {
+            method: "post",
+            url: url,
+            data: data,
+            err: err,
+            admin: "Y",
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            if (res.headers.result_code === successCode.success) {
+                const result_info = res.data.result_info;
+                setModDataQr(result_info);
+
+                console.log(res);
+                modBoardQr();
+
+                setIsSpinner(false);
+            } else {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: res.headers.result_message_ko,
+                });
+            }
+        };
+    };
+
+    const modBoardQr = () => {
+        setModalTitleQr("QR-CODE LIST");
+        setIsOpenQr(true);
     };
     // --------------------------------- 테이블 세팅 -------------------------------------
 
@@ -392,7 +486,26 @@ const ArtistManageMain = (props) => {
                     />
 
                     <div
+                        className="sub_search_bar"
                         style={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            marginBottom: "10px",
+                        }}
+                    >
+                        <Link
+                            to=""
+                            className="subbtn on"
+                            onClick={qrModalHandler}
+                        >
+                            전체 QR 리스트
+                        </Link>
+                    </div>
+
+                    <div
+                        style={{
+                            width: "100%",
                             display: "flex",
                             justifyContent: "flex-end",
                             marginBottom: "10px",
@@ -521,6 +634,15 @@ const ArtistManageMain = (props) => {
                 component={"ArtistManageModalMain"}
                 handleNeedUpdate={handleNeedUpdate}
                 modData={modData}
+            />
+            <CommonModal
+                isOpen={isOpenQr}
+                title={modalTitleQr}
+                width={"1400"}
+                handleModalClose={handleModalClose}
+                component={"QrListModalMain"}
+                handleNeedUpdate={handleNeedUpdate}
+                modData={modDataQr}
             />
         </>
     );
