@@ -85,8 +85,12 @@ const routerPath = {
     web_local_confirmation_url: `${base_url}local/confirmation`,
 
     // 가이드라인 - 인도네시아
-    // /participation/guideline
+    // /local/guideline
     web_local_guideline_url: `${base_url}local/guideline`,
+
+    // 방명록
+    // /guest_book
+    web_guest_book_url: `${base_url}guest_book`,
 
     // ---------------------- admin -------------------------
     // 메인
@@ -357,34 +361,39 @@ const apiPath = {
     }popup${slash}`,
 
     // ------------------ People Management API 인물 관리 API ------------------
-    // /v1/_mapper/peoples
+    // /v1/peoples
     // POST
     // 아티스트 리스트
     api_admin_list_people: `${base_api_url + slash + version + slash}_peoples`,
 
-    // /v1/_mapper/people/{people_idx}/
+    // /v1/people/{people_idx}/
     // GET
     // 아티스트 상세
     api_admin_detail_people: `${
         base_api_url + slash + version + slash
     }_people${slash}`,
 
-    // /v1/_mapper/people/{people_idx}/
+    // /v1/people/{people_idx}/
     // DELETE
     // 아티스트 삭제
     api_admin_remove_people: `${
         base_api_url + slash + version + slash
     }people${slash}`,
 
-    // /v1/mapper/people
+    // /v1/people
     // POST
     // 아티스트 등록
     api_admin_add_people: `${base_api_url + slash + version + slash}people`,
 
-    // /v1/mapper/people
+    // /v1/people
     // PUT
     // 아티스트 수정
     api_admin_mod_people: `${base_api_url + slash + version + slash}people`,
+
+    // /v1/qrcodes
+    // POST
+    // QR코드 리스트
+    api_admin_get_qrcodes: `${base_api_url + slash + version + slash}qrcodes`,
 };
 
 export { routerPath, apiPath };

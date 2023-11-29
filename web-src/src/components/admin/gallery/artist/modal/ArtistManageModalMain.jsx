@@ -517,6 +517,7 @@ const ArtistManageModalMain = (props) => {
             mobile2: mobile2.current.value,
             mobile3: mobile3.current.value,
             gender: gender.current.value,
+            peopleIdx: method === "mod" ? modData.people_idx : "",
         };
 
         // 기본 formData append
@@ -531,25 +532,9 @@ const ArtistManageModalMain = (props) => {
             formData.append("attachmentFile", fileArr[i]);
         }
 
-        thumbArr = Array.from(inputThumbFile.current.files);
-        let thumbLen = thumbArr.length;
-        for (let i = 0; i < thumbLen; i++) {
-            imageCompression(thumbArr[i], imageResizeOptions)
-                .then(function (compressedFile) {
-                    return formData.append(
-                        "attachmentThumbnail",
-                        compressedFile,
-                    ); // write your own logic
-                })
-                .catch(function (error) {
-                    console.log(error.message);
-                });
-            // formData.append("attachmentThumbnail", thumbArr[i]);
-        }
-
         // 프로필 formData append
         state.selectedProfile.forEach((item, idx) => {
-            if (item.profileContent) {
+            if (item.profileContentKo || item.profileContentEn) {
                 formData.append(
                     `profileInfo[${idx}].profileType`,
                     item.profileType,
@@ -579,7 +564,33 @@ const ArtistManageModalMain = (props) => {
             callback: (res) => responseLogic(res),
         };
 
-        CommonRest(restParams);
+        if (inputThumbFile.current.files.length !== 0) {
+            thumbArr = Array.from(inputThumbFile.current.files);
+            let thumbLen = thumbArr.length;
+            for (let i = 0; i < thumbLen; i++) {
+                imageCompression(thumbArr[i], imageResizeOptions)
+                    .then(function (compressedFile) {
+                        const resizingFile = new File(
+                            [compressedFile],
+                            thumbArr[i].name,
+                            { type: thumbArr[i].type },
+                        );
+                        return addFormData(resizingFile);
+                    })
+                    .catch(function (error) {
+                        console.log(error.message);
+                    });
+                // formData.append("attachmentThumbnail", thumbArr[i]);
+            }
+
+            const addFormData = (compressedFile) => {
+                formData.append("attachmentThumbnail", compressedFile); // write your own logic
+
+                CommonRest(restParams);
+            };
+        } else {
+            CommonRest(restParams);
+        }
 
         const responseLogic = (res) => {
             let result_code = res.headers.result_code;
@@ -852,9 +863,7 @@ const ArtistManageModalMain = (props) => {
                                                                 profileTypeItem.code_key
                                                             }
                                                         >
-                                                            {
-                                                                profileTypeItem.code_value_ko
-                                                            }
+                                                            {`${profileTypeItem.code_value_ko} (${profileTypeItem.code_value_en})`}
                                                         </option>
                                                     ),
                                                 )}

@@ -20,6 +20,7 @@ import MainPopupModal from "components/web/main/mainComponents/mainContentsCompo
 import SignUpIndonesia from "components/web/indonesiaSignup/signup/SignUpIndonesia";
 import CheckEntryIndonesia from "components/web/indonesiaSignup/checkEntry/CheckEntryIndonesia";
 import GuidelineIndonesia from "components/web/indonesiaSignup/guideline/GuidelineIndonesia";
+import GuestBookMain from "components/web/guestBook/GuestBookMain";
 
 // Router
 const Router = () => {
@@ -140,6 +141,13 @@ const Router = () => {
                     <Route
                         path={routerPath.web_local_guideline_url}
                         element={<GuidelineIndonesia />}
+                    />
+
+                    {/* 방명록 */}
+                    {/* URL : /guest_book */}
+                    <Route
+                        path={routerPath.web_guest_book_url}
+                        element={<GuestBookMain />}
                     />
 
                     {/* -------------------------------admin------------------------------- */}
