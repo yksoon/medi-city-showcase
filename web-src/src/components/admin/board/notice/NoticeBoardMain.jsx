@@ -17,6 +17,7 @@ import {
 import { Pagination } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import SearchBar from "components/admin/common/SearchBar";
 
 // ------------------- import End --------------------
 
@@ -125,6 +126,7 @@ const NoticeManageMain = (props) => {
     // 리스트 새로고침
     const handleNeedUpdate = () => {
         setModalTitle("");
+        setModData({});
         setIsOpen(false);
         setIsNeedUpdate(!isNeedUpdate);
     };
@@ -379,35 +381,14 @@ const NoticeManageMain = (props) => {
                     <h3>게시판 관리 - 공지사항</h3>
                 </div>
                 <div className="con_area">
-                    <div className="adm_search">
-                        <div>
-                            <input
-                                type="text"
-                                className="input"
-                                ref={searchKeyword}
-                            />
-                            <Link to="" className="subbtn off" onClick={doSearch}>검색</Link>
-                        </div>
-                        <div
-                            className="btn_box btn_right"
-                            style={{ margin: 0 }}
-                        >
-                            <Link
-                                to=""
-                                className="subbtn on"
-                                onClick={regBoard}
-                            >
-                                등록
-                            </Link>
-                            <Link
-                                to=""
-                                className="subbtn del"
-                                onClick={clickRemove}
-                            >
-                                삭제
-                            </Link>
-                        </div>
-                    </div>
+                    {/*검색 바*/}
+                    <SearchBar
+                        searchKeyword={searchKeyword}
+                        doSearch={doSearch}
+                        regBoard={regBoard}
+                        // downloadExcel={downloadExcel}
+                        clickRemove={clickRemove}
+                    />
                     <div
                         style={{
                             display: "flex",
@@ -543,7 +524,7 @@ const NoticeManageMain = (props) => {
                 title={modalTitle}
                 width={"1400"}
                 handleModalClose={handleModalClose}
-                component={"NoticeModalMain"}
+                component={"NoticeBoardModalMain"}
                 handleNeedUpdate={handleNeedUpdate}
                 modData={modData}
             />

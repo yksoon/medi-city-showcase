@@ -392,7 +392,7 @@ const PopupManageModalMain = (props) => {
                                                     {item.file_name}
                                                 </Link>
                                             </div>
-                                        ))}
+                                    ))}
                                 </div>
                             </td>
                         </tr>

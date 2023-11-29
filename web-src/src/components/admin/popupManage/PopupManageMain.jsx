@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
 import { CommonConsole, CommonErrModule, CommonModal, CommonNotify, CommonRest } from "common/js/Common";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
@@ -17,6 +17,7 @@ import {
 import { Pagination } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import SearchBar from "components/admin/common/SearchBar";
 
 // ------------------- import End --------------------
 
@@ -125,6 +126,7 @@ const PopupManageMain = (props) => {
     // 리스트 새로고침
     const handleNeedUpdate = () => {
         setModalTitle("");
+        setModData({});
         setIsOpen(false);
         setIsNeedUpdate(!isNeedUpdate);
     };
@@ -202,6 +204,11 @@ const PopupManageMain = (props) => {
         setModalTitle("팝업정보 등록하기");
         setIsOpen(true);
     };
+    // 팝업 등록 모달
+    // const regPopup = () => {
+    //     setModalTitle("팝업정보 등록하기");
+    //     setIsOpen(true);
+    // };
 
     // 팝업 상세 모달
     const modPopup = () => {
@@ -394,177 +401,149 @@ const PopupManageMain = (props) => {
                     <h3>팝업 관리</h3>
                 </div>
                 <div className="con_area">
-                    <div className="adm_search">
-                        <div>
-                            <input
-                                type="text"
-                                className="input"
-                                ref={searchKeyword}
-                            />
-                            <Link to="" className="subbtn off" onClick={doSearch}>검색</Link>
-                        </div>
-                        <div
-                            className="btn_box btn_right"
-                            style={{ margin: 0 }}
-                        >
-                            <Link
-                                to=""
-                                className="subbtn on"
-                                onClick={regPopup}
-                            >
-                                팝업 등록
-                            </Link>
-                            <Link
-                                to=""
-                                className="subbtn del"
-                                onClick={clickRemove}
-                            >
-                                삭제
-                            </Link>
-                            {/*<Link className="btn btn01" onClick={downloadExcel} to="">*/}
-                            {/*    엑셀 다운로드*/}
-                            {/*</Link>*/}
-                            {/*{userInfoAdmin.user_role_cd === "000" && (*/}
-                            {/*    <Link*/}
-                            {/*        className="btn btn02"*/}
-                            {/*        onClick={removeBoard}*/}
-                            {/*     to="">*/}
-                            {/*        삭제*/}
-                            {/*    </Link>*/}
-                            {/*)}*/}
-                        </div>
-                    </div>
+                    {/*검색 바*/}
+                    <SearchBar
+                        searchKeyword={searchKeyword}
+                        doSearch={doSearch}
+                        regBoard={regPopup}
+                        // downloadExcel={downloadExcel}
+                        clickRemove={clickRemove}
+                    />
                     <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            marginBottom: "10px",
-                        }}
+                        className="btn_box btn_right"
+                        style={{ margin: 0 }}
                     >
-                        총 : <b>&nbsp; {pageInfo && pageInfo.total} &nbsp;</b>{" "}
-                        건
                     </div>
+                </div>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        marginBottom: "10px",
+                    }}
+                >
+                    총 : <b>&nbsp; {pageInfo && pageInfo.total} &nbsp;</b>{" "}
+                    건
+                </div>
 
-                    <div className="adm_table">
-                        <table className="table_a">
-                            <colgroup>
-                                <col width="5%" />
-                                <col width="20%" />
-                                <col width="*" />
-                                <col width="10%" />
-                                <col width="10%" />
-                                <col width="7%" />
-                                <col width="7%" />
-                                <col width="10%" />
-                                <col width="5%" />
-                            </colgroup>
-                            <thead>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <tr key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => {
-                                        return (
-                                            <th
-                                                key={header.id}
-                                                colSpan={header.colSpan}
-                                            >
-                                                {header.isPlaceholder ? null : (
-                                                    <div
-                                                        {...{
-                                                            className:
-                                                                header.column.getCanSort()
-                                                                    ? "cursor-pointer select-none table_sort"
-                                                                    : "",
-                                                            onClick:
-                                                                header.column.getToggleSortingHandler(),
-                                                        }}
-                                                    >
-                                                        {flexRender(
-                                                            header.column
-                                                                .columnDef
-                                                                .header,
-                                                            header.getContext()
-                                                        )}
-                                                        {header.column.getCanSort() &&
-                                                            ({
-                                                                asc: (
-                                                                    <div className="sort_asc">
-                                                                        <ArrowDropUpIcon />
-                                                                        <ArrowDropDownIcon />
-                                                                    </div>
-                                                                ),
-                                                                desc: (
-                                                                    <div className="sort_desc">
-                                                                        <ArrowDropUpIcon />
-                                                                        <ArrowDropDownIcon />
-                                                                    </div>
-                                                                ),
-                                                            }[
-                                                                header.column.getIsSorted()
-                                                                ] ?? (
-                                                                <div>
-                                                                    <ArrowDropUpIcon />
-                                                                    <ArrowDropDownIcon />
-                                                                </div>
-                                                            ))}
-                                                    </div>
-                                                )}
-                                            </th>
-                                        );
-                                    })}
-                                </tr>
-                            ))}
-                            </thead>
-                            <tbody>
-                            {popupList.length !== 0 ? (
-                                table.getRowModel().rows.map((row) => (
-                                    <tr key={row.id}>
-                                        {row
-                                            .getVisibleCells()
-                                            .map((cell) => (
-                                                <td key={cell.id} 
-                                                    style={{
-                                                        whiteSpace: 'nowrap',
-                                                        textOverflow: 'ellipsis', // 넘치는 텍스트에 ... 처리
-                                                        overflow: 'hidden', // 넘치는 영역 숨김
-                                                        maxWidth: '200px'
+                <div className="adm_table">
+                    <table className="table_a">
+                        <colgroup>
+                            <col width="5%" />
+                            <col width="20%" />
+                            <col width="*" />
+                            <col width="10%" />
+                            <col width="10%" />
+                            <col width="7%" />
+                            <col width="7%" />
+                            <col width="10%" />
+                            <col width="5%" />
+                        </colgroup>
+                        <thead>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <tr key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => {
+                                    return (
+                                        <th
+                                            key={header.id}
+                                            colSpan={header.colSpan}
+                                        >
+                                            {header.isPlaceholder ? null : (
+                                                <div
+                                                    {...{
+                                                        className:
+                                                            header.column.getCanSort()
+                                                                ? "cursor-pointer select-none table_sort"
+                                                                : "",
+                                                        onClick:
+                                                            header.column.getToggleSortingHandler(),
                                                     }}
                                                 >
                                                     {flexRender(
-                                                        cell.column
-                                                            .columnDef.cell,
-                                                        cell.getContext()
+                                                        header.column
+                                                            .columnDef
+                                                            .header,
+                                                        header.getContext()
                                                     )}
-                                                </td>
-                                            ))}
-                                    </tr>
-                                ))
-                            ) : (
-                                <>
-                                    <tr>
-                                        <td
-                                            colSpan="100%"
-                                            style={{ height: "55px" }}
-                                        >
-                                            <b>데이터가 없습니다.</b>
-                                        </td>
-                                    </tr>
-                                </>
-                            )}
-                            </tbody>
-                        </table>
-                    </div>
-                    {Object.keys(pageInfo).length !== 0 && (
-                        <div className="pagenation">
-                            <Pagination
-                                count={pageInfo.pages}
-                                onChange={handleChange}
-                                shape="rounded"
-                                color="primary"
-                            />
-                        </div>
-                    )}
-
+                                                    {header.column.getCanSort() &&
+                                                        ({
+                                                            asc: (
+                                                                <div className="sort_asc">
+                                                                    <ArrowDropUpIcon />
+                                                                    <ArrowDropDownIcon />
+                                                                </div>
+                                                            ),
+                                                            desc: (
+                                                                <div className="sort_desc">
+                                                                    <ArrowDropUpIcon />
+                                                                    <ArrowDropDownIcon />
+                                                                </div>
+                                                            ),
+                                                        }[
+                                                            header.column.getIsSorted()
+                                                            ] ?? (
+                                                            <div>
+                                                                <ArrowDropUpIcon />
+                                                                <ArrowDropDownIcon />
+                                                            </div>
+                                                        ))}
+                                                </div>
+                                            )}
+                                        </th>
+                                    );
+                                })}
+                            </tr>
+                        ))}
+                        </thead>
+                        <tbody>
+                        {popupList.length !== 0 ? (
+                            table.getRowModel().rows.map((row) => (
+                                <tr key={row.id}>
+                                    {row
+                                        .getVisibleCells()
+                                        .map((cell) => (
+                                            <td key={cell.id} 
+                                                style={{
+                                                    whiteSpace: 'nowrap',
+                                                    textOverflow: 'ellipsis', // 넘치는 텍스트에 ... 처리
+                                                    overflow: 'hidden', // 넘치는 영역 숨김
+                                                    maxWidth: '200px'
+                                                }}
+                                            >
+                                                {flexRender(
+                                                    cell.column
+                                                        .columnDef.cell,
+                                                    cell.getContext()
+                                                )}
+                                            </td>
+                                        ))}
+                                </tr>
+                            ))
+                        ) : (
+                            <>
+                                <tr>
+                                    <td
+                                        colSpan="100%"
+                                        style={{ height: "55px" }}
+                                    >
+                                        <b>데이터가 없습니다.</b>
+                                    </td>
+                                </tr>
+                            </>
+                        )}
+                        </tbody>
+                    </table>
                 </div>
+                {Object.keys(pageInfo).length !== 0 && (
+                    <div className="pagenation">
+                        <Pagination
+                            count={pageInfo.pages}
+                            onChange={handleChange}
+                            shape="rounded"
+                            color="primary"
+                        />
+                    </div>
+                )}
             </div>
             <CommonModal
                 isOpen={isOpen}
