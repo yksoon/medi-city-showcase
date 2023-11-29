@@ -360,16 +360,31 @@ const apiPath = {
     // /v1/_mapper/peoples
     // POST
     // 아티스트 리스트
-    api_admin_list_people: `${
-        base_api_url + slash + version + slash
-    }_mapper/peoples`,
+    api_admin_list_people: `${base_api_url + slash + version + slash}_peoples`,
 
     // /v1/_mapper/people/{people_idx}/
     // GET
     // 아티스트 상세
     api_admin_detail_people: `${
         base_api_url + slash + version + slash
-    }_mapper/people${slash}`,
+    }_people${slash}`,
+
+    // /v1/_mapper/people/{people_idx}/
+    // DELETE
+    // 아티스트 삭제
+    api_admin_remove_people: `${
+        base_api_url + slash + version + slash
+    }people${slash}`,
+
+    // /v1/mapper/people
+    // POST
+    // 아티스트 등록
+    api_admin_add_people: `${base_api_url + slash + version + slash}people`,
+
+    // /v1/mapper/people
+    // PUT
+    // 아티스트 수정
+    api_admin_mod_people: `${base_api_url + slash + version + slash}people`,
 };
 
 export { routerPath, apiPath };
