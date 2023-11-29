@@ -103,6 +103,7 @@ const ArtistManageModalMain = (props) => {
         mobile3.current.value = modData.mobile3;
         gender.current.value = modData.gender_cd;
         setFileInfo(modData.file_info);
+        setThumbnailInfo(modData.thumbnail_info);
 
         // setProfileInfo(modData.profile_info);
 
@@ -781,6 +782,16 @@ const ArtistManageModalMain = (props) => {
                                 />
                             </td>
                         </tr>
+                        {isModData && (
+                            <tr>
+                                <th>QR CODE</th>
+                                <td colSpan={3}>
+                                    <div className="hotel_thumb_wrap">
+                                        <img src={modData.qr_img} alt="" />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
 

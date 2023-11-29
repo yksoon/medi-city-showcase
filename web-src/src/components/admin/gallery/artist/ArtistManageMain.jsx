@@ -282,9 +282,12 @@ const ArtistManageMain = (props) => {
         columnHelper.accessor(
             (row) => (
                 <>
-                    {row.file_path_enc && (
+                    {row.thumbnail_info.length !== 0 && (
                         <img
-                            src={apiPath.api_file + row.file_path_enc}
+                            src={
+                                apiPath.api_file +
+                                row.thumbnail_info[0].file_path_enc
+                            }
                             alt=""
                             style={{ width: "100px" }}
                         />
@@ -292,9 +295,9 @@ const ArtistManageMain = (props) => {
                 </>
             ),
             {
-                id: "file_path_enc",
+                id: "thumbnail_info",
                 cell: (info) => info.getValue(),
-                header: "사진",
+                header: "썸네일",
                 enableSorting: "alphanumericCaseSensitive",
             },
         ),
