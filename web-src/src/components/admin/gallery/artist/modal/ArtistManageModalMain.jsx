@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import CountrySelect from "common/js/countryAutocomplete";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
+import imageCompression from "browser-image-compression";
+import { imageResizeOptions } from "common/js/static";
 
 const ArtistManageModalMain = (props) => {
     const { confirm } = useConfirm();
@@ -36,6 +38,7 @@ const ArtistManageModalMain = (props) => {
     // const [profileInfo, setProfileInfo] = useState([]);
     const [fileInfo, setFileInfo] = useState([]);
     const [thumbnailInfo, setThumbnailInfo] = useState([]);
+    const [thumbFiles, setThumbFiles] = useState([]);
     // const [profileSection, setProfileSection] = useState([
     //     { idx: 1, sectionValue: "" },
     // ]);
@@ -162,7 +165,8 @@ const ArtistManageModalMain = (props) => {
                     const obj = {
                         parentIdx: parentObj.idx,
                         profileType: parentObj.sectionValue,
-                        profileContent: profile.profile_content,
+                        profileContentKo: profile.profile_content_ko,
+                        profileContentEn: profile.profile_content_en,
                         inputIdx: i + 1,
                     };
 
@@ -177,32 +181,22 @@ const ArtistManageModalMain = (props) => {
 
     // 이미지 업로드 시 미리보기
     const readURL = (input, imageType) => {
+        const imageFile = input.files[0];
         if (isFileImage(input.files)) {
-            if (imageType === "thumb" && !fileSize(input.files)) {
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "1mb 이하의 이미지만 업로드 가능합니다.",
-                });
-                input.value = "";
-
-                return false;
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    // 썸네일일경우
+                    if (imageType === "thumb") {
+                        previewThumb.current.src = e.target.result;
+                    } else if (imageType === "origin") {
+                        previewAttachment.current.src = e.target.result;
+                    }
+                    // document.getElementById("preview").src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
             } else {
-                if (input.files && input.files[0]) {
-                    let reader = new FileReader();
-                    reader.onload = function (e) {
-                        // 썸네일일경우
-                        if (imageType === "thumb") {
-                            previewThumb.current.src = e.target.result;
-                        } else if (imageType === "origin") {
-                            previewAttachment.current.src = e.target.result;
-                        }
-                        // document.getElementById("preview").src = e.target.result;
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                } else {
-                    document.getElementById("preview").src = "";
-                }
+                document.getElementById("preview").src = "";
             }
         } else {
             CommonNotify({
@@ -221,17 +215,6 @@ const ArtistManageModalMain = (props) => {
         if (file) {
             for (let i = 0; i < file.length; i++) {
                 return file[i] && file[i]["type"].split("/")[0] === "image";
-            }
-        }
-    };
-
-    const fileSize = (file) => {
-        let maxSize = 1024 * 1024;
-        if (file) {
-            for (let i = 0; i < file.length; i++) {
-                const fileSize = file[i] && file[i]["size"];
-
-                return maxSize > fileSize;
             }
         }
     };
@@ -353,7 +336,8 @@ const ArtistManageModalMain = (props) => {
                 const newProfile = {
                     parentIdx: sectionIdx,
                     profileType: val,
-                    profileContent: "",
+                    profileContentKo: "",
+                    profileContentEn: "",
                     inputIdx: 1,
                 };
                 setState((prevState) => ({
@@ -379,7 +363,8 @@ const ArtistManageModalMain = (props) => {
                 const newItem = {
                     parentIdx: parentIdx,
                     profileType: parentArr[parentArr.length - 1].profileType,
-                    profileContent: "",
+                    profileContentKo: "",
+                    profileContentEn: "",
                     inputIdx: parentArr[parentArr.length - 1].inputIdx + 1,
                 };
 
@@ -407,22 +392,42 @@ const ArtistManageModalMain = (props) => {
         }
     };
 
-    const handleInput = (e, parentIdx, inputIdx) => {
-        setState((prevState) => ({
-            ...prevState,
-            selectedProfile: prevState.selectedProfile.map((profile) => {
-                if (
-                    profile.parentIdx === parentIdx &&
-                    profile.inputIdx === inputIdx
-                ) {
-                    return {
-                        ...profile,
-                        profileContent: e.target.value,
-                    };
-                }
-                return profile;
-            }),
-        }));
+    const handleInput = (e, parentIdx, inputIdx, type) => {
+        if (type === "ko") {
+            setState((prevState) => ({
+                ...prevState,
+                selectedProfile: prevState.selectedProfile.map((profile) => {
+                    if (
+                        profile.parentIdx === parentIdx &&
+                        profile.inputIdx === inputIdx
+                    ) {
+                        return {
+                            ...profile,
+                            profileContentKo: e.target.value,
+                        };
+                    }
+                    return profile;
+                }),
+            }));
+        } else if (type === "en") {
+            setState((prevState) => ({
+                ...prevState,
+                selectedProfile: prevState.selectedProfile.map((profile) => {
+                    if (
+                        profile.parentIdx === parentIdx &&
+                        profile.inputIdx === inputIdx
+                    ) {
+                        return {
+                            ...profile,
+                            profileContentEn: e.target.value,
+                        };
+                    }
+                    return profile;
+                }),
+            }));
+        } else {
+            return false;
+        }
     };
 
     const clickRemove = () => {
@@ -526,11 +531,20 @@ const ArtistManageModalMain = (props) => {
             formData.append("attachmentFile", fileArr[i]);
         }
 
-        // 썸네일 formData append
         thumbArr = Array.from(inputThumbFile.current.files);
         let thumbLen = thumbArr.length;
         for (let i = 0; i < thumbLen; i++) {
-            formData.append("attachmentThumbnail", thumbArr[i]);
+            imageCompression(thumbArr[i], imageResizeOptions)
+                .then(function (compressedFile) {
+                    return formData.append(
+                        "attachmentThumbnail",
+                        compressedFile,
+                    ); // write your own logic
+                })
+                .catch(function (error) {
+                    console.log(error.message);
+                });
+            // formData.append("attachmentThumbnail", thumbArr[i]);
         }
 
         // 프로필 formData append
@@ -541,8 +555,12 @@ const ArtistManageModalMain = (props) => {
                     item.profileType,
                 );
                 formData.append(
-                    `profileInfo[${idx}].profileContent`,
-                    item.profileContent,
+                    `profileInfo[${idx}].profileContentKo`,
+                    item.profileContentKo,
+                );
+                formData.append(
+                    `profileInfo[${idx}].profileContentEn`,
+                    item.profileContentEn,
                 );
             }
         });
@@ -879,18 +897,37 @@ const ArtistManageModalMain = (props) => {
                                             <div key={inputItem.inputIdx}>
                                                 <input
                                                     type="text"
-                                                    className="input w800"
+                                                    className="input w370"
                                                     id={`${item.idx}-${inputItem.inputIdx}`}
                                                     value={
-                                                        inputItem.profileContent
+                                                        inputItem.profileContentKo
                                                     }
                                                     onChange={(e) =>
                                                         handleInput(
                                                             e,
                                                             item.idx,
                                                             inputItem.inputIdx,
+                                                            "ko",
                                                         )
                                                     }
+                                                    placeholder="국문"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    className="input w370"
+                                                    id={`${item.idx}-${inputItem.inputIdx}`}
+                                                    value={
+                                                        inputItem.profileContentEn
+                                                    }
+                                                    onChange={(e) =>
+                                                        handleInput(
+                                                            e,
+                                                            item.idx,
+                                                            inputItem.inputIdx,
+                                                            "en",
+                                                        )
+                                                    }
+                                                    placeholder="영문"
                                                 />
                                                 <Link
                                                     to=""
