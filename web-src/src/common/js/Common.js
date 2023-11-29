@@ -14,6 +14,7 @@ import {
 } from "recoils/atoms";
 import useConfirm from "hook/useConfirm";
 import ConsultingBoardModalMain from "components/admin/board/consultingBoard/modal/ConsultingBoardModalMain";
+import NoticeBoardModalMain from "components/admin/board/notice/modal/NoticeBoardModalMain";
 import RegistrationManageModalMain from "components/admin/registration/registrationManage/modal/RegistrationManageModalMain";
 import EntryManageModalMain from "components/admin/registration/entryManage/modal/EntryManageModalMain";
 import PopupManageModalMain from "components/admin/popupManage/modal/PopupManageModalMain";
@@ -76,6 +77,16 @@ const CommonModal = (props) => {
             case "EntryManageModalMain":
                 return (
                     <EntryManageModalMain
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modData={props.modData}
+                    />
+                );
+
+            // 공지사항 관리
+            case "NoticeBoardModalMain":
+                return (
+                    <NoticeBoardModalMain
                         handleNeedUpdate={handleNeedUpdate}
                         handleModalClose={modalOption.handleModalClose}
                         modData={props.modData}
@@ -197,38 +208,9 @@ const CommonConsole = (type, responseData) => {
 
 // 스피너
 const CommonSpinner = (props) => {
-    // const [isLoading, setIsloading] = useState(false);
-    // const spinner = useRef(null);
-
-    // const isLoading = props.option.isLoading;
-    // const alertMsg = props.option.alert ? props.option.alert : "";
-    // const error = props.option.error ? props.option.error : "";
-
-    // let height;
-    // $(window).scroll(function () {
-    //     height = $(document).scrollTop();
-    // });
-
-    // useEffect(() => {
-    //     setIsloading(props.option.isLoading);
-
-    //     if (error === "Y") {
-    //         if (!alertMsg) {
-    //             const spnin = spinner.current.childNodes[0];
-    //             spnin.classList.add("error");
-    //         } else {
-    //             alert(decodeURI(alertMsg).replace("%20", " "));
-    //         }
-    //     }
-    // }, [props]);
 
     return (
         <>
-            {/* {isLoading && (
-                <div className="spinner" ref={spinner}>
-                    <CircularProgress />
-                </div>
-            )} */}
             <div className="spinner">
                 <CircularProgress />
             </div>
@@ -256,11 +238,6 @@ const CommonErrorCatch = async (
             error.response.status === errorCode.timeOut || // 타임아웃 - 500
             error.response.status === errorCode.timeOut2 // 타임아웃 - 503
         ) {
-            // dispatch(
-            //     set_spinner({
-            //         isLoading: false,
-            //     })
-            // );
             setIsSpinner(false);
 
             CommonNotify({
@@ -287,27 +264,15 @@ const CommonErrorCatch = async (
         }
         // 에러
         else {
-            // dispatch(
-            //     set_spinner({
-            //         isLoading: false,
-            //     })
-            // );
             setIsSpinner(false);
 
             CommonNotify({
                 type: "alert",
                 hook: alert,
-                // message: error.response.headers.result_message_ko
                 message: error.response.headers.result_message_en,
             });
         }
     } else {
-        // dispatch(
-        //     set_spinner({
-        //         isLoading: true,
-        //         error: "Y",
-        //     })
-        // );
         setIsSpinner(true);
     }
 
@@ -316,11 +281,6 @@ const CommonErrorCatch = async (
 
     // 타임아웃 (axios 타임아웃 걸릴경우)
     if (error.message === `timeout of ${timeOut}ms exceeded`) {
-        // dispatch(
-        //     set_spinner({
-        //         isLoading: false,
-        //     })
-        // );
         setIsSpinner(false);
 
         CommonNotify({
@@ -422,12 +382,6 @@ const CommonRest = async (restParams = {}) => {
                 resetUserInfoAdmin,
                 resetUserTokenAdmin,
             );
-
-            // console.log(restParams);
-
-            // restParams.errCallback(error);
-            // console.log(error);
-            // func(error);
         });
 };
 
@@ -447,11 +401,6 @@ const CommonCheckDate = async (
     // dispatch
     setIsSpinner,
 ) => {
-    // dispatch(
-    //     set_spinner({
-    //         isLoading: true,
-    //     })
-    // );
     setIsSpinner(true);
 
     if (Object.keys(checkSchedule).length !== 0) {
@@ -472,12 +421,6 @@ const CommonCheckDate = async (
         if (nowDate > startDateTime && nowDate < endDateTime) {
             // 사전등록기간 내
             console.log("checkSchedule OK");
-
-            // dispatch(
-            //     set_spinner({
-            //         isLoading: false,
-            //     })
-            // );
 
             return true;
         } else {

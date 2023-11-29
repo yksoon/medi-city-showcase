@@ -255,7 +255,7 @@ const apiPath = {
 
     // /v1/_comment
     // PUT MULTI
-    // 문의 답변 등록
+    // 문의 답변 수정
     api_admin_mod_comment: `${base_api_url + slash + version + slash}_comment`,
 
     // ------------------ Registration Management API 사전등록 관리 API ------------------
