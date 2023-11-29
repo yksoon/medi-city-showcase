@@ -552,33 +552,6 @@ const EntryManageModalMain = (props) => {
         };
     };
 
-    // 국적 SELECT 스타일
-    const customStyles = {
-        control: () => ({
-            width: "inherit",
-            height: "inherit",
-            lineHeight: "28px",
-        }),
-        valueContainer: () => ({
-            height: "28px",
-            lineHeight: "28px",
-            padding: "0",
-            display: "block",
-        }),
-        indicatorsContainer: () => ({
-            display: "none",
-        }),
-        input: () => ({
-            height: "inherit",
-            lineHeight: "28px",
-            gridArea: "0",
-            display: "block",
-            position: "absolute",
-            top: "0",
-            width: "85%",
-        }),
-    };
-
     return (
         <>
             <div className="admin">

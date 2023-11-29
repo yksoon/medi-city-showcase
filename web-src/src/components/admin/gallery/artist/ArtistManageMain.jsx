@@ -55,7 +55,7 @@ const ArtistManageMain = (props) => {
     // qr모달
     const [isOpenQr, setIsOpenQr] = useState(false);
     const [modalTitleQr, setModalTitleQr] = useState("");
-    const [modDataQr, setModDataQr] = useState({});
+    const [modDataQr, setModDataQr] = useState([]);
 
     useEffect(() => {
         getBoardList(1, 10, "");
@@ -138,6 +138,7 @@ const ArtistManageMain = (props) => {
     const handleNeedUpdate = () => {
         setModalTitle("");
         setIsOpen(false);
+        setModData({});
         setIsNeedUpdate(!isNeedUpdate);
     };
 
@@ -340,6 +341,22 @@ const ArtistManageMain = (props) => {
         setModalTitleQr("QR-CODE LIST");
         setIsOpenQr(true);
     };
+
+    // 모달창 닫기
+    const handleModalCloseQr = () => {
+        CommonNotify({
+            type: "confirm",
+            hook: confirm,
+            message: "입력된 정보가 초기화 됩니다. 창을 닫으시겠습니까?",
+            callback: () => close(),
+        });
+
+        const close = () => {
+            setModalTitleQr("");
+            setModDataQr({});
+            setIsOpenQr(false);
+        };
+    };
     // --------------------------------- 테이블 세팅 -------------------------------------
 
     // 컬럼 세팅
@@ -376,16 +393,16 @@ const ArtistManageMain = (props) => {
         columnHelper.accessor(
             (row) => (
                 <>
-                    {row.thumbnail_info.length !== 0 && (
-                        <img
-                            src={
-                                apiPath.api_file +
-                                row.thumbnail_info[0].file_path_enc
-                            }
-                            alt=""
-                            style={{ width: "100px" }}
-                        />
-                    )}
+                    <img
+                        src={
+                            row.thumbnail_info.length !== 0
+                                ? apiPath.api_file +
+                                  row.thumbnail_info[0].file_path_enc
+                                : "img/web/sub/default_full.jpg"
+                        }
+                        alt=""
+                        style={{ width: "100px" }}
+                    />
                 </>
             ),
             {
@@ -499,7 +516,7 @@ const ArtistManageMain = (props) => {
                             className="subbtn on"
                             onClick={qrModalHandler}
                         >
-                            전체 QR 리스트
+                            아티스트 전체 QR 리스트
                         </Link>
                     </div>
 
@@ -639,7 +656,7 @@ const ArtistManageMain = (props) => {
                 isOpen={isOpenQr}
                 title={modalTitleQr}
                 width={"1400"}
-                handleModalClose={handleModalClose}
+                handleModalClose={handleModalCloseQr}
                 component={"QrListModalMain"}
                 handleNeedUpdate={handleNeedUpdate}
                 modData={modDataQr}

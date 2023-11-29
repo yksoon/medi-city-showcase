@@ -64,6 +64,7 @@ const ArtistManageModalMain = (props) => {
     const previewThumb = useRef(null);
     const previewAttachment = useRef(null);
     const gender = useRef(null);
+    const birth = useRef(null);
     // refs End
 
     useEffect(() => {
@@ -105,6 +106,7 @@ const ArtistManageModalMain = (props) => {
         mobile2.current.value = modData.mobile2;
         mobile3.current.value = modData.mobile3;
         gender.current.value = modData.gender_cd;
+        birth.current.value = modData.birth;
         setFileInfo(modData.file_info);
         setThumbnailInfo(modData.thumbnail_info);
 
@@ -484,140 +486,198 @@ const ArtistManageModalMain = (props) => {
 
     // 등록
     const regModBoard = (method) => {
-        setIsSpinner(true);
+        if (validation()) {
+            setIsSpinner(true);
 
-        let url;
-        if (method === "reg") {
-            // /v1/reg
-            // POST
-            // 사전등록 등록
-            url = apiPath.api_admin_add_people;
-        } else if (method === "mod") {
-            // /v1/reg
-            // PUT
-            // 사전등록 수정
-            url = apiPath.api_admin_mod_people;
-        }
-
-        const formData = new FormData();
-        let data = {};
-
-        let fileArr = [];
-        let thumbArr = [];
-
-        data = {
-            peopleType: peopleType.current.value,
-            nameFirstKo: nameFirstKo.current.value,
-            nameLastKo: nameLastKo.current.value,
-            nameFirstEn: nameFirstEn.current.value,
-            nameLastEn: nameLastEn.current.value,
-            email: email.current.value,
-            interPhoneNumber: selectedCountry,
-            mobile1: mobile1.current.value,
-            mobile2: mobile2.current.value,
-            mobile3: mobile3.current.value,
-            gender: gender.current.value,
-            peopleIdx: method === "mod" ? modData.people_idx : "",
-        };
-
-        // 기본 formData append
-        for (const key in data) {
-            formData.append(key, data[key]);
-        }
-
-        // 파일 formData append
-        fileArr = Array.from(inputAttachmentFile.current.files);
-        let fileLen = fileArr.length;
-        for (let i = 0; i < fileLen; i++) {
-            formData.append("attachmentFile", fileArr[i]);
-        }
-
-        // 프로필 formData append
-        state.selectedProfile.forEach((item, idx) => {
-            if (item.profileContentKo || item.profileContentEn) {
-                formData.append(
-                    `profileInfo[${idx}].profileType`,
-                    item.profileType,
-                );
-                formData.append(
-                    `profileInfo[${idx}].profileContentKo`,
-                    item.profileContentKo,
-                );
-                formData.append(
-                    `profileInfo[${idx}].profileContentEn`,
-                    item.profileContentEn,
-                );
-            }
-        });
-
-        const restParams = {
-            method:
-                method === "reg"
-                    ? "post_multi"
-                    : method === "mod"
-                    ? "put_multi"
-                    : "",
-            url: url,
-            data: formData,
-            err: err,
-            admin: "Y",
-            callback: (res) => responseLogic(res),
-        };
-
-        if (inputThumbFile.current.files.length !== 0) {
-            thumbArr = Array.from(inputThumbFile.current.files);
-            let thumbLen = thumbArr.length;
-            for (let i = 0; i < thumbLen; i++) {
-                imageCompression(thumbArr[i], imageResizeOptions)
-                    .then(function (compressedFile) {
-                        const resizingFile = new File(
-                            [compressedFile],
-                            thumbArr[i].name,
-                            { type: thumbArr[i].type },
-                        );
-                        return addFormData(resizingFile);
-                    })
-                    .catch(function (error) {
-                        console.log(error.message);
-                    });
-                // formData.append("attachmentThumbnail", thumbArr[i]);
+            let url;
+            if (method === "reg") {
+                // /v1/reg
+                // POST
+                // 사전등록 등록
+                url = apiPath.api_admin_add_people;
+            } else if (method === "mod") {
+                // /v1/reg
+                // PUT
+                // 사전등록 수정
+                url = apiPath.api_admin_mod_people;
             }
 
-            const addFormData = (compressedFile) => {
-                formData.append("attachmentThumbnail", compressedFile); // write your own logic
+            const formData = new FormData();
+            let data = {};
 
-                CommonRest(restParams);
+            let fileArr = [];
+            let thumbArr = [];
+
+            data = {
+                peopleType: peopleType.current.value,
+                nameFirstKo: nameFirstKo.current.value,
+                nameLastKo: nameLastKo.current.value,
+                nameFirstEn: nameFirstEn.current.value,
+                nameLastEn: nameLastEn.current.value,
+                email: email.current.value,
+                interPhoneNumber: selectedCountry,
+                mobile1: mobile1.current.value,
+                mobile2: mobile2.current.value,
+                mobile3: mobile3.current.value,
+                gender: gender.current.value,
+                birthYyyy:
+                    birth.current.value && birth.current.value.split("-")[0],
+                birthMm:
+                    birth.current.value && birth.current.value.split("-")[1],
+                birthDd:
+                    birth.current.value && birth.current.value.split("-")[2],
+                peopleIdx: method === "mod" ? modData.people_idx : "",
             };
-        } else {
-            CommonRest(restParams);
+
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            // 파일 formData append
+            fileArr = Array.from(inputAttachmentFile.current.files);
+            let fileLen = fileArr.length;
+            for (let i = 0; i < fileLen; i++) {
+                formData.append("attachmentFile", fileArr[i]);
+            }
+
+            // 프로필 formData append
+            state.selectedProfile.forEach((item, idx) => {
+                if (item.profileContentKo || item.profileContentEn) {
+                    formData.append(
+                        `profileInfo[${idx}].profileType`,
+                        item.profileType,
+                    );
+                    formData.append(
+                        `profileInfo[${idx}].profileContentKo`,
+                        item.profileContentKo,
+                    );
+                    formData.append(
+                        `profileInfo[${idx}].profileContentEn`,
+                        item.profileContentEn,
+                    );
+                }
+            });
+
+            const restParams = {
+                method:
+                    method === "reg"
+                        ? "post_multi"
+                        : method === "mod"
+                        ? "put_multi"
+                        : "",
+                url: url,
+                data: formData,
+                err: err,
+                admin: "Y",
+                callback: (res) => responseLogic(res),
+            };
+
+            if (inputThumbFile.current.files.length !== 0) {
+                thumbArr = Array.from(inputThumbFile.current.files);
+                let thumbLen = thumbArr.length;
+                for (let i = 0; i < thumbLen; i++) {
+                    imageCompression(thumbArr[i], imageResizeOptions)
+                        .then(function (compressedFile) {
+                            const resizingFile = new File(
+                                [compressedFile],
+                                thumbArr[i].name,
+                                { type: thumbArr[i].type },
+                            );
+                            return addFormData(resizingFile);
+                        })
+                        .catch(function (error) {
+                            console.log(error.message);
+                        });
+                    // formData.append("attachmentThumbnail", thumbArr[i]);
+                }
+
+                const addFormData = (compressedFile) => {
+                    formData.append("attachmentThumbnail", compressedFile); // write your own logic
+
+                    CommonRest(restParams);
+                };
+            } else {
+                CommonRest(restParams);
+            }
+
+            const responseLogic = (res) => {
+                let result_code = res.headers.result_code;
+                if (result_code === successCode.success) {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message:
+                            method === "reg"
+                                ? "아티스트 등록이 완료 되었습니다"
+                                : method === "mod"
+                                ? "아티스트 수정이 완료 되었습니다"
+                                : "",
+                        callback: () => handleNeedUpdate(),
+                    });
+                } else {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "잠시 후 다시 시도해주세요",
+                    });
+                }
+            };
+        }
+    };
+
+    /**
+     * validation 검증
+     */
+    const validation = () => {
+        const noti = (ref, msg) => {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: msg,
+                callback: () => focus(),
+            });
+
+            const focus = () => {
+                ref && ref.current.focus();
+            };
+        };
+
+        if (!nameFirstKo.current.value || !nameLastKo.current.value) {
+            noti(nameFirstKo, "아티스트명(국문)을 입력해주세요");
+
+            return false;
         }
 
-        const responseLogic = (res) => {
-            let result_code = res.headers.result_code;
-            if (result_code === successCode.success) {
-                setIsSpinner(false);
+        if (!nameFirstEn.current.value || !nameLastEn.current.value) {
+            noti(nameFirstEn, "아티스트명(영문)을 입력해주세요");
 
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message:
-                        method === "reg"
-                            ? "아티스트 등록이 완료 되었습니다"
-                            : method === "mod"
-                            ? "아티스트 수정이 완료 되었습니다"
-                            : "",
-                    callback: () => handleNeedUpdate(),
-                });
-            } else {
-                setIsSpinner(false);
+            return false;
+        }
 
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "잠시 후 다시 시도해주세요",
-                });
-            }
-        };
+        if (!peopleType.current.value) {
+            noti(peopleType, "아티스트 구분을 선택해주세요");
+
+            return false;
+        }
+
+        if (!gender.current.value) {
+            noti(gender, "성별을 선택해주세요");
+
+            return false;
+        }
+
+        if (state.selectedProfile.length === 0) {
+            noti("", "한가지 이상의 프로필을 등록해주세요");
+
+            return false;
+        }
+
+        return true;
     };
 
     return (
@@ -633,7 +693,9 @@ const ArtistManageModalMain = (props) => {
                     </colgroup>
                     <tbody>
                         <tr>
-                            <th>이름(국문)</th>
+                            <th>
+                                이름(국문) <span className="red">*</span>
+                            </th>
                             <td>
                                 <input
                                     type="text"
@@ -648,7 +710,9 @@ const ArtistManageModalMain = (props) => {
                                     placeholder="이름"
                                 />
                             </td>
-                            <th>이름(영문)</th>
+                            <th>
+                                이름(영문) <span className="red">*</span>
+                            </th>
                             <td>
                                 <input
                                     type="text"
@@ -665,7 +729,9 @@ const ArtistManageModalMain = (props) => {
                             </td>
                         </tr>
                         <tr>
-                            <th>구분</th>
+                            <th>
+                                구분 <span className="red">*</span>
+                            </th>
                             <td>
                                 <select className="wp100" ref={peopleType}>
                                     <option>- 선택 -</option>
@@ -689,7 +755,9 @@ const ArtistManageModalMain = (props) => {
                             </td>
                         </tr>
                         <tr>
-                            <th>국가번호</th>
+                            <th>
+                                국가번호 <span className="red">*</span>
+                            </th>
                             <td>
                                 <CountrySelect
                                     onChange={(e, value) =>
@@ -721,7 +789,9 @@ const ArtistManageModalMain = (props) => {
                             </td>
                         </tr>
                         <tr>
-                            <th>성별</th>
+                            <th>
+                                성별 <span className="red">*</span>
+                            </th>
                             <td>
                                 <select className="wp100" ref={gender}>
                                     <option>- 선택 -</option>
@@ -733,6 +803,14 @@ const ArtistManageModalMain = (props) => {
                                             >{`${item.code_value_ko} (${item.code_value_en})`}</option>
                                         ))}
                                 </select>
+                            </td>
+                            <th>생년월일</th>
+                            <td>
+                                <input
+                                    type="date"
+                                    className="input w120"
+                                    ref={birth}
+                                />
                             </td>
                         </tr>
                         <tr>
