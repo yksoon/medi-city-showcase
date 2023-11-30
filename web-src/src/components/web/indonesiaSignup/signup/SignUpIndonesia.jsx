@@ -182,9 +182,10 @@ const SignUpIndonesia = (props) => {
         // console.log(modData);
 
         // 성별
-        const genderArr = codes.filter((el) => el.code_type === "GENDER");
-
-        // console.log(genderArr);
+        let genderArr = codes.filter((el) => el.code_type === "GENDER");
+        genderArr = genderArr.filter(
+            (el) => el.code_key === "0" || el.code_key === "1",
+        );
         setGenderOption(genderArr);
 
         setModData(location.state ?? {});
@@ -238,7 +239,10 @@ const SignUpIndonesia = (props) => {
         setEntryInfo(newArr);
 
         // 성별
-        const genderArr = codes.filter((el) => el.code_type === "GENDER");
+        let genderArr = codes.filter((el) => el.code_type === "GENDER");
+        genderArr = genderArr.filter(
+            (el) => el.code_key === "0" || el.code_key === "1",
+        );
         setGenderOption(genderArr);
     };
 
