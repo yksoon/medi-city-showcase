@@ -374,6 +374,12 @@ to {transform:rotate(0); }
 
  .galleryList figure a p { display: inline-block; } 
 
+ .artist_list .thumb {width:390px;overflow: hidden;}
+ .artist_list figure a {display:block;width:390px;}
+ .artist_list figure a .name span {color: #818181;font-weight: 400;}
+
+
+
 #guest {}
 #guest_book {max-width:1180px;margin:0 auto;padding:0 60px;background: #fff;height:100vh;display:flex; justify-content: center; align-items: center;background: url('../img/sub/guest_bg.png') center top no-repeat;background-size: cover;}
 #guest_book > div {height:fit-content;background: #fff;padding:40px;margin:200px 0 0;}
