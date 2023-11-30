@@ -481,18 +481,27 @@ const ArtistManageMain = (props) => {
             },
         ),
 
-        columnHelper.accessor((row) => row.reg_dttm.split(" ")[0], {
-            id: "reg_dttm",
-            cell: (info) => info.getValue(),
-            header: "등록일",
-            sortingFn: "alphanumericCaseSensitive",
-        }),
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {row.reg_dttm.split(" ")[0]}
+                    <br />
+                    {row.reg_dttm.split(" ")[1]}
+                </>
+            ),
+            {
+                id: "reg_dttm",
+                cell: (info) => info.getValue(),
+                header: "등록일",
+                sortingFn: "alphanumericCaseSensitive",
+            },
+        ),
 
         columnHelper.accessor((row) => <img src={row.qr_img} alt="" />, {
             id: "qr_img",
             cell: (info) => info.getValue(),
             header: "QR",
-            sortingFn: "alphanumericCaseSensitive",
+            enableSorting: false,
         }),
 
         columnHelper.accessor(

@@ -291,7 +291,7 @@ div.mo_title > h4{font-size: 24px;font-weight: 700;}
 .fac_icon_box p {font-size: 14px;}
 
 
-.profile_thumb {display:inline-block;width:150px;height:90px;overflow:hidden;background-color:#efefef;margin:0 0 6px;}
+.profile_thumb {display:inline-block;overflow:hidden;background-color:#efefef;margin:0 0 6px;}
 .profile_thumb img {width: 100%;}
 .profile_thumb.width_b {width:400px;height:fit-content;}
 .profile_thumb.height_b {height:300px;width:fit-content;}

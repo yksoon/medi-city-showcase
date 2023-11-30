@@ -97,21 +97,6 @@ const ArtistManageModalMain = (props) => {
         isModData && setDefaultValue();
     }, [peopleTypeOptions]);
 
-    // 아티스트 썸네일 이미지 사이즈 조정 - 가로 세로 길이 대비
-    useEffect(() => {
-        var thumbWidth = $('.profile_img').width();
-        var thumbHeight = $('.profile_img').height();
-
-        if (thumbWidth > thumbHeight) {
-            $('.profile_thumb').addClass('width_b'); 
-        } 
-
-        if (thumbHeight > thumbWidth) {
-            $('.profile_thumb').addClass('height_b');
-        }
- 
-    }, [fileInfo]);
-
     const setDefaultValue = () => {
         nameFirstKo.current.value = modData.name_first_ko ?? "";
         nameLastKo.current.value = modData.name_last_ko ?? "";
@@ -130,11 +115,32 @@ const ArtistManageModalMain = (props) => {
         peopleMemoKo.current.value = modData.people_memo_ko ?? "";
         peopleMemoEn.current.value = modData.people_memo_en ?? "";
         setFileInfo(modData.file_info);
+        previewAttachment.current.src =
+            modData.file_info.length !== 0 &&
+            apiPath.api_file + modData.file_info[0].file_path_enc;
         setThumbnailInfo(modData.thumbnail_info);
 
         // setProfileInfo(modData.profile_info);
 
         setDefaultProfile();
+    };
+
+    // 아티스트 썸네일 이미지 사이즈 조정 - 가로 세로 길이 대비
+    const handleImageLoad = () => {
+        if (previewAttachment) {
+            const thumbWidth = previewAttachment.current.width;
+            const thumbHeight = previewAttachment.current.height;
+
+            const profileThumb = document.querySelector(".profile_thumb");
+
+            if (thumbWidth > thumbHeight) {
+                profileThumb.classList.add("width_b");
+            }
+
+            if (thumbHeight > thumbWidth) {
+                profileThumb.classList.add("height_b");
+            }
+        }
     };
 
     const setDefaultProfile = () => {
@@ -682,8 +688,6 @@ const ArtistManageModalMain = (props) => {
             };
         }
     };
-    
-
 
     /**
      * validation 검증
@@ -908,31 +912,42 @@ const ArtistManageModalMain = (props) => {
                             <th>프로필 사진</th>
                             <td colSpan={3}>
                                 <div className="profile_wrap">
-                                    {fileInfo.length !== 0 ? (
-                                        fileInfo.map((item, idx) => (
-                                            <span
-                                                className="profile_thumb"
-                                                key={`file_info_${idx}`}
-                                            >
-                                                <img
-                                                    src={`${apiPath.api_file}${item.file_path_enc}`}
-                                                    alt=""
-                                                    id="preview"
-                                                    class="profile_img"
-                                                    ref={previewAttachment}
-                                                />
-                                            </span>
-                                        ))
-                                    ) : (
-                                        <span className="hotel_thumb">
-                                            <img
-                                                src=""
-                                                alt=""
-                                                id="preview"
-                                                ref={previewAttachment}
-                                            />
-                                        </span>
-                                    )}
+                                    {/*{fileInfo.length !== 0 ? (*/}
+                                    {/*    fileInfo.map((item, idx) => (*/}
+                                    {/*        <span*/}
+                                    {/*            className="profile_thumb"*/}
+                                    {/*            key={`file_info_${idx}`}*/}
+                                    {/*        >*/}
+                                    {/*            <img*/}
+                                    {/*                src={`${apiPath.api_file}${item.file_path_enc}`}*/}
+                                    {/*                alt=""*/}
+                                    {/*                id="preview"*/}
+                                    {/*                className="profile_img"*/}
+                                    {/*                // ref={previewAttachment}*/}
+                                    {/*            />*/}
+                                    {/*        </span>*/}
+                                    {/*    ))*/}
+                                    {/*) : (*/}
+                                    {/*    <span className="profile_thumb">*/}
+                                    {/*        <img*/}
+                                    {/*            src=""*/}
+                                    {/*            alt=""*/}
+                                    {/*            id="preview"*/}
+                                    {/*            className="profile_img"*/}
+                                    {/*            ref={previewAttachment}*/}
+                                    {/*        />*/}
+                                    {/*    </span>*/}
+                                    {/*)}*/}
+                                    <span className="profile_thumb">
+                                        <img
+                                            src=""
+                                            alt=""
+                                            id="preview"
+                                            className="profile_img"
+                                            ref={previewAttachment}
+                                            onLoad={handleImageLoad}
+                                        />
+                                    </span>
                                 </div>
                                 <input
                                     type="file"
@@ -982,8 +997,8 @@ const ArtistManageModalMain = (props) => {
                         <col width="*" />
                     </colgroup>
                     <tbody>
-                        {state.profileSection.map((item) => (
-                            <tr key={item.idx}>
+                        {state.profileSection.map((item, idx) => (
+                            <tr key={`${idx}_${item.idx}`}>
                                 <th>프로필</th>
                                 <td>
                                     <div>
@@ -1143,8 +1158,6 @@ const ArtistManageModalMain = (props) => {
     );
 };
 
-<script>
-
-</script>
+<script></script>;
 
 export default ArtistManageModalMain;
