@@ -37,16 +37,18 @@ const GuestBookBoardModalMain = (props) => {
     useEffect(() => {
         // 수정일 경우 디폴트 세팅
         isModData && setDefaultValue();
-    }, [isModData]);
+    }, []);
 
+
+    // !TODO 오류확인 필요
     const setDefaultValue = () => {
-        nameFirstEn.current.value = modData.user_name_first_en ?? "";
-        nameLastEn.current.value = modData.user_name_last_en;
-        email.current.value = modData.email;
-        mobile1.current.value = modData.mobile1;
-        mobile2.current.value = modData.mobile2;
-        mobile3.current.value = modData.mobile3;
-        affiliation.current.value = modData.content_en;
+        // nameFirstEn.current.value = modData.user_name_first_en ?? "";
+        // nameLastEn.current.value = modData.user_name_last_en ?? "";
+        // email.current.value = modData.email ?? "";
+        // mobile1.current.value = modData.mobile1 ?? "";
+        // mobile2.current.value = modData.mobile2 ?? "";
+        // mobile3.current.value = modData.mobile3 ?? "";
+        // affiliation.current.value = modData.content_en ?? "";
     };
 
     // 등록
@@ -217,10 +219,10 @@ const GuestBookBoardModalMain = (props) => {
             <div className="admin">
                 <table className="table_bb">
                     <colgroup>
-                        <col width="20%" />
-                        <col width="20%" />
-                        <col width="20%" />
                         <col width="*" />
+                        <col width="20%" />
+                        <col width="20%" />
+                        <col width="20%" />
                     </colgroup>
                     <tbody>
                         <tr>
@@ -248,11 +250,25 @@ const GuestBookBoardModalMain = (props) => {
                             <th>
                                 TEL <span className="red">*</span>
                             </th>
-                            <td colSpan="3">
+                            <td colSpan>
                                 <input
                                     type="text"
                                     className="input wp100"
                                     ref={mobile1}
+                                />
+                            </td>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={mobile2}
+                                />
+                            </td>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={mobile3}
                                 />
                             </td>
                         </tr>

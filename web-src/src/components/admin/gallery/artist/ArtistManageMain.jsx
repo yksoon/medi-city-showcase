@@ -418,7 +418,7 @@ const ArtistManageMain = (props) => {
                 <>
                     {`${row.name_first_ko} ${row.name_last_ko}`}
                     <br />
-                    {`${row.name_first_en} ${row.name_last_en}`}
+                    {`(${row.name_first_en} ${row.name_last_en})`}
                 </>
             ),
             {
@@ -429,19 +429,37 @@ const ArtistManageMain = (props) => {
             },
         ),
 
-        columnHelper.accessor((row) => row.gender, {
-            id: "gender",
-            cell: (info) => info.getValue(),
-            header: "성별",
-            enableSorting: "alphanumericCaseSensitive",
-        }),
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {row.gender.split("(")[0]}
+                    <br />
+                    {"(" + row.gender.split("(")[1]}
+                </>
+            ),
+            {
+                id: "gender",
+                cell: (info) => info.getValue(),
+                header: "성별",
+                enableSorting: "alphanumericCaseSensitive",
+            },
+        ),
 
-        columnHelper.accessor((row) => row.people_type, {
-            id: "people_type",
-            cell: (info) => info.getValue(),
-            header: "구분",
-            enableSorting: "alphanumericCaseSensitive",
-        }),
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {row.people_type.split("(")[0]}
+                    <br />
+                    {"(" + row.people_type.split("(")[1]}
+                </>
+            ),
+            {
+                id: "people_type",
+                cell: (info) => info.getValue(),
+                header: "구분",
+                enableSorting: "alphanumericCaseSensitive",
+            },
+        ),
 
         columnHelper.accessor((row) => row.email, {
             id: "email",
@@ -463,11 +481,27 @@ const ArtistManageMain = (props) => {
             },
         ),
 
-        columnHelper.accessor((row) => row.reg_dttm.split(" ")[0], {
-            id: "reg_dttm",
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {row.reg_dttm.split(" ")[0]}
+                    <br />
+                    {row.reg_dttm.split(" ")[1]}
+                </>
+            ),
+            {
+                id: "reg_dttm",
+                cell: (info) => info.getValue(),
+                header: "등록일",
+                sortingFn: "alphanumericCaseSensitive",
+            },
+        ),
+
+        columnHelper.accessor((row) => <img src={row.qr_img} alt="" />, {
+            id: "qr_img",
             cell: (info) => info.getValue(),
-            header: "등록일",
-            sortingFn: "alphanumericCaseSensitive",
+            header: "QR",
+            enableSorting: false,
         }),
 
         columnHelper.accessor(
@@ -554,11 +588,12 @@ const ArtistManageMain = (props) => {
                             <colgroup>
                                 <col width="5%" />
                                 <col width="10%" />
-                                <col width="15%" />
                                 <col width="10%" />
-                                <col width="10%" />
+                                <col width="8%" />
+                                <col width="8%" />
                                 <col width="*" />
-                                <col width="15%" />
+                                <col width="12%" />
+                                <col width="8%" />
                                 <col width="10%" />
                                 <col width="5%" />
                             </colgroup>

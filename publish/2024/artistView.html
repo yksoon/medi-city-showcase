@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+	<meta property="og:type" content="website"> 
+	<meta property="og:title" content="Medi-City Medical Showcase - K-AESTHETIC & ART INDONESIA 2024">
+	<meta property="og:image" content="img/kakao.jpg">
+	<meta property="og:url" content="">
+
+	<title>:: Medi-City Medical Showcase - K-AESTHETIC & ART INDONESIA 2024 ::</title>
+	<link rel="stylesheet" type="text/css" href="css/default.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="css/board.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="css/aos.css" media="all"/>
+	
+	<script type="text/javascript" language="javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" language="javascript" src="js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" language="javascript" src="js/aos.js"></script>    
+	<script type="text/javascript" language="javascript" src="js/nav.js"></script>
+	</head>
+
+ <body > 
+	<div id="wrapper">
+	
+		<!--header//S-->
+		<div id="header"></div>
+		<!--header//E-->
+        
+
+		<div id="subvisual" class="art_subvisual">
+            <div class="sub_txt">
+                <div class="sub_txt_in">
+                    <h3>K-AESTHETIC & ART INDONESIA 2024</h3>
+                    <h4>ARTBUDDY, K-ART</h4>           
+                </div>
+            </div>
+		</div>
+
+
+		<!-- 서브 container //S-->
+		<div id="container" class="sub_container">
+           <div id="con_area">
+
+            <div id="leftmenu">
+                <a href="guideline.html">K-ART Exhibition</a>
+                <a href="artistList.html" class="active">Artist</a>
+                <a href="galleryList.html">Gallery</a>
+            </div>
+
+                <div class="galleryView">
+                    <div class="name">
+
+                    </div>
+                    <p class="artbox" >
+                        <img  src="img/sub/thumb03.jpg" alt="" data-aos="fade-up" data-aos-duration="1000"/>
+                    </p>
+                    <div class="artinfo">
+                        <h4 class="artist">
+                            <span>Artist</span><br/>
+                            Can N Chur
+                        </h4>
+                        <ul>
+                            <li><span>Title</span>빡고주의보 </li>
+                            <li><span>Size</span>42 X 58cm</li>
+                            <li><span>Materials</span>Edgecoloring on gicleeprint, ED of 90, 2023</li>
+                            <li><span>Price</span>KRW 350,000</li>
+                        </ul>
+
+                        <div class="artnote">
+                            <h4>Artist’s Note</h4>
+                            <p class="txt">
+                                작가는 자신이 만든 세계, 나만의 세계를 ‘마이토피아’라고 칭하며  그 속에서 남의 시선을 의식하지 않은채 자유롭게 살아가는 ‘나’와는 정반대인 이상형 빡고(빡친 고양이 줄인말)의 모습을 담고 작품화했다. 작품마다 각기 다른 동화적 이야기를 녹여 한계와 경계가 없는 독창적인 작품 세계를 선보이고 있다.
+                            </p>
+                        </div>
+
+                        <div class="inqbox">
+                            <h4>Inquire</h4>
+                            <table>
+                                <colgroup>
+                                    <col width="30%"/>
+                                    <col width="*"/>
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>Name</th> 
+                                        <td><input type="text"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>TEL</th> 
+                                        <td>
+                                            <input type="text" class="input_t"/> -
+                                            <input type="text" class="input_t"/> -
+                                            <input type="text" class="input_t"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>E-mail</th> 
+                                        <td><input type="text"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Memo</th> 
+                                        <td><textarea name="" id=""></textarea></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="btnbox">
+                                <input type="submit" value="SUBMIT">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+           </div>
+        </div>
+		<!-- 서브 container //E-->
+
+
+        
+		<!--footer //S-->
+		<div id="footer_wrap"></div>
+		<!-- footer //E-->
+
+	</div>
+    
+<script>
+    AOS.init();
+</script>
+
+<script>
+    // 상단으로이동 퀵버튼 등장 , html 인클루드에선 script 작동안해서 여기에도 둔것임!!
+    document.addEventListener('scroll', function() {
+        var currentScrollValue = document.documentElement.scrollTop;
+        var gotop = document.getElementById("go_top");
+
+        if( currentScrollValue > 100){
+            gotop.style.opacity="1";
+        } else {
+            gotop.style.opacity="0";
+        }
+
+    });
+</script>
+
+<script>
+    // header
+        const header = document.querySelector('#header');
+        fetch('include/header.html')
+        .then(res => res.text())
+        .then(data => header.innerHTML = data);
+    
+        //footer
+        const footer = document.querySelector('#footer_wrap');
+        fetch('include/footer.html')
+        .then(res => res.text())
+        .then(data => footer.innerHTML = data);
+    </script>
+
+</body>
+</html>

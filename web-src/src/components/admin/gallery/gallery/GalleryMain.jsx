@@ -4,6 +4,7 @@ import useAlert from "hook/useAlert";
 import {
     CommonConsole,
     CommonErrModule,
+    CommonModal,
     CommonNotify,
     CommonRest,
 } from "common/js/Common";
@@ -11,6 +12,7 @@ import { useSetRecoilState } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
 import {
     createColumnHelper,
+    flexRender,
     getCoreRowModel,
     getSortedRowModel,
     useReactTable,
@@ -18,6 +20,10 @@ import {
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
 import { Link } from "react-router-dom";
+import SearchBar from "components/admin/common/SearchBar";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { Pagination } from "@mui/material";
 
 const GalleryMain = (props) => {
     const { confirm } = useConfirm();
@@ -410,11 +416,11 @@ const GalleryMain = (props) => {
     // 컬럼 세팅
     const columns = useMemo(() => [
         {
-            accessorKey: "people_idx",
+            accessorKey: "work_idx",
             cell: (info) => (
                 <input
                     type="checkbox"
-                    name={`people_idx_${info.getValue()}`}
+                    name={`work_idx_${info.getValue()}`}
                     id={info.getValue()}
                     value={info.getValue()}
                     onChange={(e) =>
@@ -464,41 +470,120 @@ const GalleryMain = (props) => {
         columnHelper.accessor(
             (row) => (
                 <>
-                    {`${row.name_first_ko} ${row.name_last_ko}`}
+                    {row.main_title_ko}
                     <br />
-                    {`${row.name_first_en} ${row.name_last_en}`}
+                    {`(${row.main_title_en})`}
                 </>
             ),
             {
-                id: "name",
+                id: "main_title_ko",
                 cell: (info) => info.getValue(),
-                header: "이름",
+                header: "작품제목",
                 enableSorting: "alphanumericCaseSensitive",
             },
         ),
 
-        columnHelper.accessor((row) => row.email, {
-            id: "email",
-            cell: (info) => info.getValue(),
-            header: "이메일",
-            sortingFn: "alphanumericCaseSensitive",
-        }),
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {row.main_title_ko}
+                    <br />
+                    {`(${row.main_title_en})`}
+                </>
+            ),
+            {
+                id: "main_title_ko",
+                cell: (info) => info.getValue(),
+                header: "부제목",
+                enableSorting: "alphanumericCaseSensitive",
+            },
+        ),
 
         columnHelper.accessor(
-            (row) => <>{`${row.mobile1}-${row.mobile2}-${row.mobile3}`}</>,
+            (row) => (
+                <>
+                    {row.art_type.split("(")[0]}
+                    <br />
+                    {"(" + row.art_type.split("(")[1]}
+                </>
+            ),
             {
-                id: "mobile",
+                id: "art_type",
                 cell: (info) => info.getValue(),
-                header: "연락처",
+                header: "미술 구분",
                 sortingFn: "alphanumericCaseSensitive",
             },
         ),
 
-        columnHelper.accessor((row) => row.reg_dttm.split(" ")[0], {
-            id: "reg_dttm",
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {row.paint_type.split("(")[0]}
+                    <br />
+                    {"(" + row.paint_type.split("(")[1]}
+                </>
+            ),
+            {
+                id: "paint_type",
+                cell: (info) => info.getValue(),
+                header: "질감 구분",
+                sortingFn: "alphanumericCaseSensitive",
+            },
+        ),
+
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {row.participate_type.split("(")[0]}
+                    <br />
+                    {"(" + row.participate_type.split("(")[1]}
+                </>
+            ),
+            {
+                id: "participate_type",
+                cell: (info) => info.getValue(),
+                header: "참여 구분",
+                sortingFn: "alphanumericCaseSensitive",
+            },
+        ),
+
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {row.content_info_ko}
+                    <br />
+                    {row.content_info_en}
+                </>
+            ),
+            {
+                id: "content_info",
+                cell: (info) => info.getValue(),
+                header: "내용",
+                sortingFn: "alphanumericCaseSensitive",
+            },
+        ),
+
+        columnHelper.accessor(
+            (row) => (
+                <>
+                    {row.reg_dttm.split(" ")[0]}
+                    <br />
+                    {row.reg_dttm.split(" ")[1]}
+                </>
+            ),
+            {
+                id: "reg_dttm",
+                cell: (info) => info.getValue(),
+                header: "등록일",
+                sortingFn: "alphanumericCaseSensitive",
+            },
+        ),
+
+        columnHelper.accessor((row) => <img src={row.qr_img} alt="" />, {
+            id: "qr_img",
             cell: (info) => info.getValue(),
-            header: "등록일",
-            sortingFn: "alphanumericCaseSensitive",
+            header: "QR",
+            enableSorting: false,
         }),
 
         columnHelper.accessor(
@@ -506,7 +591,7 @@ const GalleryMain = (props) => {
                 <Link
                     to=""
                     className="tablebtn"
-                    onClick={() => detailBoard(row.people_idx)}
+                    onClick={() => detailBoard(row.work_idx)}
                 >
                     상세보기
                 </Link>
@@ -539,7 +624,180 @@ const GalleryMain = (props) => {
                 <div className="title">
                     <h3>갤러리 관리 - 갤러리</h3>
                 </div>
+
+                <div className="con_area">
+                    {/*검색 바*/}
+                    <SearchBar
+                        searchKeyword={searchKeyword}
+                        doSearch={doSearch}
+                        regBoard={regBoard}
+                        // downloadExcel={downloadExcel}
+                        clickRemove={clickRemove}
+                    />
+
+                    <div
+                        className="sub_search_bar"
+                        style={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            marginBottom: "10px",
+                        }}
+                    >
+                        <Link
+                            to=""
+                            className="subbtn on"
+                            onClick={qrModalHandler}
+                        >
+                            아티스트 전체 QR 리스트
+                        </Link>
+                    </div>
+
+                    <div
+                        style={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            marginBottom: "10px",
+                        }}
+                    >
+                        총 : <b>&nbsp; {pageInfo && pageInfo.total} &nbsp;</b>{" "}
+                        건
+                    </div>
+
+                    <div className="adm_table">
+                        <table className="table_a">
+                            <colgroup>
+                                <col width="5%" />
+                                <col width="10%" />
+                                <col width="10%" />
+                                <col width="10%" />
+                                <col width="7%" />
+                                <col width="7%" />
+                                <col width="7%" />
+                                <col width="*" />
+                                <col width="8%" />
+                                <col width="10%" />
+                                <col width="5%" />
+                            </colgroup>
+                            <thead>
+                                {table.getHeaderGroups().map((headerGroup) => (
+                                    <tr key={headerGroup.id}>
+                                        {headerGroup.headers.map((header) => {
+                                            return (
+                                                <th
+                                                    key={header.id}
+                                                    colSpan={header.colSpan}
+                                                >
+                                                    {header.isPlaceholder ? null : (
+                                                        <div
+                                                            {...{
+                                                                className:
+                                                                    header.column.getCanSort()
+                                                                        ? "cursor-pointer select-none table_sort"
+                                                                        : "",
+                                                                onClick:
+                                                                    header.column.getToggleSortingHandler(),
+                                                            }}
+                                                        >
+                                                            {flexRender(
+                                                                header.column
+                                                                    .columnDef
+                                                                    .header,
+                                                                header.getContext(),
+                                                            )}
+                                                            {header.column.getCanSort() &&
+                                                                ({
+                                                                    asc: (
+                                                                        <div className="sort_asc">
+                                                                            <ArrowDropUpIcon />
+                                                                            <ArrowDropDownIcon />
+                                                                        </div>
+                                                                    ),
+                                                                    desc: (
+                                                                        <div className="sort_desc">
+                                                                            <ArrowDropUpIcon />
+                                                                            <ArrowDropDownIcon />
+                                                                        </div>
+                                                                    ),
+                                                                }[
+                                                                    header.column.getIsSorted()
+                                                                ] ?? (
+                                                                    <div>
+                                                                        <ArrowDropUpIcon />
+                                                                        <ArrowDropDownIcon />
+                                                                    </div>
+                                                                ))}
+                                                        </div>
+                                                    )}
+                                                </th>
+                                            );
+                                        })}
+                                    </tr>
+                                ))}
+                            </thead>
+                            <tbody>
+                                {boardList.length !== 0 ? (
+                                    table.getRowModel().rows.map((row) => (
+                                        <tr key={row.id}>
+                                            {row
+                                                .getVisibleCells()
+                                                .map((cell) => (
+                                                    <td key={cell.id}>
+                                                        {flexRender(
+                                                            cell.column
+                                                                .columnDef.cell,
+                                                            cell.getContext(),
+                                                        )}
+                                                    </td>
+                                                ))}
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <>
+                                        <tr>
+                                            <td
+                                                colSpan="100%"
+                                                style={{ height: "55px" }}
+                                            >
+                                                <b>데이터가 없습니다.</b>
+                                            </td>
+                                        </tr>
+                                    </>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                    {Object.keys(pageInfo).length !== 0 && (
+                        <div className="pagenation">
+                            <Pagination
+                                count={pageInfo.pages}
+                                onChange={handleChange}
+                                shape="rounded"
+                                color="primary"
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
+            <CommonModal
+                isOpen={isOpen}
+                title={modalTitle}
+                width={"1400"}
+                handleModalClose={handleModalClose}
+                component={"ArtistManageModalMain"}
+                handleNeedUpdate={handleNeedUpdate}
+                modData={modData}
+            />
+            <CommonModal
+                isOpen={isOpenQr}
+                title={modalTitleQr}
+                width={"1400"}
+                handleModalClose={handleModalCloseQr}
+                component={"QrListModalMain"}
+                handleNeedUpdate={handleNeedUpdate}
+                modData={modDataQr}
+            />
         </>
     );
 };

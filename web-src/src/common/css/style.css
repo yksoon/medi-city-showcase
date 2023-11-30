@@ -424,7 +424,7 @@ body {margin:0 auto;}
 .kart .bimg img{position:absolute; left:50%; margin-left:-1000px;}
 
 /* GALLEY 뷰페이지 */
-.galleryView .artbox {display:flex; justify-content:center; align-items:center;height:auto;padding:150px 0;text-align: center; margin:0 0 40px 0;
+.galleryView .artbox {display:flex; justify-content:center; align-items:center;height:auto;padding:68px 0;text-align: center; margin:0 0 40px 0;
 	background:url('/public/img/web/sub/artbox_bg.jpg') center center no-repeat;}
 .galleryView .artbox img{width:500px; height:auto;padding:6px;bordeR:11px solid #d1bfa8;
 	box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);

@@ -92,7 +92,7 @@ const ArtbuddyExhibitionMain = () => {
                             </div>
                         </div>
 
-                        <p class="bimg">
+                        <p className="bimg">
                             <img src="img/web/sub/artbuddy_bg.jpg" alt="" />
                         </p>
                     </div>
