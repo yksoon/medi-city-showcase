@@ -97,22 +97,20 @@ const ArtistManageModalMain = (props) => {
         isModData && setDefaultValue();
     }, [peopleTypeOptions]);
 
+    // 아티스트 썸네일 이미지 사이즈 조정 - 가로 세로 길이 대비
     useEffect(() => {
-        var thumbWidth = $('#preview').width();
-        var thumbHeight = $('#preview').height();
-        console.log(thumbWidth);
-        console.log(thumbHeight);
+        var thumbWidth = $('.profile_img').width();
+        var thumbHeight = $('.profile_img').height();
 
         if (thumbWidth > thumbHeight) {
-            $('.profile_thumb').css({'width':'400px','height':'fit-content'});
-        }
+            $('.profile_thumb').addClass('width_b'); 
+        } 
 
         if (thumbHeight > thumbWidth) {
-            $('.profile_thumb').css({'height':'300px','width':'fit-content'});
-            $('#preview').css({'height':'100%','width':'auto'});
+            $('.profile_thumb').addClass('height_b');
         }
-
-    }, []);
+ 
+    }, [fileInfo]);
 
     const setDefaultValue = () => {
         nameFirstKo.current.value = modData.name_first_ko ?? "";
@@ -920,6 +918,7 @@ const ArtistManageModalMain = (props) => {
                                                     src={`${apiPath.api_file}${item.file_path_enc}`}
                                                     alt=""
                                                     id="preview"
+                                                    class="profile_img"
                                                     ref={previewAttachment}
                                                 />
                                             </span>
