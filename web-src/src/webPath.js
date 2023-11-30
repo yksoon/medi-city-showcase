@@ -220,7 +220,7 @@ const apiPath = {
     // POST
     // 게시판 목록
     api_admin_boards: `${base_api_url + slash + version + slash}_boards`,
-    
+
     // /v1/board/{board_idx}
     // GET
     // 게시판 상세
@@ -394,6 +394,27 @@ const apiPath = {
     // POST
     // QR코드 리스트
     api_admin_get_qrcodes: `${base_api_url + slash + version + slash}qrcodes`,
+
+    // ------------------ Gallery Management API 갤러리 관리 API ------------------
+
+    // /v1/_gallerys
+    // POST
+    // 갤러리 목록
+    api_list_gallery: `${base_api_url + slash + version + slash}_gallerys`,
+
+    // /v1/gallery/{work_idx}/
+    // DELETE
+    // 갤러리 삭제
+    api_delete_gallery: `${
+        base_api_url + slash + version + slash
+    }gallery${slash}`,
+
+    // /v1/gallery/{work_idx}/
+    // GET
+    // 갤러리 상세
+    api_detail_gallery: `${
+        base_api_url + slash + version + slash
+    }gallery${slash}`,
 };
 
 export { routerPath, apiPath };
