@@ -105,137 +105,134 @@ const ConsultingBoardModalMain = (props) => {
         return;
     }
 
-    // 등록
-    // const regBoarTest = (method) => {
-    //     if (validation()) {
-    //         setIsSpinner(true);
+    // 등록 or 수정
+    const regModBoard = (method) => {
+        if (validation()) {
+            setIsSpinner(true);
 
-    //         const model = boardModel;
-    //         const formData = new FormData();
-    //         let data = {};
-    //         let fileArr = [];
+            const formData = new FormData();
+            let url;
+            let data = {};
+            let fileArr = [];
+            let commentIdxVal = method === "mod" ? modData.comment_info.comment_idx : "";
 
-    //         // /v1/_board
-    //         // POST MULTI
-    //         // 게시판 등록
-    //         let url = apiPath.api_admin_reg_board;
+            if (method === "reg") {
+                // /v1/_comment
+                // POST MULTI
+                // 문의 답변 등록
+                url = apiPath.api_admin_reg_comment;
+            } else if (method === "mod") {
+                // /v1/_comment
+                // PUT MULTI
+                // 문의 답변 수정
+                url = apiPath.api_admin_mod_comment;
+            }
 
-    //         data = {
-    //             ...model,
-    //             showYn: selectShowYn.current.value,
-    //             boardType: boardType.consulting,
-    //             categoryType: "900",
-    //             subjectKo: inputSubjectKo.current.value,
-    //             subTitleKo: inputSubTitleKo.current.value,
-    //             contentKo: inputContentKo.current.value,
-    //         };
+            data = {
+                commentIdx: commentIdxVal,
+                boardIdx: isModData && modData.board_idx,
+                showYn: selectShowYn.current.value,
+                boardType: boardType.consulting,
+                categoryType: isModData && modData.category_type_cd,
+                subject: inputSubjectKo.current.value,
+                subTitle: inputSubTitleKo.current.value,
+                content: inputAnswerContent.current.value,
+            };
 
-    //         // 기본 formData append
-    //         for (const key in data) {
-    //             formData.append(key, data[key]);
-    //         }
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
 
-    //         // 파일 formData append
-    //         fileArr = Array.from(inputAttachmentFile.current.files);
-    //         let len = fileArr.length;
-    //         for (let i = 0; i < len; i++) {
-    //             formData.append("attachmentFile", fileArr[i]);
-    //         }
+            // 파일 formData append
+            fileArr = Array.from(inputAttachmentFile.current.files);
+            let len = fileArr.length;
+            for (let i = 0; i < len; i++) {
+                formData.append("attachmentFile", fileArr[i]);
+            }
 
-    //         const restParams = {
-    //             method:
-    //                 method === "reg" ? "post_multi" : method === "mod" ? "put_multi" : "",
-    //             url: url,
-    //             data: formData,
-    //             err: err,
-    //             admin: "Y",
-    //             callback: (res) => responseLogic(res),
-    //         };
+            const restParams = {
+                method: method === "reg" ? "post_multi" : method === "mod" ? "put_multi" : "",
+                url: url, // /v1/board
+                data: formData,
+                err: err,
+                admin: "Y",
+                callback: (res) => responseLogic(res),
+            };
 
-    //         CommonRest(restParams);
+            CommonRest(restParams);
 
-    //         const responseLogic = (res) => {
-    //             let result_code = res.headers.result_code;
-    //             if (result_code === successCode.success) {
-    //                 setIsSpinner(false);
+            const responseLogic = (res) => {
+                let result_code = res.headers.result_code;
+                if (result_code === successCode.success) {
+                    setIsSpinner(false);
 
-    //                 CommonNotify({
-    //                     type: "alert",
-    //                     hook: alert,
-    //                     message:
-    //                         method === "reg"
-    //                             ? "게시글 등록이 완료 되었습니다"
-    //                             : method === "mod"
-    //                             ? "게시글 수정이 완료 되었습니다"
-    //                             : "",
-    //                     callback: () => handleNeedUpdate(),
-    //                 });
-    //             } else {
-    //                 setIsSpinner(false);
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: 
+                            method === "reg"
+                                ? "답변 등록이 완료 되었습니다"
+                                : method === "mod"
+                                ? "답변 수정이 완료 되었습니다"
+                                : "",
+                        callback: () => handleNeedUpdate(),
+                    });
+                } else {
+                    setIsSpinner(false);
 
-    //                 CommonNotify({
-    //                     type: "alert",
-    //                     hook: alert,
-    //                     message: "잠시 후 다시 시도해주세요",
-    //                 });
-    //             }
-    //         };
-    //     }
-    // };
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "잠시 후 다시 시도해주세요",
+                    });
+                }
+            };
+        }
+    };
 
+    // 삭제 확인
+    const clickRemove = () => {
+        //선택여부 확인
+        CommonNotify({
+            type: "confirm",
+            hook: confirm,
+            message: "답변을 삭제 하시겠습니까?",
+            callback: () => removeBoard(),
+        });
+    };
 
-    // 등록
-    const regBoard = () => {
+    // 삭제
+    const removeBoard = () => {
         setIsSpinner(true);
 
-        const formData = new FormData();
+        // /v1/board/{board_idx}
+        // DELETE
+        // 게시판 삭제
+        let url = apiPath.api_admin_remove_board + modData.board_idx;
+
         let data = {};
 
-        let fileArr = [];
-
-        data = {
-            showYn: selectShowYn.current.value,
-            boardType: boardType.consulting,
-            boardIdx: isModData && modData.board_idx,
-            categoryType: isModData && modData.category_type_cd,
-            subject: inputSubjectKo.current.value,
-            subTitle: inputSubTitleKo.current.value,
-            content: inputAnswerContent.current.value,
-        };
-
-        // 기본 formData append
-        for (const key in data) {
-            formData.append(key, data[key]);
-        }
-
-        // 파일 formData append
-        fileArr = Array.from(inputAttachmentFile.current.files);
-        let len = fileArr.length;
-
-        for (let i = 0; i < len; i++) {
-            formData.append("attachmentFile", fileArr[i]);
-        }
-
+        // 파라미터
         const restParams = {
-            method: "post_multi",
-            url: apiPath.api_admin_reg_comment, // /v1/board
-            data: formData,
+            method: "delete",
+            url: url,
+            data: data,
             err: err,
+            callback: (res) => responsLogic(res),
             admin: "Y",
-            callback: (res) => responseLogic(res),
         };
 
         CommonRest(restParams);
 
-        const responseLogic = (res) => {
-            let result_code = res.headers.result_code;
-            if (result_code === successCode.success) {
+        const responsLogic = (res) => {
+            if (res.headers.result_code === successCode.success) {
                 setIsSpinner(false);
 
                 CommonNotify({
                     type: "alert",
                     hook: alert,
-                    message: "답변 등록이 완료 되었습니다",
+                    message: "게시글이 삭제 되었습니다.",
                     callback: () => handleNeedUpdate(),
                 });
             } else {
@@ -247,76 +244,32 @@ const ConsultingBoardModalMain = (props) => {
                     message: "잠시 후 다시 시도해주세요",
                 });
             }
-        };
+        }
     };
+    
+    // 검증
+    const validation = () => {
+        const noti = (ref, msg) => {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: msg,
+                callback: () => focus(),
+            });
 
-    // 수정
-    const modBoard = () => {
-        setIsSpinner(true);
-
-        const formData = new FormData();
-        let data = {};
-
-        let fileArr = [];
-
-        data = {
-            showYn: selectShowYn.current.value,
-            boardType: boardType.consulting,
-            boardIdx: isModData && modData.board_idx,
-            categoryType: isModData && modData.category_type_cd,
-            subject: inputSubjectKo.current.value,
-            subTitle: inputSubTitleKo.current.value,
-            content: inputAnswerContent.current.value,
-            commentIdx: modData.comment_info.comment_idx,
+            const focus = () => {
+                ref.current.focus();
+            };
         };
 
-        // 기본 formData append
-        for (const key in data) {
-            formData.append(key, data[key]);
+        if (!inputAnswerContent.current.value && inputAttachmentFile.current.files.length === 0) {
+            noti(inputAnswerContent, "내용을 입력해주세요");
+
+            return false;
         }
 
-        // 파일 formData append
-        fileArr = Array.from(inputAttachmentFile.current.files);
-        let len = fileArr.length;
-        for (let i = 0; i < len; i++) {
-            formData.append("attachmentFile", fileArr[i]);
-        }
-
-        const restParams = {
-            method: "put_multi",
-            url: apiPath.api_admin_reg_comment, // /v1/board
-            data: formData,
-            err: err,
-            admin: "Y",
-            callback: (res) => responseLogic(res),
-        };
-
-        CommonRest(restParams);
-
-        const responseLogic = (res) => {
-            let result_code = res.headers.result_code;
-            if (result_code === successCode.success) {
-                setIsSpinner(false);
-
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "답변 수정이 완료 되었습니다",
-                    callback: () => handleNeedUpdate(),
-                });
-            } else {
-                setIsSpinner(false);
-
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "잠시 후 다시 시도해주세요",
-                });
-            }
-        };
+        return true;
     };
-
- 
 
     return (
         <div className="admin">
@@ -474,42 +427,19 @@ const ConsultingBoardModalMain = (props) => {
             </table>
 
             <div className="subbtn_box">
-                {/*{isModData ? (*/}
-                {/*    <>*/}
-                {/*        <Link*/}
-                {/*            className="subbtn del"*/}
-                {/*            // onClick={clickRemove}*/}
-                {/*        >*/}
-                {/*            삭제*/}
-                {/*        </Link>*/}
-                {/*        <Link*/}
-                {/*            className="subbtn on"*/}
-                {/*            onClick={modBoard}*/}
-                {/*        >*/}
-                {/*            수정*/}
-                {/*        </Link>*/}
-                {/*    </>*/}
-                {/*) : (*/}
-                {/*    <Link*/}
-                {/*        className="subbtn on"*/}
-                {/*        // onClick={regTerms}*/}
-                {/*    >*/}
-                {/*        등록*/}
-                {/*    </Link>*/}
-                {/*)}*/}
                 {modData.process_status_cd === "100" ? (
-                    <Link className="subbtn on" onClick={regBoard}>
+                    <Link className="subbtn on" onClick={() => regModBoard("reg")}>
                         등록
                     </Link>
                 ) : (
                     <>
                         <Link
                             className="subbtn del"
-                            // onClick={clickRemove}
+                            onClick={clickRemove}
                         >
                             삭제
                         </Link>
-                        <Link className="subbtn on" onClick={modBoard}>
+                        <Link className="subbtn on" onClick={() => regModBoard("mod")}>
                             수정
                         </Link>
                     </>

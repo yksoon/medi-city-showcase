@@ -127,6 +127,7 @@ const ConsultingBoardMain = (props) => {
     // 리스트 새로고침
     const handleNeedUpdate = () => {
         setModalTitle("");
+        setModData({});
         setIsOpen(false);
         setIsNeedUpdate(!isNeedUpdate);
     };
@@ -182,7 +183,7 @@ const ConsultingBoardMain = (props) => {
             if (res.headers.result_code === successCode.success) {
                 const result_info = res.data.result_info;
                 setModData(result_info);
-                
+
                 modBoard();
 
                 setIsSpinner(false);
@@ -196,12 +197,6 @@ const ConsultingBoardMain = (props) => {
                 });
             }
         };
-    };
-
-    // 상담문의 등록 모달 (임시)
-    const regBoard = () => {
-        setModalTitle("상담문의 등록하기");
-        setIsOpen(true);
     };
 
     // 상세보기 모달
@@ -389,7 +384,7 @@ const ConsultingBoardMain = (props) => {
                     <SearchBar
                         searchKeyword={searchKeyword}
                         doSearch={doSearch}
-                        regBoard={regBoard}
+                        // regBoard={regBoard}
                         // downloadExcel={downloadExcel}
                         clickRemove={clickRemove}
                     />
