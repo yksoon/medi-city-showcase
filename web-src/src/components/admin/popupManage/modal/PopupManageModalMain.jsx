@@ -37,7 +37,7 @@ const PopupManageModalMain = (props) => {
     const endDate = useRef(null);
     const endTime = useRef(null);
     const inputAttachmentFile = useRef(null);
-    
+
     const fileBaseUrl = apiPath.api_file;
     const [fileList, setFileList] = useState([]);
 
@@ -56,10 +56,10 @@ const PopupManageModalMain = (props) => {
         popupLeft.current.value = modData.position_left;
         selectScrollYn.current.value = modData.option_scroll_yn;
         select24HoursYn.current.value = modData.option_24_hours_yn;
-        startDate.current.value = modData.start_date.split(' ')[0];
-        startTime.current.value = modData.start_date.split(' ')[1];
-        endDate.current.value = modData.end_date.split(' ')[0];
-        endTime.current.value = modData.end_date.split(' ')[1];
+        startDate.current.value = modData.start_date.split(" ")[0];
+        startTime.current.value = modData.start_date.split(" ")[1];
+        endDate.current.value = modData.end_date.split(" ")[0];
+        endTime.current.value = modData.end_date.split(" ")[1];
         setFileList(modData.file_info);
     };
 
@@ -105,13 +105,13 @@ const PopupManageModalMain = (props) => {
     const resetFileList = () => {
         // 각각 배열에 담긴 데이터가 있을 경우에만 초기화
         if (fileList.length) {
-            setFileList(prevFileList => ([...prevFileList].splice(0, 0)));
+            setFileList((prevFileList) => [...prevFileList].splice(0, 0));
         }
         if (inputAttachmentFile.current.files.length) {
             inputAttachmentFile.current.value = "";
         }
         return;
-    }
+    };
 
     // 등록
     const regModBoard = (method) => {
@@ -124,8 +124,12 @@ const PopupManageModalMain = (props) => {
             let data = {};
             let fileArr = [];
 
-            let startDateVal = startTime.current.value ? startDate.current.value + ' ' + startTime.current.value : startDate.current.value + ' 00:00';
-            let endDateVal = endTime.current.value ? endDate.current.value + ' ' + endTime.current.value : endDate.current.value + ' 23:59';
+            let startDateVal = startTime.current.value
+                ? startDate.current.value + " " + startTime.current.value
+                : startDate.current.value + " 00:00";
+            let endDateVal = endTime.current.value
+                ? endDate.current.value + " " + endTime.current.value
+                : endDate.current.value + " 23:59";
             let popupIdxVal = method === "mod" ? modData.popup_idx : "";
 
             if (method === "reg") {
@@ -170,7 +174,11 @@ const PopupManageModalMain = (props) => {
 
             const restParams = {
                 method:
-                    method === "reg" ? "post_multi" : method === "mod" ? "put_multi" : "",
+                    method === "reg"
+                        ? "post_multi"
+                        : method === "mod"
+                        ? "put_multi"
+                        : "",
                 url: url,
                 data: formData,
                 err: err,
@@ -262,7 +270,7 @@ const PopupManageModalMain = (props) => {
                     message: "잠시 후 다시 시도해주세요",
                 });
             }
-        }
+        };
     };
 
     // 검증
@@ -286,7 +294,10 @@ const PopupManageModalMain = (props) => {
             return false;
         }
 
-        if (!popupContent.current.value && inputAttachmentFile.current.files.length === 0) {
+        if (
+            !popupContent.current.value &&
+            inputAttachmentFile.current.files.length === 0
+        ) {
             noti(popupContent, "내용을 입력해주세요");
 
             return false;
@@ -319,11 +330,9 @@ const PopupManageModalMain = (props) => {
                     </colgroup>
                     <tbody>
                         <tr>
-                            <th>
-                                노출여부
-                            </th>
+                            <th>노출여부</th>
                             <td colSpan="3">
-                                <select class="wp100" ref={selectShowYn}>
+                                <select className="wp100" ref={selectShowYn}>
                                     <option value="Y">노출</option>
                                     <option value="N">비노출</option>
                                 </select>
@@ -347,7 +356,7 @@ const PopupManageModalMain = (props) => {
                             </th>
                             <td colSpan="3">
                                 <textarea
-                                    class="textarea_basic"
+                                    className="textarea_basic"
                                     ref={popupContent}
                                 ></textarea>
                             </td>
@@ -363,7 +372,13 @@ const PopupManageModalMain = (props) => {
                                     </b>
                                     
                                 </div> */}
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                    }}
+                                >
                                     <input
                                         type="file"
                                         ref={inputAttachmentFile}
@@ -392,7 +407,7 @@ const PopupManageModalMain = (props) => {
                                                     {item.file_name}
                                                 </Link>
                                             </div>
-                                    ))}
+                                        ))}
                                 </div>
                             </td>
                         </tr>
@@ -435,7 +450,7 @@ const PopupManageModalMain = (props) => {
                         <tr>
                             <th>스크롤 사용</th>
                             <td colSpan="3">
-                                <select class="wp100" ref={selectScrollYn}>
+                                <select className="wp100" ref={selectScrollYn}>
                                     <option value="N">사용안함</option>
                                     <option value="Y">사용함</option>
                                 </select>
@@ -444,7 +459,7 @@ const PopupManageModalMain = (props) => {
                         <tr>
                             <th>24시간동안 띄우지 않기</th>
                             <td colSpan="3">
-                                <select class="wp100" ref={select24HoursYn}>
+                                <select className="wp100" ref={select24HoursYn}>
                                     <option value="N">사용안함</option>
                                     <option value="Y">사용함</option>
                                 </select>
@@ -490,25 +505,49 @@ const PopupManageModalMain = (props) => {
                                 />
                             </td>
                         </tr>
-                        
+
                         {isModData && (
                             <>
                                 <tr>
                                     <th>등록자</th>
-                                    <td colSpan="3">{ modData.reg_user_name_ko }</td>
+                                    <td colSpan="3">
+                                        {modData.reg_user_name_ko}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>등록일</th>
-                                    <td colSpan="3">{ modData.reg_dttm }</td>
+                                    <td colSpan="3">{modData.reg_dttm}</td>
                                 </tr>
                                 <tr>
-                                    <th>
-                                        View Content
-                                    </th>
-                                    <td colSpan="3" style={{maxWidth: '24vw', overflow: 'hidden'}}>
-                                        <div dangerouslySetInnerHTML={{ __html: modData.view_content }}></div>
+                                    <th>View Content</th>
+                                    <td
+                                        colSpan="3"
+                                        style={{
+                                            maxWidth: "24vw",
+                                            overflow: "hidden",
+                                        }}
+                                    >
+                                        <div
+                                            dangerouslySetInnerHTML={{
+                                                __html: modData.view_content,
+                                            }}
+                                        ></div>
                                         <div>
-                                            { fileList.length !== 0 && fileList.map((file) => <img src={`${fileBaseUrl + file.file_path_enc}`} alt={file.file_name} key={file.file_idx} style={{width: '100%', height: 'auto'}} />)}
+                                            {fileList.length !== 0 &&
+                                                fileList.map((file) => (
+                                                    <img
+                                                        src={`${
+                                                            fileBaseUrl +
+                                                            file.file_path_enc
+                                                        }`}
+                                                        alt={file.file_name}
+                                                        key={file.file_idx}
+                                                        style={{
+                                                            width: "100%",
+                                                            height: "auto",
+                                                        }}
+                                                    />
+                                                ))}
                                         </div>
                                     </td>
                                 </tr>
