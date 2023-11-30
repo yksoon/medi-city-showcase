@@ -65,6 +65,7 @@ const ArtistManageModalMain = (props) => {
     const previewAttachment = useRef(null);
     const gender = useRef(null);
     const birth = useRef(null);
+    const peopleMemo = useRef(null);
     // refs End
 
     useEffect(() => {
@@ -107,6 +108,7 @@ const ArtistManageModalMain = (props) => {
         mobile3.current.value = modData.mobile3;
         gender.current.value = modData.gender_cd;
         birth.current.value = modData.birth;
+        peopleMemo.current.value = modData.people_memo;
         setFileInfo(modData.file_info);
         setThumbnailInfo(modData.thumbnail_info);
 
@@ -520,6 +522,7 @@ const ArtistManageModalMain = (props) => {
                 mobile2: mobile2.current.value,
                 mobile3: mobile3.current.value,
                 gender: gender.current.value,
+                people_memo: peopleMemo.current.value,
                 birthYyyy:
                     birth.current.value && birth.current.value.split("-")[0],
                 birthMm:
@@ -899,6 +902,12 @@ const ArtistManageModalMain = (props) => {
                                 </td>
                             </tr>
                         )}
+                        <tr>
+                            <th>메모</th>
+                            <td colSpan={3}>
+                                <textarea ref={peopleMemo}></textarea>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 
