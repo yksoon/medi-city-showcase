@@ -10,6 +10,7 @@ import { apiPath } from "webPath";
 import { successCode } from "resultCode";
 import imageCompression from "browser-image-compression";
 import { imageResizeOptions } from "common/js/static";
+import $ from "jquery";
 
 const ArtistManageModalMain = (props) => {
     const { confirm } = useConfirm();
@@ -95,6 +96,23 @@ const ArtistManageModalMain = (props) => {
     useEffect(() => {
         isModData && setDefaultValue();
     }, [peopleTypeOptions]);
+
+    useEffect(() => {
+        var thumbWidth = $('#preview').width();
+        var thumbHeight = $('#preview').height();
+        console.log(thumbWidth);
+        console.log(thumbHeight);
+
+        if (thumbWidth > thumbHeight) {
+            $('.profile_thumb').css({'width':'400px','height':'fit-content'});
+        }
+
+        if (thumbHeight > thumbWidth) {
+            $('.profile_thumb').css({'height':'300px','width':'fit-content'});
+            $('#preview').css({'height':'100%','width':'auto'});
+        }
+
+    }, []);
 
     const setDefaultValue = () => {
         nameFirstKo.current.value = modData.name_first_ko ?? "";

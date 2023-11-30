@@ -78,7 +78,7 @@ select {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;colo
     -moz-appearance:none; appearance:none; background:url('/public/img/common/arrow_btm.png') right 10px center no-repeat;min-width:86px;}
 input::placeholder {color: #a6a6a6;}
 input.input {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;display:inline-block;min-width:80px;border-radius: 5px;font-family: inherit;}
-textarea {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;display:inline-block;min-width:80px;border-radius: 5px;font-family: inherit;resize:none;min-height:80px;width:100%;}
+textarea {border: 1px solid #ddd;height:28px;line-height:14px;font-size: 14px;color: #333;padding: 0 10px;display:inline-block;min-width:80px;border-radius: 5px;font-family: inherit;resize:none;min-height:80px;width:100%;}
 input.input.hold {background: #efefef;color: #bdbdbd;}
 input.input:last-child {margin:0;}
 input.login {border: 1px solid #818181;height:36px;line-height:36px;font-size: 12px;color: #333;padding: 0 10px;border-radius: 5px;}
