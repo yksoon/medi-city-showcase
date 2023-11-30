@@ -1,14 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import useAlert from "hook/useAlert";
+import useConfirm from "hook/useConfirm";
 import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import { useSetRecoilState } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
+import { boardModel } from "models/board/board";
+import { boardType } from "common/js/static";
+
+// ------------------- import End --------------------
 
 const ConsultingBoardModalMain = (props) => {
     const { alert } = useAlert();
+    const { confirm } = useConfirm();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
@@ -21,9 +27,9 @@ const ConsultingBoardModalMain = (props) => {
 
     // refs
     const selectShowYn = useRef(null);
-    const inputTitle = useRef(null);
-    const inputSubTitle = useRef(null);
-    const inputContent = useRef(null);
+    const inputSubjectKo = useRef(null);
+    const inputSubTitleKo = useRef(null);
+    const inputContentKo = useRef(null);
     const inputAnswerContent = useRef(null);
     const inputAttachmentFile = useRef(null);
 
@@ -38,9 +44,9 @@ const ConsultingBoardModalMain = (props) => {
 
     const setDefaultValue = () => {
         selectShowYn.current.value = modData.show_yn;
-        inputTitle.current.value = modData.subject;
-        inputSubTitle.current.value = modData.sub_title;
-        inputContent.current.value = modData.content;
+        inputSubjectKo.current.value = modData.subject_ko;
+        inputSubTitleKo.current.value = modData.sub_title_ko;
+        inputContentKo.current.value = modData.content_ko;
         setFileList(modData.file_info);
 
         if (modData.comment_info !== null) {
@@ -51,14 +57,14 @@ const ConsultingBoardModalMain = (props) => {
 
     // 파일 첨부시
     const attachFile = (input) => {
-        // console.log(input.files);
         const maxFileCnt = 5; // 첨부파일 최대 개수
+
         if (isFileImage(input.files)) {
             if (input.files.length > maxFileCnt) {
                 CommonNotify({
                     type: "alert",
                     hook: alert,
-                    message: "이미지는 5장까지 업로드 가능합니다.",
+                    message: `이미지는 ${maxFileCnt}장까지 업로드 가능합니다.`,
                 });
 
                 input.value = "";
@@ -87,6 +93,163 @@ const ConsultingBoardModalMain = (props) => {
         }
     }
 
+    // 첨부파일 삭제
+    const resetFileList = () => {
+        // 각각 배열에 담긴 데이터가 있을 경우에만 초기화
+        if (fileList.length) {
+            setFileList(prevFileList => ([...prevFileList].splice(0, 0)));
+        }
+        if (inputAttachmentFile.current.files.length) {
+            inputAttachmentFile.current.value = "";
+        }
+        return;
+    }
+
+    // 등록
+    // const regBoarTest = (method) => {
+    //     if (validation()) {
+    //         setIsSpinner(true);
+
+    //         const model = boardModel;
+    //         const formData = new FormData();
+    //         let data = {};
+    //         let fileArr = [];
+
+    //         // /v1/_board
+    //         // POST MULTI
+    //         // 게시판 등록
+    //         let url = apiPath.api_admin_reg_board;
+
+    //         data = {
+    //             ...model,
+    //             showYn: selectShowYn.current.value,
+    //             boardType: boardType.consulting,
+    //             categoryType: "900",
+    //             subjectKo: inputSubjectKo.current.value,
+    //             subTitleKo: inputSubTitleKo.current.value,
+    //             contentKo: inputContentKo.current.value,
+    //         };
+
+    //         // 기본 formData append
+    //         for (const key in data) {
+    //             formData.append(key, data[key]);
+    //         }
+
+    //         // 파일 formData append
+    //         fileArr = Array.from(inputAttachmentFile.current.files);
+    //         let len = fileArr.length;
+    //         for (let i = 0; i < len; i++) {
+    //             formData.append("attachmentFile", fileArr[i]);
+    //         }
+
+    //         const restParams = {
+    //             method:
+    //                 method === "reg" ? "post_multi" : method === "mod" ? "put_multi" : "",
+    //             url: url,
+    //             data: formData,
+    //             err: err,
+    //             admin: "Y",
+    //             callback: (res) => responseLogic(res),
+    //         };
+
+    //         CommonRest(restParams);
+
+    //         const responseLogic = (res) => {
+    //             let result_code = res.headers.result_code;
+    //             if (result_code === successCode.success) {
+    //                 setIsSpinner(false);
+
+    //                 CommonNotify({
+    //                     type: "alert",
+    //                     hook: alert,
+    //                     message:
+    //                         method === "reg"
+    //                             ? "게시글 등록이 완료 되었습니다"
+    //                             : method === "mod"
+    //                             ? "게시글 수정이 완료 되었습니다"
+    //                             : "",
+    //                     callback: () => handleNeedUpdate(),
+    //                 });
+    //             } else {
+    //                 setIsSpinner(false);
+
+    //                 CommonNotify({
+    //                     type: "alert",
+    //                     hook: alert,
+    //                     message: "잠시 후 다시 시도해주세요",
+    //                 });
+    //             }
+    //         };
+    //     }
+    // };
+
+
+    // 등록
+    const regBoard = () => {
+        setIsSpinner(true);
+
+        const formData = new FormData();
+        let data = {};
+
+        let fileArr = [];
+
+        data = {
+            showYn: selectShowYn.current.value,
+            boardType: boardType.consulting,
+            boardIdx: isModData && modData.board_idx,
+            categoryType: isModData && modData.category_type_cd,
+            subject: inputSubjectKo.current.value,
+            subTitle: inputSubTitleKo.current.value,
+            content: inputAnswerContent.current.value,
+        };
+
+        // 기본 formData append
+        for (const key in data) {
+            formData.append(key, data[key]);
+        }
+
+        // 파일 formData append
+        fileArr = Array.from(inputAttachmentFile.current.files);
+        let len = fileArr.length;
+
+        for (let i = 0; i < len; i++) {
+            formData.append("attachmentFile", fileArr[i]);
+        }
+
+        const restParams = {
+            method: "post_multi",
+            url: apiPath.api_admin_reg_comment, // /v1/board
+            data: formData,
+            err: err,
+            admin: "Y",
+            callback: (res) => responseLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responseLogic = (res) => {
+            let result_code = res.headers.result_code;
+            if (result_code === successCode.success) {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "답변 등록이 완료 되었습니다",
+                    callback: () => handleNeedUpdate(),
+                });
+            } else {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "잠시 후 다시 시도해주세요",
+                });
+            }
+        };
+    };
+
     // 수정
     const modBoard = () => {
         setIsSpinner(true);
@@ -98,11 +261,11 @@ const ConsultingBoardModalMain = (props) => {
 
         data = {
             showYn: selectShowYn.current.value,
-            boardType: "100",
+            boardType: boardType.consulting,
             boardIdx: isModData && modData.board_idx,
             categoryType: isModData && modData.category_type_cd,
-            subject: inputTitle.current.value,
-            subTitle: inputSubTitle.current.value,
+            subject: inputSubjectKo.current.value,
+            subTitle: inputSubTitleKo.current.value,
             content: inputAnswerContent.current.value,
             commentIdx: modData.comment_info.comment_idx,
         };
@@ -153,70 +316,7 @@ const ConsultingBoardModalMain = (props) => {
         };
     };
 
-    // 등록
-    const regBoard = () => {
-        setIsSpinner(true);
-
-        const formData = new FormData();
-        let data = {};
-
-        let fileArr = [];
-
-        data = {
-            showYn: selectShowYn.current.value,
-            boardType: "100",
-            boardIdx: isModData && modData.board_idx,
-            categoryType: isModData && modData.category_type_cd,
-            subject: inputTitle.current.value,
-            subTitle: inputSubTitle.current.value,
-            content: inputAnswerContent.current.value,
-        };
-
-        // 기본 formData append
-        for (const key in data) {
-            formData.append(key, data[key]);
-        }
-
-        // 파일 formData append
-        fileArr = Array.from(inputAttachmentFile.current.files);
-        let len = fileArr.length;
-        for (let i = 0; i < len; i++) {
-            formData.append("attachmentFile", fileArr[i]);
-        }
-
-        const restParams = {
-            method: "post_multi",
-            url: apiPath.api_admin_reg_comment, // /v1/board
-            data: formData,
-            err: err,
-            admin: "Y",
-            callback: (res) => responseLogic(res),
-        };
-
-        CommonRest(restParams);
-
-        const responseLogic = (res) => {
-            let result_code = res.headers.result_code;
-            if (result_code === successCode.success) {
-                setIsSpinner(false);
-
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "답변 등록이 완료 되었습니다",
-                    callback: () => handleNeedUpdate(),
-                });
-            } else {
-                setIsSpinner(false);
-
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "잠시 후 다시 시도해주세요",
-                });
-            }
-        };
-    };
+ 
 
     return (
         <div className="admin">
@@ -247,7 +347,7 @@ const ConsultingBoardModalMain = (props) => {
                                 className="input wp100"
                                 readOnly={true}
                                 disabled={true}
-                                ref={inputTitle}
+                                ref={inputSubjectKo}
                             />
                         </td>
                     </tr>
@@ -259,7 +359,7 @@ const ConsultingBoardModalMain = (props) => {
                                 className="input wp100"
                                 readOnly={true}
                                 disabled={true}
-                                ref={inputSubTitle}
+                                ref={inputSubTitleKo}
                             />
                         </td>
                     </tr>
@@ -268,7 +368,7 @@ const ConsultingBoardModalMain = (props) => {
                         <td>
                             <textarea
                                 className="textarea_basic"
-                                ref={inputContent}
+                                ref={inputContentKo}
                                 readOnly={true}
                                 disabled={true}
                             ></textarea>

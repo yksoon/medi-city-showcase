@@ -5,7 +5,7 @@ import { CommonErrModule } from "common/js/Common";
 import { useSetRecoilState } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
 
-const PhotoBoardMain = (props) => {
+const GuestBookBoardMain = (props) => {
     const { confirm } = useConfirm();
     const { alert } = useAlert();
     const err = CommonErrModule();
@@ -17,11 +17,11 @@ const PhotoBoardMain = (props) => {
         <>
             <div className="content">
                 <div className="title">
-                    <h3>게시판 관리 - 포토 갤러리</h3>
+                    <h3>게시판 관리 - 방명록</h3>
                 </div>
             </div>
         </>
     );
 };
 
-export default PhotoBoardMain;
+export default GuestBookBoardMain;

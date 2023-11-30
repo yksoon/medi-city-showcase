@@ -15,7 +15,7 @@ import ConsultingBoardMain from "components/admin/board/consultingBoard/Consulti
 import RegistraionManageMain from "components/admin/registration/registrationManage/RegistraionManageMain";
 import EntryManageMain from "components/admin/registration/entryManage/EntryManageMain";
 import PopupManageMain from "components/admin/popupManage/PopupManageMain";
-import PhotoBoardMain from "components/admin/board/photoBoard/PhotoBoardMain";
+import GuestBookBoardMain from "components/admin/board/guestBook/GuestBookBoardMain";
 import ArtistManageMain from "components/admin/gallery/artist/ArtistManageMain";
 import NoticeBoardMain from "components/admin/board/notice/NoticeBoardMain";
 import VideoBoardMain from "components/admin/board/videoBoard/VideoBoardMain";
@@ -145,41 +145,42 @@ const Admin = () => {
     // 렌더링 페이지
     const renderPage = (page) => {
         switch (page) {
-            // 상담문의
-            case "consultingBoard":
-                return <ConsultingBoardMain isRefresh={isRefresh} />;
-
-            // 사전등록관리
+            
+            // 사전등록관리 - 사전등록
             case "registrationMng":
                 return <RegistraionManageMain isRefresh={isRefresh} />;
 
-            // 참가자관리
+            // 사전등록관리 - 참가자관리
             case "entryMng":
                 return <EntryManageMain isRefresh={isRefresh} />;
-
-            // 팝업관리
-            case "popupMng":
-                return <PopupManageMain isRefresh={isRefresh} />;
-
-            // 팝업관리
-            case "photoBoard":
-                return <PhotoBoardMain isRefresh={isRefresh} />;
-
-            // 갤러리관리 - 아티스트
-            case "artistMng":
-                return <ArtistManageMain isRefresh={isRefresh} />;
 
             // 게시판관리 - 공지사항
             case "noticeBoard":
                 return <NoticeBoardMain isRefresh={isRefresh} />;
 
+            // 게시판관리 - 상담문의
+            case "consultingBoard":
+                return <ConsultingBoardMain isRefresh={isRefresh} />;
+
+            // 게시판관리 - 방명록
+            case "guestBookBoard":
+                return <GuestBookBoardMain isRefresh={isRefresh} />;
+
             // 게시판관리 - 영상갤러리
             case "movieBoard":
                 return <VideoBoardMain isRefresh={isRefresh} />;
 
+            // 갤러리관리 - 아티스트
+            case "artistMng":
+                return <ArtistManageMain isRefresh={isRefresh} />;
+
             // 갤러리관리 - 갤러리
             case "galleryMng":
                 return <GalleryMain isRefresh={isRefresh} />;
+
+            // 팝업관리
+            case "popupMng":
+                return <PopupManageMain isRefresh={isRefresh} />;
 
             default:
                 return <EntryManageMain isRefresh={isRefresh} />;

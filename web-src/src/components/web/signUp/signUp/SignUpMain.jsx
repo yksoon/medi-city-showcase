@@ -237,14 +237,10 @@ const SignUpMain = (props) => {
         setEntryInfo(newArr);
 
         // 성별
-        const genderArr = codes.filter((el) => el.code_type === "GENDER");
-        for (let i = 0; i < genderArr.length; i++) {
-            if (genderArr[i].code_key === "0") {
-                genderArr[i] = { ...genderArr[i], code_value_en: "Man" };
-            } else if (genderArr[i].code_key === "1") {
-                genderArr[i] = { ...genderArr[i], code_value_en: "Woman" };
-            }
-        }
+        let genderArr = codes.filter((el) => el.code_type === "GENDER");
+        genderArr = genderArr.filter(
+            (el) => el.code_key === "0" || el.code_key === "1",
+        );
         setGenderOption(genderArr);
     };
 

@@ -1,20 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-    CommonConsole,
-    CommonErrModule,
-    CommonModal,
-    CommonNotify,
-    CommonRest,
-} from "common/js/Common";
+import { CommonConsole, CommonErrModule, CommonModal, CommonNotify, CommonRest } from "common/js/Common";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-    isSpinnerAtom,
-    userInfoAdminAtom,
-    userTokenAdminAtom,
-} from "recoils/atoms";
+import { useSetRecoilState } from "recoil";
+import { isSpinnerAtom } from "recoils/atoms";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
 import {
@@ -25,18 +15,18 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { Pagination } from "@mui/material";
+import { boardType } from "common/js/static";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import SearchBar from "components/admin/common/SearchBar";
+
+// ------------------- import End --------------------
 
 const ConsultingBoardMain = (props) => {
     const { confirm } = useConfirm();
     const { alert } = useAlert();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
-
-    const userTokenAdmin = useRecoilValue(userTokenAdminAtom);
-    const userInfoAdmin = useRecoilValue(userInfoAdminAtom);
 
     const isRefresh = props.isRefresh;
 
@@ -72,7 +62,7 @@ const ConsultingBoardMain = (props) => {
             page_num: pageNum,
             page_size: pageSize,
             search_keyword: searchKeyword,
-            board_type: "100", // 상담문의
+            board_type: boardType.consulting, // 상담문의
         };
 
         // 파라미터
@@ -192,8 +182,7 @@ const ConsultingBoardMain = (props) => {
             if (res.headers.result_code === successCode.success) {
                 const result_info = res.data.result_info;
                 setModData(result_info);
-
-                // console.log(result_info)
+                
                 modBoard();
 
                 setIsSpinner(false);
@@ -209,10 +198,78 @@ const ConsultingBoardMain = (props) => {
         };
     };
 
+    // 상담문의 등록 모달 (임시)
+    const regBoard = () => {
+        setModalTitle("상담문의 등록하기");
+        setIsOpen(true);
+    };
+
     // 상세보기 모달
     const modBoard = () => {
         setModalTitle("문의내용 상세보기");
         setIsOpen(true);
+    };
+
+    // 삭제
+    const clickRemove = () => {
+        //선택여부 확인
+        checkItems.length === 0
+            ? CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "삭제할 항목을 선택해주세요",
+                })
+            : CommonNotify({
+                    type: "confirm",
+                    hook: confirm,
+                    message: "선택된 항목을 삭제 하시겠습니까?",
+                    callback: () => removeBoard(),
+                });
+    };
+
+    const removeBoard = async () => {
+        let checkItemsStr = checkItems.join();
+        setIsSpinner(true);
+
+        const url = `${apiPath.api_admin_remove_board}${checkItemsStr}`;
+
+        const restParams = {
+            method: "delete",
+            url: url,
+            data: {},
+            err: err,
+            admin: "Y",
+            callback: (res) => responsLogic(res),
+        };
+
+        CommonRest(restParams);
+
+        const responsLogic = (res) => {
+            const result_code = res.headers.result_code;
+            if (result_code === successCode.success) {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "삭제가 완료 되었습니다",
+                    callback: () => pageUpdate(),
+                });
+            } else {
+                setIsSpinner(false);
+
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "잠시 후 다시 시도해주세요",
+                });
+            }
+
+            const pageUpdate = () => {
+                setCheckItems([]);
+                handleNeedUpdate();
+            };
+        };
     };
 
     // --------------------------------- 테이블 세팅 -------------------------------------
@@ -255,17 +312,24 @@ const ConsultingBoardMain = (props) => {
             sortingFn: "alphanumericCaseSensitive",
         }),
 
-        columnHelper.accessor((row) => row.subject, {
-            id: "subject",
+        columnHelper.accessor((row) => row.subject_ko, {
+            id: "subject_ko",
             cell: (info) => info.getValue(),
             header: "제목",
             sortingFn: "alphanumericCaseSensitive",
         }),
 
-        columnHelper.accessor((row) => row.content, {
-            id: "content",
+        columnHelper.accessor((row) => row.content_ko, {
+            id: "content_ko",
             cell: (info) => info.getValue(),
             header: "내용",
+            sortingFn: "alphanumericCaseSensitive",
+        }),
+
+        columnHelper.accessor((row) => row.show_yn, {
+            id: "show_yn",
+            cell: (info) => (info.getValue() === "Y" ? "노출" : "비노출"),
+            header: "노출여부",
             sortingFn: "alphanumericCaseSensitive",
         }),
 
@@ -325,9 +389,9 @@ const ConsultingBoardMain = (props) => {
                     <SearchBar
                         searchKeyword={searchKeyword}
                         doSearch={doSearch}
-                        // regBoard={regBoard}
+                        regBoard={regBoard}
                         // downloadExcel={downloadExcel}
-                        // clickRemove={clickRemove}
+                        clickRemove={clickRemove}
                     />
 
                     <div
@@ -348,6 +412,7 @@ const ConsultingBoardMain = (props) => {
                                 <col width="10%" />
                                 <col width="20%" />
                                 <col width="*" />
+                                <col width="10%" />
                                 <col width="10%" />
                                 <col width="10%" />
                                 <col width="5%" />
