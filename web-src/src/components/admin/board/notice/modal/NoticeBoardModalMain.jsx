@@ -10,6 +10,8 @@ import { successCode } from "resultCode";
 import { boardModel } from "models/board/board";
 import { boardType } from "common/js/static";
 
+// ------------------- import End --------------------
+
 const NoticeBoardModalMain = (props) => {
     const { alert } = useAlert();
     const { confirm } = useConfirm();
