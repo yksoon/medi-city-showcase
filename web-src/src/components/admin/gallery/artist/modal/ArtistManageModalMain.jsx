@@ -666,6 +666,8 @@ const ArtistManageModalMain = (props) => {
             };
         }
     };
+    
+
 
     /**
      * validation 검증
@@ -889,11 +891,11 @@ const ArtistManageModalMain = (props) => {
                             {/*</td>*/}
                             <th>프로필 사진</th>
                             <td colSpan={3}>
-                                <div className="hotel_thumb_wrap">
+                                <div className="profile_wrap">
                                     {fileInfo.length !== 0 ? (
                                         fileInfo.map((item, idx) => (
                                             <span
-                                                className="hotel_thumb"
+                                                className="profile_thumb"
                                                 key={`file_info_${idx}`}
                                             >
                                                 <img
@@ -1123,5 +1125,9 @@ const ArtistManageModalMain = (props) => {
         </>
     );
 };
+
+<script>
+
+</script>
 
 export default ArtistManageModalMain;
