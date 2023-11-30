@@ -108,7 +108,9 @@ const ArtistManageModalMain = (props) => {
         mobile2.current.value = modData.mobile2 ?? "";
         mobile3.current.value = modData.mobile3 ?? "";
         gender.current.value = modData.gender_cd ?? "";
-        birth.current.value = modData.birth ?? "";
+        birth.current.value = modData.birth
+            ? `${modData.birth_yyyy}-${modData.birth_mm}-${modData.birth_dd}`
+            : "";
         peopleMemoKo.current.value = modData.people_memo_ko ?? "";
         peopleMemoEn.current.value = modData.people_memo_en ?? "";
         setFileInfo(modData.file_info);
@@ -524,8 +526,8 @@ const ArtistManageModalMain = (props) => {
                 mobile2: mobile2.current.value,
                 mobile3: mobile3.current.value,
                 gender: gender.current.value,
-                people_memo_ko: peopleMemoKo.current.value,
-                people_memo_en: peopleMemoEn.current.value,
+                peopleMemoKo: peopleMemoKo.current.value,
+                peopleMemoEn: peopleMemoEn.current.value,
                 birthYyyy:
                     birth.current.value && birth.current.value.split("-")[0],
                 birthMm:
@@ -579,8 +581,37 @@ const ArtistManageModalMain = (props) => {
                 callback: (res) => responseLogic(res),
             };
 
-            if (inputThumbFile.current.files.length !== 0) {
-                thumbArr = Array.from(inputThumbFile.current.files);
+            // if (inputThumbFile.current.files.length !== 0) {
+            //     thumbArr = Array.from(inputThumbFile.current.files);
+            //     let thumbLen = thumbArr.length;
+            //     for (let i = 0; i < thumbLen; i++) {
+            //         imageCompression(thumbArr[i], imageResizeOptions)
+            //             .then(function (compressedFile) {
+            //                 const resizingFile = new File(
+            //                     [compressedFile],
+            //                     thumbArr[i].name,
+            //                     { type: thumbArr[i].type },
+            //                 );
+            //                 return addFormData(resizingFile);
+            //             })
+            //             .catch(function (error) {
+            //                 console.log(error.message);
+            //             });
+            //         // formData.append("attachmentThumbnail", thumbArr[i]);
+            //     }
+            //
+            //     const addFormData = (compressedFile) => {
+            //         formData.append("attachmentThumbnail", compressedFile); // write your own logic
+            //
+            //         CommonRest(restParams);
+            //     };
+            // } else {
+            //     CommonRest(restParams);
+            // }
+
+            // 인물일 경우 썸네일 생성
+            if (inputAttachmentFile.current.files.length !== 0) {
+                thumbArr = Array.from(inputAttachmentFile.current.files);
                 let thumbLen = thumbArr.length;
                 for (let i = 0; i < thumbLen; i++) {
                     imageCompression(thumbArr[i], imageResizeOptions)
@@ -820,44 +851,44 @@ const ArtistManageModalMain = (props) => {
                             </td>
                         </tr>
                         <tr>
-                            <th>썸네일 사진</th>
-                            <td>
-                                <div className="hotel_thumb_wrap">
-                                    {thumbnailInfo.length !== 0 ? (
-                                        thumbnailInfo.map((item, idx) => (
-                                            <span
-                                                className="hotel_thumb"
-                                                key={`thumbnail_info_${idx}`}
-                                            >
-                                                <img
-                                                    src={`${apiPath.api_file}${item.file_path_enc}`}
-                                                    alt=""
-                                                    id="preview"
-                                                    ref={previewThumb}
-                                                />
-                                            </span>
-                                        ))
-                                    ) : (
-                                        <span className="hotel_thumb">
-                                            <img
-                                                src=""
-                                                alt=""
-                                                id="preview"
-                                                ref={previewThumb}
-                                            />
-                                        </span>
-                                    )}
-                                </div>
-                                <input
-                                    type="file"
-                                    onChange={(e) => readURL(e.target, "thumb")}
-                                    accept="image/*"
-                                    id="inputThumbFile"
-                                    ref={inputThumbFile}
-                                />
-                            </td>
-                            <th>원본 사진</th>
-                            <td>
+                            {/*<th>썸네일 사진</th>*/}
+                            {/*<td>*/}
+                            {/*    <div className="hotel_thumb_wrap">*/}
+                            {/*        {thumbnailInfo.length !== 0 ? (*/}
+                            {/*            thumbnailInfo.map((item, idx) => (*/}
+                            {/*                <span*/}
+                            {/*                    className="hotel_thumb"*/}
+                            {/*                    key={`thumbnail_info_${idx}`}*/}
+                            {/*                >*/}
+                            {/*                    <img*/}
+                            {/*                        src={`${apiPath.api_file}${item.file_path_enc}`}*/}
+                            {/*                        alt=""*/}
+                            {/*                        id="preview"*/}
+                            {/*                        ref={previewThumb}*/}
+                            {/*                    />*/}
+                            {/*                </span>*/}
+                            {/*            ))*/}
+                            {/*        ) : (*/}
+                            {/*            <span className="hotel_thumb">*/}
+                            {/*                <img*/}
+                            {/*                    src=""*/}
+                            {/*                    alt=""*/}
+                            {/*                    id="preview"*/}
+                            {/*                    ref={previewThumb}*/}
+                            {/*                />*/}
+                            {/*            </span>*/}
+                            {/*        )}*/}
+                            {/*    </div>*/}
+                            {/*    <input*/}
+                            {/*        type="file"*/}
+                            {/*        onChange={(e) => readURL(e.target, "thumb")}*/}
+                            {/*        accept="image/*"*/}
+                            {/*        id="inputThumbFile"*/}
+                            {/*        ref={inputThumbFile}*/}
+                            {/*    />*/}
+                            {/*</td>*/}
+                            <th>프로필 사진</th>
+                            <td colSpan={3}>
                                 <div className="hotel_thumb_wrap">
                                     {fileInfo.length !== 0 ? (
                                         fileInfo.map((item, idx) => (

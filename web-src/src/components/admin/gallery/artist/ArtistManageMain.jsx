@@ -408,7 +408,7 @@ const ArtistManageMain = (props) => {
             {
                 id: "thumbnail_info",
                 cell: (info) => info.getValue(),
-                header: "썸네일",
+                header: "프로필 사진",
                 enableSorting: "alphanumericCaseSensitive",
             },
         ),
@@ -429,6 +429,20 @@ const ArtistManageMain = (props) => {
             },
         ),
 
+        columnHelper.accessor((row) => row.gender, {
+            id: "gender",
+            cell: (info) => info.getValue(),
+            header: "성별",
+            enableSorting: "alphanumericCaseSensitive",
+        }),
+
+        columnHelper.accessor((row) => row.people_type, {
+            id: "people_type",
+            cell: (info) => info.getValue(),
+            header: "구분",
+            enableSorting: "alphanumericCaseSensitive",
+        }),
+
         columnHelper.accessor((row) => row.email, {
             id: "email",
             cell: (info) => info.getValue(),
@@ -437,7 +451,10 @@ const ArtistManageMain = (props) => {
         }),
 
         columnHelper.accessor(
-            (row) => <>{`${row.mobile1}-${row.mobile2}-${row.mobile3}`}</>,
+            (row) =>
+                row.mobile && (
+                    <>{`${row.mobile1}-${row.mobile2}-${row.mobile3}`}</>
+                ),
             {
                 id: "mobile",
                 cell: (info) => info.getValue(),
@@ -538,8 +555,10 @@ const ArtistManageMain = (props) => {
                                 <col width="5%" />
                                 <col width="10%" />
                                 <col width="15%" />
-                                <col width="*" />
                                 <col width="10%" />
+                                <col width="10%" />
+                                <col width="*" />
+                                <col width="15%" />
                                 <col width="10%" />
                                 <col width="5%" />
                             </colgroup>
