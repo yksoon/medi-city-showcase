@@ -97,20 +97,20 @@ const ArtistManageModalMain = (props) => {
     }, [peopleTypeOptions]);
 
     const setDefaultValue = () => {
-        nameFirstKo.current.value = modData.name_first_ko;
-        nameLastKo.current.value = modData.name_last_ko;
-        nameFirstEn.current.value = modData.name_first_en;
-        nameLastEn.current.value = modData.name_last_en;
-        peopleType.current.value = modData.people_type_cd;
-        email.current.value = modData.email;
+        nameFirstKo.current.value = modData.name_first_ko ?? "";
+        nameLastKo.current.value = modData.name_last_ko ?? "";
+        nameFirstEn.current.value = modData.name_first_en ?? "";
+        nameLastEn.current.value = modData.name_last_en ?? "";
+        peopleType.current.value = modData.people_type_cd ?? "";
+        email.current.value = modData.email ?? "";
         setSelectedCountry(modData.inter_phone_number);
-        mobile1.current.value = modData.mobile1;
-        mobile2.current.value = modData.mobile2;
-        mobile3.current.value = modData.mobile3;
-        gender.current.value = modData.gender_cd;
-        birth.current.value = modData.birth;
-        peopleMemoKo.current.value = modData.people_memo_ko;
-        peopleMemoEn.current.value = modData.people_memo_en;
+        mobile1.current.value = modData.mobile1 ?? "";
+        mobile2.current.value = modData.mobile2 ?? "";
+        mobile3.current.value = modData.mobile3 ?? "";
+        gender.current.value = modData.gender_cd ?? "";
+        birth.current.value = modData.birth ?? "";
+        peopleMemoKo.current.value = modData.people_memo_ko ?? "";
+        peopleMemoEn.current.value = modData.people_memo_en ?? "";
         setFileInfo(modData.file_info);
         setThumbnailInfo(modData.thumbnail_info);
 
@@ -895,16 +895,6 @@ const ArtistManageModalMain = (props) => {
                                 />
                             </td>
                         </tr>
-                        {isModData && (
-                            <tr>
-                                <th>QR CODE</th>
-                                <td colSpan={3}>
-                                    <div className="hotel_thumb_wrap">
-                                        <img src={modData.qr_img} alt="" />
-                                    </div>
-                                </td>
-                            </tr>
-                        )}
                         <tr>
                             <th>메모 (국문)</th>
                             <td>
@@ -915,6 +905,16 @@ const ArtistManageModalMain = (props) => {
                                 <textarea ref={peopleMemoEn}></textarea>
                             </td>
                         </tr>
+                        {isModData && (
+                            <tr>
+                                <th>QR CODE</th>
+                                <td colSpan={3}>
+                                    <div className="hotel_thumb_wrap">
+                                        <img src={modData.qr_img} alt="" />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
 
