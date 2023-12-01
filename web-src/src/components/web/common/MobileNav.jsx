@@ -112,7 +112,7 @@ function MobileNav() {
                             </Link>
                             <ul
                                 id="nav4_s"
-                                className="nav_4depth"
+                                className="nav_2depth"
                                 style={{ display: "block" }}
                             >
                                 <li>
