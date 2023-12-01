@@ -3,11 +3,17 @@ import CountrySelect from "common/js/commonComponents/CountrySelect";
 import CurrencySelect from "common/js/commonComponents/CurrencySelect";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
-import { CommonErrModule, CommonNotify } from "common/js/Common";
+import {
+    CommonConsole,
+    CommonErrModule,
+    CommonNotify,
+    CommonRest,
+} from "common/js/Common";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { codesAtom, countryBankAtom, isSpinnerAtom } from "recoils/atoms";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
+import { successCode } from "resultCode";
 
 const GalleryManageModalMain = (props) => {
     const { confirm } = useConfirm();
@@ -72,6 +78,39 @@ const GalleryManageModalMain = (props) => {
             page_num: "1",
             page_size: "0",
             search_keyword: "",
+        };
+
+        // 파라미터
+        const restParams = {
+            method: "post",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+            admin: "Y",
+        };
+        CommonRest(restParams);
+
+        // 완료 로직
+        const responsLogic = (res) => {
+            const result_code = res.headers.result_code;
+
+            // 성공
+            if (
+                result_code === successCode.success ||
+                result_code === successCode.noData
+            ) {
+                const result_info = res.data.result_info;
+
+                setArtistList(result_info);
+
+                setIsSpinner(false);
+            } else {
+                // 에러
+                CommonConsole("log", res);
+
+                setIsSpinner(false);
+            }
         };
     };
 
