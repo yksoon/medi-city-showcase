@@ -16,10 +16,12 @@ function Footer() {
             let currentScrollValue = document.documentElement.scrollTop;
             let gotop = document.getElementById("go_top");
 
-            if (currentScrollValue > 100) {
-                gotop.style.opacity = "1";
-            } else {
-                gotop.style.opacity = "0";
+            if (gotop) {
+                if (currentScrollValue > 100) {
+                    gotop.style.opacity = "1";
+                } else {
+                    gotop.style.opacity = "0";
+                }
             }
         });
         // }
@@ -41,7 +43,10 @@ function Footer() {
             <div id="footer">
                 <div id="footer_content">
                     <address>
-                        <b>Medi-City Co.,<Link to={routerPath.web_guest_book_url}>Ltd</Link></b>
+                        <b>
+                            Medi-City Co.,
+                            <Link to={routerPath.web_guest_book_url}>Ltd</Link>
+                        </b>
                         10364, R#302, 43-55, Mugunghwa-ro, Ilsandong-gu,
                         Goyang-si, Gyeonggi-do, Republic of Korea{" "}
                         <img src="img/web/main/f_bar.jpg" alt="" /> Business
