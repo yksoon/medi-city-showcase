@@ -15,6 +15,7 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { Pagination } from "@mui/material";
+import { boardType } from "common/js/static";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import SearchBar from "components/admin/common/SearchBar";
@@ -62,6 +63,7 @@ const NoticeManageMain = (props) => {
             page_num: pageNum,
             page_size: pageSize,
             search_keyword: searchKeyword,
+            board_type: boardType.notice, // 공지사항
         };
 
         // 파라미터
@@ -522,7 +524,7 @@ const NoticeManageMain = (props) => {
             <CommonModal
                 isOpen={isOpen}
                 title={modalTitle}
-                width={"1400"}
+                width={"800"}
                 handleModalClose={handleModalClose}
                 component={"NoticeBoardModalMain"}
                 handleNeedUpdate={handleNeedUpdate}

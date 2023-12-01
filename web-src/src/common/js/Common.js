@@ -15,6 +15,7 @@ import {
 import useConfirm from "hook/useConfirm";
 import ConsultingBoardModalMain from "components/admin/board/consultingBoard/modal/ConsultingBoardModalMain";
 import NoticeBoardModalMain from "components/admin/board/notice/modal/NoticeBoardModalMain";
+import GuestBookBoardModalMain from "components/admin/board/guestBook/modal/GuestBookBoardModalMain";
 import RegistrationManageModalMain from "components/admin/registration/registrationManage/modal/RegistrationManageModalMain";
 import EntryManageModalMain from "components/admin/registration/entryManage/modal/EntryManageModalMain";
 import PopupManageModalMain from "components/admin/popupManage/modal/PopupManageModalMain";
@@ -89,6 +90,16 @@ const CommonModal = (props) => {
             case "NoticeBoardModalMain":
                 return (
                     <NoticeBoardModalMain
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modData={props.modData}
+                    />
+                );
+
+            // 방명록 관리
+            case "GuestBookBoardModalMain":
+                return (
+                    <GuestBookBoardModalMain
                         handleNeedUpdate={handleNeedUpdate}
                         handleModalClose={modalOption.handleModalClose}
                         modData={props.modData}
