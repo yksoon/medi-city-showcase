@@ -3,10 +3,11 @@ import CountrySelect from "common/js/commonComponents/CountrySelect";
 import CurrencySelect from "common/js/commonComponents/CurrencySelect";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
-import { CommonErrModule } from "common/js/Common";
+import { CommonErrModule, CommonNotify } from "common/js/Common";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { codesAtom, countryBankAtom, isSpinnerAtom } from "recoils/atoms";
 import { Link } from "react-router-dom";
+import { apiPath } from "webPath";
 
 const GalleryManageModalMain = (props) => {
     const { confirm } = useConfirm();
@@ -33,6 +34,9 @@ const GalleryManageModalMain = (props) => {
     const [artTypeOption, setArtTypeOption] = useState([]);
     const [participateTypeOption, setParticipateTypeOption] = useState([]);
 
+    // 아티스트 리스트
+    const [artistList, setArtistList] = useState([]);
+
     // refs
     const mainTitleKo = useRef(null);
     const mainTitleEn = useRef(null);
@@ -47,6 +51,29 @@ const GalleryManageModalMain = (props) => {
     const participateMemoEn = useRef(null);
     const priceInfoKo = useRef(null);
     const priceInfoEn = useRef(null);
+    const sizeInfoKo = useRef(null);
+    const sizeInfoEn = useRef(null);
+    const workMemoKo = useRef(null);
+    const workMemoEn = useRef(null);
+    const contentInfoKo = useRef(null);
+    const contentInfoEn = useRef(null);
+    const inputAttachmentFile = useRef(null);
+    const previewAttachment = useRef(null);
+
+    useEffect(() => {
+        getArtistList();
+    }, []);
+
+    const getArtistList = () => {
+        setIsSpinner(true);
+
+        const url = apiPath.api_admin_list_people;
+        const data = {
+            page_num: "1",
+            page_size: "0",
+            search_keyword: "",
+        };
+    };
 
     useEffect(() => {
         // SELECT 옵션 초기화
@@ -81,6 +108,67 @@ const GalleryManageModalMain = (props) => {
         setParticipateTypeOption(participateTypeArr);
     };
 
+    // 이미지 업로드 시 미리보기
+    const readURL = (input, imageType) => {
+        const imageFile = input.files[0];
+        if (isFileImage(input.files)) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    // 썸네일일경우
+                    if (imageType === "origin") {
+                        previewAttachment.current.src = e.target.result;
+                    }
+                    // document.getElementById("preview").src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                document.getElementById("preview").src = "";
+            }
+        } else {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: "이미지만 업로드 가능합니다.",
+            });
+
+            input.value = "";
+
+            return false;
+        }
+    };
+
+    /**
+     * 파일이 이미지인지
+     * @param file
+     * @returns {*|boolean}
+     */
+    const isFileImage = (file) => {
+        if (file) {
+            for (let i = 0; i < file.length; i++) {
+                return file[i] && file[i]["type"].split("/")[0] === "image";
+            }
+        }
+    };
+
+    // 썸네일 이미지 사이즈 조정 - 가로 세로 길이 대비
+    const handleImageLoad = () => {
+        if (previewAttachment) {
+            const thumbWidth = previewAttachment.current.width;
+            const thumbHeight = previewAttachment.current.height;
+
+            const profileThumb = document.querySelector(".profile_thumb");
+
+            if (thumbWidth > thumbHeight) {
+                profileThumb.classList.add("width_b");
+            }
+
+            if (thumbHeight > thumbWidth) {
+                profileThumb.classList.add("height_b");
+            }
+        }
+    };
+
     return (
         <>
             <div className="admin">
@@ -113,20 +201,10 @@ const GalleryManageModalMain = (props) => {
                                 />
                             </td>
                             <th>
-                                작품명(영문) <span className="red">*</span>
+                                부제목
+                                <br />
+                                (국문/영문)
                             </th>
-                            <td>
-                                <input
-                                    type="text"
-                                    className="input wp100"
-                                    ref={mainTitleEn}
-                                    placeholder="Title"
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>부제목(국문)</th>
                             <td>
                                 <input
                                     type="text"
@@ -134,9 +212,6 @@ const GalleryManageModalMain = (props) => {
                                     ref={subTitleKo}
                                     placeholder="부제목"
                                 />
-                            </td>
-                            <th>부제목(영문)</th>
-                            <td>
                                 <input
                                     type="text"
                                     className="input wp100"
@@ -265,6 +340,94 @@ const GalleryManageModalMain = (props) => {
                                     className="input wp100"
                                     ref={priceInfoEn}
                                     placeholder="Price Info (English)"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                사이즈 정보
+                                <br />
+                                (국문/영문)
+                            </th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={sizeInfoKo}
+                                    placeholder="사이즈 정보 (국문)"
+                                />
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={sizeInfoEn}
+                                    placeholder="Size Info (English)"
+                                />
+                            </td>
+                            <th>
+                                메모
+                                <br />
+                                (국문/영문)
+                            </th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={workMemoKo}
+                                    placeholder="메모 (국문)"
+                                />
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={workMemoEn}
+                                    placeholder="Memo (English)"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                내용(국문) <span className="red">*</span>
+                            </th>
+                            <td>
+                                <textarea
+                                    ref={contentInfoKo}
+                                    placeholder="내용"
+                                ></textarea>
+                            </td>
+                            <th>
+                                내용(영문) <span className="red">*</span>
+                            </th>
+                            <td>
+                                <textarea
+                                    ref={contentInfoEn}
+                                    placeholder="Content"
+                                ></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                작품이미지 <span className="red">*</span>
+                            </th>
+                            <td colSpan={3}>
+                                <div className="profile_wrap">
+                                    <span className="profile_thumb">
+                                        <img
+                                            src=""
+                                            alt=""
+                                            id="preview"
+                                            className="profile_img"
+                                            ref={previewAttachment}
+                                            onLoad={handleImageLoad}
+                                        />
+                                    </span>
+                                </div>
+                                <input
+                                    type="file"
+                                    onChange={(e) =>
+                                        readURL(e.target, "origin")
+                                    }
+                                    accept="image/*"
+                                    id="inputAttachmentFile"
+                                    ref={inputAttachmentFile}
                                 />
                             </td>
                         </tr>

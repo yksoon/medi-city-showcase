@@ -20,7 +20,7 @@ const GuestBookMain = () => {
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
     // states
-    const [selectedCountry, setSelectedCountry] = useState("82");
+    const [selectedCountry, setSelectedCountry] = useState("62");
 
     // refs
     const nameFirstEn = useRef(null);

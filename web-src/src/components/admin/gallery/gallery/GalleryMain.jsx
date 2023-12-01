@@ -369,7 +369,7 @@ const GalleryMain = (props) => {
                 const result_info = res.data.result_info;
                 setModDataQr(result_info);
 
-                console.log(res);
+                // console.log(res);
                 modBoardQr();
 
                 setIsSpinner(false);
@@ -389,7 +389,7 @@ const GalleryMain = (props) => {
      * QR 모달
      */
     const modBoardQr = () => {
-        setModalTitleQr("QR-CODE LIST");
+        setModalTitleQr("갤러리 QR-CODE LIST");
         setIsOpenQr(true);
     };
 
@@ -633,7 +633,7 @@ const GalleryMain = (props) => {
                             className="subbtn on"
                             onClick={qrModalHandler}
                         >
-                            아티스트 전체 QR 리스트
+                            갤러리 전체 QR 리스트
                         </Link>
                     </div>
 

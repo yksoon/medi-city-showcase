@@ -54,7 +54,7 @@ const routerPath = {
 
     // 사전등록 참가자 확인
     // /signup/check_entry
-    web_signup_check_entry_url: `${base_url}signup/check_entry`,
+    web_signup_check_entry_url: `${base_url}signup/check-entry`,
 
     // 사전등록 확인
     // /signup/confirmation
@@ -62,7 +62,7 @@ const routerPath = {
 
     // 아트버디 - 갤러리 리스트
     // /artbuddy/gallery_list
-    web_artbuddy_gallery_list_url: `${base_url}artbuddy/gallery_list`,
+    web_artbuddy_gallery_list_url: `${base_url}artbuddy/gallery-list`,
 
     // 아트버디 - 갤러리 상세
     // /artbuddy/gallery
@@ -78,7 +78,7 @@ const routerPath = {
 
     // 사전등록 참가자 확인 - 인도네시아
     // /local/check_entry
-    web_local_check_entry_url: `${base_url}local/check_entry`,
+    web_local_check_entry_url: `${base_url}local/check-entry`,
 
     // 사전등록 확인 - 인도네시아
     // /local/confirmation
@@ -90,7 +90,7 @@ const routerPath = {
 
     // 방명록
     // /guest_book
-    web_guest_book_url: `${base_url}guest_book`,
+    web_guest_book_url: `${base_url}guest-book`,
 
     // ---------------------- admin -------------------------
     // 메인

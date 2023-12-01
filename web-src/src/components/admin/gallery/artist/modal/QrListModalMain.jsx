@@ -17,6 +17,8 @@ const QrListModalMain = (props) => {
     const modData = props.modData;
     const isModData = Object.keys(modData).length !== 0;
 
+    const title = props.title;
+
     const handleModalClose = props.handleModalClose;
     const handleNeedUpdate = props.handleNeedUpdate;
 
@@ -54,7 +56,7 @@ const QrListModalMain = (props) => {
                         content={() => printRef.current}
                     />
                 </div>
-                <h4 className="mo_subtitle">아티스트 정보</h4>
+                <h4 className="mo_subtitle">{title}</h4>
                 <table className="table_bb" id="qrTable" ref={printRef}>
                     <colgroup>
                         <col width="60%" />

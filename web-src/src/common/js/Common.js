@@ -132,6 +132,7 @@ const CommonModal = (props) => {
                     <QrListModalMain
                         handleNeedUpdate={handleNeedUpdate}
                         handleModalClose={modalOption.handleModalClose}
+                        title={props.title}
                         modData={props.modData}
                     />
                 );

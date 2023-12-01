@@ -338,7 +338,7 @@ const ArtistManageMain = (props) => {
     };
 
     const modBoardQr = () => {
-        setModalTitleQr("QR-CODE LIST");
+        setModalTitleQr("아티스트 QR-CODE LIST");
         setIsOpenQr(true);
     };
 
