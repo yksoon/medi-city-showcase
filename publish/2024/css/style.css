@@ -393,6 +393,28 @@ to {transform:rotate(0); }
  #guest_book .signup .boxing table {border-top: none;}
  #guest_book .signup .boxing table tbody tr:last-child th, #guest_book .signup .boxing table tbody tr:last-child td {border-bottom: none;}
 
+
+ .artist_work {width:100%;overflow-x:hidden;padding:50px 0;}
+ .artist_work .swiper-slide{height:520px;width:fit-content;}
+ .artist_work .swiper-slide img{height:520px;width:fit-content;position: relative;}
+ .galleryView .top_name {text-align: center;padding:80px 0 10px}
+ .galleryView .top_name h5 {font-size: 42px;font-weight: 500;}
+ .galleryView .top_name h4 {font-size: 18px;color: #9e9e9e;}
+
+ .artist_info {width:1300px;margin:0 auto;padding:160px 0 0;}
+ .artist_info img {width:100%;}
+ .artist_info::after {clear:both;content:"";display:block;}
+ .artist_info .left {width: 40%;float: left;position:sticky;top:40px;padding:0 96px 0 0;}
+ .artist_info .left .thumb {width:80%;}
+ .artist_info .left .artist {margin:40px 0 0;}
+ .artist_info .right {width: 60%;float: left;padding:0 0 0 86px;border-left: 1px solid #ddd;position: relative;}
+ .artist_info .right::before {content:"";display:block;width:1px;height:48px;top:10px;position: sticky;z-index: 999;background: #000;left:0;margin:0 0 0 -87px;}
+ .artist_info p { line-height: 26px; color:#424242; font-size: 16px; } 
+ .galleryView .artist_info .artnote {margin:0 0 50px;}
+ .galleryView .artist_info ul {margin:0;font-family: 'Pretendard';}
+
+
+
 /* IE */
 select::-ms-expand {display: none; } 
 select { -o-appearance: none; -webkit-appearance: none; -moz-appearance: none; appearance: none; background: url('../img/common/select_arrow.png') calc(100% - 10px) center no-repeat;}

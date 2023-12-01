@@ -499,7 +499,6 @@ select {
 }
 
 
-
 #guest {}
 #guest_book {position: relative; max-width:1180px;margin:0 auto;padding:0 60px;background: #fff;height:100vh;display:flex; justify-content: center; align-items: center;background: url('/public/img/web/sub/guest_bg.png') center top no-repeat;background-size: cover;}
 #guest_book > div {height:fit-content;background: #fff;padding:40px;margin:200px 0 0;}
@@ -514,6 +513,7 @@ select {
  #guest_book .signup .boxing table {border-top: none;}
  #guest_book .signup .boxing table tbody tr:last-child th, #guest_book .signup .boxing table tbody tr:last-child td {border-bottom: none;}
  a.guest_home_btn {position: absolute;right:20px;top:20px;color: #fff;opacity:0.06;}
+
 
 
 
