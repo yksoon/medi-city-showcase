@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import React, { useRef } from "react"
+import { Link } from "react-router-dom";
 import useAlert from "hook/useAlert";
 import useConfirm from "hook/useConfirm";
 import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
@@ -8,6 +9,7 @@ import { apiPath } from "webPath";
 import { successCode } from "resultCode";
 import { boardModel } from "models/board/board";
 import { boardType } from "common/js/static";
+import { routerPath } from "webPath";
 
 // ------------------- import End --------------------
 
@@ -137,20 +139,21 @@ const GuestBookMain = () => {
     return (
         <div id="guest">
             <div id="guest_book">
+                <Link to={routerPath.web_main_url} className="guest_home_btn">■</Link>
                 <div>
                     <div className="signup">
                         <div className="boxing">
                             <table>
                                 <colgroup>
-                                    <col width="30%"/>
+                                    <col width="20%"/>
                                     <col width="*"/>
                                 </colgroup>
                                 <tbody>
                                     <tr>
                                         <th>NAME</th>
                                         <td>
-                                            <input type="text" ref={nameFirstEn} required />
-                                            <input type="text" ref={nameLastEn} required />
+                                            <input type="text" ref={nameFirstEn} className="input_h" placeholder="First Name" required />&nbsp;
+                                            <input type="text" ref={nameLastEn} className="input_h" placeholder="Last Name" required />
                                         </td>
                                     </tr>
                                     <tr>

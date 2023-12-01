@@ -501,10 +501,11 @@ select {
 
 
 #guest {}
-#guest_book {max-width:1180px;margin:0 auto;padding:0 60px;background: #fff;height:100vh;display:flex; justify-content: center; align-items: center;background: url('/public/img/web/sub/guest_bg.png') center top no-repeat;background-size: cover;}
+#guest_book {position: relative; max-width:1180px;margin:0 auto;padding:0 60px;background: #fff;height:100vh;display:flex; justify-content: center; align-items: center;background: url('/public/img/web/sub/guest_bg.png') center top no-repeat;background-size: cover;}
 #guest_book > div {height:fit-content;background: #fff;padding:40px;margin:200px 0 0;}
 #guest_book .signup .boxing table tbody tr td input[type="text"] {width:100%;}
 #guest_book .signup .boxing table tbody tr td input[type="text"].input_m {width:calc(( 100% - 32px ) /3);}
+#guest_book .signup .boxing table tbody tr td input[type="text"].input_h {width:calc(( 100% - 5px ) /2);}
  #guest_book #subtitle {padding:0 0 40px} 
  #guest_book .c_tit { font-size:30px; font-weight: 900; color: #000; position:relative; padding:6px 0 0 8px; margin:0 0 20px 0; } 
  #guest_book .c_tit .s_txt { font-size:20px; } 
@@ -512,6 +513,7 @@ select {
  #guest_book .boxing {border-radius: 5px;margin:0 0 40px;}
  #guest_book .signup .boxing table {border-top: none;}
  #guest_book .signup .boxing table tbody tr:last-child th, #guest_book .signup .boxing table tbody tr:last-child td {border-bottom: none;}
+ a.guest_home_btn {position: absolute;right:20px;top:20px;color: #fff;opacity:0.06;}
 
 
 
