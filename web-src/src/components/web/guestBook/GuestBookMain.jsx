@@ -11,7 +11,6 @@ import { boardModel } from "models/board/board";
 import { boardType } from "common/js/static";
 import { routerPath } from "webPath";
 import CountrySelect from "common/js/commonComponents/CountrySelect";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 // ------------------- import End --------------------
 
@@ -31,11 +30,6 @@ const GuestBookMain = () => {
     const mobile2 = useRef(null);
     const mobile3 = useRef(null);
     const affiliation = useRef(null);
-
-    const fullscreenHandle = useFullScreenHandle();
-    useEffect(() => {
-        fullscreenHandle.enter();
-    }, []);
 
     // 등록
     const regBoard = () => {
@@ -148,118 +142,109 @@ const GuestBookMain = () => {
     };
 
     return (
-        <FullScreen className="full-screen" handle={fullscreenHandle}>
-            <div id="guest">
-                <div id="guest_book">
-                    <Link
-                        to={routerPath.web_main_url}
-                        className="guest_home_btn"
-                    >
-                        ■
-                    </Link>
-                    <div>
-                        <div className="signup">
-                            <div className="boxing">
-                                <table>
-                                    <colgroup>
-                                        <col width="20%" />
-                                        <col width="*" />
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>NAME</th>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    ref={nameFirstEn}
-                                                    className="input_h"
-                                                    placeholder="First Name"
-                                                    required
-                                                />
-                                                &nbsp;
-                                                <input
-                                                    type="text"
-                                                    ref={nameLastEn}
-                                                    className="input_h"
-                                                    placeholder="Last Name"
-                                                    required
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>TEL</th>
-                                            <td>
-                                                <CountrySelect
-                                                    onChange={(e, value) =>
-                                                        setSelectedCountry(
-                                                            value,
-                                                        )
-                                                    }
-                                                    defaultValue={
-                                                        selectedCountry
-                                                    }
-                                                    mode={"en"}
-                                                />
-                                                <input
-                                                    type="text"
-                                                    ref={mobile1}
-                                                    className="input_m"
-                                                    required
-                                                />
-                                                &nbsp;-&nbsp;
-                                                <input
-                                                    type="text"
-                                                    ref={mobile2}
-                                                    className="input_m"
-                                                    required
-                                                />
-                                                &nbsp;-&nbsp;
-                                                <input
-                                                    type="text"
-                                                    ref={mobile3}
-                                                    className="input_m"
-                                                    required
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>E-MAIL</th>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    ref={email}
-                                                    required
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>AFFILIATION</th>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    ref={affiliation}
-                                                    className=""
-                                                    placeholder=""
-                                                    required
-                                                />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="btn_box">
-                                <input
-                                    type="submit"
-                                    value="SUBMIT"
-                                    name=""
-                                    onClick={regBoard}
-                                />
-                            </div>
+        <div id="guest">
+            <div id="guest_book">
+                <Link to={routerPath.web_main_url} className="guest_home_btn">
+                    ■
+                </Link>
+                <div>
+                    <div className="signup">
+                        <div className="boxing">
+                            <table>
+                                <colgroup>
+                                    <col width="20%" />
+                                    <col width="*" />
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>NAME</th>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                ref={nameFirstEn}
+                                                className="input_h"
+                                                placeholder="First Name"
+                                                required
+                                            />
+                                            &nbsp;
+                                            <input
+                                                type="text"
+                                                ref={nameLastEn}
+                                                className="input_h"
+                                                placeholder="Last Name"
+                                                required
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>TEL</th>
+                                        <td>
+                                            <CountrySelect
+                                                onChange={(e, value) =>
+                                                    setSelectedCountry(value)
+                                                }
+                                                defaultValue={selectedCountry}
+                                                mode={"en"}
+                                            />
+                                            <input
+                                                type="text"
+                                                ref={mobile1}
+                                                className="input_m"
+                                                required
+                                            />
+                                            &nbsp;-&nbsp;
+                                            <input
+                                                type="text"
+                                                ref={mobile2}
+                                                className="input_m"
+                                                required
+                                            />
+                                            &nbsp;-&nbsp;
+                                            <input
+                                                type="text"
+                                                ref={mobile3}
+                                                className="input_m"
+                                                required
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>E-MAIL</th>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                ref={email}
+                                                required
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>AFFILIATION</th>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                ref={affiliation}
+                                                className=""
+                                                placeholder=""
+                                                required
+                                            />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="btn_box">
+                            <input
+                                type="submit"
+                                value="SUBMIT"
+                                name=""
+                                onClick={regBoard}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
-        </FullScreen>
+        </div>
     );
 };
 
