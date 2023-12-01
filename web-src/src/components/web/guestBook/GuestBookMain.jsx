@@ -10,7 +10,6 @@ import { successCode } from "resultCode";
 import { boardModel } from "models/board/board";
 import { boardType } from "common/js/static";
 import { routerPath } from "webPath";
-import CountrySelect from "common/js/commonComponents/CountrySelect";
 
 // ------------------- import End --------------------
 
@@ -179,13 +178,6 @@ const GuestBookMain = () => {
                                     <tr>
                                         <th>TEL</th>
                                         <td>
-                                            <CountrySelect
-                                                onChange={(e, value) =>
-                                                    setSelectedCountry(value)
-                                                }
-                                                defaultValue={selectedCountry}
-                                                mode={"en"}
-                                            />
                                             <input
                                                 type="text"
                                                 ref={mobile1}

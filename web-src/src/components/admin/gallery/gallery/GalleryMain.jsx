@@ -462,7 +462,7 @@ const GalleryMain = (props) => {
             {
                 id: "thumbnail_info",
                 cell: (info) => info.getValue(),
-                header: "썸네일",
+                header: "작품",
                 enableSorting: "alphanumericCaseSensitive",
             },
         ),
@@ -473,6 +473,15 @@ const GalleryMain = (props) => {
                     {row.main_title_ko}
                     <br />
                     {`(${row.main_title_en})`}
+                    {(row.sub_title_ko || row.sub_title_en) && (
+                        <>
+                            <br />
+                            <br />
+                            {row.sub_title_ko ?? ""}
+                            <br />
+                            {`(${row.sub_title_en ?? ""})`}
+                        </>
+                    )}
                 </>
             ),
             {

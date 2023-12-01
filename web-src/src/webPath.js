@@ -409,12 +409,17 @@ const apiPath = {
         base_api_url + slash + version + slash
     }gallery${slash}`,
 
-    // /v1/gallery/{work_idx}/
+    // /v1/_gallery/{work_idx}/
     // GET
     // 갤러리 상세
     api_detail_gallery: `${
         base_api_url + slash + version + slash
-    }gallery${slash}`,
+    }_gallery${slash}`,
+
+    // /v1/_gallery
+    // POST MULTI
+    // 갤러리 등록
+    api_add_gallery: `${base_api_url + slash + version + slash}_gallery`,
 };
 
 export { routerPath, apiPath };

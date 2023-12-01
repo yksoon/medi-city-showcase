@@ -14,6 +14,11 @@ import { codesAtom, countryBankAtom, isSpinnerAtom } from "recoils/atoms";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
+import Autocomplete from "@mui/material/Autocomplete";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import imageCompression from "browser-image-compression";
+import { imageResizeOptions } from "common/js/static";
 
 const GalleryManageModalMain = (props) => {
     const { confirm } = useConfirm();
@@ -43,7 +48,11 @@ const GalleryManageModalMain = (props) => {
     // 아티스트 리스트
     const [artistList, setArtistList] = useState([]);
 
+    // states
+    const [peopleIdx, setPeopleIdx] = useState("");
+
     // refs
+    const showYn = useRef(null);
     const mainTitleKo = useRef(null);
     const mainTitleEn = useRef(null);
     const subTitleKo = useRef(null);
@@ -102,7 +111,7 @@ const GalleryManageModalMain = (props) => {
             ) {
                 const result_info = res.data.result_info;
 
-                setArtistList(result_info);
+                getArtists(result_info);
 
                 setIsSpinner(false);
             } else {
@@ -112,6 +121,25 @@ const GalleryManageModalMain = (props) => {
                 setIsSpinner(false);
             }
         };
+    };
+
+    const getArtists = (result_info) => {
+        let options = [];
+        for (let i = 0; i < result_info.length; i++) {
+            let newObj = {};
+
+            const value = String(result_info[i].people_idx);
+            newObj = {
+                value: value,
+                label: `${result_info[i].name_ko} (${result_info[i].name_en})`,
+            };
+
+            options.push(newObj);
+        }
+
+        setArtistList(options);
+
+        isModData && setDefaultValue();
     };
 
     useEffect(() => {
@@ -145,6 +173,34 @@ const GalleryManageModalMain = (props) => {
             (el) => el.code_type === "PARTICIPATE_TYPE",
         );
         setParticipateTypeOption(participateTypeArr);
+    };
+
+    const setDefaultValue = () => {
+        showYn.current.value = modData.show_yn;
+        mainTitleKo.current.value = modData.main_title_ko;
+        mainTitleEn.current.value = modData.main_title_en;
+        subTitleKo.current.value = modData.sub_title_ko;
+        subTitleEn.current.value = modData.sub_title_en;
+        postType.current.value = modData.post_type_cd;
+        postStatus.current.value = modData.post_status_cd;
+        paintType.current.value = modData.paint_type_cd;
+        artType.current.value = modData.art_type_cd;
+        participateType.current.value = modData.participate_type_cd;
+        participateMemoKo.current.value = modData.participate_memo_ko;
+        participateMemoEn.current.value = modData.participate_memo_en;
+        priceInfoKo.current.value = modData.price_info_ko;
+        priceInfoEn.current.value = modData.price_info_en;
+        sizeInfoKo.current.value = modData.size_info_ko;
+        sizeInfoEn.current.value = modData.size_info_en;
+        workMemoKo.current.value = modData.work_memo_ko;
+        workMemoEn.current.value = modData.work_memo_en;
+        contentInfoKo.current.value = modData.content_info_ko;
+        contentInfoEn.current.value = modData.content_info_en;
+        previewAttachment.current.src =
+            modData.file_info.length !== 0 &&
+            apiPath.api_file + modData.file_info[0].file_path_enc;
+        setPeopleIdx(String(modData.people_idx));
+        // TODO: QR이랑 화폐도 고고
     };
 
     // 이미지 업로드 시 미리보기
@@ -208,6 +264,292 @@ const GalleryManageModalMain = (props) => {
         }
     };
 
+    // 등록
+    const regModBoard = (method) => {
+        if (validation()) {
+            setIsSpinner(true);
+
+            let url;
+            if (method === "reg") {
+                // /v1/_gallery
+                // POST MULTI
+                // 갤러리 등록
+                url = apiPath.api_add_gallery;
+            } else if (method === "mod") {
+                // /v1/reg
+                // PUT
+                // 사전등록 수정
+                url = apiPath.api_admin_mod_people;
+            }
+
+            const formData = new FormData();
+            let data = {};
+
+            let fileArr = [];
+            let thumbArr = [];
+
+            data = {
+                showYn: showYn.current.value,
+                mainTitleKo: mainTitleKo.current.value,
+                mainTitleEn: mainTitleEn.current.value,
+                subTitleKo: subTitleKo.current.value,
+                subTitleEn: subTitleEn.current.value,
+                postType: postType.current.value,
+                postStatus: postStatus.current.value,
+                paintType: paintType.current.value,
+                artType: artType.current.value,
+                participateType: participateType.current.value,
+                participateMemoKo: participateMemoKo.current.value,
+                participateMemoEn: participateMemoEn.current.value,
+                priceInfoKo: priceInfoKo.current.value,
+                priceInfoEn: priceInfoEn.current.value,
+                sizeInfoKo: sizeInfoKo.current.value,
+                sizeInfoEn: sizeInfoEn.current.value,
+                workMemoKo: workMemoKo.current.value,
+                workMemoEn: workMemoEn.current.value,
+                contentInfoKo: contentInfoKo.current.value,
+                contentInfoEn: contentInfoEn.current.value,
+                peopleIdx: peopleIdx,
+                currencyType: selectedCurrency,
+            };
+
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            // 파일 formData append
+            fileArr = Array.from(inputAttachmentFile.current.files);
+            let fileLen = fileArr.length;
+            for (let i = 0; i < fileLen; i++) {
+                formData.append("attachmentFile", fileArr[i]);
+            }
+
+            // 프로필 formData append
+            // state.selectedProfile.forEach((item, idx) => {
+            //     if (item.profileContentKo || item.profileContentEn) {
+            //         formData.append(
+            //             `profileInfo[${idx}].profileType`,
+            //             item.profileType,
+            //         );
+            //         formData.append(
+            //             `profileInfo[${idx}].profileContentKo`,
+            //             item.profileContentKo,
+            //         );
+            //         formData.append(
+            //             `profileInfo[${idx}].profileContentEn`,
+            //             item.profileContentEn,
+            //         );
+            //     }
+            // });
+
+            const restParams = {
+                method:
+                    method === "reg"
+                        ? "post_multi"
+                        : method === "mod"
+                        ? "put_multi"
+                        : "",
+                url: url,
+                data: formData,
+                err: err,
+                admin: "Y",
+                callback: (res) => responseLogic(res),
+            };
+
+            // 썸네일 생성
+            if (inputAttachmentFile.current.files.length !== 0) {
+                thumbArr = Array.from(inputAttachmentFile.current.files);
+                let thumbLen = thumbArr.length;
+                for (let i = 0; i < thumbLen; i++) {
+                    imageCompression(thumbArr[i], imageResizeOptions)
+                        .then(function (compressedFile) {
+                            const resizingFile = new File(
+                                [compressedFile],
+                                thumbArr[i].name,
+                                { type: thumbArr[i].type },
+                            );
+                            return addFormData(resizingFile);
+                        })
+                        .catch(function (error) {
+                            console.log(error.message);
+                        });
+                    // formData.append("attachmentThumbnail", thumbArr[i]);
+                }
+
+                const addFormData = (compressedFile) => {
+                    formData.append("attachmentThumbnail", compressedFile); // write your own logic
+
+                    CommonRest(restParams);
+                };
+            } else {
+                CommonRest(restParams);
+            }
+
+            const responseLogic = (res) => {
+                let result_code = res.headers.result_code;
+                if (result_code === successCode.success) {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message:
+                            method === "reg"
+                                ? "갤러리 등록이 완료 되었습니다"
+                                : method === "mod"
+                                ? "갤러리 수정이 완료 되었습니다"
+                                : "",
+                        callback: () => handleNeedUpdate(),
+                    });
+                } else {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "잠시 후 다시 시도해주세요",
+                    });
+                }
+            };
+        }
+    };
+
+    /**
+     * validation 검증
+     */
+    const validation = () => {
+        const noti = (ref, msg) => {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: msg,
+                callback: () => focus(),
+            });
+
+            const focus = () => {
+                ref && ref.current.focus();
+            };
+        };
+
+        if (peopleIdx === 0) {
+            noti("", "아티스트를 선택해주세요");
+
+            return false;
+        }
+
+        if (!showYn.current.value) {
+            noti(showYn, "노출여부를 선택해주세요");
+
+            return false;
+        }
+
+        if (!mainTitleKo.current.value || !mainTitleEn.current.value) {
+            noti(mainTitleKo, "작품명(국문,영문)을 입력해주세요");
+
+            return false;
+        }
+
+        if (!subTitleKo.current.value || !subTitleEn.current.value) {
+            noti(subTitleKo, "부제목(국문,영문)을 입력해주세요");
+
+            return false;
+        }
+
+        if (!postType.current.value) {
+            noti(postType, "게시유형을 선택해주세요");
+
+            return false;
+        }
+
+        if (!postStatus.current.value) {
+            noti(postStatus, "게시상태를 선택해주세요");
+
+            return false;
+        }
+
+        if (!paintType.current.value) {
+            noti(paintType, "재질유형을 선택해주세요");
+
+            return false;
+        }
+
+        if (!participateType.current.value) {
+            noti(participateType, "참여유형을 선택해주세요");
+
+            return false;
+        }
+
+        if (!sizeInfoKo.current.value || !sizeInfoEn.current.value) {
+            noti(sizeInfoKo, "크기정보(국문,영문)를 입력해주세요");
+
+            return false;
+        }
+
+        if (!isModData) {
+            if (!inputAttachmentFile) {
+                noti(inputAttachmentFile, "작품 이미지를 첨부해주세요");
+
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    // 삭제
+    const clickRemove = () => {
+        CommonNotify({
+            type: "confirm",
+            hook: confirm,
+            message: "삭제하시겠습니까?",
+            callback: () => doRemove(),
+        });
+
+        const doRemove = () => {
+            setIsSpinner(true);
+
+            const url = `${apiPath.api_delete_gallery}${modData.work_idx}`;
+
+            const restParams = {
+                method: "delete",
+                url: url,
+                data: {},
+                err: err,
+                admin: "Y",
+                callback: (res) => responsLogic(res),
+            };
+
+            CommonRest(restParams);
+
+            const responsLogic = (res) => {
+                const result_code = res.headers.result_code;
+                if (result_code === successCode.success) {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "삭제가 완료 되었습니다",
+                        callback: () => pageUpdate(),
+                    });
+                } else {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "잠시 후 다시 시도해주세요",
+                    });
+                }
+
+                const pageUpdate = () => {
+                    handleNeedUpdate();
+                };
+            };
+        };
+    };
+
     return (
         <>
             <div className="admin">
@@ -220,6 +562,72 @@ const GalleryManageModalMain = (props) => {
                         <col width="30%" />
                     </colgroup>
                     <tbody>
+                        <tr>
+                            <th>
+                                작가 <span className="red">*</span>
+                            </th>
+                            <td>
+                                {artistList.length !== 0 && (
+                                    <Autocomplete
+                                        id="artist-select-demo"
+                                        // sx={{ width: 300 }}
+                                        size="small"
+                                        options={artistList}
+                                        value={
+                                            artistList.filter(
+                                                (el) => el.value === peopleIdx,
+                                            )[0]
+                                        }
+                                        // disableCloseOnSelect
+                                        // autoHighlight
+                                        getOptionLabel={(option) =>
+                                            option.label
+                                        }
+                                        onChange={(e, newValue) =>
+                                            setPeopleIdx(
+                                                newValue ? newValue.value : "",
+                                            )
+                                        }
+                                        renderOption={(props, option) => (
+                                            <Box
+                                                component="li"
+                                                sx={{
+                                                    "& > img": {
+                                                        mr: 2,
+                                                        flexShrink: 0,
+                                                    },
+                                                }}
+                                                {...props}
+                                            >
+                                                {option.label}
+                                            </Box>
+                                        )}
+                                        renderInput={(params) => (
+                                            <>
+                                                <TextField
+                                                    {...params}
+                                                    // label="Choose a country"
+                                                    inputProps={{
+                                                        ...params.inputProps,
+                                                        label: "Choose a artist", // disable autocomplete and autofill
+                                                    }}
+                                                />
+                                            </>
+                                        )}
+                                    />
+                                )}
+                            </td>
+                            <th>
+                                노출여부 <span className="red">*</span>
+                            </th>
+                            <td>
+                                <select className="wp100" ref={showYn}>
+                                    <option value="">- 선택 -</option>
+                                    <option value="Y">노출</option>
+                                    <option value="N">비노출</option>
+                                </select>
+                            </td>
+                        </tr>
                         <tr>
                             <th>
                                 작품명 <span className="red">*</span> <br />
@@ -260,7 +668,9 @@ const GalleryManageModalMain = (props) => {
                             </td>
                         </tr>
                         <tr>
-                            <th>게시유형</th>
+                            <th>
+                                게시유형 <span className="red">*</span>
+                            </th>
                             <td>
                                 <select className="wp100" ref={postType}>
                                     <option value="">- 선택 -</option>
@@ -273,7 +683,9 @@ const GalleryManageModalMain = (props) => {
                                         ))}
                                 </select>
                             </td>
-                            <th>게시상태</th>
+                            <th>
+                                게시상태 <span className="red">*</span>
+                            </th>
                             <td>
                                 <select className="wp100" ref={postStatus}>
                                     <option value="">- 선택 -</option>
@@ -301,7 +713,9 @@ const GalleryManageModalMain = (props) => {
                                         ))}
                                 </select>
                             </td>
-                            <th>재질유형</th>
+                            <th>
+                                재질유형 <span className="red">*</span>
+                            </th>
                             <td>
                                 <select className="wp100" ref={paintType}>
                                     <option value="">- 선택 -</option>
@@ -316,7 +730,9 @@ const GalleryManageModalMain = (props) => {
                             </td>
                         </tr>
                         <tr>
-                            <th>참여유형</th>
+                            <th>
+                                참여유형 <span className="red">*</span>
+                            </th>
                             <td>
                                 <select className="wp100" ref={participateType}>
                                     <option value="">- 선택 -</option>
@@ -332,7 +748,7 @@ const GalleryManageModalMain = (props) => {
                                 </select>
                             </td>
                             <th>
-                                참여자 메모
+                                추가 참여자 메모
                                 <br />
                                 (국문/영문)
                             </th>
@@ -384,7 +800,7 @@ const GalleryManageModalMain = (props) => {
                         </tr>
                         <tr>
                             <th>
-                                사이즈 정보
+                                사이즈 정보 <span className="red">*</span>
                                 <br />
                                 (국문/영문)
                             </th>
@@ -475,32 +891,32 @@ const GalleryManageModalMain = (props) => {
             </div>
 
             <div className="subbtn_box">
-                {/*{isModData ? (*/}
-                {/*    <>*/}
-                {/*        <Link*/}
-                {/*            to=""*/}
-                {/*            className="subbtn del"*/}
-                {/*            onClick={clickRemove}*/}
-                {/*        >*/}
-                {/*            삭제*/}
-                {/*        </Link>*/}
-                {/*        <Link*/}
-                {/*            to=""*/}
-                {/*            className="subbtn on"*/}
-                {/*            onClick={() => regModBoard("mod")}*/}
-                {/*        >*/}
-                {/*            수정*/}
-                {/*        </Link>*/}
-                {/*    </>*/}
-                {/*) : (*/}
-                {/*    <Link*/}
-                {/*        to=""*/}
-                {/*        className="subbtn on"*/}
-                {/*        onClick={() => regModBoard("reg")}*/}
-                {/*    >*/}
-                {/*        등록*/}
-                {/*    </Link>*/}
-                {/*)}*/}
+                {isModData ? (
+                    <>
+                        <Link
+                            to=""
+                            className="subbtn del"
+                            onClick={clickRemove}
+                        >
+                            삭제
+                        </Link>
+                        <Link
+                            to=""
+                            className="subbtn on"
+                            onClick={() => regModBoard("mod")}
+                        >
+                            수정
+                        </Link>
+                    </>
+                ) : (
+                    <Link
+                        to=""
+                        className="subbtn on"
+                        onClick={() => regModBoard("reg")}
+                    >
+                        등록
+                    </Link>
+                )}
                 <Link to="" className="subbtn off" onClick={handleModalClose}>
                     취소
                 </Link>
