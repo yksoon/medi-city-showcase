@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useAlert from "hook/useAlert";
 import useConfirm from "hook/useConfirm";
@@ -10,6 +10,7 @@ import { successCode } from "resultCode";
 import { boardModel } from "models/board/board";
 import { boardType } from "common/js/static";
 import { routerPath } from "webPath";
+import CountrySelect from "common/js/commonComponents/CountrySelect";
 
 // ------------------- import End --------------------
 
@@ -17,6 +18,9 @@ const GuestBookMain = () => {
     const { alert } = useAlert();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    // states
+    const [selectedCountry, setSelectedCountry] = useState("82");
 
     // refs
     const nameFirstEn = useRef(null);
@@ -57,7 +61,8 @@ const GuestBookMain = () => {
                 email: email.current.value,
                 contentKo: affiliation.current.value,
                 contentEn: affiliation.current.value,
-                regUserNameEn: nameFirstEn.current.value + ' ' + nameLastEn.current.value,
+                regUserNameEn:
+                    nameFirstEn.current.value + " " + nameLastEn.current.value,
             };
 
             // 기본 formData append
@@ -98,7 +103,7 @@ const GuestBookMain = () => {
             };
         }
     };
-    
+
     // 리스트 새로고침
     const handleNeedUpdate = () => {
         // 입력값 초기화
@@ -110,7 +115,7 @@ const GuestBookMain = () => {
         mobile3.current.value = null;
         affiliation.current.value = null;
     };
-    
+
     // 검증
     const validation = () => {
         const noti = (ref, msg) => {
@@ -135,55 +140,110 @@ const GuestBookMain = () => {
 
         return true;
     };
-    
+
     return (
         <div id="guest">
             <div id="guest_book">
-                <Link to={routerPath.web_main_url} className="guest_home_btn">■</Link>
+                <Link to={routerPath.web_main_url} className="guest_home_btn">
+                    ■
+                </Link>
                 <div>
                     <div className="signup">
                         <div className="boxing">
                             <table>
                                 <colgroup>
-                                    <col width="20%"/>
-                                    <col width="*"/>
+                                    <col width="20%" />
+                                    <col width="*" />
                                 </colgroup>
                                 <tbody>
                                     <tr>
                                         <th>NAME</th>
                                         <td>
-                                            <input type="text" ref={nameFirstEn} className="input_h" placeholder="First Name" required />&nbsp;
-                                            <input type="text" ref={nameLastEn} className="input_h" placeholder="Last Name" required />
+                                            <input
+                                                type="text"
+                                                ref={nameFirstEn}
+                                                className="input_h"
+                                                placeholder="First Name"
+                                                required
+                                            />
+                                            &nbsp;
+                                            <input
+                                                type="text"
+                                                ref={nameLastEn}
+                                                className="input_h"
+                                                placeholder="Last Name"
+                                                required
+                                            />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>TEL</th>
                                         <td>
-                                            <input type="text" ref={mobile1} className="input_m" required/>&nbsp;-&nbsp;
-                                            <input type="text" ref={mobile2} className="input_m" required/>&nbsp;-&nbsp;
-                                            <input type="text" ref={mobile3} className="input_m" required/>
+                                            <CountrySelect
+                                                onChange={(e, value) =>
+                                                    setSelectedCountry(value)
+                                                }
+                                                defaultValue={selectedCountry}
+                                                mode={"en"}
+                                            />
+                                            <input
+                                                type="text"
+                                                ref={mobile1}
+                                                className="input_m"
+                                                required
+                                            />
+                                            &nbsp;-&nbsp;
+                                            <input
+                                                type="text"
+                                                ref={mobile2}
+                                                className="input_m"
+                                                required
+                                            />
+                                            &nbsp;-&nbsp;
+                                            <input
+                                                type="text"
+                                                ref={mobile3}
+                                                className="input_m"
+                                                required
+                                            />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>E-MAIL</th>
-                                        <td><input type="text" ref={email} required /></td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                ref={email}
+                                                required
+                                            />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>AFFILIATION</th>
                                         <td>
-                                            <input type="text" ref={affiliation} className="" placeholder="" required/>
+                                            <input
+                                                type="text"
+                                                ref={affiliation}
+                                                className=""
+                                                placeholder=""
+                                                required
+                                            />
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div className="btn_box">
-                            <input type="submit" value="SUBMIT" name="" onClick={regBoard} />
+                            <input
+                                type="submit"
+                                value="SUBMIT"
+                                name=""
+                                onClick={regBoard}
+                            />
                         </div>
+                    </div>
                 </div>
-
-                </div>
-           </div>
+            </div>
         </div>
     );
 };
