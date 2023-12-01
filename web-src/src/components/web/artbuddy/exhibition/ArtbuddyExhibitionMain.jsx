@@ -55,38 +55,15 @@ const ArtbuddyExhibitionMain = () => {
                                 <dl>
                                     <dt>ARTBUDDY is </dt>
                                     <dd>
-                                        dedicated to mitigating the barriers to
-                                        the art market, allowing everyone to
-                                        become friends with art.
-                                        <br />
-                                        As an art business group, we engage in
-                                        various activities to support and
-                                        encourage emerging artists in South
-                                        Korea.
-                                        <br />
-                                        Through the discovery of new talents and
-                                        the utilization of copyrights for
-                                        product and content development,
-                                        <br />
-                                        we strive to breathe life into the
-                                        Korean art market, providing fresh
-                                        stimulation.
+                                        dedicated to mitigating the barriers to the art market, allowing everyone to develop their own unique relationships or connections with art. As an art business collective, we engage in various activities with the aim of providing support and encouragement to emerging artists in South Korea. Through the discovery of new talents and the utilization of copyrights for IP (Intellectual Property) such product and content development, we strive to breathe life into the Korean art market, thereby providing fresh stimulation.
                                     </dd>
                                 </dl>
                                 <dl>
-                                    <dt>In this Medi-City Medical Showcase,</dt>
+                                    <dt>Throughout this Medi-City Medical Showcase,</dt>
                                     <dd>
-                                        we will highlight the works of creative
-                                        and fresh Korean artists who play a key
-                                        role in K-Culture.
-                                        <br />
-                                        This showcase not only raises awareness
-                                        of K-medical but also elevates the
-                                        interest in K-ART,
-                                        <br />
-                                        laying the groundwork for promising
-                                        Korean artists to venture into the
-                                        international market.
+                                        we aim to highlight the works of creative and fresh Korean artists who play a key role in K-Culture.<br />
+                                        This showcase will not only strive to raises awareness of K-medical but will also elevate interest in K-ART,<br />
+                                        effectively laying the groundwork to allow for promising Korean artists to venture into the international market.
                                     </dd>
                                 </dl>
                             </div>
