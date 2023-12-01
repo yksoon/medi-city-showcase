@@ -218,7 +218,7 @@ const GalleryMain = (props) => {
      * 신규 등록 모달
      */
     const regBoard = () => {
-        setModalTitle("아티스트 신규 등록");
+        setModalTitle("갤러리 신규 등록");
         setIsOpen(true);
     };
 
@@ -300,7 +300,7 @@ const GalleryMain = (props) => {
 
     /**
      * 상세
-     * @param people_idx
+     * @param work_idx
      */
     const detailBoard = (work_idx) => {
         setIsSpinner(true);
@@ -486,15 +486,15 @@ const GalleryMain = (props) => {
         columnHelper.accessor(
             (row) => (
                 <>
-                    {row.main_title_ko}
+                    {row.name_ko}
                     <br />
-                    {`(${row.main_title_en})`}
+                    {`(${row.name_en})`}
                 </>
             ),
             {
-                id: "main_title_ko",
+                id: "name",
                 cell: (info) => info.getValue(),
-                header: "부제목",
+                header: "작가명",
                 enableSorting: "alphanumericCaseSensitive",
             },
         ),
@@ -543,22 +543,6 @@ const GalleryMain = (props) => {
                 id: "participate_type",
                 cell: (info) => info.getValue(),
                 header: "참여 구분",
-                sortingFn: "alphanumericCaseSensitive",
-            },
-        ),
-
-        columnHelper.accessor(
-            (row) => (
-                <>
-                    {row.content_info_ko}
-                    <br />
-                    {row.content_info_en}
-                </>
-            ),
-            {
-                id: "content_info",
-                cell: (info) => info.getValue(),
-                header: "내용",
                 sortingFn: "alphanumericCaseSensitive",
             },
         ),
@@ -670,12 +654,11 @@ const GalleryMain = (props) => {
                             <colgroup>
                                 <col width="5%" />
                                 <col width="10%" />
-                                <col width="10%" />
-                                <col width="10%" />
-                                <col width="7%" />
-                                <col width="7%" />
-                                <col width="7%" />
                                 <col width="*" />
+                                <col width="13%" />
+                                <col width="10%" />
+                                <col width="10%" />
+                                <col width="7%" />
                                 <col width="8%" />
                                 <col width="10%" />
                                 <col width="5%" />
@@ -785,7 +768,7 @@ const GalleryMain = (props) => {
                 title={modalTitle}
                 width={"1400"}
                 handleModalClose={handleModalClose}
-                component={"ArtistManageModalMain"}
+                component={"GalleryManageModalMain"}
                 handleNeedUpdate={handleNeedUpdate}
                 modData={modData}
             />

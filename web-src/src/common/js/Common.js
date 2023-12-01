@@ -21,6 +21,7 @@ import PopupManageModalMain from "components/admin/popupManage/modal/PopupManage
 import { BarChart, PieChart } from "@mui/x-charts";
 import ArtistManageModalMain from "components/admin/gallery/artist/modal/ArtistManageModalMain";
 import QrListModalMain from "components/admin/gallery/artist/modal/QrListModalMain";
+import GalleryManageModalMain from "components/admin/gallery/gallery/modal/GalleryManageModalMain";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -114,10 +115,20 @@ const CommonModal = (props) => {
                     />
                 );
 
-            // 아티스트 관리
+            // QR
             case "QrListModalMain":
                 return (
                     <QrListModalMain
+                        handleNeedUpdate={handleNeedUpdate}
+                        handleModalClose={modalOption.handleModalClose}
+                        modData={props.modData}
+                    />
+                );
+
+            // 갤러리 관리
+            case "GalleryManageModalMain":
+                return (
+                    <GalleryManageModalMain
                         handleNeedUpdate={handleNeedUpdate}
                         handleModalClose={modalOption.handleModalClose}
                         modData={props.modData}
@@ -219,7 +230,6 @@ const CommonConsole = (type, responseData) => {
 
 // 스피너
 const CommonSpinner = (props) => {
-
     return (
         <>
             <div className="spinner">

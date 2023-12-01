@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
 import useConfirm from "hook/useConfirm";
-import CountrySelect from "common/js/countryAutocomplete";
+import CountrySelect from "common/js/commonComponents/CountrySelect";
 import { registration_idx } from "common/js/static";
 
 const EntryManageModalMain = (props) => {

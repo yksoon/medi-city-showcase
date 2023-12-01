@@ -151,6 +151,7 @@ function App() {
                 "INTER_PHONE_TYPE",
                 "BANK_TYPE",
                 "LANGUAGE_TYPE",
+                "CURRENCY_TYPE",
             ],
         })
             .then((response) => {
@@ -168,7 +169,12 @@ function App() {
     // codes
     const getCountryBank = () => {
         RestServer("post", apiPath.api_codes, {
-            code_types: ["INTER_PHONE_TYPE", "BANK_TYPE", "LANGUAGE_TYPE"],
+            code_types: [
+                "INTER_PHONE_TYPE",
+                "BANK_TYPE",
+                "LANGUAGE_TYPE",
+                "CURRENCY_TYPE",
+            ],
             exclude_code_types: [],
         })
             .then((response) => {

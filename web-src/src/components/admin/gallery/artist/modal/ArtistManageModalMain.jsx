@@ -5,12 +5,11 @@ import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { codesAtom, countryBankAtom, isSpinnerAtom } from "recoils/atoms";
 import { Link } from "react-router-dom";
-import CountrySelect from "common/js/countryAutocomplete";
+import CountrySelect from "common/js/commonComponents/CountrySelect";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
 import imageCompression from "browser-image-compression";
 import { imageResizeOptions } from "common/js/static";
-import $ from "jquery";
 
 const ArtistManageModalMain = (props) => {
     const { confirm } = useConfirm();

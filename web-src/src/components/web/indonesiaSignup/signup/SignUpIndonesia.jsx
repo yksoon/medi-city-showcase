@@ -15,7 +15,7 @@ import { successCode } from "resultCode";
 import { Checkbox } from "@mui/material";
 import { commaOfNumber } from "common/js/Pattern";
 import { useLocation } from "react-router";
-import CountrySelect from "common/js/countryAutocomplete";
+import CountrySelect from "common/js/commonComponents/CountrySelect";
 
 // 참가상태 코드 영어
 const additional_status_en = {

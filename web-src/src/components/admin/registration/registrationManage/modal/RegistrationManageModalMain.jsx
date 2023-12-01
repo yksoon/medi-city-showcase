@@ -7,7 +7,7 @@ import Select from "react-select";
 import { Link } from "react-router-dom";
 import { apiPath } from "webPath";
 import { successCode } from "resultCode";
-import CountrySelect from "common/js/countryAutocomplete";
+import CountrySelect from "common/js/commonComponents/CountrySelect";
 
 const RegistrationManageModalMain = (props) => {
     const { alert } = useAlert();
