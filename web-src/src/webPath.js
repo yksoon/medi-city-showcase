@@ -420,6 +420,11 @@ const apiPath = {
     // POST MULTI
     // 갤러리 등록
     api_add_gallery: `${base_api_url + slash + version + slash}_gallery`,
+
+    // /v1/gallery
+    // PUT
+    // 갤러리 수정
+    api_mod_gallery: `${base_api_url + slash + version + slash}gallery`,
 };
 
 export { routerPath, apiPath };

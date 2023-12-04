@@ -74,6 +74,10 @@ const GalleryManageModalMain = (props) => {
     const contentInfoEn = useRef(null);
     const inputAttachmentFile = useRef(null);
     const previewAttachment = useRef(null);
+    const yearInfoKo = useRef(null);
+    const yearInfoEn = useRef(null);
+    const materialsInfoKo = useRef(null);
+    const materialsInfoEn = useRef(null);
 
     useEffect(() => {
         getArtistList();
@@ -196,11 +200,15 @@ const GalleryManageModalMain = (props) => {
         workMemoEn.current.value = modData.work_memo_en;
         contentInfoKo.current.value = modData.content_info_ko;
         contentInfoEn.current.value = modData.content_info_en;
+        yearInfoKo.current.value = modData.year_info_ko;
+        yearInfoEn.current.value = modData.year_info_en;
+        materialsInfoKo.current.value = modData.materials_info_ko;
+        materialsInfoEn.current.value = modData.materials_info_en;
         previewAttachment.current.src =
             modData.file_info.length !== 0 &&
             apiPath.api_file + modData.file_info[0].file_path_enc;
         setPeopleIdx(String(modData.people_idx));
-        // TODO: QR이랑 화폐도 고고
+        setSelectedCurrency(modData.currency_type);
     };
 
     // 이미지 업로드 시 미리보기
@@ -279,7 +287,7 @@ const GalleryManageModalMain = (props) => {
                 // /v1/reg
                 // PUT
                 // 사전등록 수정
-                url = apiPath.api_admin_mod_people;
+                url = apiPath.api_mod_gallery;
             }
 
             const formData = new FormData();
@@ -309,8 +317,13 @@ const GalleryManageModalMain = (props) => {
                 workMemoEn: workMemoEn.current.value,
                 contentInfoKo: contentInfoKo.current.value,
                 contentInfoEn: contentInfoEn.current.value,
+                yearInfoKo: yearInfoKo.current.value,
+                yearInfoEn: yearInfoEn.current.value,
+                materialsInfoKo: materialsInfoKo.current.value,
+                materialsInfoEn: materialsInfoEn.current.value,
                 peopleIdx: peopleIdx,
                 currencyType: selectedCurrency,
+                workIdx: method === "mod" ? modData.work_idx : "",
             };
 
             // 기본 formData append
@@ -731,6 +744,46 @@ const GalleryManageModalMain = (props) => {
                         </tr>
                         <tr>
                             <th>
+                                연도정보
+                                <br />
+                                (국문/영문)
+                            </th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={yearInfoKo}
+                                    placeholder="연도 정보"
+                                />
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={yearInfoEn}
+                                    placeholder="Year Info"
+                                />
+                            </td>
+                            <th>
+                                재료정보
+                                <br />
+                                (국문/영문)
+                            </th>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={materialsInfoKo}
+                                    placeholder="재료정보"
+                                />
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={materialsInfoEn}
+                                    placeholder="Materials Info"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
                                 참여유형 <span className="red">*</span>
                             </th>
                             <td>
@@ -886,6 +939,16 @@ const GalleryManageModalMain = (props) => {
                                 />
                             </td>
                         </tr>
+                        {isModData && (
+                            <tr>
+                                <th>QR</th>
+                                <td>
+                                    <div className="hotel_thumb_wrap">
+                                        <img src={modData.qr_img} alt="" />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

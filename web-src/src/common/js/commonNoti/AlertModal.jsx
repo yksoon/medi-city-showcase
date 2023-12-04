@@ -27,7 +27,7 @@ const AlertModal = () => {
                                 >
                                     <img src="img/common_old/alert.png" alt="" />
                                 </span> */}
-                                <span className="alert_icon">!</span>
+                                <span className="confirm_icon">!</span>
                                 <h3>
                                     {message
                                         ? decodeURI(message)
