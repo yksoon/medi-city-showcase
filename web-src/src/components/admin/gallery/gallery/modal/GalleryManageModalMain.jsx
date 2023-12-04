@@ -38,7 +38,7 @@ const GalleryManageModalMain = (props) => {
     const handleNeedUpdate = props.handleNeedUpdate;
 
     // select box options
-    const [selectedCurrency, setSelectedCurrency] = useState("410");
+    const [selectedCurrency, setSelectedCurrency] = useState("");
     const [postTypeOption, setPostTypeOption] = useState([]);
     const [postStatusOption, setPostStatusOption] = useState([]);
     const [paintTypeOption, setPaintTypeOption] = useState([]);
@@ -577,7 +577,6 @@ const GalleryManageModalMain = (props) => {
                                 {artistList.length !== 0 && (
                                     <Autocomplete
                                         id="artist-select-demo"
-                                        // sx={{ width: 300 }}
                                         size="small"
                                         options={artistList}
                                         value={
@@ -616,8 +615,8 @@ const GalleryManageModalMain = (props) => {
                                                     // label="Choose a country"
                                                     inputProps={{
                                                         ...params.inputProps,
-                                                        label: "Choose a artist", // disable autocomplete and autofill
                                                     }}
+                                                    placeholder="작가를 선택해주세요"
                                                 />
                                             </>
                                         )}

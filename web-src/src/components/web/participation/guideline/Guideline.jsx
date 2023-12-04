@@ -78,7 +78,12 @@ const Guideline = () => {
                                 {registrationInfo.registration_sub_title_en}
                             </h3>
                         ) : (
-                            <h3>
+                            <h3
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                }}
+                            >
                                 <Skeleton
                                     variant="text"
                                     sx={{

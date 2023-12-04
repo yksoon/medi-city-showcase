@@ -99,8 +99,8 @@ const CurrencySelect = (props) => {
                                 // label="Choose a country"
                                 inputProps={{
                                     ...params.inputProps,
-                                    label: "Choose a currency", // disable autocomplete and autofill
                                 }}
+                                placeholder="통화 코드를 선택해주세요"
                             />
                         </>
                     )}

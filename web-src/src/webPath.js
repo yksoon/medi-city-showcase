@@ -66,7 +66,7 @@ const routerPath = {
 
     // 아트버디 - 아티스트 리스트
     // /artbuddy/artist-list
-    web_artbuddy_artist_list_url: `${base_url}artbuddy/gallery-list`,
+    web_artbuddy_artist_list_url: `${base_url}artbuddy/artist-list`,
 
     // 아트버디 - 갤러리 상세
     // /artbuddy/gallery

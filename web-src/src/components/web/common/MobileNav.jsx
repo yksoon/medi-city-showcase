@@ -173,6 +173,15 @@ function MobileNav() {
                                         Gallery
                                     </Link>
                                 </li>
+                                <li>
+                                    <Link
+                                        to={
+                                            routerPath.web_artbuddy_artist_list_url
+                                        }
+                                    >
+                                        Artist
+                                    </Link>
+                                </li>
                             </ul>
                         </li>
                         {/* <li>

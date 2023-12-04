@@ -101,8 +101,8 @@ export default function CountrySelect(props) {
                                 // label="Choose a country"
                                 inputProps={{
                                     ...params.inputProps,
-                                    label: "Choose a country", // disable autocomplete and autofill
                                 }}
+                                placeholder="국가를 선택해주세요"
                             />
                         </>
                     )}
