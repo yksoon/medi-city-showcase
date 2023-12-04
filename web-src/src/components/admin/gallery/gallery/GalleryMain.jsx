@@ -196,7 +196,7 @@ const GalleryMain = (props) => {
             // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
             const idArray = [];
             // boardList.forEach((el) => idArray.push(el.institution_idx));
-            boardList.forEach((el) => idArray.push(el.people_idx));
+            boardList.forEach((el) => idArray.push(el.work_idx));
 
             setCheckItems(idArray);
         } else {
