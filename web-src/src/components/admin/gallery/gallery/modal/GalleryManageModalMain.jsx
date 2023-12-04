@@ -463,12 +463,6 @@ const GalleryManageModalMain = (props) => {
             return false;
         }
 
-        if (!subTitleKo.current.value || !subTitleEn.current.value) {
-            noti(subTitleKo, "부제목(국문,영문)을 입력해주세요");
-
-            return false;
-        }
-
         if (!postType.current.value) {
             noti(postType, "게시유형을 선택해주세요");
 
@@ -892,18 +886,14 @@ const GalleryManageModalMain = (props) => {
                             </td>
                         </tr>
                         <tr>
-                            <th>
-                                내용(국문) <span className="red">*</span>
-                            </th>
+                            <th>내용(국문)</th>
                             <td>
                                 <textarea
                                     ref={contentInfoKo}
                                     placeholder="내용"
                                 ></textarea>
                             </td>
-                            <th>
-                                내용(영문) <span className="red">*</span>
-                            </th>
+                            <th>내용(영문)</th>
                             <td>
                                 <textarea
                                     ref={contentInfoEn}

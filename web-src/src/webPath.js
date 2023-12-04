@@ -61,8 +61,12 @@ const routerPath = {
     web_signup_confirmation_url: `${base_url}signup/confirmation`,
 
     // 아트버디 - 갤러리 리스트
-    // /artbuddy/gallery_list
+    // /artbuddy/gallery-list
     web_artbuddy_gallery_list_url: `${base_url}artbuddy/gallery-list`,
+
+    // 아트버디 - 아티스트 리스트
+    // /artbuddy/artist-list
+    web_artbuddy_artist_list_url: `${base_url}artbuddy/gallery-list`,
 
     // 아트버디 - 갤러리 상세
     // /artbuddy/gallery

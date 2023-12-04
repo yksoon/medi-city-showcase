@@ -99,6 +99,13 @@ function Header() {
                                     >
                                         Gallery
                                     </Link>
+                                    <Link
+                                        to={
+                                            routerPath.web_artbuddy_gallery_list_url
+                                        }
+                                    >
+                                        Artist
+                                    </Link>
                                 </div>
                             </li>
                             {/* <li>
