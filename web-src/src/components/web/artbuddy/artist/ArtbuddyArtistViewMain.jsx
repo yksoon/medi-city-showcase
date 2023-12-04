@@ -13,7 +13,12 @@ import { Link } from "react-router-dom";
 import { apiPath, routerPath } from "webPath";
 import { successCode } from "resultCode";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
+import {
+    Autoplay,
+    EffectCoverflow,
+    Navigation,
+    Pagination,
+} from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -284,10 +289,12 @@ const ArtbuddyArtistViewMain = () => {
                                     <Swiper
                                         className="swiper-container artist_work"
                                         speed={1000}
-                                        slidesPerView={"auto"}
+                                        // slidesPerView={"auto"}
+                                        slidesPerView={3}
                                         spaceBetween={40}
                                         mousewheel={true}
-                                        // loop={true}
+                                        loop={true}
+                                        // navigation={true}
                                         // loopAdditionalSlides={1}
                                         grabCursor={true}
                                         centeredSlides={true}
@@ -299,7 +306,7 @@ const ArtbuddyArtistViewMain = () => {
                                             modifier: 1,
                                             slideShadows: true,
                                         }}
-                                        modules={[EffectCoverflow]}
+                                        modules={[EffectCoverflow, Navigation]}
                                         pagination={false}
                                         initialSlide={0}
                                     >
@@ -311,11 +318,11 @@ const ArtbuddyArtistViewMain = () => {
                                                 <img
                                                     src={item}
                                                     alt=""
-                                                    // style={{
-                                                    //     width: "100%",
-                                                    //     height: "100%",
-                                                    //     objectFit: "cover",
-                                                    // }}
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        objectFit: "cover",
+                                                    }}
                                                 />
                                             </SwiperSlide>
                                         ))}
