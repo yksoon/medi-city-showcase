@@ -19,12 +19,16 @@ import {
     codesAtom,
     countryBankAtom,
     ipInfoAtom,
+    registrationInfoAtom,
     resultCodeAtom,
     userInfoAtom,
     userTokenAtom,
     viewScheduleAtom,
 } from "recoils/atoms";
 import Aos from "aos";
+import { registration_idx } from "common/js/static";
+import { CommonNotify, CommonRest } from "common/js/Common";
+import { successCode } from "resultCode";
 
 function App() {
     useEffect(() => {
@@ -51,6 +55,7 @@ function App() {
     const setCountryBank = useSetRecoilState(countryBankAtom);
     const setViewSchedule = useSetRecoilState(viewScheduleAtom);
     const setCheckSchedule = useSetRecoilState(checkScheduleAtom);
+    const setRegistrationInfo = useSetRecoilState(registrationInfoAtom);
 
     useEffect(() => {
         if (ipInfo === "") {
@@ -59,6 +64,7 @@ function App() {
             getResultCode();
             getCodes();
             getCountryBank();
+            getRegistrationInfo();
             setInterval(getResultCode, 3600000);
             setInterval(getCodes, 3600000);
         }
@@ -109,6 +115,7 @@ function App() {
                 getResultCode();
                 getCodes();
                 getCountryBank();
+                getRegistrationInfo();
                 setInterval(getResultCode, 3600000);
                 setInterval(getCodes, 3600000);
 
@@ -185,6 +192,22 @@ function App() {
                 // );
 
                 setCountryBank(response.data.result_info);
+            })
+            .catch((error) => {
+                // 오류발생시 실행
+                console.log(decodeURI(error));
+            });
+    };
+
+    const getRegistrationInfo = () => {
+        RestServer("get", apiPath.api_admin_get_reg + registration_idx, {})
+            .then((response) => {
+                // console.log("result_code", response);
+
+                setRegistrationInfo(response.data.result_info);
+                // dispatch(
+                //     set_result_code(JSON.stringify(response.data.result_info))
+                // );
             })
             .catch((error) => {
                 // 오류발생시 실행

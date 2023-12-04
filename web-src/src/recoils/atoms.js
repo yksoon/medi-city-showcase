@@ -86,6 +86,13 @@ export const userTokenAtom = atom({
     effects_UNSTABLE: [persistAtom],
 });
 
+// 사용자
+export const registrationInfoAtom = atom({
+    key: "registrationInfo",
+    default: {},
+    effects_UNSTABLE: [persistAtom],
+});
+
 // ----session End----
 
 // 스피너

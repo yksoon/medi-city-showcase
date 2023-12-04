@@ -10,8 +10,8 @@ import {
     CommonNotify,
     CommonRest,
 } from "common/js/Common";
-import { useSetRecoilState } from "recoil";
-import { isSpinnerAtom } from "recoils/atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isSpinnerAtom, registrationInfoAtom } from "recoils/atoms";
 import { apiPath, routerPath } from "webPath";
 import { registration_idx } from "common/js/static";
 import { successCode } from "resultCode";
@@ -24,45 +24,13 @@ const ArtbuddyArtistListMain = (props) => {
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
-    const [registrationInfo, setRegistrationInfo] = useState([]);
+    const registrationInfo = useRecoilValue(registrationInfoAtom);
+
     const [boardList, setBoardList] = useState([]);
 
     useEffect(() => {
-        getRegistration();
         getArtistList();
     }, []);
-
-    // 정보 받아오기 REST
-    const getRegistration = () => {
-        const url = apiPath.api_admin_get_reg + registration_idx;
-        const data = {};
-
-        // 파라미터
-        const restParams = {
-            method: "get",
-            url: url,
-            data: data,
-            err: err,
-            callback: (res) => responsLogic(res),
-        };
-
-        CommonRest(restParams);
-
-        const responsLogic = (res) => {
-            if (res.headers.result_code === successCode.success) {
-                const result_info = res.data.result_info;
-
-                setRegistrationInfo(result_info);
-            } else {
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    // message: res.headers.result_message_ko,
-                    message: "잠시후 다시 시도해주세요",
-                });
-            }
-        };
-    };
 
     const getArtistList = () => {
         setIsSpinner(true);
@@ -84,7 +52,6 @@ const ArtbuddyArtistListMain = (props) => {
             data: data,
             err: err,
             callback: (res) => responsLogic(res),
-            admin: "Y",
         };
         CommonRest(restParams);
 
@@ -160,10 +127,7 @@ const ArtbuddyArtistListMain = (props) => {
                         >
                             Artist
                         </Link>
-                        <Link
-                            to={routerPath.web_artbuddy_gallery_list_url}
-                            className="active"
-                        >
+                        <Link to={routerPath.web_artbuddy_gallery_list_url}>
                             Gallery
                         </Link>
                     </div>
@@ -175,7 +139,7 @@ const ArtbuddyArtistListMain = (props) => {
                     <div className="listbox artist_list">
                         {boardList.length !== 0 &&
                             boardList.map((item, idx) => (
-                                <figure>
+                                <figure key={item.people_idx}>
                                     <Link
                                         to={`${routerPath.web_artbuddy_artist_detail_url}${item.people_idx}`}
                                     >
