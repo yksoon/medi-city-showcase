@@ -424,65 +424,88 @@ body {margin:0 auto;}
 .kart .bimg img{position:absolute; left:50%; margin-left:-1000px;}
 
 /* GALLEY 뷰페이지 */
-.galleryView .artbox {display:flex; justify-content:center; align-items:center;height:auto;padding:68px 0;text-align: center; margin:0 0 40px 0;
-	background:url('/public/img/web/sub/artbox_bg.jpg') center center no-repeat;}
-.galleryView .artbox img{width:500px; height:auto;padding:6px;bordeR:11px solid #d1bfa8;
-	box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);
-	-webkit-box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);
-	-moz-box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);
-	-o-box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);
-}
+
+.galleryView .artbox { display:flex; justify-content:center; align-items:center; height:auto; padding:150px 0; text-align: center; margin:0 0 40px 0;background:url('/public/img/web/sub/artbox_bg.jpg') center center no-repeat; }
+.galleryView .artbox img { width:500px; height:auto; padding:6px; bordeR:11px solid #d1bfa8;box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);-webkit-box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);-moz-box-shadow: 8px 7px 10px rgb(75 50 19 / 16%);-o-box-shadow: 8px 7px 10px rgb(75 50 19 / 16%); }
 
 
 
-.galleryView .artinfo .artist {font-size: 30px; font-weight: 400; color:#000000;;}
-.galleryView .artinfo .artist span {font-size: 15px; color:#59047f;;}
-.galleryView .artinfo .artist:after {content:"";display: block;width:100px;height:1px; background-color:#000; margin:20px 0;}
-.galleryView .artinfo ul {margin:0 0 80px 0;}
-.galleryView .artinfo ul li{line-height: 32px; color:#333333;font-size: 17px;}
-.galleryView .artinfo ul li span{display: inline-block; width:150px; color:#888;}
-.galleryView .artinfo .artnote {margin:0 0 80px 0;}
-.galleryView .artinfo .artnote h4 {font-size: 22px;font-weight: 900;color:#000;margin:0 0 20px 0;}
-.galleryView .artinfo .artnote .txt {font-size: 17px;color:#333333;line-height: 29px; word-break: keep-all;}
-.galleryView .inqbox  h4 {font-size: 22px;font-weight: 900;color:#000;margin:0 0 20px 0;}
-.galleryView .inqbox table{border-top:1px solid #59047f;}
-.galleryView .inqbox table tbody tr th {border-bottom: 1px solid #ddd; padding:20px 0 20px 35px;text-align: left;;font-size: 17px; color:#000;font-weight: 600;}
-.galleryView .inqbox table tbody tr td {border-bottom: 1px solid #ddd; padding:20px 5px;font-size:16px; color:#333;}
-.galleryView .inqbox table tbody tr td input {border:1px solid #ccc; height:45px; line-height: 45px; padding-left:10px;width:300px;outline:none;}
-.galleryView .inqbox table tbody tr td input.input_t {width:120px;}
-.galleryView .inqbox table tbody tr td textarea {border:1px solid #ccc; padding:8px; width:100%; height:100px; resize: none;;outline:none;box-sizing:border-box;}
+.galleryView .artinfo .artist { font-size: 30px; font-weight: 400; color:#000000;; }
+.galleryView .artinfo .artist span { font-size: 15px; color:#59047f;; }
+.galleryView .artinfo .artist:after { content:""; display: block; width:100px; height:1px; background-color:#000; margin:20px 0; }
+.galleryView .artinfo ul { margin:0 0 80px 0; }
+.galleryView .artinfo ul li { line-height: 32px; color:#333333; font-size: 17px; }
+.galleryView .artinfo ul li span { display: inline-block; width:150px; color:#888; }
+.galleryView .artinfo .artnote { margin:0 0 80px 0; }
+.galleryView .artinfo .artnote h4 { font-size: 22px; font-weight: 900; color:#000; margin:0 0 20px 0; }
+.galleryView .artinfo .artnote .txt { font-size: 17px; color:#333333; line-height: 29px; word-break: keep-all; }
+.galleryView .inqbox h4 { font-size: 22px; font-weight: 900; color:#000; margin:0 0 20px 0; }
+.galleryView .inqbox table { border-top:1px solid #59047f; }
+.galleryView .inqbox table tbody tr th { border-bottom: 1px solid #ddd; padding:20px 0 20px 35px; text-align: left;; font-size: 17px; color:#000; font-weight: 600; }
+.galleryView .inqbox table tbody tr td { border-bottom: 1px solid #ddd; padding:20px 5px; font-size:16px; color:#333; }
+.galleryView .inqbox table tbody tr td input { border:1px solid #ccc; height:45px; line-height: 45px; padding-left:10px; width:300px; outline:none; }
+.galleryView .inqbox table tbody tr td input.input_t { width:120px; }
+.galleryView .inqbox table tbody tr td textarea { border:1px solid #ccc; padding:8px; width:100%; height:100px; resize: none;; outline:none; box-sizing:border-box; }
 .galleryView .inqbox table tbody tr td input:focus,
-.galleryView .inqbox table tbody tr td textarea:focus {border-color:#5e0875;}
-.galleryView .inqbox .btnbox {margin:50px 0 0 0; text-align:center;}
-.galleryView .inqbox .btnbox input[type="submit"] {border:none; height:65px; line-height: 65px; width:300px;outline:none;border:none;background-color: #47005a;color:#fff; font-size:24px; font-family:inherit;cursor:pointer;font-weight: 600;;}
-.galleryView .inqbox .btnbox input[type="submit"]:hover, .galleryView .inqbox .btnbox input[type="submit"]:focus{background-color: #290035;}
+.galleryView .inqbox table tbody tr td textarea:focus { border-color:#5e0875; }
+.galleryView .inqbox .btnbox { margin:50px 0 0 0; text-align:center; }
+.galleryView .inqbox .btnbox input[type="submit"] { border:none; height:65px; line-height: 65px; width:300px; outline:none; border:none; background-color: #47005a; color:#fff; font-size:24px; font-family:inherit; cursor:pointer; font-weight: 600;; }
+.galleryView .inqbox .btnbox input[type="submit"]:hover, .galleryView .inqbox .btnbox input[type="submit"]:focus { background-color: #290035; }
 
 
 /* GALLERY 리스트 페이지 */
-.galleryList .gfilter {text-align: center;margin:0 0 60px 0;}
-.galleryList .gfilter a{display:inline-block;height:25px; line-height: 25px; border:1px solid #ddd; border-radius: 25px;padding:0 20px;font-size:15px;color:#333;margin:3px;}
-.galleryList .gfilter a:hover, .galleryList .gfilter a.active{border:1px solid #59047f;color:#59047f;;}
-.galleryList .grid .grid-item { width: 390px;  }
+.galleryList .gfilter { text-align: center; margin:0 0 60px 0; }
+.galleryList .gfilter a { display:inline-block; height:25px; line-height: 25px; border:1px solid #ddd; border-radius: 25px; padding:0 20px; font-size:15px; color:#333; }
+.galleryList .gfilter a:hover, .galleryList .gfilter a.active { border:1px solid #59047f; color:#59047f;; }
+.galleryList .grid .grid-item { width: 390px; }
 
-.listbox{
-	margin:0 50px;
-	column-width:390px;
-	column-gap: 10px;
-  }
-.listbox figure{
-	display: inline-block;
-	margin:0;
-	margin-bottom: 50px;	
-}
+.listbox {margin:0 50px;column-width:390px;column-gap: 10px; }
+.listbox figure {display: inline-block;margin:0;margin-bottom: 50px; }
 
-.listbox  figure a .thumb img {max-width:100%;height:auto;}
-.listbox  figure a .name {font-size:20px; color:#000;margin:20px 0 10px;font-weight: 600;;}
-.listbox  figure a .info {font-size:16px; color:#333; line-height:30px;}
-.listbox  figure a .info p span {display:inline-block;width:80px;color:#888;}
-.listbox  figure a:hover .thumb img {opacity: 0.5;}
-.listbox  figure a:hover .name {color:#5e0875;}
+.listbox figure a .thumb img { max-width:100%; height:auto; }
+.listbox figure a .name { font-size:20px; color:#000; margin:20px 0 10px; font-weight: 600;; }
+.listbox figure a .info { font-size:16px; color:#333; line-height:30px; }
+.listbox figure a .info p span { display:inline-block; width:80px; color:#888; }
+.listbox figure a:hover .thumb img { opacity: 0.5; }
+.listbox figure a:hover .name { color:#5e0875; }
 
-  .galleryList figure a p{display: inline-block=;}
+.galleryList figure a p { display: inline-block; }
+
+.artist_list .thumb {width:390px;overflow: hidden;}
+.artist_list figure a {display:block;width:390px;}
+.artist_list figure a .name span {color: #818181;font-weight: 400;}
+
+#guest {}
+#guest_book {max-width:1180px;margin:0 auto;padding:0 60px;background: #fff;height:100vh;display:flex; justify-content: center; align-items: center;background: url('/public/img/web/sub/guest_bg.png') center top no-repeat;background-size: cover;}
+#guest_book > div {height:fit-content;background: #fff;padding:40px;margin:200px 0 0;}
+#guest_book .signup .boxing table tbody tr td input[type="text"] {width:100%;}
+#guest_book .signup .boxing table tbody tr td input[type="text"].input_m {width:calc(( 100% - 32px ) /3);}
+#guest_book #subtitle {padding:0 0 40px}
+#guest_book .c_tit { font-size:30px; font-weight: 900; color: #000; position:relative; padding:6px 0 0 8px; margin:0 0 20px 0; }
+#guest_book .c_tit .s_txt { font-size:20px; }
+#guest_book .c_tit:before { content:""; display:block; width:30px; height:30px; border-radius:30px; -webkit-border-radius:30px; -moz-border-radius:30px; background-color:#ffa8ca;position:absolute; left:0; top:0; z-index:-1; }
+#guest_book .boxing {border-radius: 5px;margin:0 0 40px;}
+#guest_book .signup .boxing table {border-top: none;}
+#guest_book .signup .boxing table tbody tr:last-child th, #guest_book .signup .boxing table tbody tr:last-child td {border-bottom: none;}
+
+.artist_work {width:100%;overflow-x:hidden;padding:50px 0;}
+.artist_work .swiper-slide{height:520px;width:fit-content;}
+.artist_work .swiper-slide img{height:520px;width:fit-content;position: relative;}
+.galleryView .top_name {text-align: center;padding:80px 0 10px}
+.galleryView .top_name h5 {font-size: 42px;font-weight: 500;}
+.galleryView .top_name h4 {font-size: 18px;color: #9e9e9e;}
+
+.artist_info {width:1300px;margin:0 auto;padding:160px 0 0;}
+.artist_info img {width:100%;}
+.artist_info::after {clear:both;content:"";display:block;}
+.artist_info .left {width: 40%;float: left;position:sticky;top:40px;padding:0 96px 0 0;}
+.artist_info .left .thumb {width:80%;}
+.artist_info .left .artist {margin:40px 0 0;}
+.artist_info .right {width: 60%;float: left;padding:0 0 0 86px;border-left: 1px solid #ddd;position: relative;}
+.artist_info .right::before {content:"";display:block;width:1px;height:48px;top:10px;position: sticky;z-index: 999;background: #000;left:0;margin:0 0 0 -87px;}
+.artist_info p { line-height: 26px; color:#424242; font-size: 16px; }
+.galleryView .artist_info .artnote {margin:0 0 50px;}
+.galleryView .artist_info ul {margin:0;font-family: 'Pretendard';}
 
 
 /* IE */
@@ -877,8 +900,9 @@ select {
 
 	.galleryView .inqbox .btnbox input[type="submit"] {height:55px; line-height: 55px; width:220px;font-size:20px;}
 
+    #guest_book .signup .boxing table tbody tr td input[type="text"].input_m {width:30%;}
+    #guest_book .c_tit { font-size:18px; letter-spacing:-0.02em; }
 
-	
 
 
 

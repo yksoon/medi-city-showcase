@@ -509,13 +509,14 @@ const GalleryMain = (props) => {
         ),
 
         columnHelper.accessor(
-            (row) => (
-                <>
-                    {row.art_type.split("(")[0]}
-                    <br />
-                    {"(" + row.art_type.split("(")[1]}
-                </>
-            ),
+            (row) =>
+                row.art_type && (
+                    <>
+                        {row.art_type.split("(")[0]}
+                        <br />
+                        {row.art_type.split("(")[1]}
+                    </>
+                ),
             {
                 id: "art_type",
                 cell: (info) => info.getValue(),
@@ -525,13 +526,14 @@ const GalleryMain = (props) => {
         ),
 
         columnHelper.accessor(
-            (row) => (
-                <>
-                    {row.paint_type.split("(")[0]}
-                    <br />
-                    {"(" + row.paint_type.split("(")[1]}
-                </>
-            ),
+            (row) =>
+                row.paint_type && (
+                    <>
+                        {row.paint_type.split("(")[0]}
+                        <br />
+                        {"(" + row.paint_type.split("(")[1]}
+                    </>
+                ),
             {
                 id: "paint_type",
                 cell: (info) => info.getValue(),
@@ -541,13 +543,14 @@ const GalleryMain = (props) => {
         ),
 
         columnHelper.accessor(
-            (row) => (
-                <>
-                    {row.participate_type.split("(")[0]}
-                    <br />
-                    {"(" + row.participate_type.split("(")[1]}
-                </>
-            ),
+            (row) =>
+                row.participate_type && (
+                    <>
+                        {row.participate_type.split("(")[0]}
+                        <br />
+                        {"(" + row.participate_type.split("(")[1]}
+                    </>
+                ),
             {
                 id: "participate_type",
                 cell: (info) => info.getValue(),
@@ -557,13 +560,14 @@ const GalleryMain = (props) => {
         ),
 
         columnHelper.accessor(
-            (row) => (
-                <>
-                    {row.reg_dttm.split(" ")[0]}
-                    <br />
-                    {row.reg_dttm.split(" ")[1]}
-                </>
-            ),
+            (row) =>
+                row.reg_dttm && (
+                    <>
+                        {row.reg_dttm.split(" ")[0]}
+                        <br />
+                        {row.reg_dttm.split(" ")[1]}
+                    </>
+                ),
             {
                 id: "reg_dttm",
                 cell: (info) => info.getValue(),
