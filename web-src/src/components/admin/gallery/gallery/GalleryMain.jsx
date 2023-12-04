@@ -514,7 +514,7 @@ const GalleryMain = (props) => {
                     <>
                         {row.art_type.split("(")[0]}
                         <br />
-                        {row.art_type.split("(")[1]}
+                        {"(" + row.art_type.split("(")[1]}
                     </>
                 ),
             {

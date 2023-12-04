@@ -22,6 +22,7 @@ import CheckEntryIndonesia from "components/web/indonesiaSignup/checkEntry/Check
 import GuidelineIndonesia from "components/web/indonesiaSignup/guideline/GuidelineIndonesia";
 import GuestBookMain from "components/web/guestBook/GuestBookMain";
 import ArtbuddyArtistListMain from "components/web/artbuddy/artist/ArtbuddyArtistListMain";
+import ArtbuddyArtistViewMain from "components/web/artbuddy/artist/ArtbuddyArtistViewMain";
 
 // Router
 const Router = () => {
@@ -121,6 +122,13 @@ const Router = () => {
                     <Route
                         path={routerPath.web_artbuddy_artist_list_url}
                         element={<ArtbuddyArtistListMain />}
+                    />
+
+                    {/* 아트버디 - 아티스트 상세 */}
+                    {/* URL : /artbuddy/artist/{people_idx} */}
+                    <Route
+                        path={`${routerPath.web_artbuddy_artist_detail_url}:peopleIdx`}
+                        element={<ArtbuddyArtistViewMain />}
                     />
 
                     {/* 사전등록 - 인도네시아 */}

@@ -176,7 +176,9 @@ const ArtbuddyArtistListMain = (props) => {
                         {boardList.length !== 0 &&
                             boardList.map((item, idx) => (
                                 <figure>
-                                    <Link to="">
+                                    <Link
+                                        to={`${routerPath.web_artbuddy_artist_detail_url}${item.people_idx}`}
+                                    >
                                         <div className="thumb">
                                             <img
                                                 src={

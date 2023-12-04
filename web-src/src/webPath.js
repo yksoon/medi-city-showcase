@@ -72,6 +72,10 @@ const routerPath = {
     // /artbuddy/gallery
     web_artbuddy_gallery_url: `${base_url}artbuddy/gallery`,
 
+    // 아트버디 - 아티스트 상세
+    // /artbuddy/artist/
+    web_artbuddy_artist_detail_url: `${base_url}artbuddy/artist${slash}`,
+
     // 아트버디 - 소개
     // /artbuddy/exhibition
     web_artbuddy_exhibition_url: `${base_url}artbuddy/exhibition`,

@@ -487,12 +487,6 @@ const GalleryManageModalMain = (props) => {
             return false;
         }
 
-        if (!sizeInfoKo.current.value || !sizeInfoEn.current.value) {
-            noti(sizeInfoKo, "크기정보(국문,영문)를 입력해주세요");
-
-            return false;
-        }
-
         if (!isModData) {
             if (!inputAttachmentFile) {
                 noti(inputAttachmentFile, "작품 이미지를 첨부해주세요");
@@ -846,7 +840,7 @@ const GalleryManageModalMain = (props) => {
                         </tr>
                         <tr>
                             <th>
-                                사이즈 정보 <span className="red">*</span>
+                                사이즈 정보
                                 <br />
                                 (국문/영문)
                             </th>
