@@ -469,7 +469,7 @@ body {margin:0 auto;}
 .listbox figure a:hover .thumb img { opacity: 0.5; }
 .listbox figure a:hover .name { color:#5e0875; }
 
-.galleryList figure a p { display: inline-block; }
+/*.galleryList figure a p { display: inline-block; }*/
 
 .artist_list .thumb {width:390px;overflow: hidden;}
 .artist_list figure a {display:block;width:390px;}

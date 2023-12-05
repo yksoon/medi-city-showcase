@@ -38,6 +38,7 @@ const GalleryMain = (props) => {
      */
     const [boardList, setBoardList] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
+    const [page, setPage] = useState(1);
     const [checkItems, setCheckItems] = useState([]);
 
     /**
@@ -68,7 +69,7 @@ const GalleryMain = (props) => {
     const [modDataQr, setModDataQr] = useState([]);
 
     useEffect(() => {
-        getBoardList(1, 10, "");
+        getBoardList(page, 10, "");
     }, [isNeedUpdate, isRefresh]);
 
     /**
@@ -150,7 +151,7 @@ const GalleryMain = (props) => {
     const doSearch = () => {
         const keyword = searchKeyword.current.value;
 
-        getBoardList(1, 10, keyword);
+        getBoardList(page, 10, keyword);
     };
 
     /**
@@ -212,6 +213,7 @@ const GalleryMain = (props) => {
      */
     const handleChange = (e, value) => {
         getBoardList(value, 10, searchKeyword.current.value);
+        setPage(value);
     };
 
     /**

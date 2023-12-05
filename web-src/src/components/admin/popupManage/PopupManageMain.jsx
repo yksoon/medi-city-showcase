@@ -1,7 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
-import { CommonConsole, CommonErrModule, CommonModal, CommonNotify, CommonRest } from "common/js/Common";
+import {
+    CommonConsole,
+    CommonErrModule,
+    CommonModal,
+    CommonNotify,
+    CommonRest,
+} from "common/js/Common";
 import { useSetRecoilState } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
 import { Link } from "react-router-dom";
@@ -32,6 +38,7 @@ const PopupManageMain = (props) => {
     // 리스트
     const [popupList, setPopupList] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
+    const [page, setPage] = useState(1);
     const [checkItems, setCheckItems] = useState([]);
 
     // 모달
@@ -48,7 +55,7 @@ const PopupManageMain = (props) => {
     const searchKeyword = useRef(null);
 
     useEffect(() => {
-        getPopupList(1, 10, "");
+        getPopupList(page, 10, "");
     }, [isNeedUpdate, isRefresh]);
 
     // 리스트 가져오기
@@ -104,7 +111,7 @@ const PopupManageMain = (props) => {
     const doSearch = () => {
         const keyword = searchKeyword.current.value;
 
-        getPopupList(1, 10, keyword);
+        getPopupList(page, 10, keyword);
     };
 
     // 모달창 닫기
@@ -122,7 +129,7 @@ const PopupManageMain = (props) => {
             setIsOpen(false);
         };
     };
-    
+
     // 리스트 새로고침
     const handleNeedUpdate = () => {
         setModalTitle("");
@@ -158,8 +165,9 @@ const PopupManageMain = (props) => {
     // 페이지네이션 이동
     const handleChange = (e, value) => {
         getPopupList(value, 10, searchKeyword.current.value);
+        setPage(value);
     };
-    
+
     // 팝업 정보 상세
     const detailPopup = (popup_idx) => {
         setIsSpinner(true);
@@ -221,16 +229,16 @@ const PopupManageMain = (props) => {
         //선택여부 확인
         checkItems.length === 0
             ? CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "삭제할 항목을 선택해주세요",
-                })
+                  type: "alert",
+                  hook: alert,
+                  message: "삭제할 항목을 선택해주세요",
+              })
             : CommonNotify({
-                    type: "confirm",
-                    hook: confirm,
-                    message: "선택된 항목을 삭제 하시겠습니까?",
-                    callback: () => removePopup(),
-                });
+                  type: "confirm",
+                  hook: confirm,
+                  message: "선택된 항목을 삭제 하시겠습니까?",
+                  callback: () => removePopup(),
+              });
     };
 
     const removePopup = async () => {
@@ -293,9 +301,7 @@ const PopupManageMain = (props) => {
                     onChange={(e) =>
                         handleSingleCheck(e.target.checked, info.getValue())
                     }
-                    checked={
-                        checkItems.includes(info.getValue())
-                    }
+                    checked={checkItems.includes(info.getValue())}
                 />
             ),
             header: () => (
@@ -377,7 +383,7 @@ const PopupManageMain = (props) => {
                 cell: (info) => info.getValue(),
                 header: "상세보기",
                 enableSorting: false,
-            }
+            },
         ),
     ]);
 
@@ -412,8 +418,7 @@ const PopupManageMain = (props) => {
                     <div
                         className="btn_box btn_right"
                         style={{ margin: 0 }}
-                    >
-                    </div>
+                    ></div>
                 </div>
                 <div
                     style={{
@@ -422,8 +427,7 @@ const PopupManageMain = (props) => {
                         marginBottom: "10px",
                     }}
                 >
-                    총 : <b>&nbsp; {pageInfo && pageInfo.total} &nbsp;</b>{" "}
-                    건
+                    총 : <b>&nbsp; {pageInfo && pageInfo.total} &nbsp;</b> 건
                 </div>
 
                 <div className="adm_table">
@@ -440,97 +444,95 @@ const PopupManageMain = (props) => {
                             <col width="5%" />
                         </colgroup>
                         <thead>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <tr key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <th
-                                            key={header.id}
-                                            colSpan={header.colSpan}
-                                        >
-                                            {header.isPlaceholder ? null : (
-                                                <div
-                                                    {...{
-                                                        className:
-                                                            header.column.getCanSort()
-                                                                ? "cursor-pointer select-none table_sort"
-                                                                : "",
-                                                        onClick:
-                                                            header.column.getToggleSortingHandler(),
-                                                    }}
-                                                >
-                                                    {flexRender(
-                                                        header.column
-                                                            .columnDef
-                                                            .header,
-                                                        header.getContext()
-                                                    )}
-                                                    {header.column.getCanSort() &&
-                                                        ({
-                                                            asc: (
-                                                                <div className="sort_asc">
-                                                                    <ArrowDropUpIcon />
-                                                                    <ArrowDropDownIcon />
-                                                                </div>
-                                                            ),
-                                                            desc: (
-                                                                <div className="sort_desc">
-                                                                    <ArrowDropUpIcon />
-                                                                    <ArrowDropDownIcon />
-                                                                </div>
-                                                            ),
-                                                        }[
-                                                            header.column.getIsSorted()
+                            {table.getHeaderGroups().map((headerGroup) => (
+                                <tr key={headerGroup.id}>
+                                    {headerGroup.headers.map((header) => {
+                                        return (
+                                            <th
+                                                key={header.id}
+                                                colSpan={header.colSpan}
+                                            >
+                                                {header.isPlaceholder ? null : (
+                                                    <div
+                                                        {...{
+                                                            className:
+                                                                header.column.getCanSort()
+                                                                    ? "cursor-pointer select-none table_sort"
+                                                                    : "",
+                                                            onClick:
+                                                                header.column.getToggleSortingHandler(),
+                                                        }}
+                                                    >
+                                                        {flexRender(
+                                                            header.column
+                                                                .columnDef
+                                                                .header,
+                                                            header.getContext(),
+                                                        )}
+                                                        {header.column.getCanSort() &&
+                                                            ({
+                                                                asc: (
+                                                                    <div className="sort_asc">
+                                                                        <ArrowDropUpIcon />
+                                                                        <ArrowDropDownIcon />
+                                                                    </div>
+                                                                ),
+                                                                desc: (
+                                                                    <div className="sort_desc">
+                                                                        <ArrowDropUpIcon />
+                                                                        <ArrowDropDownIcon />
+                                                                    </div>
+                                                                ),
+                                                            }[
+                                                                header.column.getIsSorted()
                                                             ] ?? (
-                                                            <div>
-                                                                <ArrowDropUpIcon />
-                                                                <ArrowDropDownIcon />
-                                                            </div>
-                                                        ))}
-                                                </div>
-                                            )}
-                                        </th>
-                                    );
-                                })}
-                            </tr>
-                        ))}
+                                                                <div>
+                                                                    <ArrowDropUpIcon />
+                                                                    <ArrowDropDownIcon />
+                                                                </div>
+                                                            ))}
+                                                    </div>
+                                                )}
+                                            </th>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
                         </thead>
                         <tbody>
-                        {popupList.length !== 0 ? (
-                            table.getRowModel().rows.map((row) => (
-                                <tr key={row.id}>
-                                    {row
-                                        .getVisibleCells()
-                                        .map((cell) => (
-                                            <td key={cell.id} 
+                            {popupList.length !== 0 ? (
+                                table.getRowModel().rows.map((row) => (
+                                    <tr key={row.id}>
+                                        {row.getVisibleCells().map((cell) => (
+                                            <td
+                                                key={cell.id}
                                                 style={{
-                                                    whiteSpace: 'nowrap',
-                                                    textOverflow: 'ellipsis', // 넘치는 텍스트에 ... 처리
-                                                    overflow: 'hidden', // 넘치는 영역 숨김
-                                                    maxWidth: '200px'
+                                                    whiteSpace: "nowrap",
+                                                    textOverflow: "ellipsis", // 넘치는 텍스트에 ... 처리
+                                                    overflow: "hidden", // 넘치는 영역 숨김
+                                                    maxWidth: "200px",
                                                 }}
                                             >
                                                 {flexRender(
-                                                    cell.column
-                                                        .columnDef.cell,
-                                                    cell.getContext()
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext(),
                                                 )}
                                             </td>
                                         ))}
-                                </tr>
-                            ))
-                        ) : (
-                            <>
-                                <tr>
-                                    <td
-                                        colSpan="100%"
-                                        style={{ height: "55px" }}
-                                    >
-                                        <b>데이터가 없습니다.</b>
-                                    </td>
-                                </tr>
-                            </>
-                        )}
+                                    </tr>
+                                ))
+                            ) : (
+                                <>
+                                    <tr>
+                                        <td
+                                            colSpan="100%"
+                                            style={{ height: "55px" }}
+                                        >
+                                            <b>데이터가 없습니다.</b>
+                                        </td>
+                                    </tr>
+                                </>
+                            )}
                         </tbody>
                     </table>
                 </div>

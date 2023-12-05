@@ -234,7 +234,7 @@ const ArtbuddyArtistViewMain = () => {
             <div id="subvisual" className="art_subvisual">
                 <div className="sub_txt">
                     <div className="sub_txt_in">
-                        {registrationInfo.length !== 0 ? (
+                        {Object.keys(registrationInfo).length !== 0 ? (
                             <h3>
                                 {registrationInfo.registration_sub_title_en}
                             </h3>

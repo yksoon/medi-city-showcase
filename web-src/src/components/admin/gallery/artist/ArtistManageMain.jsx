@@ -37,6 +37,7 @@ const ArtistManageMain = (props) => {
     // 리스트
     const [boardList, setBoardList] = useState([]);
     const [pageInfo, setPageInfo] = useState({});
+    const [page, setPage] = useState(1);
     const [checkItems, setCheckItems] = useState([]);
 
     // 모달
@@ -58,7 +59,7 @@ const ArtistManageMain = (props) => {
     const [modDataQr, setModDataQr] = useState([]);
 
     useEffect(() => {
-        getBoardList(1, 10, "");
+        getBoardList(page, 10, "");
     }, [isNeedUpdate, isRefresh]);
 
     // 리스트 가져오기
@@ -131,7 +132,7 @@ const ArtistManageMain = (props) => {
     const doSearch = () => {
         const keyword = searchKeyword.current.value;
 
-        getBoardList(1, 10, keyword);
+        getBoardList(page, 10, keyword);
     };
 
     // 리스트 새로고침
@@ -180,6 +181,7 @@ const ArtistManageMain = (props) => {
     // 페이지네이션 이동
     const handleChange = (e, value) => {
         getBoardList(value, 10, searchKeyword.current.value);
+        setPage(value);
     };
 
     // 약관 신규 등록 모달
