@@ -230,48 +230,140 @@ const GuestBookBoardMain = (props) => {
     };
 
     const removeBoard = async () => {
-        let checkItemsStr = checkItems.join();
         setIsSpinner(true);
 
-        const url = `${apiPath.api_admin_remove_board}${checkItemsStr}`;
+        const length = checkItems.length;
 
-        const restParams = {
-            method: "delete",
-            url: url,
-            data: {},
-            err: err,
-            admin: "Y",
-            callback: (res) => responsLogic(res),
-        };
+        let data = {};
+        let checkCount = 0;
 
-        CommonRest(restParams);
+        for (let i = 0; i < length; i++) {
+            // /v1/board/{board_idx}
+            // DELETE
+            // 게시판 삭제
+            let url = apiPath.api_admin_remove_board + checkItems[i];
+
+            // 파라미터
+            const restParams = {
+                method: "delete",
+                url: url,
+                data: data,
+                err: err,
+                callback: (res) => responsLogic(res),
+                admin: "Y",
+            };
+
+            CommonRest(restParams);
+        }
 
         const responsLogic = (res) => {
-            const result_code = res.headers.result_code;
-            if (result_code === successCode.success) {
-                setIsSpinner(false);
+            if (res.headers.result_code === successCode.success) {
+                checkCount++;
 
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "삭제가 완료 되었습니다",
-                    callback: () => pageUpdate(),
-                });
-            } else {
-                setIsSpinner(false);
+                if (checkCount === length) {
+                    setIsSpinner(false);
 
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "잠시 후 다시 시도해주세요",
-                });
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: `${checkCount} 건의 방명록이 삭제 되었습니다.`,
+                        callback: () => refresh(),
+                    });
+
+                    const refresh = () => {
+                        setCheckItems([]);
+
+                        setIsNeedUpdate(!isNeedUpdate);
+                    };
+                }
             }
-
-            const pageUpdate = () => {
-                setCheckItems([]);
-                handleNeedUpdate();
-            };
         };
+    };
+
+    const downloadExcel = () => {
+        setIsSpinner(true);
+
+        // /v1/board/_download
+        // POST
+        // 게시판 엑셀 다운로드
+        const url = apiPath.api_admin_board_download;
+        const data = {
+            page_num: 1,
+            page_size: 10,
+            search_keyword: "",
+            board_type: boardType.guestBook, // 방명록
+            file_down_yn: "Y",
+        };
+
+        // 파라미터
+        const restParams = {
+            method: "post",
+            url: url,
+            data: data,
+            err: err,
+            callback: (res) => responsLogic(res),
+            admin: "Y",
+            file: "Y", // file: "Y" 로 하면 엑셀 다운로드 가능
+        };
+        CommonRest(restParams);
+
+        // 완료 로직
+        const responsLogic = (res) => {
+            const result_code = res.headers.result_code;
+
+            console.log(res);
+
+            // 성공
+            if (
+                result_code === successCode.success ||
+                result_code === successCode.noData
+            ) {
+                // window 객체의 createObjuctURL을 이용해서 blob:http://~~~ 식의 url을 만들어 준다.
+                const url = window.URL.createObjectURL(
+                    // Blob은 배열 객체 안의 모든 데이터를 합쳐 blob으로 반환하기 때문에 []안에 담는다!
+                    new Blob([res.data], {
+                        type: res.headers["content-type"],
+                    }),
+                );
+
+                // link 안에 위에서 만든 url을 가지고 있는 a 태그를 만들고 보이지 않도록 해준다.
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", excelName());
+                document.body.appendChild(link);
+                link.style.display = "none";
+                link.click();
+
+                setIsSpinner(false);
+            } else {
+                // 에러
+                CommonConsole("log", res);
+
+                setIsSpinner(false);
+            }
+        };
+    };
+
+    // 엑셀 이름
+    const excelName = () => {
+        const now = new Date();
+        const year = String(now.getFullYear());
+
+        let month = String(now.getMonth() + 1);
+        if (month.length === 1) {
+            month = "0" + month;
+        }
+
+        let day = String(now.getDate());
+        if (day.length === 1) {
+            day = "0" + day;
+        }
+
+        const nowDate = `${year}${month}${day}`;
+
+        const xlsName = `${nowDate}_Showcase_방명록`;
+
+        return xlsName;
     };
 
     // --------------------------------- 테이블 세팅 -------------------------------------
@@ -316,7 +408,7 @@ const GuestBookBoardMain = (props) => {
             sortingFn: "alphanumericCaseSensitive",
         }),
 
-        columnHelper.accessor((row) => `${row.mobile1}-${row.mobile2}-${row.mobile3}`, {
+        columnHelper.accessor((row) => `+${row.inter_phone_number} ${row.mobile1}-${row.mobile2}-${row.mobile3}`, {
             id: "mobile",
             cell: (info) => info.getValue(),
             header: "전화번호",
@@ -388,7 +480,7 @@ const GuestBookBoardMain = (props) => {
                         searchKeyword={searchKeyword}
                         doSearch={doSearch}
                         regBoard={regBoard}
-                        // downloadExcel={downloadExcel}
+                        downloadExcel={downloadExcel}
                         clickRemove={clickRemove}
                     />
                     <div
@@ -406,11 +498,11 @@ const GuestBookBoardMain = (props) => {
                         <table className="table_a">
                             <colgroup>
                                 <col width="5%" />
-                                <col width="*" />
-                                <col width="10%" />
-                                <col width="20%" />
-                                <col width="10%" />
                                 <col width="15%" />
+                                <col width="12%" />
+                                <col width="*" />
+                                <col width="15%" />
+                                <col width="12%" />
                                 <col width="5%" />
                             </colgroup>
                             <thead>

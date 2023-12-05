@@ -29,6 +29,7 @@ const GuestBookBoardModalMain = (props) => {
     const nameFirstEn = useRef(null);
     const nameLastEn = useRef(null);
     const email = useRef(null);
+    const interPhoneNumber = useRef(null);
     const mobile1 = useRef(null);
     const mobile2 = useRef(null);
     const mobile3 = useRef(null);
@@ -42,13 +43,14 @@ const GuestBookBoardModalMain = (props) => {
 
     // !TODO 오류확인 필요
     const setDefaultValue = () => {
-        // nameFirstEn.current.value = modData.user_name_first_en ?? "";
-        // nameLastEn.current.value = modData.user_name_last_en ?? "";
-        // email.current.value = modData.email ?? "";
-        // mobile1.current.value = modData.mobile1 ?? "";
-        // mobile2.current.value = modData.mobile2 ?? "";
-        // mobile3.current.value = modData.mobile3 ?? "";
-        // affiliation.current.value = modData.content_en ?? "";
+        nameFirstEn.current.value = modData.user_name_first_en ?? "";
+        nameLastEn.current.value = modData.user_name_last_en ?? "";
+        email.current.value = modData.email ?? "";
+        interPhoneNumber.current.value = modData.inter_phone_number ?? "";
+        mobile1.current.value = modData.mobile1 ?? "";
+        mobile2.current.value = modData.mobile2 ?? "";
+        mobile3.current.value = modData.mobile3 ?? "";
+        affiliation.current.value = modData.content_en ?? "";
     };
 
     // 등록
@@ -85,6 +87,7 @@ const GuestBookBoardModalMain = (props) => {
                 subTitleKo: modData.sub_title_ko,
                 userNameFirstEn: nameFirstEn.current.value,
                 userNameLastEn: nameLastEn.current.value,
+                interPhoneNumber: interPhoneNumber.current.value,
                 mobile1: mobile1.current.value,
                 mobile2: mobile2.current.value,
                 mobile3: mobile3.current.value,
@@ -220,24 +223,20 @@ const GuestBookBoardModalMain = (props) => {
                 <table className="table_bb">
                     <colgroup>
                         <col width="*" />
-                        <col width="20%" />
-                        <col width="20%" />
-                        <col width="20%" />
+                        <col width="70%" />
                     </colgroup>
                     <tbody>
                         <tr>
                             <th>
                                 NAME <span className="red">*</span>
                             </th>
-                            <td>
+                            <td style={{ display: "flex" }}>
                                 <input
                                     type="text"
                                     className="input wp100"
                                     ref={nameFirstEn}
                                     placeholder="First Name"
                                 />
-                            </td>
-                            <td>
                                 <input
                                     type="text"
                                     className="input wp100"
@@ -250,21 +249,26 @@ const GuestBookBoardModalMain = (props) => {
                             <th>
                                 TEL <span className="red">*</span>
                             </th>
-                            <td colSpan>
+                            <td colSpan="3" style={{ display: "flex", alignItems: "center" }}>
+                                +
+                                <input
+                                    type="text"
+                                    className="input wp100"
+                                    ref={interPhoneNumber}
+                                />
+
                                 <input
                                     type="text"
                                     className="input wp100"
                                     ref={mobile1}
                                 />
-                            </td>
-                            <td>
+                                -
                                 <input
                                     type="text"
                                     className="input wp100"
                                     ref={mobile2}
                                 />
-                            </td>
-                            <td>
+                                -
                                 <input
                                     type="text"
                                     className="input wp100"
@@ -301,11 +305,11 @@ const GuestBookBoardModalMain = (props) => {
                             <>
                                 <tr>
                                     <th>등록자</th>
-                                    <td colSpan="3">{ modData.reg_user_name_en }</td>
+                                    <td>{ modData.reg_user_name_en }</td>
                                 </tr>
                                 <tr>
                                     <th>등록일</th>
-                                    <td colSpan="3">{ modData.reg_dttm }</td>
+                                    <td>{ modData.reg_dttm }</td>
                                 </tr>
                             </>
                         )}

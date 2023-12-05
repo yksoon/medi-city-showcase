@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import useAlert from "hook/useAlert";
-import useConfirm from "hook/useConfirm";
 import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import { useSetRecoilState } from "recoil";
 import { isSpinnerAtom } from "recoils/atoms";
@@ -17,9 +16,6 @@ const GuestBookMain = () => {
     const { alert } = useAlert();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
-
-    // states
-    const [selectedCountry, setSelectedCountry] = useState("62");
 
     // refs
     const nameFirstEn = useRef(null);
@@ -44,7 +40,6 @@ const GuestBookMain = () => {
             let url = apiPath.api_admin_reg_board;
             let data = {};
 
-            // !TODO 소속(AFFILIATION) 데이터 어디 파라미터로 넘길지 확인
             data = {
                 ...model,
                 boardType: boardType.guestBook,
@@ -52,6 +47,7 @@ const GuestBookMain = () => {
                 subjectEn: "GuestBook",
                 subTitleKo: "방명록",
                 subTitleEn: "GuestBook",
+                interPhoneNumber: "62",
                 userNameFirstEn: nameFirstEn.current.value,
                 userNameLastEn: nameLastEn.current.value,
                 mobile1: mobile1.current.value,
@@ -60,8 +56,6 @@ const GuestBookMain = () => {
                 email: email.current.value,
                 contentKo: affiliation.current.value,
                 contentEn: affiliation.current.value,
-                regUserNameEn:
-                    nameFirstEn.current.value + " " + nameLastEn.current.value,
             };
 
             // 기본 formData append
@@ -130,12 +124,36 @@ const GuestBookMain = () => {
             };
         };
 
-        // !TODO 영문 피드백 작성 부탁드립니다.
-        // if (!nameFirstEn.current.value) {
-        //     noti(nameFirstEn, "제목을 입력해주세요");
+        // !TODO 영문 피드백 확인 필요
+        if (!nameFirstEn.current.value) {
+            noti(nameFirstEn, "Please enter your first name");
 
-        //     return false;
-        // }
+            return false;
+        }
+
+        if (!nameLastEn.current.value) {
+            noti(nameLastEn, "Please enter your last name");
+
+            return false;
+        }
+
+        if (!mobile1.current.value || !mobile2.current.value || !mobile3.current.value) {
+            noti(mobile1, "Please enter your phone number");
+
+            return false;
+        }
+
+        if (!email.current.value) {
+            noti(email, "Please enter your e-mail");
+
+            return false;
+        }
+
+        if (!affiliation.current.value) {
+            noti(affiliation, "Please enter your affiliation");
+
+            return false;
+        }
 
         return true;
     };
