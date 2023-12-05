@@ -51,9 +51,11 @@ const ArtbuddyArtistViewMain = () => {
     });
 
     useEffect(() => {
-        setPeopleTypeFunc();
+        codes.length === 0 ? setIsSpinner(true) : setIsSpinner(false);
 
-        getArtistInfo();
+        codes.length !== 0 && setPeopleTypeFunc();
+
+        codes.length !== 0 && getArtistInfo();
     }, [codes]);
 
     const setPeopleTypeFunc = () => {
@@ -258,168 +260,186 @@ const ArtbuddyArtistViewMain = () => {
                 </div>
             </div>
 
-            {/*서브 container //S*/}
-            <div id="container" className="sub_container">
-                <div id="con_area" className="wide_conarea">
-                    <div id="leftmenu">
-                        <Link to={routerPath.web_artbuddy_exhibition_url}>
-                            K-ART Exhibition
-                        </Link>
-                        <Link
-                            to={routerPath.web_artbuddy_artist_list_url}
-                            className="active"
-                        >
-                            Artist
-                        </Link>
-                        <Link to={routerPath.web_artbuddy_gallery_list_url}>
-                            Gallery
-                        </Link>
-                    </div>
+            {codes.length !== 0 && (
+                <>
+                    {/*서브 container //S*/}
+                    <div id="container" className="sub_container">
+                        <div id="con_area" className="wide_conarea">
+                            <div id="leftmenu">
+                                <Link
+                                    to={routerPath.web_artbuddy_exhibition_url}
+                                >
+                                    K-ART Exhibition
+                                </Link>
+                                <Link
+                                    to={routerPath.web_artbuddy_artist_list_url}
+                                    className="active"
+                                >
+                                    Artist
+                                </Link>
+                                <Link
+                                    to={
+                                        routerPath.web_artbuddy_gallery_list_url
+                                    }
+                                >
+                                    Gallery
+                                </Link>
+                            </div>
 
-                    <div className="galleryView">
-                        {Object.keys(artistInfo).length !== 0 && (
-                            <>
-                                <div className="top_name">
-                                    {/*<h4>{artistInfo.name_ko}</h4>*/}
-                                    <h5>{artistInfo.name_en}</h5>
-                                </div>
-
-                                {/*이미지 스와이퍼 영역 S*/}
-                                {swiperItem.length !== 0 && (
-                                    <Swiper
-                                        className="swiper-container artist_work"
-                                        speed={1000}
-                                        // slidesPerView={"auto"}
-                                        slidesPerView={3}
-                                        spaceBetween={40}
-                                        mousewheel={true}
-                                        loop={true}
-                                        // navigation={true}
-                                        // loopAdditionalSlides={1}
-                                        grabCursor={true}
-                                        centeredSlides={true}
-                                        effect={"coverflow"}
-                                        coverflowEffect={{
-                                            rotate: 50,
-                                            stretch: 0,
-                                            depth: 100,
-                                            modifier: 1,
-                                            slideShadows: true,
-                                        }}
-                                        modules={[EffectCoverflow, Navigation]}
-                                        pagination={false}
-                                        initialSlide={0}
-                                    >
-                                        {swiperItem.map((item, idx) => (
-                                            <SwiperSlide
-                                                key={`Swiper_${idx}`}
-                                                className="swiper-slide"
-                                            >
-                                                <img
-                                                    src={item}
-                                                    alt=""
-                                                    style={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                        objectFit: "cover",
-                                                    }}
-                                                />
-                                            </SwiperSlide>
-                                        ))}
-                                    </Swiper>
-                                )}
-                                {/*이미지 스와이퍼 영역 E*/}
-
-                                <div className="artinfo artist_info">
-                                    <div className="left">
-                                        <div className="thumb">
-                                            <img
-                                                src={
-                                                    apiPath.api_file +
-                                                    artistInfo.file_info[0]
-                                                        .file_path_enc
-                                                }
-                                                alt=""
-                                            />
+                            <div className="galleryView">
+                                {Object.keys(artistInfo).length !== 0 && (
+                                    <>
+                                        <div className="top_name">
+                                            {/*<h4>{artistInfo.name_ko}</h4>*/}
+                                            <h5>{artistInfo.name_en}</h5>
                                         </div>
-                                        <h4 className="artist">
-                                            <span>
-                                                {
-                                                    peopleType.filter(
-                                                        (el) =>
-                                                            el.code_key ===
-                                                            artistInfo.people_type_cd,
-                                                    )[0].code_value_en
-                                                }
-                                            </span>
-                                            <br />
-                                            {artistInfo.name_en}
-                                        </h4>
-                                        <p>
-                                            {artistInfo.people_memo_en
-                                                ? artistInfo.people_memo_en
-                                                : artistInfo.people_memo_ko}
-                                        </p>
-                                    </div>
 
-                                    <div className="right">
-                                        {state.profileSection.length !== 0 &&
-                                            state.profileSection.map(
-                                                (item, idx) => (
-                                                    <>
-                                                        <div
-                                                            className="artnote"
-                                                            key={`profileSection_${item.idx}`}
-                                                        >
-                                                            <h4>
-                                                                {
-                                                                    profileType.filter(
-                                                                        (el) =>
-                                                                            el.code_key ===
-                                                                            item.sectionValue,
-                                                                    )[0]
-                                                                        .code_value_en
-                                                                }
-                                                            </h4>
-                                                            <ul>
-                                                                {state
-                                                                    .selectedProfile
-                                                                    .length !==
-                                                                    0 &&
-                                                                    state.selectedProfile
-                                                                        .filter(
-                                                                            (
-                                                                                el,
-                                                                            ) =>
-                                                                                el.parentIdx ===
-                                                                                item.idx,
-                                                                        )
-                                                                        .map(
-                                                                            (
-                                                                                inputItem,
-                                                                            ) => (
-                                                                                <li
-                                                                                    key={`selectedProfile_${inputItem.inputIdx}`}
-                                                                                >
-                                                                                    {inputItem.profileContentEn
-                                                                                        ? inputItem.profileContentEn
-                                                                                        : inputItem.profileContentKo}
-                                                                                </li>
-                                                                            ),
-                                                                        )}
-                                                            </ul>
-                                                        </div>
-                                                    </>
-                                                ),
-                                            )}
-                                    </div>
-                                </div>
-                            </>
-                        )}
+                                        {/*이미지 스와이퍼 영역 S*/}
+                                        {swiperItem.length !== 0 && (
+                                            <Swiper
+                                                className="swiper-container artist_work"
+                                                speed={1000}
+                                                // slidesPerView={"auto"}
+                                                slidesPerView={3}
+                                                spaceBetween={40}
+                                                mousewheel={true}
+                                                loop={true}
+                                                // navigation={true}
+                                                // loopAdditionalSlides={1}
+                                                grabCursor={true}
+                                                centeredSlides={true}
+                                                effect={"coverflow"}
+                                                coverflowEffect={{
+                                                    rotate: 50,
+                                                    stretch: 0,
+                                                    depth: 100,
+                                                    modifier: 1,
+                                                    slideShadows: true,
+                                                }}
+                                                modules={[
+                                                    EffectCoverflow,
+                                                    Navigation,
+                                                ]}
+                                                pagination={false}
+                                                initialSlide={0}
+                                            >
+                                                {swiperItem.map((item, idx) => (
+                                                    <SwiperSlide
+                                                        key={`Swiper_${idx}`}
+                                                        className="swiper-slide"
+                                                    >
+                                                        <img
+                                                            src={item}
+                                                            alt=""
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "100%",
+                                                                objectFit:
+                                                                    "cover",
+                                                            }}
+                                                        />
+                                                    </SwiperSlide>
+                                                ))}
+                                            </Swiper>
+                                        )}
+                                        {/*이미지 스와이퍼 영역 E*/}
+
+                                        <div className="artinfo artist_info">
+                                            <div className="left">
+                                                <div className="thumb">
+                                                    <img
+                                                        src={
+                                                            apiPath.api_file +
+                                                            artistInfo
+                                                                .file_info[0]
+                                                                .file_path_enc
+                                                        }
+                                                        alt=""
+                                                    />
+                                                </div>
+                                                <h4 className="artist">
+                                                    <span>
+                                                        {
+                                                            peopleType.filter(
+                                                                (el) =>
+                                                                    el.code_key ===
+                                                                    artistInfo.people_type_cd,
+                                                            )[0].code_value_en
+                                                        }
+                                                    </span>
+                                                    <br />
+                                                    {artistInfo.name_en}
+                                                </h4>
+                                                <p>
+                                                    {artistInfo.people_memo_en
+                                                        ? artistInfo.people_memo_en
+                                                        : artistInfo.people_memo_ko}
+                                                </p>
+                                            </div>
+
+                                            <div className="right">
+                                                {state.profileSection.length !==
+                                                    0 &&
+                                                    state.profileSection.map(
+                                                        (item, idx) => (
+                                                            <>
+                                                                <div
+                                                                    className="artnote"
+                                                                    key={`profileSection_${item.idx}`}
+                                                                >
+                                                                    <h4>
+                                                                        {
+                                                                            profileType.filter(
+                                                                                (
+                                                                                    el,
+                                                                                ) =>
+                                                                                    el.code_key ===
+                                                                                    item.sectionValue,
+                                                                            )[0]
+                                                                                .code_value_en
+                                                                        }
+                                                                    </h4>
+                                                                    <ul>
+                                                                        {state
+                                                                            .selectedProfile
+                                                                            .length !==
+                                                                            0 &&
+                                                                            state.selectedProfile
+                                                                                .filter(
+                                                                                    (
+                                                                                        el,
+                                                                                    ) =>
+                                                                                        el.parentIdx ===
+                                                                                        item.idx,
+                                                                                )
+                                                                                .map(
+                                                                                    (
+                                                                                        inputItem,
+                                                                                    ) => (
+                                                                                        <li
+                                                                                            key={`selectedProfile_${inputItem.inputIdx}`}
+                                                                                        >
+                                                                                            {inputItem.profileContentEn
+                                                                                                ? inputItem.profileContentEn
+                                                                                                : inputItem.profileContentKo}
+                                                                                        </li>
+                                                                                    ),
+                                                                                )}
+                                                                    </ul>
+                                                                </div>
+                                                            </>
+                                                        ),
+                                                    )}
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            {/*서브 container //E*/}
+                    {/*서브 container //E*/}
+                </>
+            )}
 
             {/*footer //S*/}
             <FooterSub />

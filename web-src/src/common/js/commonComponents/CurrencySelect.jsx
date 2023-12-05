@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 
 const CurrencySelect = (props) => {
     const onChange = props.onChange;
-    const defaultValue = props.defaultValue;
+    const defaultValue = props.defaultValue ?? "";
     const mode = props.mode;
 
     const countryBank = useRecoilValue(countryBankAtom);
@@ -25,31 +25,31 @@ const CurrencySelect = (props) => {
         );
 
         for (let i = 0; i < currency.length; i++) {
-            const value = currency[i].code_key.split("-")[0];
+            const value = currency[i].code_key;
             const currencyCode = currency[i].code_key.split("-")[1];
             let newObj = {};
             if (mode === "full") {
                 newObj = {
                     value: value,
-                    label: `${currency[i].code_value_ko} (${currency[i].code_value_en}) (+${value})`,
+                    label: `${currencyCode}-${currency[i].code_value_ko} (${currency[i].code_value_en}) (+${value})`,
                     currencyCode: currencyCode,
                 };
             } else if (mode === "en") {
                 newObj = {
                     value: value,
-                    label: `${currency[i].code_value_en} (+${value})`,
+                    label: `${currencyCode}-${currency[i].code_value_en} (+${value})`,
                     currencyCode: currencyCode,
                 };
             } else if (mode === "ko") {
                 newObj = {
                     value: value,
-                    label: `${currency[i].code_value_ko} (+${value})`,
+                    label: `${currencyCode}-${currency[i].code_value_ko} (+${value})`,
                     currencyCode: currencyCode,
                 };
             } else {
                 newObj = {
                     value: value,
-                    label: `${currency[i].code_value_ko} (${currency[i].code_value_en})`,
+                    label: `${currencyCode}-${currency[i].code_value_ko} (${currency[i].code_value_en})`,
                     currencyCode: currencyCode,
                 };
             }
@@ -68,7 +68,14 @@ const CurrencySelect = (props) => {
                     size="small"
                     options={currencies}
                     value={
-                        currencies.filter((el) => el.value === defaultValue)[0]
+                        defaultValue
+                            ? currencies.filter(
+                                  (el) => el.value === defaultValue,
+                              )[0]
+                            : null
+                    }
+                    isOptionEqualToValue={(option, value) =>
+                        option.value === value.value
                     }
                     // disableCloseOnSelect
                     // autoHighlight

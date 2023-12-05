@@ -70,7 +70,11 @@ export default function CountrySelect(props) {
                     size="small"
                     options={countries}
                     value={
-                        countries.filter((el) => el.value === defaultValue)[0]
+                        defaultValue
+                            ? countries.filter(
+                                  (el) => el.value === defaultValue,
+                              )[0]
+                            : null
                     }
                     // disableCloseOnSelect
                     // autoHighlight

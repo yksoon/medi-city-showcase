@@ -19,6 +19,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import imageCompression from "browser-image-compression";
 import { imageResizeOptions } from "common/js/static";
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import RadioGroupSelection from "common/js/commonComponents/RadioGroupSelection";
 
 const GalleryManageModalMain = (props) => {
     const { confirm } = useConfirm();
@@ -50,6 +52,14 @@ const GalleryManageModalMain = (props) => {
 
     // states
     const [peopleIdx, setPeopleIdx] = useState("");
+    const [artTypeShowYn, setArtTypeShowYn] = useState("Y");
+    const [materialsInfoShowYn, setMaterialsInfoShowYn] = useState("Y");
+    const [paintTypeShowYn, setPaintTypeShowYn] = useState("Y");
+    const [participateTypeShowYn, setParticipateTypeShowYn] = useState("Y");
+    const [placeInfoShowYn, setPlaceInfoShowYn] = useState("Y");
+    const [priceInfoShowYn, setPriceInfoShowYn] = useState("Y");
+    const [sizeInfoShowYn, setSizeInfoShowYn] = useState("Y");
+    const [yearInfoShowYn, setYearInfoShowYn] = useState("Y");
 
     // refs
     const showYn = useRef(null);
@@ -204,11 +214,20 @@ const GalleryManageModalMain = (props) => {
         yearInfoEn.current.value = modData.year_info_en;
         materialsInfoKo.current.value = modData.materials_info_ko;
         materialsInfoEn.current.value = modData.materials_info_en;
+
+        setArtTypeShowYn(modData.art_type_show_yn);
+        setMaterialsInfoShowYn(modData.materials_info_show_yn);
+        setPaintTypeShowYn(modData.paint_type_show_yn);
+        setParticipateTypeShowYn(modData.participate_type_show_yn);
+        setPriceInfoShowYn(modData.price_info_show_yn);
+        setSizeInfoShowYn(modData.size_info_show_yn);
+        setYearInfoShowYn(modData.year_info_show_yn);
+
         previewAttachment.current.src =
             modData.file_info.length !== 0 &&
             apiPath.api_file + modData.file_info[0].file_path_enc;
         setPeopleIdx(String(modData.people_idx));
-        setSelectedCurrency(modData.currency_type);
+        setSelectedCurrency(modData.currency_type_cd);
     };
 
     // 이미지 업로드 시 미리보기
@@ -321,6 +340,13 @@ const GalleryManageModalMain = (props) => {
                 yearInfoEn: yearInfoEn.current.value,
                 materialsInfoKo: materialsInfoKo.current.value,
                 materialsInfoEn: materialsInfoEn.current.value,
+                artTypeShowYn: artTypeShowYn,
+                materialsInfoShowYn: materialsInfoShowYn,
+                paintTypeShowYn: paintTypeShowYn,
+                participateTypeShowYn: participateTypeShowYn,
+                priceInfoShowYn: priceInfoShowYn,
+                sizeInfoShowYn: sizeInfoShowYn,
+                yearInfoShowYn: yearInfoShowYn,
                 peopleIdx: peopleIdx,
                 currencyType: selectedCurrency,
                 workIdx: method === "mod" ? modData.work_idx : "",
@@ -551,6 +577,11 @@ const GalleryManageModalMain = (props) => {
         };
     };
 
+    const radioItems = [
+        { value: "Y", label: "노출" },
+        { value: "N", label: "비노출" },
+    ];
+
     return (
         <>
             <div className="admin">
@@ -574,9 +605,13 @@ const GalleryManageModalMain = (props) => {
                                         size="small"
                                         options={artistList}
                                         value={
-                                            artistList.filter(
-                                                (el) => el.value === peopleIdx,
-                                            )[0]
+                                            peopleIdx
+                                                ? artistList.filter(
+                                                      (el) =>
+                                                          el.value ===
+                                                          peopleIdx,
+                                                  )[0]
+                                                : null
                                         }
                                         // disableCloseOnSelect
                                         // autoHighlight
@@ -702,6 +737,14 @@ const GalleryManageModalMain = (props) => {
                         <tr>
                             <th>미술유형</th>
                             <td>
+                                <RadioGroupSelection
+                                    radioItems={radioItems}
+                                    name={"artTypeShowYn"}
+                                    value={artTypeShowYn}
+                                    onChange={(e) =>
+                                        setArtTypeShowYn(e.target.value)
+                                    }
+                                />
                                 <select className="wp100" ref={artType}>
                                     <option value="">- 선택 -</option>
                                     {artTypeOption.length !== 0 &&
@@ -717,6 +760,14 @@ const GalleryManageModalMain = (props) => {
                                 재질유형 <span className="red">*</span>
                             </th>
                             <td>
+                                <RadioGroupSelection
+                                    radioItems={radioItems}
+                                    name={"paintTypeShowYn"}
+                                    value={paintTypeShowYn}
+                                    onChange={(e) =>
+                                        setPaintTypeShowYn(e.target.value)
+                                    }
+                                />
                                 <select className="wp100" ref={paintType}>
                                     <option value="">- 선택 -</option>
                                     {paintTypeOption.length !== 0 &&
@@ -736,6 +787,14 @@ const GalleryManageModalMain = (props) => {
                                 (국문/영문)
                             </th>
                             <td>
+                                <RadioGroupSelection
+                                    radioItems={radioItems}
+                                    name={"yearInfoShowYn"}
+                                    value={yearInfoShowYn}
+                                    onChange={(e) =>
+                                        setYearInfoShowYn(e.target.value)
+                                    }
+                                />
                                 <input
                                     type="text"
                                     className="input wp100"
@@ -755,6 +814,14 @@ const GalleryManageModalMain = (props) => {
                                 (국문/영문)
                             </th>
                             <td>
+                                <RadioGroupSelection
+                                    radioItems={radioItems}
+                                    name={"materialsInfoShowYn"}
+                                    value={materialsInfoShowYn}
+                                    onChange={(e) =>
+                                        setMaterialsInfoShowYn(e.target.value)
+                                    }
+                                />
                                 <input
                                     type="text"
                                     className="input wp100"
@@ -774,6 +841,14 @@ const GalleryManageModalMain = (props) => {
                                 참여유형 <span className="red">*</span>
                             </th>
                             <td>
+                                <RadioGroupSelection
+                                    radioItems={radioItems}
+                                    name={"participateTypeShowYn"}
+                                    value={participateTypeShowYn}
+                                    onChange={(e) =>
+                                        setParticipateTypeShowYn(e.target.value)
+                                    }
+                                />
                                 <select className="wp100" ref={participateType}>
                                     <option value="">- 선택 -</option>
                                     {participateTypeOption.length !== 0 &&
@@ -824,6 +899,14 @@ const GalleryManageModalMain = (props) => {
                                 (국문/영문)
                             </th>
                             <td>
+                                <RadioGroupSelection
+                                    radioItems={radioItems}
+                                    name={"priceInfoShowYn"}
+                                    value={priceInfoShowYn}
+                                    onChange={(e) =>
+                                        setPriceInfoShowYn(e.target.value)
+                                    }
+                                />
                                 <input
                                     type="text"
                                     className="input wp100"
@@ -845,6 +928,14 @@ const GalleryManageModalMain = (props) => {
                                 (국문/영문)
                             </th>
                             <td>
+                                <RadioGroupSelection
+                                    radioItems={radioItems}
+                                    name={"sizeInfoShowYn"}
+                                    value={sizeInfoShowYn}
+                                    onChange={(e) =>
+                                        setSizeInfoShowYn(e.target.value)
+                                    }
+                                />
                                 <input
                                     type="text"
                                     className="input wp100"
@@ -925,7 +1016,7 @@ const GalleryManageModalMain = (props) => {
                         {isModData && (
                             <tr>
                                 <th>QR</th>
-                                <td>
+                                <td colSpan={3}>
                                     <div className="hotel_thumb_wrap">
                                         <img src={modData.qr_img} alt="" />
                                     </div>

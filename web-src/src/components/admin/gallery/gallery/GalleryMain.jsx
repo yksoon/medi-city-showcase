@@ -448,6 +448,7 @@ const GalleryMain = (props) => {
             (row) => (
                 <>
                     <img
+                        loading="lazy"
                         src={
                             row.thumbnail_info.length !== 0
                                 ? apiPath.api_file +
