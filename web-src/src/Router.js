@@ -103,10 +103,10 @@ const Router = () => {
                         element={<ArtbuddyGalleryListMain />}
                     />
 
-                    {/* 아트버디 - 갤러리 */}
+                    {/* 아트버디 - 갤러리 상세 */}
                     {/* URL : /artbuddy/gallery */}
                     <Route
-                        path={routerPath.web_artbuddy_gallery_url}
+                        path={`${routerPath.web_artbuddy_gallery_url}:workIdx`}
                         element={<ArtbuddyGalleryMain />}
                     />
 

@@ -3,10 +3,15 @@ import Header from "components/web/common/Header";
 import Footer from "components/web/common/Footer";
 import FooterSub from "components/web/common/FooterSub";
 import { Link } from "react-router-dom";
+import { Skeleton } from "@mui/material";
+import { useRecoilValue } from "recoil";
+import { registrationInfoAtom } from "recoils/atoms";
 
 const Program = () => {
     const glanceRef = useRef(null);
     const specialRef = useRef(null);
+
+    const registrationInfo = useRecoilValue(registrationInfoAtom);
 
     const onGlanceClick = () => {
         glanceRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -29,7 +34,27 @@ const Program = () => {
                                 alt="Medi-City Medical Showcase"
                             />
                         </h2>
-                        <h3>K-AESTHETIC & ART INDONESIA 2024</h3>
+                        {Object.keys(registrationInfo).length !== 0 ? (
+                            <h3>
+                                {registrationInfo.registration_sub_title_en}
+                            </h3>
+                        ) : (
+                            <h3
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <Skeleton
+                                    variant="text"
+                                    sx={{
+                                        fontSize: "1rem",
+                                        textAlign: "center",
+                                    }}
+                                    width={"60%"}
+                                />
+                            </h3>
+                        )}
                         <h4>PROGRAM</h4>
                     </div>
                 </div>

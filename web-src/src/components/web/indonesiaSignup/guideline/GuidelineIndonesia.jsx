@@ -4,8 +4,12 @@ import FooterSub from "components/web/common/FooterSub";
 import Footer from "components/web/common/Footer";
 import { Link } from "react-router-dom";
 import { routerPath } from "webPath";
+import { Skeleton } from "@mui/material";
+import { useRecoilValue } from "recoil";
+import { registrationInfoAtom } from "recoils/atoms";
 
 const GuidelineIndonesia = () => {
+    const registrationInfo = useRecoilValue(registrationInfoAtom);
     return (
         <>
             {/*header//S*/}
@@ -21,7 +25,27 @@ const GuidelineIndonesia = () => {
                                 alt="Medi-City Medical Showcase"
                             />
                         </h2>
-                        <h3>K-AESTHETIC & ART INDONESIA 2024</h3>
+                        {Object.keys(registrationInfo).length !== 0 ? (
+                            <h3>
+                                {registrationInfo.registration_sub_title_en}
+                            </h3>
+                        ) : (
+                            <h3
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <Skeleton
+                                    variant="text"
+                                    sx={{
+                                        fontSize: "1rem",
+                                        textAlign: "center",
+                                    }}
+                                    width={"60%"}
+                                />
+                            </h3>
+                        )}
                         <h4 className="long">Peserta Pameran SIGN-UP</h4>
                     </div>
                 </div>

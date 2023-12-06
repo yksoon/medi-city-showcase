@@ -303,7 +303,7 @@ const ArtbuddyArtistViewMain = () => {
                                                 slidesPerView={3}
                                                 spaceBetween={40}
                                                 mousewheel={true}
-                                                loop={true}
+                                                loop={false}
                                                 // navigation={true}
                                                 // loopAdditionalSlides={1}
                                                 grabCursor={true}

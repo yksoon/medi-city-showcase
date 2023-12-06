@@ -8,8 +8,8 @@ import MainPopupModal from "./main/mainComponents/mainContentsComponents/modal/M
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
 import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
-import { useSetRecoilState } from "recoil";
-import { isSpinnerAtom } from "recoils/atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isSpinnerAtom, registrationInfoAtom } from "recoils/atoms";
 import { apiPath } from "webPath";
 import { registration_idx } from "common/js/static";
 import { successCode } from "resultCode";
@@ -21,7 +21,8 @@ function Main() {
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
-    const [registrationInfo, setRegistrationInfo] = useState([]);
+    const registrationInfo = useRecoilValue(registrationInfoAtom);
+
     const [popupList, setPopupList] = useState([]);
 
     // 브라우저 창 크기 변화를 상태로 관리
@@ -33,55 +34,21 @@ function Main() {
     };
 
     useEffect(() => {
-        getRegistration();
         getPopupList(1, 20, "");
 
-        window.addEventListener('resize', handleResize);
-    
+        window.addEventListener("resize", handleResize);
+
         handleResize(); // 초기 렌더링 시 한번 실행
-    
-        window.addEventListener('resize', handleResize); // 창 크기 변화 감지
-    
+
+        window.addEventListener("resize", handleResize); // 창 크기 변화 감지
+
         return () => {
-            window.removeEventListener('resize', handleResize); // 컴포넌트 언마운트 시 리스너 제거
+            window.removeEventListener("resize", handleResize); // 컴포넌트 언마운트 시 리스너 제거
         };
     }, []);
 
-    // 정보 받아오기 REST
-    const getRegistration = () => {
-        const url = apiPath.api_admin_get_reg + registration_idx;
-        const data = {};
-
-        // 파라미터
-        const restParams = {
-            method: "get",
-            url: url,
-            data: data,
-            err: err,
-            callback: (res) => responsLogic(res),
-        };
-
-        CommonRest(restParams);
-
-        const responsLogic = (res) => {
-            if (res.headers.result_code === successCode.success) {
-                const result_info = res.data.result_info;
-
-                setRegistrationInfo(result_info);
-            } else {
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    // message: res.headers.result_message_ko,
-                    message: "잠시후 다시 시도해주세요",
-                });
-            }
-        };
-    };
-
     // 팝업 리스트 가져오기
     const getPopupList = (pageNum, pageSize, searchKeyword) => {
-
         // /v1/_popups
         // POST
         // 팝업 정보 목록
@@ -106,8 +73,10 @@ function Main() {
         const responsLogic = (res) => {
             if (res.headers.result_code === successCode.success) {
                 const result_info = res.data.result_info;
-                
-                let renderPopupList = result_info.filter((popup) => (renderPopup(popup)));
+
+                let renderPopupList = result_info.filter((popup) =>
+                    renderPopup(popup),
+                );
 
                 console.log(renderPopupList);
                 setPopupList(renderPopupList);
@@ -127,10 +96,18 @@ function Main() {
         const today = new Date();
         const startDate = new Date(popup.start_date);
         const endDate = new Date(popup.end_date);
-        const storageCheck = popupOpenTime(popup.popup_idx, popup.option_24_hours_yn)
+        const storageCheck = popupOpenTime(
+            popup.popup_idx,
+            popup.option_24_hours_yn,
+        );
 
         // 노출여부, 시작일&종료일 기간체크, 24시간보지않기 기능 사용 중일 경우 로컬스토리지 기간체크
-        if (popup.show_yn === 'Y' && startDate <= today && endDate >= today && storageCheck) {
+        if (
+            popup.show_yn === "Y" &&
+            startDate <= today &&
+            endDate >= today &&
+            storageCheck
+        ) {
             return popup;
         } else {
             return false;
@@ -139,13 +116,14 @@ function Main() {
 
     // 팝업 닫기 함수
     const closePopup = (popupIdx) => {
-        setPopupList(prevPopups => prevPopups.map(popup => {
-            if (popup.popup_idx === popupIdx) {
-                return { ...popup, isOpen: false }; // 해당 팝업을 닫음
-            }
+        setPopupList((prevPopups) =>
+            prevPopups.map((popup) => {
+                if (popup.popup_idx === popupIdx) {
+                    return { ...popup, isOpen: false }; // 해당 팝업을 닫음
+                }
                 return popup;
-            }
-        ));
+            }),
+        );
     };
 
     // 메인 팝업 시간
@@ -153,7 +131,7 @@ function Main() {
         const viewedTime = localStorage.getItem(`popup_viewed_${popupIdx}`);
 
         console.log(viewedTime);
-        
+
         if (option24HoursYn === "N" || !viewedTime) {
             return true; // 저장된 시간이 없으면 팝업을 보여줌
         } else {
@@ -178,20 +156,23 @@ function Main() {
             <Footer />
 
             {/* 팝업 렌더링 */}
-            {popupList.length && popupList.map((popup) => (
-                popup.isOpen !== false && (
-                    <MainPopupModal
-                        key={popup.popup_idx}
-                        popupIdx={popup.popup_idx}
-                        onClose={() => closePopup(popup.popup_idx)}
-                        width={popup.size_width}
-                        height={popup.size_height}
-                        top={popup.position_top}
-                        left={popup.position_left}
-                        scrollbars={popup.option_scroll_yn}
-                        windowSize={windowSize}
-                    />
-            )))}
+            {popupList.length &&
+                popupList.map(
+                    (popup) =>
+                        popup.isOpen !== false && (
+                            <MainPopupModal
+                                key={popup.popup_idx}
+                                popupIdx={popup.popup_idx}
+                                onClose={() => closePopup(popup.popup_idx)}
+                                width={popup.size_width}
+                                height={popup.size_height}
+                                top={popup.position_top}
+                                left={popup.position_left}
+                                scrollbars={popup.option_scroll_yn}
+                                windowSize={windowSize}
+                            />
+                        ),
+                )}
         </>
     );
 }

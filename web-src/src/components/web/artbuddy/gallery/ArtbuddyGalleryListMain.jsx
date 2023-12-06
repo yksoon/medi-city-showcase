@@ -148,7 +148,7 @@ const ArtbuddyGalleryListMain = () => {
             <div id="subvisual" className="art_subvisual">
                 <div className="sub_txt">
                     <div className="sub_txt_in">
-                        {registrationInfo.length !== 0 ? (
+                        {Object.keys(registrationInfo).length !== 0 ? (
                             <h3>
                                 {registrationInfo.registration_sub_title_en}
                             </h3>
@@ -233,9 +233,7 @@ const ArtbuddyGalleryListMain = () => {
                                 boardList.map((item, idx) => (
                                     <figure key={`boardList_${idx}`}>
                                         <Link
-                                            to={
-                                                routerPath.web_artbuddy_gallery_url
-                                            }
+                                            to={`${routerPath.web_artbuddy_gallery_url}${item.work_idx}`}
                                         >
                                             <p className="thumb">
                                                 {/*<img*/}

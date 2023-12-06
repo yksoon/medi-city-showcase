@@ -23,6 +23,7 @@ import { BarChart, PieChart } from "@mui/x-charts";
 import ArtistManageModalMain from "components/admin/gallery/artist/modal/ArtistManageModalMain";
 import QrListModalMain from "components/admin/gallery/artist/modal/QrListModalMain";
 import GalleryManageModalMain from "components/admin/gallery/gallery/modal/GalleryManageModalMain";
+import { commaOfNumber } from "common/js/Pattern";
 
 // Alert (props)
 // isOpen = state 상태값
@@ -581,6 +582,30 @@ const CommonBarChart = (props) => {
     );
 };
 
+/**
+ * 숫자 세자리 콤마
+ * @param str
+ * @param digit
+ * @returns {string}
+ * @constructor
+ */
+const CommonCommaPattern = (str, digit) => {
+    const pattern_3 = /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g;
+    const pattern_4 = /\B(?<!\.\d*)(?=(\d{4})+(?!\d))/g;
+
+    let returnValue = "";
+
+    if (digit === 3) {
+        returnValue = str.toString().replace(pattern_3, ",");
+    } else if (digit === 4) {
+        returnValue = str.toString().replace(pattern_4, ",");
+    } else {
+        returnValue = str.toString().replace(pattern_3, ",");
+    }
+
+    return returnValue;
+};
+
 export {
     CommonModal,
     CommonConsole,
@@ -593,4 +618,5 @@ export {
     CommonErrModule,
     CommonPieChart,
     CommonBarChart,
+    CommonCommaPattern,
 };
