@@ -42,6 +42,7 @@ const ArtbuddyGalleryMain = () => {
     const [galleryInfo, setGalleryInfo] = useState({});
     const [peopleType, setPeopleType] = useState([]);
     const [currencies, setCurrencies] = useState([]);
+    const [currencyCode, setCurrencyCode] = useState("");
 
     useEffect(() => {
         codes.length === 0 ? setIsSpinner(true) : setIsSpinner(false);
@@ -105,6 +106,16 @@ const ArtbuddyGalleryMain = () => {
             }
         };
     };
+
+    useEffect(() => {
+        currencies.length !== 0 &&
+            Object.keys(galleryInfo).length !== 0 &&
+            setCurrencyCode(
+                currencies.filter(
+                    (el) => el.code_key === galleryInfo.currency_type_cd,
+                )[0].code_value_en,
+            );
+    }, [galleryInfo, currencies]);
 
     return (
         <>
@@ -208,6 +219,15 @@ const ArtbuddyGalleryMain = () => {
                                                     ? galleryInfo.main_title_en
                                                     : galleryInfo.main_title_ko}
                                             </li>
+                                            {(galleryInfo.sub_title_en ||
+                                                galleryInfo.sub_title_ko) && (
+                                                <li>
+                                                    <span>Sub Title</span>
+                                                    {galleryInfo.sub_title_en
+                                                        ? galleryInfo.sub_title_en
+                                                        : galleryInfo.sub_title_ko}
+                                                </li>
+                                            )}
                                             {galleryInfo.size_info_show_yn ===
                                                 "Y" && (
                                                 <li>
@@ -230,21 +250,32 @@ const ArtbuddyGalleryMain = () => {
                                                 "Y" && (
                                                 <li>
                                                     <span>Price</span>
-                                                    {currencies.length !== 0 &&
-                                                        currencies.filter(
-                                                            (el) =>
-                                                                el.code_key ===
-                                                                galleryInfo.currency_type_cd,
-                                                        )[0].code_value_en}{" "}
+                                                    {currencyCode
+                                                        ? currencyCode.split(
+                                                              "-",
+                                                          )[0]
+                                                        : ""}{" "}
                                                     {galleryInfo.price_info_en
-                                                        ? CommonCommaPattern(
+                                                        ? `${CommonCommaPattern(
                                                               galleryInfo.price_info_en,
                                                               3,
-                                                          )
-                                                        : CommonCommaPattern(
+                                                          )} ${
+                                                              currencyCode
+                                                                  ? currencyCode.split(
+                                                                        "-",
+                                                                    )[1]
+                                                                  : ""
+                                                          }`
+                                                        : `${CommonCommaPattern(
                                                               galleryInfo.price_info_ko,
                                                               3,
-                                                          )}
+                                                          )} ${
+                                                              currencyCode
+                                                                  ? currencyCode.split(
+                                                                        "-",
+                                                                    )[1]
+                                                                  : ""
+                                                          }`}
                                                 </li>
                                             )}
                                         </ul>
