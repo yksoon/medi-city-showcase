@@ -11,6 +11,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isSpinnerAtom, registrationInfoAtom } from "recoils/atoms";
 import { successCode } from "resultCode";
 import { Skeleton } from "@mui/material";
+import NoImage from "./no_image.jpg";
 
 const ArtbuddyGalleryListMain = () => {
     const { confirm } = useConfirm();
@@ -201,7 +202,7 @@ const ArtbuddyGalleryListMain = () => {
                                 <Link
                                     to=""
                                     className={
-                                        activePeopleIdx === 0 && "active"
+                                        activePeopleIdx === 0 ? "active" : ""
                                     }
                                     onClick={() => changeArtist(0)}
                                 >
@@ -217,8 +218,9 @@ const ArtbuddyGalleryListMain = () => {
                                             changeArtist(item.people_idx)
                                         }
                                         className={
-                                            activePeopleIdx ===
-                                                item.people_idx && "active"
+                                            activePeopleIdx === item.people_idx
+                                                ? "active"
+                                                : ""
                                         }
                                     >
                                         {item.name_en}
@@ -236,8 +238,20 @@ const ArtbuddyGalleryListMain = () => {
                                             }
                                         >
                                             <p className="thumb">
-                                                <img
-                                                    loading="lazy"
+                                                {/*<img*/}
+                                                {/*    loading="lazy"*/}
+                                                {/*    src={*/}
+                                                {/*        item.thumbnail_info*/}
+                                                {/*            .length !== 0*/}
+                                                {/*            ? apiPath.api_file +*/}
+                                                {/*              item*/}
+                                                {/*                  .thumbnail_info[0]*/}
+                                                {/*                  .file_path_enc*/}
+                                                {/*            : ""*/}
+                                                {/*    }*/}
+                                                {/*    alt=""*/}
+                                                {/*/>*/}
+                                                <LazyImage
                                                     src={
                                                         item.thumbnail_info
                                                             .length !== 0
@@ -247,7 +261,6 @@ const ArtbuddyGalleryListMain = () => {
                                                                   .file_path_enc
                                                             : ""
                                                     }
-                                                    alt=""
                                                 />
                                             </p>
                                             <p className="name">
@@ -295,3 +308,34 @@ const ArtbuddyGalleryListMain = () => {
 };
 
 export default ArtbuddyGalleryListMain;
+
+const LazyImage = ({ src }) => {
+    // state
+    const [isLoading, setIsLoading] = useState(false);
+
+    // ref
+    const imgRef = useRef(null);
+    const observer = useRef();
+
+    // useEffect
+    useEffect(() => {
+        observer.current = new IntersectionObserver(intersectionObserver);
+        imgRef.current && observer.current.observe(imgRef.current);
+
+        return () => {
+            observer.current && observer.current.disconnect(); // disconnect the observer on component unmount
+        };
+    }, []);
+
+    // IntersectionObserver settings
+    const intersectionObserver = (entries, io) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                io.unobserve(entry.target);
+                setIsLoading(true);
+            }
+        });
+    };
+
+    return <img ref={imgRef} src={isLoading ? src : NoImage} alt="" />;
+};
