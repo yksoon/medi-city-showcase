@@ -550,8 +550,8 @@ select {
 @media screen and (max-width:1200px) {
 
 	#guest_book {padding:0 20px;}
-	#guest_book .signup .boxing table tbody tr td input[type="text"].input_m {width:29%;}
-	#guest_book > div {margin:0;position: absolute;bottom:30px;width:90%;}
+	#guest_book .signup .boxing table tbody tr td input[type="text"].input_m {width:30%;}
+	#guest_book > div {margin:0;position: absolute;bottom:30px;width:90%;padding:80px 40px;}
 
 }
 
