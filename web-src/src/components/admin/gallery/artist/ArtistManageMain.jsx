@@ -254,7 +254,7 @@ const ArtistManageMain = (props) => {
 
     // 수정
     const modBoard = () => {
-        setModalTitle("참가자 상세보기");
+        setModalTitle("아티스트 상세보기");
         setIsOpen(true);
     };
 
