@@ -21,9 +21,7 @@ const GuestBookMain = () => {
     const nameFirstEn = useRef(null);
     const nameLastEn = useRef(null);
     const email = useRef(null);
-    const mobile1 = useRef(null);
-    const mobile2 = useRef(null);
-    const mobile3 = useRef(null);
+    const mobile = useRef(null);
     const affiliation = useRef(null);
 
     // 등록
@@ -47,12 +45,10 @@ const GuestBookMain = () => {
                 subjectEn: "GuestBook",
                 subTitleKo: "방명록",
                 subTitleEn: "GuestBook",
-                interPhoneNumber: "62",
+                interPhoneNumber: "62", // 인도 국가번호로 고정
                 userNameFirstEn: nameFirstEn.current.value,
                 userNameLastEn: nameLastEn.current.value,
-                mobile1: mobile1.current.value,
-                mobile2: mobile2.current.value,
-                mobile3: mobile3.current.value,
+                mobile1: mobile.current.value,
                 email: email.current.value,
                 contentKo: affiliation.current.value,
                 contentEn: affiliation.current.value,
@@ -103,9 +99,7 @@ const GuestBookMain = () => {
         nameLastEn.current.value = null;
         nameFirstEn.current.value = null;
         email.current.value = null;
-        mobile1.current.value = null;
-        mobile2.current.value = null;
-        mobile3.current.value = null;
+        mobile.current.value = null;
         affiliation.current.value = null;
     };
 
@@ -137,8 +131,8 @@ const GuestBookMain = () => {
             return false;
         }
 
-        if (!mobile1.current.value || !mobile2.current.value || !mobile3.current.value) {
-            noti(mobile1, "Please enter your phone number");
+        if (!mobile.current.value) {
+            noti(mobile, "Please enter your phone number");
 
             return false;
         }
@@ -169,18 +163,18 @@ const GuestBookMain = () => {
                         <div className="boxing">
                             <table>
                                 <colgroup>
-                                    <col width="20%" />
+                                    <col width="25%" />
                                     <col width="*" />
                                 </colgroup>
                                 <tbody>
                                     <tr>
-                                        <th>NAME</th>
+                                        <th>Nama</th>
                                         <td>
                                             <input
                                                 type="text"
                                                 ref={nameFirstEn}
                                                 className="input_h"
-                                                placeholder="First Name"
+                                                placeholder="Depan"
                                                 required
                                             />
                                             &nbsp;
@@ -188,38 +182,23 @@ const GuestBookMain = () => {
                                                 type="text"
                                                 ref={nameLastEn}
                                                 className="input_h"
-                                                placeholder="Last Name"
+                                                placeholder="Belakang"
                                                 required
                                             />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>TEL</th>
+                                        <th>Nomor HP</th>
                                         <td>
                                             <input
                                                 type="text"
-                                                ref={mobile1}
-                                                className="input_m"
-                                                required
-                                            />
-                                            &nbsp;-&nbsp;
-                                            <input
-                                                type="text"
-                                                ref={mobile2}
-                                                className="input_m"
-                                                required
-                                            />
-                                            &nbsp;-&nbsp;
-                                            <input
-                                                type="text"
-                                                ref={mobile3}
-                                                className="input_m"
+                                                ref={mobile}
                                                 required
                                             />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>E-MAIL</th>
+                                        <th>E-Mail</th>
                                         <td>
                                             <input
                                                 type="text"
@@ -229,7 +208,7 @@ const GuestBookMain = () => {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>AFFILIATION</th>
+                                        <th>Afiliasi</th>
                                         <td>
                                             <input
                                                 type="text"
@@ -246,7 +225,7 @@ const GuestBookMain = () => {
                         <div className="btn_box">
                             <input
                                 type="submit"
-                                value="SUBMIT"
+                                value="Kirim"
                                 name=""
                                 onClick={regBoard}
                             />

@@ -29,10 +29,7 @@ const GuestBookBoardModalMain = (props) => {
     const nameFirstEn = useRef(null);
     const nameLastEn = useRef(null);
     const email = useRef(null);
-    const interPhoneNumber = useRef(null);
-    const mobile1 = useRef(null);
-    const mobile2 = useRef(null);
-    const mobile3 = useRef(null);
+    const mobile = useRef(null);
     const affiliation = useRef(null);
 
     useEffect(() => {
@@ -46,10 +43,7 @@ const GuestBookBoardModalMain = (props) => {
         nameFirstEn.current.value = modData.user_name_first_en ?? "";
         nameLastEn.current.value = modData.user_name_last_en ?? "";
         email.current.value = modData.email ?? "";
-        interPhoneNumber.current.value = modData.inter_phone_number ?? "";
-        mobile1.current.value = modData.mobile1 ?? "";
-        mobile2.current.value = modData.mobile2 ?? "";
-        mobile3.current.value = modData.mobile3 ?? "";
+        mobile.current.value = modData.mobile1 ?? "";
         affiliation.current.value = modData.content_en ?? "";
     };
 
@@ -87,10 +81,8 @@ const GuestBookBoardModalMain = (props) => {
                 subTitleKo: modData.sub_title_ko,
                 userNameFirstEn: nameFirstEn.current.value,
                 userNameLastEn: nameLastEn.current.value,
-                interPhoneNumber: interPhoneNumber.current.value,
-                mobile1: mobile1.current.value,
-                mobile2: mobile2.current.value,
-                mobile3: mobile3.current.value,
+                interPhoneNumber: modData.inter_phone_number,
+                mobile1: mobile.current.value,
                 email: email.current.value,
                 contentKo: affiliation.current.value,
                 contentEn: affiliation.current.value,
@@ -250,29 +242,11 @@ const GuestBookBoardModalMain = (props) => {
                                 TEL <span className="red">*</span>
                             </th>
                             <td colSpan="3" style={{ display: "flex", alignItems: "center" }}>
-                                +
+                                <span>{ '+' + modData.inter_phone_number }</span>
                                 <input
                                     type="text"
                                     className="input wp100"
-                                    ref={interPhoneNumber}
-                                />
-
-                                <input
-                                    type="text"
-                                    className="input wp100"
-                                    ref={mobile1}
-                                />
-                                -
-                                <input
-                                    type="text"
-                                    className="input wp100"
-                                    ref={mobile2}
-                                />
-                                -
-                                <input
-                                    type="text"
-                                    className="input wp100"
-                                    ref={mobile3}
+                                    ref={mobile}
                                 />
                             </td>
                         </tr>

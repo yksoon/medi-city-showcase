@@ -408,7 +408,7 @@ const GuestBookBoardMain = (props) => {
             sortingFn: "alphanumericCaseSensitive",
         }),
 
-        columnHelper.accessor((row) => `+${row.inter_phone_number} ${row.mobile1}-${row.mobile2}-${row.mobile3}`, {
+        columnHelper.accessor((row) => `+${row.inter_phone_number} ${row.mobile1}`, {
             id: "mobile",
             cell: (info) => info.getValue(),
             header: "전화번호",
@@ -499,7 +499,7 @@ const GuestBookBoardMain = (props) => {
                             <colgroup>
                                 <col width="5%" />
                                 <col width="15%" />
-                                <col width="12%" />
+                                <col width="15%" />
                                 <col width="*" />
                                 <col width="15%" />
                                 <col width="12%" />
