@@ -302,9 +302,9 @@ const ArtbuddyArtistViewMain = () => {
                                                 // slidesPerView={"auto"}
                                                 slidesPerView={3}
                                                 spaceBetween={40}
-                                                mousewheel={true}
+                                                // mousewheel={true}
                                                 loop={false}
-                                                // navigation={true}
+                                                navigation={true}
                                                 // loopAdditionalSlides={1}
                                                 grabCursor={true}
                                                 centeredSlides={true}
@@ -327,7 +327,12 @@ const ArtbuddyArtistViewMain = () => {
                                                     }
                                                   
                                                   }}
+                                                autoplay={{
+                                                    delay: 5000,
+                                                    disableOnInteraction: false,
+                                                }}
                                                 modules={[
+                                                    Autoplay,
                                                     EffectCoverflow,
                                                     Navigation,
                                                 ]}
