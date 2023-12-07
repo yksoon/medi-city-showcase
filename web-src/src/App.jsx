@@ -96,9 +96,6 @@ function App() {
                     resetUserToken();
                 });
         }
-
-        if (currentPath === pathname) window.location.reload();
-        currentPath = location.pathname;
     }, [location]);
 
     // Spinner
