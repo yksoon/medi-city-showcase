@@ -27,7 +27,7 @@ import "swiper/css/scrollbar";
 import "swiper/css/effect-coverflow";
 
 const ArtbuddyArtistViewMain = () => {
-    const { confirm } = useConfirm();
+    // const { confirm } = useConfirm();
     const { alert } = useAlert();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
@@ -325,7 +325,7 @@ const ArtbuddyArtistViewMain = () => {
                                                         slidesPerView: 3,
                                                         spaceBetween:40
                                                     }
-                                                  
+
                                                   }}
                                                 autoplay={{
                                                     delay: 5000,
@@ -339,22 +339,23 @@ const ArtbuddyArtistViewMain = () => {
                                                 pagination={false}
                                                 initialSlide={0}
                                             >
-                                                {swiperItem.map((item, idx) => (
-                                                    <SwiperSlide
-                                                        key={`Swiper_${idx}`}
-                                                        className="swiper-slide"
-                                                    >
-                                                        <img
-                                                            src={item}
-                                                            alt=""
-                                                            style={{
-                                                                width: "100%",
-                                                                height: "100%",
-                                                                objectFit:
-                                                                    "cover",
-                                                            }}
-                                                        />
-                                                    </SwiperSlide>
+                                                {swiperItem.length !== 0 &&
+                                                    swiperItem.map((item, idx) => (
+                                                        <SwiperSlide
+                                                            className="swiper-slide"
+                                                            key={`swiper_${idx}`}
+                                                        >
+                                                            <img
+                                                                src={item}
+                                                                alt=""
+                                                                style={{
+                                                                    width: "100%",
+                                                                    height: "100%",
+                                                                    objectFit:
+                                                                        "cover",
+                                                                }}
+                                                            />
+                                                        </SwiperSlide>
                                                 ))}
                                             </Swiper>
                                         )}
@@ -401,7 +402,8 @@ const ArtbuddyArtistViewMain = () => {
                                                             <>
                                                                 <div
                                                                     className="artnote"
-                                                                    key={`profileSection_${item.idx}`}
+                                                                    // key={item.sectionValue}
+                                                                    key={`profileSection-${item.idx}`}
                                                                 >
                                                                     <h4>
                                                                         {
@@ -433,7 +435,7 @@ const ArtbuddyArtistViewMain = () => {
                                                                                         inputItem,
                                                                                     ) => (
                                                                                         <li
-                                                                                            key={`selectedProfile_${inputItem.inputIdx}`}
+                                                                                            key={`${inputItem.parentIdx}-${inputItem.inputIdx}`}
                                                                                         >
                                                                                             {inputItem.profileContentEn
                                                                                                 ? inputItem.profileContentEn
