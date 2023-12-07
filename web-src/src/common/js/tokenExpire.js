@@ -1,6 +1,6 @@
 import { RestServer } from "./Rest";
 import { apiPath, routerPath } from "webPath";
-import { CommonConsole, CommonNotify } from "./Common";
+import { CommonConsole, CommonNotify } from "common/js/Common";
 import { successCode } from "resultCode";
 
 const tokenExpire = (
@@ -8,7 +8,7 @@ const tokenExpire = (
     setIsSpinner,
     alert,
     resetUserInfoAdmin,
-    resetUserTokenAdmin
+    resetUserTokenAdmin,
 ) => {
     // dispatch(
     //     set_spinner({

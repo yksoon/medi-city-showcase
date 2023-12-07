@@ -8,14 +8,14 @@ import RecoilizeDebugger from "recoilize";
 // Bootstrap
 // import "common_old/css/bootstrap.min.css";
 
-import App from "./App";
+import App from "App";
 
 import "common/css/default.css";
 import "common/css/style.css";
 import "common/css/common.css";
 import "common/css/aos.css";
 import "common/css/adm.css";
-import ScrollToTop from "ScrollToTop";
+import ScrollToTop from "./ScrollToTop";
 import { StyledEngineProvider } from "@mui/material";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

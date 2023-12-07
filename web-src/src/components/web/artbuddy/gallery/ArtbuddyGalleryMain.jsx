@@ -219,15 +219,6 @@ const ArtbuddyGalleryMain = () => {
                                                     ? galleryInfo.main_title_en
                                                     : galleryInfo.main_title_ko}
                                             </li>
-                                            {(galleryInfo.sub_title_en ||
-                                                galleryInfo.sub_title_ko) && (
-                                                <li>
-                                                    <span>Sub Title</span>
-                                                    {galleryInfo.sub_title_en
-                                                        ? galleryInfo.sub_title_en
-                                                        : galleryInfo.sub_title_ko}
-                                                </li>
-                                            )}
                                             {galleryInfo.size_info_show_yn ===
                                                 "Y" && (
                                                 <li>

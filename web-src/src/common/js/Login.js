@@ -1,6 +1,6 @@
 import { routerPath } from "webPath";
 import { RestServer } from "./Rest";
-import { CommonConsole, CommonNotify } from "./Common";
+import { CommonConsole, CommonNotify } from "common/js/Common";
 import { successCode } from "resultCode";
 
 export default function Login(
@@ -11,7 +11,7 @@ export default function Login(
     setIsSpinner,
     alert,
     setUserInfo,
-    setUserToken
+    setUserToken,
 ) {
     RestServer("post", url, data)
         .then(function (response) {
