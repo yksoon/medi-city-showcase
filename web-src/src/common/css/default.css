@@ -5,39 +5,39 @@
     font-family: 'Pretendard';
     font-weight: 400;
     font-style: normal;
-    src: url('/public/font_hi/Pretendard-Regular.woff')  format('woff');
+    src: url('/font_hi/Pretendard-Regular.woff')  format('woff');
 }
 @font-face {
     font-family: 'Pretendard';
     font-weight: 600;
     font-style: bold;
-    src: url('/public/font_hi/Pretendard-Medium.woff')  format('woff');
+    src: url('/font_hi/Pretendard-Medium.woff')  format('woff');
 }
 @font-face {
     font-family: 'Pretendard';
     font-weight: 900;
     font-style: bold;
-    src: url('/public/font_hi/Pretendard-Bold.woff')  format('woff');
+    src: url('/font_hi/Pretendard-Bold.woff')  format('woff');
 }
 
 @font-face {
     font-family: 'raleway';
     font-weight: 400;
     font-style: normal;
-    src: url('/public/font_hi/Raleway-Regular_0.woff')  format('woff');
+    src: url('/font_hi/Raleway-Regular_0.woff')  format('woff');
 }
 
 @font-face {
     font-family: 'raleway';
     font-weight: 600;
     font-style: normal;
-    src: url('/public/font_hi/Raleway-SemiBold_0.woff')  format('woff');
+    src: url('/font_hi/Raleway-SemiBold_0.woff')  format('woff');
 }
 @font-face {
     font-family: 'raleway';
     font-weight: 900;
     font-style: bold;
-    src: url('/public/font_hi/Raleway-Bold_0.woff')  format('woff');
+    src: url('/font_hi/Raleway-Bold_0.woff')  format('woff');
 }
 
 

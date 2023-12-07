@@ -188,7 +188,7 @@ const ArtbuddyGalleryMain = () => {
                                         <img
                                             src={
                                                 apiPath.api_file +
-                                                galleryInfo.file_info[0]
+                                                galleryInfo.thumbnail_info[0]
                                                     .file_path_enc
                                             }
                                             alt=""
@@ -208,9 +208,13 @@ const ArtbuddyGalleryMain = () => {
                                                 }
                                             </span>
                                             <br />
-                                            {galleryInfo.name_en
-                                                ? galleryInfo.name_en
-                                                : galleryInfo.name_ko}
+                                            <Link
+                                                to={`${routerPath.web_artbuddy_artist_detail_url}${galleryInfo.people_idx}`}
+                                            >
+                                                {galleryInfo.name_en
+                                                    ? galleryInfo.name_en
+                                                    : galleryInfo.name_ko}
+                                            </Link>
                                         </h4>
                                         <ul>
                                             <li>

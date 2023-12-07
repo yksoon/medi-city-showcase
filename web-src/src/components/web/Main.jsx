@@ -78,7 +78,7 @@ function Main() {
                     renderPopup(popup),
                 );
 
-                console.log(renderPopupList);
+                // console.log(renderPopupList);
                 setPopupList(renderPopupList);
             } else {
                 // CommonNotify({
@@ -130,7 +130,7 @@ function Main() {
     const popupOpenTime = (popupIdx, option24HoursYn) => {
         const viewedTime = localStorage.getItem(`popup_viewed_${popupIdx}`);
 
-        console.log(viewedTime);
+        // console.log(viewedTime);
 
         if (option24HoursYn === "N" || !viewedTime) {
             return true; // 저장된 시간이 없으면 팝업을 보여줌

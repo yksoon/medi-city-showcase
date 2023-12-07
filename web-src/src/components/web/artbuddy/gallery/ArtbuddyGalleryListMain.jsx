@@ -71,7 +71,7 @@ const ArtbuddyGalleryListMain = () => {
                 setArtistList(result_info);
                 // setPageInfo(page_info);
 
-                setIsSpinner(false);
+                // setIsSpinner(false);
             } else {
                 // 에러
                 CommonConsole("log", res);

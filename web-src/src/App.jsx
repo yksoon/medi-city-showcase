@@ -30,6 +30,7 @@ import { registration_idx } from "common/js/static";
 import { CommonNotify, CommonRest } from "common/js/Common";
 import { successCode } from "resultCode";
 
+let currentPath = "";
 function App() {
     useEffect(() => {
         Aos.init();
@@ -95,6 +96,9 @@ function App() {
                     resetUserToken();
                 });
         }
+
+        if (currentPath === pathname) window.location.reload();
+        currentPath = location.pathname;
     }, [location]);
 
     // Spinner
