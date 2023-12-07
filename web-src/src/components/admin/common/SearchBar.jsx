@@ -8,6 +8,13 @@ const SearchBar = (props) => {
     const downloadExcel = props.downloadExcel;
     const clickRemove = props.clickRemove;
 
+    // 엔터키
+    const handleOnKeyPress = (e) => {
+        if (e.key === "Enter") {
+            doSearch(); // Enter 입력이 되면 클릭 이벤트 실행
+        }
+    };
+
     return (
         <>
             <div className="adm_search">
@@ -17,7 +24,7 @@ const SearchBar = (props) => {
                                         <option value="">이름</option>
                                         <option value="">소속</option>
                                     </select> */}
-                    <input type="text" className="input" ref={searchKeyword} />
+                    <input type="text" className="input" onKeyDown={handleOnKeyPress} ref={searchKeyword} />
                     <Link to="" className="subbtn off" onClick={doSearch}>
                         검색
                     </Link>
