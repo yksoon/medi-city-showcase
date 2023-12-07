@@ -296,7 +296,7 @@ const GalleryMain = (props) => {
      * 상세보기 모달
      */
     const modBoard = () => {
-        setModalTitle("참가자 상세보기");
+        setModalTitle("갤러리 상세보기");
         setIsOpen(true);
     };
 
@@ -564,21 +564,6 @@ const GalleryMain = (props) => {
 
         columnHelper.accessor(
             (row) =>
-                row.comment_info && (
-                    <>
-                        {row.comment_info.length}
-                    </>
-                ),
-            {
-                id: "comment_info",
-                cell: (info) => info.getValue(),
-                header: "댓글수",
-                sortingFn: "alphanumericCaseSensitive",
-            },
-        ),
-
-        columnHelper.accessor(
-            (row) =>
                 row.reg_dttm && (
                     <>
                         {row.reg_dttm.split(" ")[0]}
@@ -690,7 +675,6 @@ const GalleryMain = (props) => {
                                 <col width="10%" />
                                 <col width="10%" />
                                 <col width="7%" />
-                                <col width="5%" />
                                 <col width="8%" />
                                 <col width="10%" />
                                 <col width="5%" />
