@@ -43,6 +43,7 @@ const ArtbuddyArtistListMain = (props) => {
             page_num: "1",
             page_size: "0",
             search_keyword: "",
+            show_yn: "Y"
         };
 
         // 파라미터
@@ -67,6 +68,7 @@ const ArtbuddyArtistListMain = (props) => {
                 const result_info = res.data.result_info;
                 const page_info = res.data.page_info;
 
+                // setBoardList(result_info.filter((el) => el.show_yn === "Y"));
                 setBoardList(result_info);
                 // setPageInfo(page_info);
 
@@ -136,7 +138,12 @@ const ArtbuddyArtistListMain = (props) => {
                         <h3>Artists</h3>
                     </div>
 
-                    <div className="listbox artist_list">
+                    <div className={
+                            activePeopleIdx === 0
+                                ? "listbox artist_list"
+                                : "listbox artistbox"
+                        }>
+                        
                         {boardList.length !== 0 &&
                             boardList.map((item, idx) => (
                                 <figure key={item.people_idx}>

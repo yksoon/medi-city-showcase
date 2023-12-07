@@ -10,6 +10,7 @@ import { apiPath } from "webPath";
 import { successCode } from "resultCode";
 import imageCompression from "browser-image-compression";
 import { imageResizeOptions } from "common/js/static";
+import RadioGroupSelection from "common/js/commonComponents/RadioGroupSelection";
 
 const ArtistManageModalMain = (props) => {
     const { confirm } = useConfirm();
@@ -39,6 +40,7 @@ const ArtistManageModalMain = (props) => {
     const [fileInfo, setFileInfo] = useState([]);
     const [thumbnailInfo, setThumbnailInfo] = useState([]);
     const [thumbFiles, setThumbFiles] = useState([]);
+    const [showYn, setShowYn] = useState("Y");
     // const [profileSection, setProfileSection] = useState([
     //     { idx: 1, sectionValue: "" },
     // ]);
@@ -113,6 +115,7 @@ const ArtistManageModalMain = (props) => {
             : "";
         peopleMemoKo.current.value = modData.people_memo_ko ?? "";
         peopleMemoEn.current.value = modData.people_memo_en ?? "";
+        setShowYn(modData.show_yn ?? "Y")
         setFileInfo(modData.file_info);
         previewAttachment.current.src =
             modData.file_info.length !== 0 &&
@@ -549,6 +552,7 @@ const ArtistManageModalMain = (props) => {
                 gender: gender.current.value,
                 peopleMemoKo: peopleMemoKo.current.value,
                 peopleMemoEn: peopleMemoEn.current.value,
+                showYn: showYn,
                 birthYyyy:
                     birth.current.value && birth.current.value.split("-")[0],
                 birthMm:
@@ -738,6 +742,11 @@ const ArtistManageModalMain = (props) => {
         return true;
     };
 
+    const radioItems = [
+        { value: "Y", label: "노출" },
+        { value: "N", label: "비노출" },
+    ];
+
     return (
         <>
             <div className="admin">
@@ -752,9 +761,10 @@ const ArtistManageModalMain = (props) => {
                     <tbody>
                         <tr>
                             <th>
-                                이름(국문) <span className="red">*</span>
+                                이름(국문, 영문) <span className="red">*</span>
                             </th>
                             <td>
+                                <div>
                                 <input
                                     type="text"
                                     className="input w140"
@@ -767,22 +777,33 @@ const ArtistManageModalMain = (props) => {
                                     ref={nameLastKo}
                                     placeholder="이름"
                                 />
+                                </div>
+                                <div>
+                                    <input
+                                        type="text"
+                                        className="input w140"
+                                        ref={nameFirstEn}
+                                        placeholder="First Name"
+                                    />{" "}
+                                    <input
+                                        type="text"
+                                        className="input w140"
+                                        ref={nameLastEn}
+                                        placeholder="Last Name"
+                                    />
+                                </div>
                             </td>
                             <th>
-                                이름(영문) <span className="red">*</span>
+                                노출여부
                             </th>
                             <td>
-                                <input
-                                    type="text"
-                                    className="input w140"
-                                    ref={nameFirstEn}
-                                    placeholder="First Name"
-                                />{" "}
-                                <input
-                                    type="text"
-                                    className="input w140"
-                                    ref={nameLastEn}
-                                    placeholder="Last Name"
+                                <RadioGroupSelection
+                                    radioItems={radioItems}
+                                    name={"showYn"}
+                                    value={showYn}
+                                    onChange={(e) =>
+                                        setShowYn(e.target.value)
+                                    }
                                 />
                             </td>
                         </tr>

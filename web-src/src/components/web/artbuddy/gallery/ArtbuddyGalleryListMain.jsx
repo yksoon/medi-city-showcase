@@ -97,6 +97,7 @@ const ArtbuddyGalleryListMain = () => {
             search_keyword: "",
             all_yn: people_idx === 0 ? "Y" : "",
             people_idx: people_idx !== 0 ? people_idx : "",
+            show_yn: "Y"
         };
 
         // 파라미터
@@ -232,7 +233,7 @@ const ArtbuddyGalleryListMain = () => {
                             className={
                                 activePeopleIdx === 0
                                     ? "listbox"
-                                    : "listbox aaa"
+                                    : "listbox artistbox"
                             }
                         >
                             {boardList.length !== 0 &&
