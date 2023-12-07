@@ -455,13 +455,14 @@ body {margin:0 auto;}
 
 /* GALLERY 리스트 페이지 */
 .galleryList .gfilter { text-align: center; margin:0 0 60px 0; }
-.galleryList .gfilter a { display:inline-block; height:25px; line-height: 25px; border:1px solid #ddd; border-radius: 25px; padding:0 20px; font-size:15px; color:#333; }
+.galleryList .gfilter a { display:inline-block; height:25px; line-height: 25px; border:1px solid #ddd; border-radius: 25px; padding:0 20px; font-size:15px; color:#333;margin:0 6px;}
 .galleryList .gfilter a:hover, .galleryList .gfilter a.active { border:1px solid #59047f; color:#59047f;; }
 .galleryList .grid .grid-item { width: 390px; }
 
 .listbox {margin:0 50px;column-width:390px;column-gap: 10px; }
 .listbox figure {display: inline-block;margin:0;margin-bottom: 50px; }
 
+.listbox figure a .thumb {width:390px;}
 .listbox figure a .thumb img { max-width:100%; height:auto; }
 .listbox figure a .name { font-size:20px; color:#000; margin:20px 0 10px; font-weight: 600;; }
 .listbox figure a .info { font-size:16px; color:#333; line-height:30px; }
@@ -546,11 +547,11 @@ select {
 
 
 /**** mobile layout *************************************************************************************************************/
-@media screen and (max-width:640px) {
+@media screen and (max-width:1200px) {
 
 	#guest_book {padding:0 20px;}
-	#guest_book .signup .boxing table tbody tr td input[type="text"].input_m {width:29%;}
-	#guest_book > div {margin:0;}
+	#guest_book .signup .boxing table tbody tr td input[type="text"].input_m {width:30%;}
+	#guest_book > div {margin:0;position: absolute;bottom:30px;width:90%;padding:80px 40px;}
 
 }
 
@@ -876,14 +877,19 @@ select {
 	.kart .bimg {position:relative;height:auto;}
 	.kart .bimg img{position:static; left:0%; margin-left:0;max-width:100%;width:100%;}
 
+	.listbox {margin:0;}
+	.listbox figure {width:100%;}
+	.listbox figure img {width:100%;}
+	.listbox figure a .thumb {width:100%;}
+	.galleryList .gfilter a {margin:6px;}
+	.listbox figure a .info p span {display:block;}
+	.artist_list figure a {width:100%;}
 
 	/* GALLEY 뷰페이지 */
 
+
 	.galleryView .artbox {height:auto;padding:80px 0; background:url('/img/web/sub/artbox_bg.jpg') 0 100%; background-size:cover;}
 	.galleryView .artbox img{width:70%; max-width:300px; min-width:180px;padding:6px;bordeR:6px solid #d1bfa8;}
-
-
-
 	.galleryView .artinfo .artist {font-size: 25px;}
 	.galleryView .artinfo .artist span {font-size: 13px;}
 	.galleryView .artinfo .artist:after {width:50px;}
@@ -900,8 +906,19 @@ select {
 
 	.galleryView .inqbox .btnbox input[type="submit"] {height:55px; line-height: 55px; width:220px;font-size:20px;}
 
+
     #guest_book .signup .boxing table tbody tr td input[type="text"].input_m {width:30%;}
     #guest_book .c_tit { font-size:18px; letter-spacing:-0.02em; }
+
+	/* 아티스트뷰 */
+	.artist_info {width: 100%;padding:20px 0;}
+	.artist_info .left, .artist_info .right {width: 100%;float: none;position:static;}
+	.artist_info .left {padding:40px 0;border-top: 1px solid #ddd;}
+	.artist_info .right {padding:0 0 0 30px;}
+	.artist_info .right::before {left:20px;}
+	.artist_info .left .thumb {width: 180px;}
+	.artist_info p {font-size: 14px;line-height: 26px;}
+	.artist_work .swiper-slide {height: auto;}
 
 
 
