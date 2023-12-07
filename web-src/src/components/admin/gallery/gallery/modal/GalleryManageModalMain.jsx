@@ -60,9 +60,10 @@ const GalleryManageModalMain = (props) => {
     const [priceInfoShowYn, setPriceInfoShowYn] = useState("Y");
     const [sizeInfoShowYn, setSizeInfoShowYn] = useState("Y");
     const [yearInfoShowYn, setYearInfoShowYn] = useState("Y");
+    const [showYn, setShowYn] = useState("Y");
 
     // refs
-    const showYn = useRef(null);
+    // const showYn = useRef(null);
     const mainTitleKo = useRef(null);
     const mainTitleEn = useRef(null);
     const subTitleKo = useRef(null);
@@ -190,7 +191,6 @@ const GalleryManageModalMain = (props) => {
     };
 
     const setDefaultValue = () => {
-        showYn.current.value = modData.show_yn;
         mainTitleKo.current.value = modData.main_title_ko;
         mainTitleEn.current.value = modData.main_title_en;
         subTitleKo.current.value = modData.sub_title_ko;
@@ -215,6 +215,7 @@ const GalleryManageModalMain = (props) => {
         materialsInfoKo.current.value = modData.materials_info_ko;
         materialsInfoEn.current.value = modData.materials_info_en;
 
+        setShowYn(modData.show_yn)
         setArtTypeShowYn(modData.art_type_show_yn);
         setMaterialsInfoShowYn(modData.materials_info_show_yn);
         setPaintTypeShowYn(modData.paint_type_show_yn);
@@ -316,7 +317,7 @@ const GalleryManageModalMain = (props) => {
             let thumbArr = [];
 
             data = {
-                showYn: showYn.current.value,
+                showYn: showYn,
                 mainTitleKo: mainTitleKo.current.value,
                 mainTitleEn: mainTitleEn.current.value,
                 subTitleKo: subTitleKo.current.value,
@@ -477,11 +478,11 @@ const GalleryManageModalMain = (props) => {
             return false;
         }
 
-        if (!showYn.current.value) {
-            noti(showYn, "노출여부를 선택해주세요");
-
-            return false;
-        }
+        // if (!showYn.current.value) {
+        //     noti(showYn, "노출여부를 선택해주세요");
+        //
+        //     return false;
+        // }
 
         if (!mainTitleKo.current.value || !mainTitleEn.current.value) {
             noti(mainTitleKo, "작품명(국문,영문)을 입력해주세요");
@@ -656,11 +657,14 @@ const GalleryManageModalMain = (props) => {
                                 노출여부 <span className="red">*</span>
                             </th>
                             <td>
-                                <select className="wp100" ref={showYn}>
-                                    <option value="">- 선택 -</option>
-                                    <option value="Y">노출</option>
-                                    <option value="N">비노출</option>
-                                </select>
+                                <RadioGroupSelection
+                                    radioItems={radioItems}
+                                    name={"showYn"}
+                                    value={showYn}
+                                    onChange={(e) =>
+                                        setShowYn(e.target.value)
+                                    }
+                                />
                             </td>
                         </tr>
                         <tr>
