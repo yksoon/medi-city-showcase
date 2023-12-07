@@ -232,7 +232,7 @@ const ArtbuddyGalleryListMain = () => {
                             className={
                                 activePeopleIdx === 0
                                     ? "listbox"
-                                    : "listbox aaa"
+                                    : "listbox artistbox"
                             }
                         >
                             {boardList.length !== 0 &&
