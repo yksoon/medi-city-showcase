@@ -223,47 +223,52 @@ const ConsultingBoardMain = (props) => {
     };
 
     const removeBoard = async () => {
-        let checkItemsStr = checkItems.join();
+        const length = checkItems.length;
         setIsSpinner(true);
 
-        const url = `${apiPath.api_admin_remove_board}${checkItemsStr}`;
+        let data = {};
+        let checkCount = 0;
 
-        const restParams = {
-            method: "delete",
-            url: url,
-            data: {},
-            err: err,
-            admin: "Y",
-            callback: (res) => responsLogic(res),
-        };
+        for (let i = 0; i < length; i++) {
+            // v1/board
+            // DELETE
+            let url = apiPath.api_admin_remove_board + checkItems[i];
 
-        CommonRest(restParams);
+            // 파라미터
+            const restParams = {
+                method: "delete",
+                url: url,
+                data: data,
+                err: err,
+                admin: "Y",
+                callback: (res) => responsLogic(res),
+            };
+            CommonRest(restParams);
+        }
 
         const responsLogic = (res) => {
             const result_code = res.headers.result_code;
+
             if (result_code === successCode.success) {
-                setIsSpinner(false);
+                checkCount++;
 
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "삭제가 완료 되었습니다",
-                    callback: () => pageUpdate(),
-                });
-            } else {
-                setIsSpinner(false);
+                if (checkCount === length) {
+                    setIsSpinner(false);
 
-                CommonNotify({
-                    type: "alert",
-                    hook: alert,
-                    message: "잠시 후 다시 시도해주세요",
-                });
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: `${checkCount} 건의 게시글이 삭제 되었습니다.`,
+                        callback: () => refresh(),
+                    });
+
+                    const refresh = () => {
+                        setCheckItems([]);
+
+                        handleNeedUpdate();
+                    };
+                }
             }
-
-            const pageUpdate = () => {
-                setCheckItems([]);
-                handleNeedUpdate();
-            };
         };
     };
 
