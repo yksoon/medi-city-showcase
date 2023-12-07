@@ -138,7 +138,12 @@ const ArtbuddyArtistListMain = (props) => {
                         <h3>Artists</h3>
                     </div>
 
-                    <div className="listbox artist_list">
+                    <div className={
+                            activePeopleIdx === 0
+                                ? "listbox artist_list"
+                                : "listbox artistbox"
+                        }>
+                        
                         {boardList.length !== 0 &&
                             boardList.map((item, idx) => (
                                 <figure key={item.people_idx}>
