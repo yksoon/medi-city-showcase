@@ -20,9 +20,6 @@ const FooterSub = () => {
                 </span>
                 <span className="tit">PARTNERS</span>
                 <span className="logobox">
-                    <img src="img/web/main/orga_logo01.png" alt="" />
-                </span>
-                <span className="logobox">
                     <img src="img/web/main/orga_logo02.png" alt="" />
                 </span>
             </div>
