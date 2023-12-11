@@ -240,13 +240,8 @@ const Section01 = (props) => {
                         invaluable time to engage with clients with real needs.{" "}
                         <br />
                         <br />
-                        The showcase is conducted in collaboration with
-                        “SUMMITS”, which has been attracting Indonesian clients
-                        to South Korean Plastic & Aesthetic Clinics
-                        <br />
-                        through the “My Venus” Application service.
-                        Additionally, a Korean art exhibition by ARTBUDDY will
-                        be held with the intention of promoting K-ART. <br />
+                        The showcase is conducted in collaboration with "ARTBUDDY," a leading company in advancing K-ART.<br />
+                        ARTBUDDY, in exclusive partnership with South Korean Plastic & Aesthetic Clinics, is organizing an exhibition featuring a diverse range of works, including Korean traditional art, contemporary art, pop art, and more, to attract Indonesian clients. This initiative highlights ARTBUDDY's significant role in the world of K-ART. <br />
                         <br />
                         Participating Plastic & Aesthetic Clinics can expect
                         more than just promotion; the focus is on tangible
@@ -277,9 +272,6 @@ const Section01 = (props) => {
                             <img src="img/web/main/host_logo02.png" alt="" />
                         </span>
                         <span className="tit">PARTNERS</span>
-                        <span className="logobox">
-                            <img src="img/web/main/orga_logo01.png" alt="" />
-                        </span>
                         <span className="logobox">
                             <img src="img/web/main/orga_logo02.png" alt="" />
                         </span>
