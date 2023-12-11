@@ -77,7 +77,7 @@ const GuestBookMain = () => {
                     CommonNotify({
                         type: "alert",
                         hook: alert,
-                        message: "Guestbook registration has been completed.",
+                        message: "Terima kasih atas kesediaan untuk mengisi informasi Anda di buku tamu",
                         callback: () => handleNeedUpdate(),
                     });
                 } else {

@@ -1018,14 +1018,35 @@ const GalleryManageModalMain = (props) => {
                             </td>
                         </tr>
                         {isModData && (
-                            <tr>
-                                <th>QR</th>
-                                <td colSpan={3}>
-                                    <div className="hotel_thumb_wrap">
-                                        <img src={modData.qr_img} alt="" />
-                                    </div>
-                                </td>
-                            </tr>
+                            <>
+                                <tr>
+                                    <th>QR</th>
+                                    <td colSpan="3">
+                                        <div className="hotel_thumb_wrap">
+                                            <img src={modData.qr_img} alt="" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                {modData.comment_info.length !== 0 && (
+                                    modData.comment_info.map((comment) => (
+                                        <div style={{ background: "lightblue", border: "1px solid tomato" }}>
+                                            <span>댓글</span>
+                                            <span>작성자</span>
+                                            <div>
+                                                <div>{comment.content}</div>
+                                                {comment.child_comments.length !== 0 && (
+                                                    comment.child_comments.map((comment) => (
+                                                        <div style={{ background: "lavender" }}>
+                                                            <span>답변</span>
+                                                            <div>{comment.content}</div>
+                                                        </div>
+                                                    ))
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </>
                         )}
                     </tbody>
                 </table>

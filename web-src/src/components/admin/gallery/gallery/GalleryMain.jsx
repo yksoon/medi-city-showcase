@@ -296,7 +296,7 @@ const GalleryMain = (props) => {
      * 상세보기 모달
      */
     const modBoard = () => {
-        setModalTitle("참가자 상세보기");
+        setModalTitle("갤러리 상세보기");
         setIsOpen(true);
     };
 

@@ -138,11 +138,7 @@ const ArtbuddyArtistListMain = (props) => {
                         <h3>Artists</h3>
                     </div>
 
-                    <div className={
-                            activePeopleIdx === 0
-                                ? "listbox artist_list"
-                                : "listbox artistbox"
-                        }>
+                    <div className="listbox artist_list">
                         
                         {boardList.length !== 0 &&
                             boardList.map((item, idx) => (
