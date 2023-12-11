@@ -123,14 +123,14 @@ const ArtbuddyArtistListMain = (props) => {
                         <Link to={routerPath.web_artbuddy_exhibition_url}>
                             K-ART Exhibition
                         </Link>
+                        <Link to={routerPath.web_artbuddy_gallery_list_url}>
+                            Gallery
+                        </Link>
                         <Link
                             to={routerPath.web_artbuddy_artist_list_url}
                             className="active"
                         >
                             Artist
-                        </Link>
-                        <Link to={routerPath.web_artbuddy_gallery_list_url}>
-                            Gallery
                         </Link>
                     </div>
 
