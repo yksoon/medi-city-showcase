@@ -476,9 +476,9 @@ body {margin:0 auto;}
 .artist_list figure a {display:block;width:390px;}
 .artist_list figure a .name span {color: #818181;font-weight: 400;}
 
-.artistbox {display:flex;flex-wrap: wrap;justify-content: space-between;}
+.artistbox {display:flex;flex-wrap: wrap; column-gap: 40px;}
 .artistbox figure img {width: 390px;}
-.artistbox figure a {width: 390px;display: block;margin:0 30px 0 0;}
+.artistbox figure a {width: calc((100%-120px) /4);display: block;}
 
 #guest {}
 #guest_book {max-width:1180px;margin:0 auto;padding:0 60px;background: #fff;height:100vh;display:flex; justify-content: center; align-items: center;background: url('/img/web/sub/guest_bg.png') center top no-repeat;background-size: cover;}
@@ -923,6 +923,8 @@ select {
 	.artist_info .left .thumb {width: 180px;}
 	.artist_info p {font-size: 14px;line-height: 26px;}
 	.artist_work .swiper-slide {height: auto;}
+
+	.artistbox figure a {width:100%;}
 
 
 
