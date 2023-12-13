@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Header from "components/web/common/Header";
 import FooterSub from "components/web/common/FooterSub";
 import Footer from "components/web/common/Footer";
@@ -23,6 +23,9 @@ import { useParams } from "react-router";
 import { successCode } from "resultCode";
 import { Skeleton } from "@mui/material";
 import { commaOfNumber } from "common/js/Pattern";
+import { commentModel } from "models/comment/comment";
+
+// ------------------- import End --------------------
 
 const ArtbuddyGalleryMain = () => {
     const { confirm } = useConfirm();
@@ -30,9 +33,21 @@ const ArtbuddyGalleryMain = () => {
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
 
+    const [isNeedUpdate, setIsNeedUpdate] = useState(false);
+
     const registrationInfo = useRecoilValue(registrationInfoAtom);
     const codes = useRecoilValue(codesAtom);
     const countryBank = useRecoilValue(countryBankAtom);
+
+    // refs
+    const nameFirstEn = useRef(null);
+    const nameLastEn = useRef(null);
+    const mobile1 = useRef(null);
+    const mobile2 = useRef(null);
+    const mobile3 = useRef(null);
+    const email = useRef(null);
+    const memo = useRef(null);
+    const password = useRef(null);
 
     // url params
     const params = useParams();
@@ -116,6 +131,142 @@ const ArtbuddyGalleryMain = () => {
                 )[0].code_value_en,
             );
     }, [galleryInfo, currencies]);
+
+    // 문의글 작성
+    const regComment = () => {
+        if (validation()) {
+            setIsSpinner(true);
+
+            const model = commentModel;
+            const formData = new FormData();
+
+            // /v1/_board
+            // POST MULTI
+            // 게시판 등록
+            let url = apiPath.api_admin_reg_board;
+            let data = {};
+
+            data = {
+                ...model,
+                // boardType: boardType.guestBook,
+                subjectKo: "방명록",
+                subjectEn: "GuestBook",
+                subTitleKo: "방명록",
+                subTitleEn: "GuestBook",
+                interPhoneNumber: "62", // 인도 국가번호로 고정
+                userNameFirstEn: nameFirstEn.current.value,
+                userNameLastEn: nameLastEn.current.value,
+                mobile1: mobile1.current.value,
+                mobile2: mobile2.current.value,
+                mobile3: mobile3.current.value,
+                email: email.current.value,
+                contentKo: memo.current.value,
+                contentEn: memo.current.value,
+            };
+
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            const restParams = {
+                method: "post_multi",
+                url: url,
+                data: formData,
+                err: err,
+                callback: (res) => responseLogic(res),
+            };
+
+            CommonRest(restParams);
+
+            const responseLogic = (res) => {
+                let result_code = res.headers.result_code;
+                if (result_code === successCode.success) {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "Terima kasih atas kesediaan untuk mengisi informasi Anda di buku tamu",
+                        callback: () => handleNeedUpdate(),
+                    });
+                } else {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "Please try again in a few minutes",
+                    });
+                }
+            };
+        }
+    };
+
+    // 페이지 새로고침
+    const handleNeedUpdate = () => {
+        setIsNeedUpdate(!isNeedUpdate);
+    };
+
+    // 문의글 입력값 검증
+    const validation = () => {
+        const noti = (ref, msg) => {
+            CommonNotify({
+                type: "alert",
+                hook: alert,
+                message: msg,
+                callback: () => focus(),
+            });
+
+            const focus = () => {
+                ref.current.focus();
+            };
+        };
+
+        if (!nameFirstEn.current.value) {
+            noti(nameFirstEn, "Please enter your first name");
+
+            return false;
+        }
+
+        if (!nameLastEn.current.value) {
+            noti(nameLastEn, "Please enter your last name");
+
+            return false;
+        }
+
+        if (!mobile1.current.value) {
+            noti(mobile1, "Please enter your phone number");
+
+            return false;
+        }
+
+        if (!mobile2.current.value) {
+            noti(mobile2, "Please enter your phone number");
+
+            return false;
+        }
+
+        if (!mobile3.current.value) {
+            noti(mobile3, "Please enter your phone number");
+
+            return false;
+        }
+
+        if (!email.current.value) {
+            noti(email, "Please enter your e-mail");
+
+            return false;
+        }
+
+        if (!memo.current.value) {
+            noti(memo, "Please enter your inquiry details");
+
+            return false;
+        }
+
+        return true;
+    };
 
     return (
         <>
@@ -287,6 +438,7 @@ const ArtbuddyGalleryMain = () => {
                                                 </div>
                                             ))}
 
+                                        {/* 문의글 작성 */}
                                         <div className="inqbox">
                                             <h4>Inquire</h4>
                                             <table>
@@ -298,51 +450,43 @@ const ArtbuddyGalleryMain = () => {
                                                     <tr>
                                                         <th>Name</th>
                                                         <td>
-                                                            <input type="text" />
+                                                            <input type="text" ref="nameFirstEn" placeholder="First" />&#32;
+                                                            <input type="text" ref="nameLastEn" placeholder="Last" />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>TEL</th>
                                                         <td>
-                                                            <input
-                                                                type="text"
-                                                                className="input_t"
-                                                            />{" "}
-                                                            -
-                                                            <input
-                                                                type="text"
-                                                                className="input_t"
-                                                            />{" "}
-                                                            -
-                                                            <input
-                                                                type="text"
-                                                                className="input_t"
-                                                            />
+                                                            <input type="text" className="input_t" ref="mobile1" />
+                                                            &#32;-&#32;
+                                                            <input type="text" className="input_t" ref="mobile2" />
+                                                            &#32;-&#32;
+                                                            <input type="text" className="input_t" ref="mobile3" />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>E-mail</th>
                                                         <td>
-                                                            <input type="text" />
+                                                            <input type="text" ref="email" />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>Memo</th>
                                                         <td>
-                                                            <textarea
-                                                                name=""
-                                                                id=""
-                                                            ></textarea>
+                                                            <textarea ref="memo"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Password</th>
+                                                        <td>
+                                                            <input type="text" ref="password" />
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
 
                                             <div className="btnbox">
-                                                <input
-                                                    type="submit"
-                                                    value="SUBMIT"
-                                                />
+                                                <input type="submit" value="SUBMIT" onClick={regComment} />
                                             </div>
                                         </div>
                                     </div>
