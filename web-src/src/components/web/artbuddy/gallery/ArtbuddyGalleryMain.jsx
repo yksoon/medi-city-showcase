@@ -450,36 +450,36 @@ const ArtbuddyGalleryMain = () => {
                                                     <tr>
                                                         <th>Name</th>
                                                         <td>
-                                                            <input type="text" ref="nameFirstEn" placeholder="First" />&#32;
-                                                            <input type="text" ref="nameLastEn" placeholder="Last" />
+                                                            <input type="text" ref={nameFirstEn} placeholder="First" />&#32;
+                                                            <input type="text" ref={nameLastEn} placeholder="Last" />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>TEL</th>
                                                         <td>
-                                                            <input type="text" className="input_t" ref="mobile1" />
+                                                            <input type="text" className="input_t" ref={mobile1} />
                                                             &#32;-&#32;
-                                                            <input type="text" className="input_t" ref="mobile2" />
+                                                            <input type="text" className="input_t" ref={mobile2} />
                                                             &#32;-&#32;
-                                                            <input type="text" className="input_t" ref="mobile3" />
+                                                            <input type="text" className="input_t" ref={mobile3} />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>E-mail</th>
                                                         <td>
-                                                            <input type="text" ref="email" />
+                                                            <input type="text" ref={email} />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>Memo</th>
                                                         <td>
-                                                            <textarea ref="memo"></textarea>
+                                                            <textarea ref={memo}></textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>Password</th>
                                                         <td>
-                                                            <input type="text" ref="password" />
+                                                            <input type="text" ref={password} />
                                                         </td>
                                                     </tr>
                                                 </tbody>
