@@ -486,7 +486,7 @@ const ArtbuddyGalleryMain = () => {
                                             </table>
 
                                             <div className="btnbox">
-                                                <input type="submit" value="SUBMIT" onClick={regComment} />
+                                                <input type="submit" value="SUBMIT" />
                                             </div>
                                         </div>
                                     </div>

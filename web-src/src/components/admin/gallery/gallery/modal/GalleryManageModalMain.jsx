@@ -1027,7 +1027,7 @@ const GalleryManageModalMain = (props) => {
                                         </div>
                                     </td>
                                 </tr>
-                                {modData.comment_info.length !== 0 && (
+                                {/* {modData.comment_info.length !== 0 && (
                                     modData.comment_info.map((comment) => (
                                         <div style={{ background: "lightblue", border: "1px solid tomato" }}>
                                             <span>댓글</span>
@@ -1045,7 +1045,7 @@ const GalleryManageModalMain = (props) => {
                                             </div>
                                         </div>
                                     ))
-                                )}
+                                )} */}
                             </>
                         )}
                     </tbody>
