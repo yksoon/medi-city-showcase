@@ -138,7 +138,7 @@ const Program = () => {
                                     <tr>
                                         <td className="time">15:00 ~ 16:00</td>
                                         <td rowSpan="2">
-                                            <div className="c04">MyVenus</div>
+                                            <div className="c04">TBA</div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -245,11 +245,11 @@ const Program = () => {
                                     </tr>
                                     <tr>
                                         <td className="time">15:00</td>
-                                        <td>MyVenus</td>
+                                        <td>TBA</td>
                                     </tr>
                                     <tr>
                                         <td className="time">16:00</td>
-                                        <td>MyVenus</td>
+                                        <td>Mega Influencer Talk Show</td>
                                     </tr>
                                     <tr>
                                         <td className="time">18:00</td>

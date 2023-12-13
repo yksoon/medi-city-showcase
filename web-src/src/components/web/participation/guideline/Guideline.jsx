@@ -93,7 +93,7 @@ const Guideline = () => {
                         <div className="boxing">
                             <h3 className="c_tit">Due date</h3>
                             <div className="pbox">
-                                ~ December 22, 2023 (Fri)
+                                ~ December 31, 2023 (Sun)
                             </div>
                             <p className="l_noti">
                                 * If an adjustment to the application deadline

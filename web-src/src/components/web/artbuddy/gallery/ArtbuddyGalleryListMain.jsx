@@ -182,14 +182,14 @@ const ArtbuddyGalleryListMain = () => {
                         <Link to={routerPath.web_artbuddy_exhibition_url}>
                             K-ART Exhibition
                         </Link>
-                        <Link to={routerPath.web_artbuddy_artist_list_url}>
-                            Artist
-                        </Link>
                         <Link
                             to={routerPath.web_artbuddy_gallery_list_url}
                             className="active"
                         >
                             Gallery
+                        </Link>
+                        <Link to={routerPath.web_artbuddy_artist_list_url}>
+                            Artist
                         </Link>
                     </div>
 

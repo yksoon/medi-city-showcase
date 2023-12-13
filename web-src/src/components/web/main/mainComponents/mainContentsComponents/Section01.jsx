@@ -240,13 +240,11 @@ const Section01 = (props) => {
                         invaluable time to engage with clients with real needs.{" "}
                         <br />
                         <br />
-                        The showcase is conducted in collaboration with
-                        “SUMMITS”, which has been attracting Indonesian clients
-                        to South Korean Plastic & Aesthetic Clinics
+                        Furthermore, from the moment the local patient recruitment contract is signed, allmytour participates as a partner in all tasks, ranging from arrival in Korea to departure services. Leveraging over a decade of experience in international patient management, including extensive experience in China, we provide a secure and reliable process.
                         <br />
-                        through the “My Venus” Application service.
-                        Additionally, a Korean art exhibition by ARTBUDDY will
-                        be held with the intention of promoting K-ART. <br />
+                        <br />
+                        Simultaneously, we collaborate with ARTBUDDY, a key player leading K-ART, to organize an exhibition featuring a diverse range of artworks, spanning from traditional Korean art to contemporary and pop art.
+                        <br />
                         <br />
                         Participating Plastic & Aesthetic Clinics can expect
                         more than just promotion; the focus is on tangible
@@ -278,10 +276,10 @@ const Section01 = (props) => {
                         </span>
                         <span className="tit">PARTNERS</span>
                         <span className="logobox">
-                            <img src="img/web/main/orga_logo01.png" alt="" />
+                            <img src="img/web/main/orga_logo02.png" alt="" />
                         </span>
                         <span className="logobox">
-                            <img src="img/web/main/orga_logo02.png" alt="" />
+                            <img src="img/web/main/orga_logo03.png" alt="" />
                         </span>
                     </div>
                 </div>
