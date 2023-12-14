@@ -21,7 +21,6 @@ const ConsultingBoardModalMain = (props) => {
     // 상세보기 데이터
     const modData = props.modData;
     const isModData = Object.keys(modData).length !== 0;
-
     const handleModalClose = props.handleModalClose;
     const handleNeedUpdate = props.handleNeedUpdate;
 
@@ -49,9 +48,9 @@ const ConsultingBoardModalMain = (props) => {
         inputContentKo.current.value = modData.content_ko;
         setFileList(modData.file_info);
 
-        if (modData.comment_info !== null) {
-            inputAnswerContent.current.value = modData.comment_info.content;
-            setCommentFileList(modData.comment_info.file_info ?? []);
+        if (modData.comment_info.length != 0) {
+            inputAnswerContent.current.value = modData.comment_info[0].content;
+            setCommentFileList(modData.comment_info[0].file_info ?? []);
         }
     };
 
@@ -114,30 +113,35 @@ const ConsultingBoardModalMain = (props) => {
             let url;
             let data = {};
             let fileArr = [];
-            let commentIdxVal = method === "mod" ? modData.comment_info.comment_idx : "";
+             
 
-            if (method === "reg") {
-                // /v1/_comment
-                // POST MULTI
-                // 문의 답변 등록
-                url = apiPath.api_admin_reg_comment;
-            } else if (method === "mod") {
-                // /v1/_comment
-                // PUT MULTI
-                // 문의 답변 수정
-                url = apiPath.api_admin_mod_comment;
-            }
-
-            data = {
-                commentIdx: commentIdxVal,
-                boardIdx: isModData && modData.board_idx,
-                showYn: selectShowYn.current.value,
-                boardType: boardType.consulting,
-                categoryType: isModData && modData.category_type_cd,
-                subject: inputSubjectKo.current.value,
-                subTitle: inputSubTitleKo.current.value,
-                content: inputAnswerContent.current.value,
-            };
+             data = {
+                 boardIdx: isModData && modData.board_idx,
+                 commentType : "100",
+                 showYn: selectShowYn.current.value,
+                 //boardType: boardType.consulting,
+                 //categoryType: isModData && modData.category_type_cd,
+                 subject: inputSubjectKo.current.value,
+                 subTitle: inputSubTitleKo.current.value,
+                 content: inputAnswerContent.current.value,
+ 
+             };
+ 
+             if (method === "reg") {
+                 // /v1/_comment
+                 // POST MULTI
+                 // 문의 답변 등록
+                 data.targetIdx = modData.board_idx;
+                 url = apiPath.api_admin_reg_comment;
+             } else if (method === "mod") {
+                // 상담게시판 답변은 1개이기때문에.. 지정했는데 좋은방법이있다면 해주세요
+                let commentIdxVal = modData.comment_info[0].comment_idx;
+                 // /v1/_comment
+                 // PUT MULTI
+                 // 문의 답변 수정
+                 data.commentIdx = commentIdxVal;
+                 url = apiPath.api_admin_mod_comment;
+             }
 
             // 기본 formData append
             for (const key in data) {
@@ -209,7 +213,7 @@ const ConsultingBoardModalMain = (props) => {
         // /v1/board/{board_idx}
         // DELETE
         // 게시판 삭제
-        let url = apiPath.api_admin_remove_board + modData.board_idx;
+        let url = apiPath.api_admin_remove_comment + modData.comment_info[0].comment_idx;
 
         let data = {};
 
@@ -232,7 +236,7 @@ const ConsultingBoardModalMain = (props) => {
                 CommonNotify({
                     type: "alert",
                     hook: alert,
-                    message: "게시글이 삭제 되었습니다.",
+                    message: "답변이 삭제 되었습니다.",
                     callback: () => handleNeedUpdate(),
                 });
             } else {
