@@ -44,6 +44,7 @@ const ArtbuddyGalleryListMain = () => {
             page_num: "1",
             page_size: "0",
             search_keyword: "",
+            show_yn: "Y"
         };
 
         // 파라미터
