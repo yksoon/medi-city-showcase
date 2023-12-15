@@ -579,6 +579,17 @@ const GalleryMain = (props) => {
             },
         ),
 
+        columnHelper.accessor(
+            (row) =>
+                row.show_yn === "Y" ? "노출" : row.show_yn === "N" ? "비노출" : "",
+            {
+                id: "show_yn",
+                cell: (info) => info.getValue(),
+                header: "노출여부",
+                sortingFn: "alphanumericCaseSensitive",
+            },
+        ),
+
         columnHelper.accessor((row) => <img src={row.qr_img} alt="" />, {
             id: "qr_img",
             cell: (info) => info.getValue(),
@@ -668,16 +679,17 @@ const GalleryMain = (props) => {
                     <div className="adm_table">
                         <table className="table_a">
                             <colgroup>
-                                <col width="5%" />
-                                <col width="10%" />
-                                <col width="*" />
-                                <col width="13%" />
-                                <col width="10%" />
-                                <col width="10%" />
-                                <col width="7%" />
-                                <col width="8%" />
-                                <col width="10%" />
-                                <col width="5%" />
+                                <col width="5%"/>
+                                <col width="10%"/>
+                                <col width="*"/>
+                                <col width="13%"/>
+                                <col width="10%"/>
+                                <col width="10%"/>
+                                <col width="7%"/>
+                                <col width="8%"/>
+                                <col width="5%"/>
+                                <col width="10%"/>
+                                <col width="5%"/>
                             </colgroup>
                             <thead>
                                 {table.getHeaderGroups().map((headerGroup) => (

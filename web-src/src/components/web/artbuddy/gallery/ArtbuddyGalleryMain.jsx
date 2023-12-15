@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Header from "components/web/common/Header";
 import FooterSub from "components/web/common/FooterSub";
 import Footer from "components/web/common/Footer";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { apiPath, routerPath } from "webPath";
 import useConfirm from "hook/useConfirm";
 import useAlert from "hook/useAlert";
@@ -32,6 +32,8 @@ const ArtbuddyGalleryMain = () => {
     const { alert } = useAlert();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+
+    const navigate = useNavigate()
 
     const [isNeedUpdate, setIsNeedUpdate] = useState(false);
 
@@ -107,6 +109,10 @@ const ArtbuddyGalleryMain = () => {
         const responsLogic = (res) => {
             if (res.headers.result_code === successCode.success) {
                 const result_info = res.data.result_info;
+
+                // 비노출일 경우 리스트 페이지로
+                result_info.show_yn === "N" && navigate(routerPath.web_artbuddy_gallery_list_url)
+
                 setGalleryInfo(result_info);
 
                 setIsSpinner(false);
