@@ -393,11 +393,12 @@ const ArtbuddyArtistViewMain = () => {
                                                     <br />
                                                     {artistInfo.name_en}
                                                 </h4>
-                                                <p>
+                                                <pre>
                                                     {artistInfo.people_memo_en
                                                         ? artistInfo.people_memo_en
                                                         : artistInfo.people_memo_ko}
-                                                </p>
+                                                </pre>
+
                                             </div>
 
                                             <div className="right">
