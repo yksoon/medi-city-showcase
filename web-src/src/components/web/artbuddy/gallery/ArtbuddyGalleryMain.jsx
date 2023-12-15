@@ -426,8 +426,8 @@ const ArtbuddyGalleryMain = () => {
                                             )}
                                         </ul>
 
-                                        {galleryInfo.people_memo_en ||
-                                            (galleryInfo.people_memo_ko && (
+                                        {(galleryInfo.people_memo_en ||
+                                            galleryInfo.people_memo_ko) && (
                                                 <div className="artnote">
                                                     <h4>Artist’s Note</h4>
                                                     <p className="txt">
@@ -436,18 +436,19 @@ const ArtbuddyGalleryMain = () => {
                                                             : galleryInfo.people_memo_ko}
                                                     </p>
                                                 </div>
-                                            ))}
+                                            )}
+
 
                                         {/* 문의글 작성 */}
                                         <div className="inqbox">
                                             <h4>Inquire</h4>
                                             <table>
                                                 <colgroup>
-                                                    <col width="30%" />
-                                                    <col width="*" />
+                                                    <col width="30%"/>
+                                                    <col width="*"/>
                                                 </colgroup>
                                                 <tbody>
-                                                    <tr>
+                                                <tr>
                                                         <th>Name</th>
                                                         <td>
                                                             <input type="text" ref={nameFirstEn} placeholder="First" />&#32;
