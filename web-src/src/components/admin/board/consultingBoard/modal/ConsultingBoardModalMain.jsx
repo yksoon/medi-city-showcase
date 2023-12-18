@@ -210,9 +210,9 @@ const ConsultingBoardModalMain = (props) => {
     const removeBoard = () => {
         setIsSpinner(true);
 
-        // /v1/board/{board_idx}
+        // /v1/_comment/{comment_idx}
         // DELETE
-        // 게시판 삭제
+        // 답변 삭제
         let url = apiPath.api_admin_remove_comment + modData.comment_info[0].comment_idx;
 
         let data = {};

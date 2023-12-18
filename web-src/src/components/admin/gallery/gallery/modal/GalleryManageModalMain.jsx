@@ -38,6 +38,8 @@ const GalleryManageModalMain = (props) => {
     // modal 컨트롤
     const handleModalClose = props.handleModalClose;
     const handleNeedUpdate = props.handleNeedUpdate;
+    const handleNeedUpdateComment = props.handleNeedUpdateComment;
+    console.log(props);
 
     // select box options
     const [selectedCurrency, setSelectedCurrency] = useState("");
@@ -45,6 +47,7 @@ const GalleryManageModalMain = (props) => {
     const [postStatusOption, setPostStatusOption] = useState([]);
     const [paintTypeOption, setPaintTypeOption] = useState([]);
     const [artTypeOption, setArtTypeOption] = useState([]);
+    const [replyContent, setReplyContent] = useState("");
     const [participateTypeOption, setParticipateTypeOption] = useState([]);
 
     // 아티스트 리스트
@@ -61,6 +64,8 @@ const GalleryManageModalMain = (props) => {
     const [sizeInfoShowYn, setSizeInfoShowYn] = useState("Y");
     const [yearInfoShowYn, setYearInfoShowYn] = useState("Y");
     const [showYn, setShowYn] = useState("Y");
+    const [replyingStates, setReplyingStates] = useState(Array(modData.comment_info.length).fill(false));
+    const [modiIdx, setModiIdx] = useState("");
 
     // refs
     // const showYn = useRef(null);
@@ -89,6 +94,8 @@ const GalleryManageModalMain = (props) => {
     const yearInfoEn = useRef(null);
     const materialsInfoKo = useRef(null);
     const materialsInfoEn = useRef(null);
+
+    const fileBaseUrl = apiPath.api_file;
 
     useEffect(() => {
         getArtistList();
@@ -578,6 +585,202 @@ const GalleryManageModalMain = (props) => {
         };
     };
 
+
+
+     // 댓글 삭제
+     const clickRemoveComment = (comment_idx) => {
+        CommonNotify({
+            type: "confirm",
+            hook: confirm,
+            message: "댓글을 삭제하시겠습니다?",
+            callback: () => removeComment(comment_idx),
+        });
+
+        const removeComment = (comment_idx) => {
+            setIsSpinner(true);
+
+            // /v1/_comment/{comment_idx}
+            // DELETE
+            // 댓글 삭제
+            let url = apiPath.api_admin_remove_comment + comment_idx;
+
+            const restParams = {
+                method: "delete",
+                url: url,
+                data: {},
+                err: err,
+                admin: "Y",
+                callback: (res) => responsLogicComment(res),
+            };
+
+            CommonRest(restParams);
+            
+            const responsLogicComment = (res) => {
+                const result_code = res.headers.result_code;
+                if (result_code === successCode.success) {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "삭제가 완료 되었습니다",
+                        callback: () => pageUpdateComment(modData.work_idx),
+                    });
+                } else {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "잠시 후 다시 시도해주세요",
+                    });
+                }
+
+                const pageUpdateComment = (work_idx) => {
+                    setReplyingStates(Array(modData.comment_info.length).fill(false));
+                    handleNeedUpdateComment(work_idx);
+                    setReplyContent("");
+                    setModiIdx("");
+                };
+            };
+        };
+    };
+
+    // 각 요소에 대한 클릭 이벤트 핸들러를 생성
+    const handleRemoveClick = (comment_idx) => {
+        return () => {
+            clickRemoveComment(comment_idx);
+        };
+    };
+
+    const handleInputChange = (e) => {
+        console.log(e.target.value);
+        // 입력된 내용을 상태에 저장
+        setReplyContent(e.target.value);
+    };
+
+    const handleInputChangeModi = (e, comments) => {
+        const updatedComments = e.target.value;
+        comments.content = updatedComments;
+        setReplyContent(updatedComments);
+        setModiIdx(comments.comment_idx);
+        return comments;
+      };
+
+
+    // 등록 or 수정
+    const clickRegComment = (method,comment_info) => {
+        if (validation()) {
+            //setIsSpinner(true);
+
+            const formData = new FormData();
+            let url;
+            let data = {};
+            let fileArr = [];
+             console.log(comment_info);
+             data = {
+                 boardIdx: comment_info.board_idx,
+                 commentType : "000",
+                 showYn: comment_info.show_yn,
+                 //boardType: boardType.consulting,
+                 //categoryType: isModData && modData.category_type_cd,
+                 subject: comment_info.subject,
+                 subTitle: comment_info.sub_title,
+             };
+ 
+             if (method === "reg") {
+                 // /v1/_comment
+                 // POST MULTI
+                 // 문의 답변 등록
+                 data.targetIdx = comment_info.comment_idx;
+                 url = apiPath.api_admin_reg_comment;
+                 data.content = replyContent;
+             } else if (method === "mod") {
+                let commentIdxVal = comment_info.comment_idx;
+                 // /v1/_comment
+                 // PUT MULTI
+                 // 문의 답변 수정
+                 data.commentIdx = commentIdxVal;
+                 url = apiPath.api_admin_mod_comment;
+                 if(modiIdx == comment_info.comment_idx){
+                    data.content = replyContent;
+                 }else{
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "수정된 대상이 올바르지 않습니다."
+                    });
+                    return;
+                 }
+             }
+             console.log(data);
+            // 기본 formData append
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            console.log(formData);
+
+            // 파일 formData append
+           /* fileArr = Array.from(comment_info.files);
+            let len = fileArr.length;
+            for (let i = 0; i < len; i++) {
+                formData.append("attachmentFile", fileArr[i]);
+            }*/
+
+            const restParams = {
+                method: method === "reg" ? "post_multi" : method === "mod" ? "put_multi" : "",
+                url: url, // /v1/board
+                data: formData,
+                err: err,
+                admin: "Y",
+                callback: (res) => responseLogicComment(res),
+            };
+
+            CommonRest(restParams);
+
+            const responseLogicComment = (res) => {
+                let result_code = res.headers.result_code;
+                if (result_code === successCode.success) {
+                    setIsSpinner(false);
+                    setReplyingStates(Array(comment_info.length).fill(false));
+                    setReplyContent("");
+                    setModiIdx("");
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: 
+                            method === "reg"
+                                ? "답변 등록이 완료 되었습니다"
+                                : method === "mod"
+                                ? "답변 수정이 완료 되었습니다"
+                                : "",
+                        callback: () => handleNeedUpdateComment(comment_info.board_idx),
+                    });
+                } else {
+                    setIsSpinner(false);
+
+                    CommonNotify({
+                        type: "alert",
+                        hook: alert,
+                        message: "잠시 후 다시 시도해주세요",
+                    });
+                }
+            };
+        }
+    };
+
+    const clickRegReplying = (mod,commentIndex) => {
+        console.log(commentIndex);
+        if(mod == 'reg'){
+            // 해당 댓글의 isReplying 상태를 토글합니다.
+            const updatedReplyingStates = [...replyingStates];
+            updatedReplyingStates[commentIndex] = !updatedReplyingStates[commentIndex];
+            setReplyingStates(updatedReplyingStates);
+        }
+    };
+
+
     const radioItems = [
         { value: "Y", label: "노출" },
         { value: "N", label: "비노출" },
@@ -1027,25 +1230,92 @@ const GalleryManageModalMain = (props) => {
                                         </div>
                                     </td>
                                 </tr>
-                                {/* {modData.comment_info.length !== 0 && (
-                                    modData.comment_info.map((comment) => (
+                                {modData.comment_info.length !== 0 && (
+                                    modData.comment_info.map((comment, index) => (
                                         <div style={{ background: "lightblue", border: "1px solid tomato" }}>
-                                            <span>댓글</span>
-                                            <span>작성자</span>
+                                            <span>댓글 ({comment.comment_idx})</span>
+                                            <Link
+                                                className="subbtn del"
+                                                onClick={handleRemoveClick(comment.comment_idx)}
+                                            >
+                                                삭제
+                                            </Link>
+                                            <Link
+                                                className="subbtn del"
+                                                onClick={() => clickRegReplying('reg',index)}
+                                            >
+                                                {replyingStates[index] ? '닫기' : '답글'}
+                                            </Link>
                                             <div>
-                                                <div>{comment.content}</div>
+                                                <div>
+                                                    <input
+                                                        type="text"
+                                                        className="input wp100"
+                                                        value={comment.content}
+                                                     />
+                                                {comment.file_info !== null &&
+                                                comment.file_info.map((item, idx) => (
+                                                    <div key={`file_info_${idx}`}>
+                                                        <Link
+                                                            to={`${fileBaseUrl}${item.file_path_enc}`}
+                                                        >
+                                                            <img
+                                                                src="/img/common_old/file.svg"
+                                                                alt=""
+                                                            />
+                                                            {item.file_name}
+                                                        </Link>
+                                                    </div>
+                                                ))} 
+                                                {replyingStates[index] && (
+                                                    <div>
+                                                    <input onChange={handleInputChange} type="text" className="input wp100" placeholder="답글 내용" />
+                                                    <button  onClick={() => clickRegReplying('reg',index)}>취소</button>
+                                                    <button  onClick={() => clickRegComment("reg",comment)} >등록</button>
+                                                    </div>
+                                                )}
+                                                </div>
                                                 {comment.child_comments.length !== 0 && (
-                                                    comment.child_comments.map((comment) => (
-                                                        <div style={{ background: "lavender" }}>
-                                                            <span>답변</span>
-                                                            <div>{comment.content}</div>
+                                                    comment.child_comments.map((childComment) => (
+                                                        <div key={childComment.comment_idx} style={{ background: "lavender" }}>
+                                                            <span>답변({childComment.comment_idx})</span>
+                                                            <Link
+                                                                className="subbtn del"
+                                                                onClick={handleRemoveClick(childComment.comment_idx)}
+                                                            >
+                                                                삭제
+                                                            </Link>
+                                                            <Link className="subbtn on" onClick={() => clickRegComment("mod",childComment)}>
+                                                                수정   
+                                                            </Link>
+                                                            <div><input
+                                                                type="text"
+                                                                className="input wp100"
+                                                                value={childComment.content}
+                                                                onChange={(e) => handleInputChangeModi(e,childComment)}
+                                                            />
+                                                            {childComment.file_info !== null &&
+                                                                childComment.file_info.map((item, idx) => (
+                                                                    <div key={`file_info_${idx}`}>
+                                                                        <Link
+                                                                            to={`${fileBaseUrl}${item.file_path_enc}`}
+                                                                        >
+                                                                            <img
+                                                                                src="/img/common_old/file.svg"
+                                                                                alt=""
+                                                                            />
+                                                                            {item.file_name}
+                                                                        </Link>
+                                                                    </div>
+                                                                ))}
+                                                                </div>
                                                         </div>
                                                     ))
                                                 )}
                                             </div>
                                         </div>
                                     ))
-                                )} */}
+                                )}
                             </>
                         )}
                     </tbody>

@@ -45,6 +45,10 @@ const CommonModal = (props) => {
         ? props.handleNeedUpdate
         : null;
 
+    const handleNeedUpdateComment = props.handleNeedUpdateComment
+        ? props.handleNeedUpdateComment
+        : null;    
+
     // 모달 컴포넌트 렌더
     const renderComponent = (component) => {
         switch (component) {
@@ -62,6 +66,7 @@ const CommonModal = (props) => {
                 return (
                     <ConsultingBoardModalMain
                         handleNeedUpdate={handleNeedUpdate}
+                        handleNeedUpdateComment={handleNeedUpdateComment}
                         handleModalClose={modalOption.handleModalClose}
                         modData={props.modData}
                     />
@@ -143,6 +148,7 @@ const CommonModal = (props) => {
                 return (
                     <GalleryManageModalMain
                         handleNeedUpdate={handleNeedUpdate}
+                        handleNeedUpdateComment={handleNeedUpdateComment}
                         handleModalClose={modalOption.handleModalClose}
                         modData={props.modData}
                     />

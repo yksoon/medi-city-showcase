@@ -165,6 +165,14 @@ const GalleryMain = (props) => {
     };
 
     /**
+     * 모달 새로고침
+     */
+    const handleNeedUpdateComment = (work_idx) => {
+        detailBoard(work_idx);
+        //setIsNeedUpdate(!isNeedUpdate);
+    };
+
+    /**
      * 체크박스 단일 선택
      * @param checked
      * @param id
@@ -786,6 +794,7 @@ const GalleryMain = (props) => {
                 handleModalClose={handleModalClose}
                 component={"GalleryManageModalMain"}
                 handleNeedUpdate={handleNeedUpdate}
+                handleNeedUpdateComment={handleNeedUpdateComment}
                 modData={modData}
             />
             <CommonModal
@@ -795,6 +804,7 @@ const GalleryMain = (props) => {
                 handleModalClose={handleModalCloseQr}
                 component={"QrListModalMain"}
                 handleNeedUpdate={handleNeedUpdate}
+                handleNeedUpdateComment={handleNeedUpdateComment}
                 modData={modDataQr}
             />
         </>
