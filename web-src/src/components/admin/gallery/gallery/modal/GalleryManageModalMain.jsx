@@ -39,7 +39,7 @@ const GalleryManageModalMain = (props) => {
     const handleModalClose = props.handleModalClose;
     const handleNeedUpdate = props.handleNeedUpdate;
     const handleNeedUpdateComment = props.handleNeedUpdateComment;
-    console.log(props);
+
 
     // select box options
     const [selectedCurrency, setSelectedCurrency] = useState("");
@@ -654,7 +654,6 @@ const GalleryManageModalMain = (props) => {
     };
 
     const handleInputChange = (e) => {
-        console.log(e.target.value);
         // 입력된 내용을 상태에 저장
         setReplyContent(e.target.value);
     };
@@ -677,7 +676,7 @@ const GalleryManageModalMain = (props) => {
             let url;
             let data = {};
             let fileArr = [];
-             console.log(comment_info);
+
              data = {
                  boardIdx: comment_info.board_idx,
                  commentType : "000",
@@ -713,13 +712,12 @@ const GalleryManageModalMain = (props) => {
                     return;
                  }
              }
-             console.log(data);
+
             // 기본 formData append
             for (const key in data) {
                 formData.append(key, data[key]);
             }
 
-            console.log(formData);
 
             // 파일 formData append
            /* fileArr = Array.from(comment_info.files);
@@ -771,7 +769,7 @@ const GalleryManageModalMain = (props) => {
     };
 
     const clickRegReplying = (mod,commentIndex) => {
-        console.log(commentIndex);
+
         if(mod == 'reg'){
             // 해당 댓글의 isReplying 상태를 토글합니다.
             const updatedReplyingStates = [...replyingStates];
