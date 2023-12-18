@@ -9,7 +9,7 @@ import Header from "components/web/common/Header";
 import { Skeleton } from "@mui/material";
 import FooterSub from "components/web/common/FooterSub";
 import Footer from "components/web/common/Footer";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { apiPath, routerPath } from "webPath";
 import { successCode } from "resultCode";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -31,6 +31,8 @@ const ArtbuddyArtistViewMain = () => {
     const { alert } = useAlert();
     const err = CommonErrModule();
     const setIsSpinner = useSetRecoilState(isSpinnerAtom);
+    
+    const navigate = useNavigate()
 
     const registrationInfo = useRecoilValue(registrationInfoAtom);
     const codes = useRecoilValue(codesAtom);
@@ -95,6 +97,10 @@ const ArtbuddyArtistViewMain = () => {
         const responsLogic = (res) => {
             if (res.headers.result_code === successCode.success) {
                 const result_info = res.data.result_info;
+
+                // 비노출일 경우 리스트 페이지로
+                result_info.show_yn === "N" && navigate(routerPath.web_artbuddy_artist_list_url)
+                
                 setArtistInfo(result_info);
 
                 if (result_info.work_info.length !== 0) {
@@ -387,11 +393,12 @@ const ArtbuddyArtistViewMain = () => {
                                                     <br />
                                                     {artistInfo.name_en}
                                                 </h4>
-                                                <p>
+                                                <pre>
                                                     {artistInfo.people_memo_en
                                                         ? artistInfo.people_memo_en
                                                         : artistInfo.people_memo_ko}
-                                                </p>
+                                                </pre>
+
                                             </div>
 
                                             <div className="right">
