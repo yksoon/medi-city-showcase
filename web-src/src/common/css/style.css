@@ -509,7 +509,7 @@ body {margin:0 auto;}
 .artist_info .right {width: 60%;float: left;padding:0 0 0 86px;border-left: 1px solid #ddd;position: relative;}
 .artist_info .right::before {content:"";display:block;width:1px;height:48px;top:10px;position: sticky;z-index: 999;background: #000;left:0;margin:0 0 0 -87px;}
 .artist_info p { line-height: 26px; color:#424242; font-size: 16px; }
-.artist_info pre { line-height: 26px; color:#424242; font-size: 16px; white-space: pre-wrap; font-family: 'raleway'; }
+.artist_info pre { line-height: 26px; color:#424242; font-size: 16px; white-space: pre-wrap; font-family: 'Pretendard'; }
 .galleryView .artist_info .artnote {margin:0 0 50px;}
 .galleryView .artist_info ul {margin:0;font-family: 'Pretendard';}
 
@@ -923,7 +923,7 @@ select {
 	.artist_info .right::before {left:20px;}
 	.artist_info .left .thumb {width: 180px;}
 	.artist_info p {font-size: 14px;line-height: 26px;}
-	.artist_info pre {font-size: 14px;line-height: 26px; white-space: pre-wrap; font-family: 'raleway';}
+	.artist_info pre {font-size: 14px;line-height: 26px; white-space: pre-wrap; font-family: 'Pretendard';}
 	.artist_work .swiper-slide {height: auto;}
 
 	.artistbox figure a {width:100%;}
