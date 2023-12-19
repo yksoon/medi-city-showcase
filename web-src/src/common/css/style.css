@@ -438,7 +438,8 @@ body {margin:0 auto;}
 .galleryView .artinfo ul li span { display: inline-block; width:150px; color:#888; }
 .galleryView .artinfo .artnote { margin:0 0 80px 0; }
 .galleryView .artinfo .artnote h4 { font-size: 22px; font-weight: 900; color:#000; margin:0 0 20px 0; }
-.galleryView .artinfo .artnote .txt { font-size: 17px; color:#333333; line-height: 29px; word-break: keep-all; }
+/*.galleryView .artinfo .artnote .txt { font-size: 17px; color:#333333; line-height: 29px; word-break: keep-all; }*/
+.galleryView .artinfo .artnote .txt { font-size: 17px; color:#333333; line-height: 29px; word-break: keep-all; white-space: pre-wrap; font-family: 'raleway'; }
 .galleryView .inqbox h4 { font-size: 22px; font-weight: 900; color:#000; margin:0 0 20px 0; }
 .galleryView .inqbox table { border-top:1px solid #59047f; }
 .galleryView .inqbox table tbody tr th { border-bottom: 1px solid #ddd; padding:20px 0 20px 35px; text-align: left;; font-size: 17px; color:#000; font-weight: 600; }
@@ -902,7 +903,8 @@ select {
 	.galleryView .artinfo ul li span{display: block; width:auto;}
 
 	.galleryView .artinfo .artnote h4 {font-size:18px;}
-	.galleryView .artinfo .artnote .txt {font-size: 13px;line-height: 24px;}
+	/*.galleryView .artinfo .artnote .txt {font-size: 13px;line-height: 24px;}*/
+	.galleryView .artinfo .artnote .txt {font-size: 13px;line-height: 24px; white-space: pre-wrap; font-family: 'raleway';}
 	.galleryView .inqbox  h4 {font-size:18px;}
 	.galleryView .inqbox table tbody tr th {display:block;padding:15px 0 15px 10px;font-size: 13px;}
 	.galleryView .inqbox table tbody tr td {display:block;padding:15px 10px;font-size:13px;}

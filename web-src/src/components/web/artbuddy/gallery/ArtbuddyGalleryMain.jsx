@@ -435,11 +435,11 @@ const ArtbuddyGalleryMain = () => {
                                             galleryInfo.people_memo_ko) && (
                                                 <div className="artnote">
                                                     <h4>Artist’s Note</h4>
-                                                    <p className="txt">
+                                                    <pre className="txt">
                                                         {galleryInfo.people_memo_en
                                                             ? galleryInfo.people_memo_en
                                                             : galleryInfo.people_memo_ko}
-                                                    </p>
+                                                    </pre>
                                                 </div>
                                             )}
 
