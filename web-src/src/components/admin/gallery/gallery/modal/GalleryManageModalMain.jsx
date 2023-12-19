@@ -1228,7 +1228,7 @@ const GalleryManageModalMain = (props) => {
                                         </div>
                                     </td>
                                 </tr>
-                                {modData.comment_info.length !== 0 && (
+                                {modData.comment_info.length == 9999 && (
                                     modData.comment_info.map((comment, index) => (
                                         <div style={{ background: "lightblue", border: "1px solid tomato" }}>
                                             <span>댓글 ({comment.comment_idx})</span>
