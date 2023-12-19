@@ -270,7 +270,7 @@ const apiPath = {
     // 문의 답변 수정
     api_admin_mod_comment: `${base_api_url + slash + version + slash}_comment`,
 
-    // /v1/_comment/
+    // /v1/_comment
     // DELETE
     // 문의 답변 삭제
     api_admin_remove_comment: `${base_api_url + slash + version + slash}_comment${slash}`,

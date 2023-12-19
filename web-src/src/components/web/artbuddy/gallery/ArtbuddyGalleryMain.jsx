@@ -142,32 +142,31 @@ const ArtbuddyGalleryMain = () => {
     const regComment = () => {
         if (validation()) {
             setIsSpinner(true);
-
+            console.log(galleryInfo);
             const model = commentModel;
             const formData = new FormData();
 
             // /v1/_board
             // POST MULTI
             // 게시판 등록
-            let url = apiPath.api_admin_reg_board;
+            const url = apiPath.api_admin_reg_comment;
             let data = {};
 
             data = {
-                ...model,
-                // boardType: boardType.guestBook,
-                subjectKo: "방명록",
-                subjectEn: "GuestBook",
-                subTitleKo: "방명록",
-                subTitleEn: "GuestBook",
-                interPhoneNumber: "62", // 인도 국가번호로 고정
-                userNameFirstEn: nameFirstEn.current.value,
-                userNameLastEn: nameLastEn.current.value,
+                subject: galleryInfo.main_title_en,
+                commentType : "000",
+                userNameFirstKo : nameFirstEn.current.value,
+                userNameLastKo : nameLastEn.current.value,
+                boardIdx: galleryInfo.work_idx,
+                targetIdx: galleryInfo.work_idx,
+                showYn: "Y",
+                subTitle: galleryInfo.sub_title,
+                content : galleryInfo.content_info_ko,
                 mobile1: mobile1.current.value,
                 mobile2: mobile2.current.value,
                 mobile3: mobile3.current.value,
                 email: email.current.value,
                 contentKo: memo.current.value,
-                contentEn: memo.current.value,
             };
 
             // 기본 formData append
@@ -493,7 +492,7 @@ const ArtbuddyGalleryMain = () => {
                                             </table>
 
                                             <div className="btnbox">
-                                                <input type="submit" value="SUBMIT" />
+                                                <input type="submit" value="SUBMIT"  onClick={() => regComment()} />
                                             </div>
                                         </div>
                                     </div>
