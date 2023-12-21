@@ -21,6 +21,9 @@ import imageCompression from "browser-image-compression";
 import { imageResizeOptions } from "common/js/static";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import RadioGroupSelection from "common/js/commonComponents/RadioGroupSelection";
+import { commentType } from "common/js/static";
+
+// ------------------- import End --------------------
 
 const GalleryManageModalMain = (props) => {
     const { confirm } = useConfirm();
@@ -660,15 +663,15 @@ const GalleryManageModalMain = (props) => {
 
     const handleInputChangeModi = (e, comments) => {
         const updatedComments = e.target.value;
-        comments.content = updatedComments;
+        comments.content_en = updatedComments;
         setReplyContent(updatedComments);
         setModiIdx(comments.comment_idx);
+        
         return comments;
-      };
-
+    };
 
     // 등록 or 수정
-    const clickRegComment = (method,comment_info) => {
+    const clickRegComment = (method, comment_info) => {
         if (validation()) {
             //setIsSpinner(true);
 
@@ -677,50 +680,55 @@ const GalleryManageModalMain = (props) => {
             let data = {};
             let fileArr = [];
 
-             data = {
-                 boardIdx: comment_info.board_idx,
-                 commentType : "000",
-                 showYn: comment_info.show_yn,
-                 //boardType: boardType.consulting,
-                 //categoryType: isModData && modData.category_type_cd,
-                 subject: comment_info.subject,
-                 subTitle: comment_info.sub_title,
-             };
- 
-             if (method === "reg") {
-                 // /v1/_comment
-                 // POST MULTI
-                 // 문의 답변 등록
-                 data.targetIdx = comment_info.comment_idx;
-                 url = apiPath.api_admin_reg_comment;
-                 data.content = replyContent;
-             } else if (method === "mod") {
+            data = {
+                boardIdx: comment_info.board_idx,
+                commentType : commentType.gallery,
+                showYn: comment_info.show_yn,
+                subjectKo: comment_info.subject_ko,
+                subjectEn: comment_info.subject_en,
+                subTitleKo: comment_info.sub_title_ko ? comment_info.sub_title_ko : comment_info.subject_ko,
+                subTitleEn: comment_info.sub_title_en ? comment_info.sub_title_en : comment_info.subject_en,
+            };
+
+            if (method === "reg") {
+                // /v1/_comment
+                // POST MULTI
+                // 문의 답변 등록
+                url = apiPath.api_admin_reg_comment;
+
+                data.targetIdx = comment_info.comment_idx;
+                data.contentKo = replyContent;
+                data.contentEn = replyContent;
+            } else if (method === "mod") {
                 let commentIdxVal = comment_info.comment_idx;
-                 // /v1/_comment
-                 // PUT MULTI
-                 // 문의 답변 수정
-                 data.commentIdx = commentIdxVal;
-                 url = apiPath.api_admin_mod_comment;
-                 if(modiIdx == comment_info.comment_idx){
-                    data.content = replyContent;
-                 }else{
+                data.commentIdx = commentIdxVal;
+
+                // /v1/_comment
+                // PUT MULTI
+                // 문의 답변 수정
+                url = apiPath.api_admin_mod_comment;
+
+                if (modiIdx == comment_info.comment_idx) {
+                    data.contentKo = replyContent;
+                    data.contentEn = replyContent;
+                } else {
                     CommonNotify({
                         type: "alert",
                         hook: alert,
                         message: "수정된 대상이 올바르지 않습니다."
                     });
+
                     return;
-                 }
-             }
+                }
+            }
 
             // 기본 formData append
             for (const key in data) {
                 formData.append(key, data[key]);
             }
 
-
             // 파일 formData append
-           /* fileArr = Array.from(comment_info.files);
+            /* fileArr = Array.from(comment_info.files);
             let len = fileArr.length;
             for (let i = 0; i < len; i++) {
                 formData.append("attachmentFile", fileArr[i]);
@@ -739,6 +747,7 @@ const GalleryManageModalMain = (props) => {
 
             const responseLogicComment = (res) => {
                 let result_code = res.headers.result_code;
+
                 if (result_code === successCode.success) {
                     setIsSpinner(false);
                     setReplyingStates(Array(comment_info.length).fill(false));
@@ -768,16 +777,14 @@ const GalleryManageModalMain = (props) => {
         }
     };
 
-    const clickRegReplying = (mod,commentIndex) => {
-
-        if(mod == 'reg'){
+    const clickRegReplying = (mod, commentIndex) => {
+        if (mod == 'reg') {
             // 해당 댓글의 isReplying 상태를 토글합니다.
             const updatedReplyingStates = [...replyingStates];
             updatedReplyingStates[commentIndex] = !updatedReplyingStates[commentIndex];
             setReplyingStates(updatedReplyingStates);
         }
     };
-
 
     const radioItems = [
         { value: "Y", label: "노출" },
@@ -1219,105 +1226,116 @@ const GalleryManageModalMain = (props) => {
                             </td>
                         </tr>
                         {isModData && (
-                            <>
-                                <tr>
-                                    <th>QR</th>
-                                    <td colSpan="3">
-                                        <div className="hotel_thumb_wrap">
-                                            <img src={modData.qr_img} alt="" />
+                            <tr>
+                                <th>QR</th>
+                                <td colSpan="3">
+                                    <div className="hotel_thumb_wrap">
+                                        <img src={modData.qr_img} alt="" />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+
+                {/* 댓글 관리 */}
+                {isModData && (
+                    modData.comment_info.length !== 9999 && (
+                        modData.comment_info.map((comment, index) => (
+                            // 댓글
+                            <div style={{ fontWeight: "bold", border: "1px solid #666" }}>
+                                <div>문의자 : {comment.user_name_first_en} {comment.user_name_last_en}</div>
+                                <div>연락처 : (+{comment.inter_phone_number}) {comment.mobile1}</div>
+                                <div>이메일 : {comment.email}</div>
+                                <div>내용 : {comment.content_en}</div>
+                                <div style={{ display: "flex", justifyContent: "end" }}>
+                                    <Link
+                                        className="subbtn del"
+                                        onClick={handleRemoveClick(comment.comment_idx)}
+                                    >
+                                        삭제
+                                    </Link>
+                                    <Link
+                                        className="subbtn on"
+                                        onClick={() => clickRegReplying('reg',index)}
+                                    >
+                                        {replyingStates[index] ? '닫기' : '답글'}
+                                    </Link>
+                                </div>
+                                {/* 댓글 첨부파일 */}
+                                {comment.file_info !== null && (
+                                    comment.file_info.map((item, idx) => (
+                                        <div key={`file_info_${idx}`}>
+                                            <Link
+                                                to={`${fileBaseUrl}${item.file_path_enc}`}
+                                            >
+                                                <img
+                                                    src="/img/common_old/file.svg"
+                                                    alt="파일 아이콘"
+                                                />
+                                                {item.file_name}
+                                            </Link>
                                         </div>
-                                    </td>
-                                </tr>
-                                {modData.comment_info.length == 9999 && (
-                                    modData.comment_info.map((comment, index) => (
-                                        <div style={{ background: "lightblue", border: "1px solid tomato" }}>
-                                            <span>댓글 ({comment.comment_idx})</span>
-                                            <Link
-                                                className="subbtn del"
-                                                onClick={handleRemoveClick(comment.comment_idx)}
-                                            >
-                                                삭제
-                                            </Link>
-                                            <Link
-                                                className="subbtn del"
-                                                onClick={() => clickRegReplying('reg',index)}
-                                            >
-                                                {replyingStates[index] ? '닫기' : '답글'}
-                                            </Link>
+                                    )
+                                ))}
+                                {/* 답변 입력 */}
+                                {replyingStates[index] && (
+                                    <div>
+                                        <div style={{ color: "#666" }}>답변 작성</div>
+                                        <input onChange={handleInputChange} type="text" className="input wp100" placeholder="답글 내용" />
+                                        <div style={{ display: "flex", justifyContent: "center" }}>
+                                            <button onClick={() => clickRegReplying("reg", index)}>취소</button>
+                                            <button onClick={() => clickRegComment("reg", comment)} >등록</button>
+                                        </div>
+                                    </div>
+                                )}
+                                {/* 답변 목록 */}
+                                {comment.child_comments.length !== 0 && (
+                                    comment.child_comments.map((childComment) => (
+                                        <div key={childComment.comment_idx} style={{ background: "#eee" }}>
+                                            <div>답변자 : {childComment.reg_user_name_en}</div>
+                                            <div style={{ display: "flex", justifyContent: "end" }}>
+                                                <Link
+                                                    className="subbtn del"
+                                                    onClick={handleRemoveClick(childComment.comment_idx)}
+                                                >
+                                                    삭제
+                                                </Link>
+                                                <Link className="subbtn on" onClick={() => clickRegComment("mod",childComment)}>
+                                                    수정   
+                                                </Link>
+                                            </div>
                                             <div>
-                                                <div>
-                                                    <input
-                                                        type="text"
-                                                        className="input wp100"
-                                                        value={comment.content}
-                                                     />
-                                                {comment.file_info !== null &&
-                                                comment.file_info.map((item, idx) => (
+                                                <input
+                                                    type="text"
+                                                    className="input wp100"
+                                                    value={childComment.content_en}
+                                                    onChange={(e) => handleInputChangeModi(e, childComment)}
+                                                />
+                                            </div>
+                                            {/* 답변 첨부파일 */}
+                                            {childComment.file_info !== null &&
+                                                childComment.file_info.map((item, idx) => (
                                                     <div key={`file_info_${idx}`}>
                                                         <Link
                                                             to={`${fileBaseUrl}${item.file_path_enc}`}
                                                         >
                                                             <img
                                                                 src="/img/common_old/file.svg"
-                                                                alt=""
+                                                                alt="파일 아이콘"
                                                             />
                                                             {item.file_name}
                                                         </Link>
                                                     </div>
-                                                ))} 
-                                                {replyingStates[index] && (
-                                                    <div>
-                                                    <input onChange={handleInputChange} type="text" className="input wp100" placeholder="답글 내용" />
-                                                    <button  onClick={() => clickRegReplying('reg',index)}>취소</button>
-                                                    <button  onClick={() => clickRegComment("reg",comment)} >등록</button>
-                                                    </div>
-                                                )}
-                                                </div>
-                                                {comment.child_comments.length !== 0 && (
-                                                    comment.child_comments.map((childComment) => (
-                                                        <div key={childComment.comment_idx} style={{ background: "lavender" }}>
-                                                            <span>답변({childComment.comment_idx})</span>
-                                                            <Link
-                                                                className="subbtn del"
-                                                                onClick={handleRemoveClick(childComment.comment_idx)}
-                                                            >
-                                                                삭제
-                                                            </Link>
-                                                            <Link className="subbtn on" onClick={() => clickRegComment("mod",childComment)}>
-                                                                수정   
-                                                            </Link>
-                                                            <div><input
-                                                                type="text"
-                                                                className="input wp100"
-                                                                value={childComment.content}
-                                                                onChange={(e) => handleInputChangeModi(e,childComment)}
-                                                            />
-                                                            {childComment.file_info !== null &&
-                                                                childComment.file_info.map((item, idx) => (
-                                                                    <div key={`file_info_${idx}`}>
-                                                                        <Link
-                                                                            to={`${fileBaseUrl}${item.file_path_enc}`}
-                                                                        >
-                                                                            <img
-                                                                                src="/img/common_old/file.svg"
-                                                                                alt=""
-                                                                            />
-                                                                            {item.file_name}
-                                                                        </Link>
-                                                                    </div>
-                                                                ))}
-                                                                </div>
-                                                        </div>
-                                                    ))
-                                                )}
-                                            </div>
+                                                )
+                                            )}
                                         </div>
                                     ))
                                 )}
-                            </>
-                        )}
-                    </tbody>
-                </table>
+                            </div>
+                        ))
+                    )
+                )}
             </div>
 
             <div className="subbtn_box">
