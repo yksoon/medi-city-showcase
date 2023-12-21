@@ -466,7 +466,7 @@ const ArtbuddyGalleryMain = () => {
                                                                     setSelectedCountry(value)
                                                                 }
                                                                 defaultValue={selectedCountry}
-                                                                mode={"full"}
+                                                                mode={"en"}
                                                             />
                                                             <input type="text" ref={mobile1} />
                                                         </td>
