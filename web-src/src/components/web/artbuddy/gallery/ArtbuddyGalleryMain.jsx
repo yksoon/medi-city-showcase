@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Header from "components/web/common/Header";
 import FooterSub from "components/web/common/FooterSub";
 import Footer from "components/web/common/Footer";
+import CountrySelect from "common/js/commonComponents/CountrySelect";
 import {Link, useNavigate} from "react-router-dom";
 import { apiPath, routerPath } from "webPath";
 import useConfirm from "hook/useConfirm";
@@ -22,8 +23,8 @@ import {
 import { useParams } from "react-router";
 import { successCode } from "resultCode";
 import { Skeleton } from "@mui/material";
-import { commaOfNumber } from "common/js/Pattern";
 import { commentModel } from "models/comment/comment";
+import { commentType } from "common/js/static";
 
 // ------------------- import End --------------------
 
@@ -45,11 +46,8 @@ const ArtbuddyGalleryMain = () => {
     const nameFirstEn = useRef(null);
     const nameLastEn = useRef(null);
     const mobile1 = useRef(null);
-    const mobile2 = useRef(null);
-    const mobile3 = useRef(null);
     const email = useRef(null);
     const memo = useRef(null);
-    const password = useRef(null);
 
     // url params
     const params = useParams();
@@ -60,6 +58,7 @@ const ArtbuddyGalleryMain = () => {
     const [peopleType, setPeopleType] = useState([]);
     const [currencies, setCurrencies] = useState([]);
     const [currencyCode, setCurrencyCode] = useState("");
+    const [selectedCountry, setSelectedCountry] = useState("62");
 
     useEffect(() => {
         codes.length === 0 ? setIsSpinner(true) : setIsSpinner(false);
@@ -142,7 +141,7 @@ const ArtbuddyGalleryMain = () => {
     const regComment = () => {
         if (validation()) {
             setIsSpinner(true);
-            console.log(galleryInfo);
+            
             const model = commentModel;
             const formData = new FormData();
 
@@ -153,20 +152,24 @@ const ArtbuddyGalleryMain = () => {
             let data = {};
 
             data = {
-                subject: galleryInfo.main_title_en,
-                commentType : "000",
-                userNameFirstKo : nameFirstEn.current.value,
-                userNameLastKo : nameLastEn.current.value,
+                ...model,
+                showYn: "Y",
+                commentType : commentType.gallery,
                 boardIdx: galleryInfo.work_idx,
                 targetIdx: galleryInfo.work_idx,
-                showYn: "Y",
-                subTitle: galleryInfo.sub_title,
-                content : galleryInfo.content_info_ko,
+                userNameFirstKo : nameFirstEn.current.value,
+                userNameFirstEn : nameFirstEn.current.value,
+                userNameLastKo : nameLastEn.current.value,
+                userNameLastEn : nameLastEn.current.value,
+                subjectKo: galleryInfo.main_title_ko,
+                subjectEn: galleryInfo.main_title_en,
+                subTitleKo: galleryInfo.sub_title_ko,
+                subTitleEn: galleryInfo.sub_title_en,
+                interPhoneNumber: selectedCountry,
                 mobile1: mobile1.current.value,
-                mobile2: mobile2.current.value,
-                mobile3: mobile3.current.value,
                 email: email.current.value,
                 contentKo: memo.current.value,
+                contentEn: memo.current.value,
             };
 
             // 기본 formData append
@@ -192,7 +195,7 @@ const ArtbuddyGalleryMain = () => {
                     CommonNotify({
                         type: "alert",
                         hook: alert,
-                        message: "Terima kasih atas kesediaan untuk mengisi informasi Anda di buku tamu",
+                        message: `Thank you for expressing interest in our artwork.\nWe appreciate your inquiry.`,
                         callback: () => handleNeedUpdate(),
                     });
                 } else {
@@ -211,6 +214,13 @@ const ArtbuddyGalleryMain = () => {
     // 페이지 새로고침
     const handleNeedUpdate = () => {
         setIsNeedUpdate(!isNeedUpdate);
+        // 입력값 초기화
+        nameFirstEn.current.value = null;
+        nameLastEn.current.value = null;
+        mobile1.current.value = null;
+        email.current.value = null;
+        memo.current.value = null;
+        setSelectedCountry("62");
     };
 
     // 문의글 입력값 검증
@@ -242,18 +252,6 @@ const ArtbuddyGalleryMain = () => {
 
         if (!mobile1.current.value) {
             noti(mobile1, "Please enter your phone number");
-
-            return false;
-        }
-
-        if (!mobile2.current.value) {
-            noti(mobile2, "Please enter your phone number");
-
-            return false;
-        }
-
-        if (!mobile3.current.value) {
-            noti(mobile3, "Please enter your phone number");
 
             return false;
         }
@@ -453,7 +451,7 @@ const ArtbuddyGalleryMain = () => {
                                                     <col width="*"/>
                                                 </colgroup>
                                                 <tbody>
-                                                <tr>
+                                                    <tr>
                                                         <th>Name</th>
                                                         <td>
                                                             <input type="text" ref={nameFirstEn} placeholder="First" />&#32;
@@ -463,11 +461,14 @@ const ArtbuddyGalleryMain = () => {
                                                     <tr>
                                                         <th>TEL</th>
                                                         <td>
-                                                            <input type="text" className="input_t" ref={mobile1} />
-                                                            &#32;-&#32;
-                                                            <input type="text" className="input_t" ref={mobile2} />
-                                                            &#32;-&#32;
-                                                            <input type="text" className="input_t" ref={mobile3} />
+                                                            <CountrySelect
+                                                                onChange={(e, value) =>
+                                                                    setSelectedCountry(value)
+                                                                }
+                                                                defaultValue={selectedCountry}
+                                                                mode={"full"}
+                                                            />
+                                                            <input type="text" ref={mobile1} />
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -480,12 +481,6 @@ const ArtbuddyGalleryMain = () => {
                                                         <th>Memo</th>
                                                         <td>
                                                             <textarea ref={memo}></textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Password</th>
-                                                        <td>
-                                                            <input type="text" ref={password} />
                                                         </td>
                                                     </tr>
                                                 </tbody>
