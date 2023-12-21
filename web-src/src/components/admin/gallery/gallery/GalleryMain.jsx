@@ -597,6 +597,13 @@ const GalleryMain = (props) => {
             },
         ),
 
+        columnHelper.accessor((row) => row.comment_count, {
+            id: "comment_count",
+            cell: (info) => info.getValue(),
+            header: "댓글수",
+            sortingFn: "alphanumericCaseSensitive",
+        }),
+
         columnHelper.accessor((row) => <img src={row.qr_img} alt="" />, {
             id: "qr_img",
             cell: (info) => info.getValue(),
@@ -694,6 +701,7 @@ const GalleryMain = (props) => {
                                 <col width="10%"/>
                                 <col width="7%"/>
                                 <col width="8%"/>
+                                <col width="5%"/>
                                 <col width="5%"/>
                                 <col width="10%"/>
                                 <col width="5%"/>
