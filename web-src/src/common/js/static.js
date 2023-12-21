@@ -14,6 +14,13 @@ const boardType = {
     consulting: "150",
     guestBook: "250",
     etc: "900"
-}
+};
 
-export { registration_idx, imageResizeOptions, boardType };
+// 댓글 유형 (comment_type)
+const commentType = {
+    gallery: "000",
+    consulting: "100",
+    etc: "900"
+};
+
+export { registration_idx, imageResizeOptions, boardType, commentType };
