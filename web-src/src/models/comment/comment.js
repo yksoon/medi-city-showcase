@@ -3,7 +3,7 @@ const commentModel = {
     userIdx: 0,
     channelType: "",
     importantType: "",
-    boardType: "",
+    // boardType: "",
     processStatus: "",
     detailType: "",
     categoryType: "",
