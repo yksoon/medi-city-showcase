@@ -63,6 +63,10 @@ const SignUpMain = (props) => {
 
     const registrationInfo = useRecoilValue(registrationInfoAtom);
 
+    useEffect(() => {
+        codes.length === 0 ? setIsSpinner(true) : setIsSpinner(false)
+    }, [codes]);
+
     // ------------------------------------------------------------------------------------------------------------------------
 
     const institutionNameKo = useRef(null);

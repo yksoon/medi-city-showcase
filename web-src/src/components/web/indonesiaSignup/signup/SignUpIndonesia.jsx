@@ -93,6 +93,11 @@ const SignUpIndonesia = (props) => {
 
     const registrationInfo = useRecoilValue(registrationInfoAtom);
 
+    useEffect(() => {
+        codes.length === 0 ? setIsSpinner(true) : setIsSpinner(false)
+    }, [codes]);
+
+
     // ------------------------------------------------------------------------------------------------------------------------
 
     const interestsOther = useRef(null);
