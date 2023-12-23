@@ -232,7 +232,7 @@ const GuidelineIndonesia = () => {
                                     </span>
                                     Join our exclusive talk show with a{" "}
                                     <span className="pink">
-                                        mega influencer “Jessica Iskandar”
+                                        mega influencer 
                                     </span>{" "}
                                     who has undergone plastic surgery in Korea!
                                     <br />
