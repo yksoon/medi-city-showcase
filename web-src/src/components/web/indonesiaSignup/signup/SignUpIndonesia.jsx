@@ -675,8 +675,8 @@ const SignUpIndonesia = (props) => {
                                                                 (
                                                                     item2,
                                                                     idx2,
-                                                                ) => (
-                                                                    <option
+                                                                ) => {
+                                                                    return <option
                                                                         key={`genderOption_${idx}_${idx2}`}
                                                                         value={
                                                                             item2.code_key
@@ -685,8 +685,8 @@ const SignUpIndonesia = (props) => {
                                                                         {
                                                                             item2.code_value_en
                                                                         }
-                                                                    </option>
-                                                                ),
+                                                                    </option>;
+                                                                },
                                                             )}
                                                     </select>
                                                 </td>
