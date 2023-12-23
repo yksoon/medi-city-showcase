@@ -8,7 +8,7 @@ import useAlert from "hook/useAlert";
 import useConfirm from "hook/useConfirm";
 import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { codesAtom, isSpinnerAtom, registrationInfoAtom } from "recoils/atoms";
+import {codesAtom, countryBankAtom, isSpinnerAtom, registrationInfoAtom} from "recoils/atoms";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { registration_idx } from "common/js/static";
 import { successCode } from "resultCode";
@@ -86,6 +86,7 @@ const SignUpIndonesia = (props) => {
     const navigate = useNavigate();
 
     const codes = useRecoilValue(codesAtom);
+    const countryBank = useRecoilValue(countryBankAtom);
 
     // 다음 주소검색
     const open = useDaumPostcodePopup();
@@ -706,6 +707,7 @@ const SignUpIndonesia = (props) => {
                                                     }
                                                 >
                                                     {!isConfirmation ? (
+                                                            countryBank.length !== 0 &&
                                                         <CountrySelect
                                                             onChange={(
                                                                 e,

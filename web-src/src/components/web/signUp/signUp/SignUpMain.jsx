@@ -57,6 +57,7 @@ const SignUpMain = (props) => {
 
     const codes = useRecoilValue(codesAtom);
 
+
     // 다음 주소검색
     const open = useDaumPostcodePopup();
 
