@@ -111,7 +111,7 @@ const SignUpIndonesia = (props) => {
     useEffect(() => {
         if (isConfirmation) {
             if (Object.keys(location.state).length !== 0) {
-                setDefaultEntryInfoFunc();
+                codes.length !== 0 && setDefaultEntryInfoFunc();
             } else {
                 navigate(routerPath.web_signup_check_entry_url);
             }
@@ -124,7 +124,7 @@ const SignUpIndonesia = (props) => {
             // interestsOther.current.value = "";
             setEntryInfoFunc();
         }
-    }, [location.pathname]);
+    }, [location.pathname, codes]);
 
     useEffect(() => {
         if (!isConfirmation) {
