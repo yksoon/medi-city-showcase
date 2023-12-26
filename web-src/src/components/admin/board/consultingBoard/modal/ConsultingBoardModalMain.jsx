@@ -48,8 +48,8 @@ const ConsultingBoardModalMain = (props) => {
         inputContentKo.current.value = modData.content_ko;
         setFileList(modData.file_info);
 
-        if (modData.comment_info.length != 0) {
-            inputAnswerContent.current.value = modData.comment_info[0].content;
+        if (modData.comment_info.length !== 0) {
+            inputAnswerContent.current.value = modData.comment_info[0].content_ko;
             setCommentFileList(modData.comment_info[0].file_info ?? []);
         }
     };
@@ -116,31 +116,32 @@ const ConsultingBoardModalMain = (props) => {
              
 
              data = {
-                 boardIdx: isModData && modData.board_idx,
-                 commentType : "100",
-                 showYn: selectShowYn.current.value,
-                 //boardType: boardType.consulting,
-                 //categoryType: isModData && modData.category_type_cd,
-                 subject: inputSubjectKo.current.value,
-                 subTitle: inputSubTitleKo.current.value,
-                 content: inputAnswerContent.current.value,
- 
+                boardIdx: isModData && modData.board_idx,
+                
+                commentType : "100",
+                showYn: selectShowYn.current.value,
+                subjectKo: inputSubjectKo.current.value,
+                subjectEn: inputSubjectKo.current.value,
+                subTitleKo: inputSubTitleKo.current.value,
+                subTitleEn: inputSubTitleKo.current.value,
+                contentKo: inputAnswerContent.current.value,
+                contentEn: inputAnswerContent.current.value,
              };
  
              if (method === "reg") {
-                 // /v1/_comment
-                 // POST MULTI
-                 // 문의 답변 등록
-                 data.targetIdx = modData.board_idx;
-                 url = apiPath.api_admin_reg_comment;
+                // /v1/_comment
+                // POST MULTI
+                // 문의 답변 등록
+                data.targetIdx = modData.board_idx;
+                url = apiPath.api_admin_reg_comment;
              } else if (method === "mod") {
-                // 상담게시판 답변은 1개이기때문에.. 지정했는데 좋은방법이있다면 해주세요
+                // 상담게시판 답변은 무조건 1개이기 때문에 0번 인덱스로 지정
                 let commentIdxVal = modData.comment_info[0].comment_idx;
-                 // /v1/_comment
-                 // PUT MULTI
-                 // 문의 답변 수정
-                 data.commentIdx = commentIdxVal;
-                 url = apiPath.api_admin_mod_comment;
+                // /v1/_comment
+                // PUT MULTI
+                // 문의 답변 수정
+                data.commentIdx = commentIdxVal;
+                url = apiPath.api_admin_mod_comment;
              }
 
             // 기본 formData append
@@ -427,6 +428,18 @@ const ConsultingBoardModalMain = (props) => {
                             </div>
                         </td>
                     </tr>
+                    {(isModData && modData.comment_info.length !== 0) && (
+                        <>
+                            <tr>
+                                <th>등록자</th>
+                                <td>{modData.comment_info[0].reg_user_name_en}</td>
+                            </tr>
+                            <tr>
+                                <th>등록일</th>
+                                <td>{modData.comment_info[0].reg_dttm}</td>
+                            </tr>
+                        </>
+                    )}
                 </tbody>
             </table>
 
