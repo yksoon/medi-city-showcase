@@ -1240,7 +1240,7 @@ const EntryManageModalMain = (props) => {
                                         <input
                                             type="text"
                                             className="input wp100"
-                                            value={item.position}
+                                            value={item.position.replace("|", "")}
                                             key={`${item.idx}_position`}
                                             onChange={(e) =>
                                                 changeEntry(
@@ -1288,7 +1288,7 @@ const EntryManageModalMain = (props) => {
                                                             item.position.split(
                                                                 ",",
                                                             ).length - 1
-                                                        ]
+                                                        ].replace("|", "")
                                                     }
                                                     key={`${item.idx}_position_other`}
                                                     onChange={(e) =>

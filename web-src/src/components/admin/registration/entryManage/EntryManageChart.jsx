@@ -255,7 +255,7 @@ const EntryManageChart = (props) => {
                     </div>
                     <div style={{ display: "flex" }}>
                         {institutionInfo.length !== 0 && (
-                            <CommonPieChart
+                            <CommonBarChart
                                 data={institutionInfo}
                                 width={550}
                                 height={330}
@@ -297,7 +297,7 @@ const EntryManageChart = (props) => {
                             />
                         )}
                         {institutionTypeInfo.length !== 0 && (
-                            <CommonPieChart
+                            <CommonBarChart
                                 data={institutionTypeInfo}
                                 width={550}
                                 height={330}
