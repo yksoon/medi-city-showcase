@@ -75,7 +75,7 @@ a.tablebtn:first-child {margin: 0;}
 .plusbtn_wrap a {padding:0 8px;border: 1px solid #ddd;display: inline-block;border-radius: 5px;line-height: 21px;}
 
 select {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;cursor:pointer;border-radius: 5px;-webkit-appearance:none; /* 크롬 화살표 없애기 */
-    -moz-appearance:none; appearance:none; background:url('/public/img/common/arrow_btm.png') right 10px center no-repeat;min-width:86px;}
+    -moz-appearance:none; appearance:none; background:url('/img/common/arrow_btm.png') right 10px center no-repeat;min-width:86px;}
 input::placeholder {color: #a6a6a6;}
 input.input {border: 1px solid #ddd;height:28px;line-height:28px;font-size: 14px;color: #333;padding: 0 10px;display:inline-block;min-width:80px;border-radius: 5px;font-family: inherit;}
 textarea {border: 1px solid #ddd;height:28px;line-height:14px;font-size: 14px;color: #333;padding: 0 10px;display:inline-block;min-width:80px;border-radius: 5px;font-family: inherit;resize:none;min-height:80px;width:100%;}
@@ -436,7 +436,7 @@ a.default_a {color:#008dd3;font-weight:500;text-decoration: underline;}
 .spinner span {position:absolute;left:50%;top:50%;transform:translate(-50%, -50%);padding:0 !important;color:#0047A0;margin-left: -20px;}
 .spinner span.error {color:#1976d2;}
 
-div.select {border: 1px solid #ddd;height: 28px; line-height: 28px; font-size: 14px; color: #333; padding: 0 10px; cursor: pointer; border-radius: 5px;background:url('/public/img/common/arrow_btm.png') right 10px center no-repeat;}
+div.select {border: 1px solid #ddd;height: 28px; line-height: 28px; font-size: 14px; color: #333; padding: 0 10px; cursor: pointer; border-radius: 5px;background:url('/img/common/arrow_btm.png') right 10px center no-repeat;}
 div.select:focus-visible {outline:-webkit-focus-ring-color auto 1px;    border: 1px solid #000;}
 div.select input:focus-visible {outline:-webkit-focus-ring-color auto 1px;    border: 1px solid #000;}
 div.select:focus {outline:-webkit-focus-ring-color auto 1px;    border: 1px solid #000;}
