@@ -71,7 +71,7 @@ const SignUpMain = (props) => {
 
     const institutionNameKo = useRef(null);
     const institutionNameEn = useRef(null);
-    const addr1Ko = useRef(null);
+    const addr1Ko = useRef();
     const addr2Ko = useRef(null);
     const addr1En = useRef(null);
     const addr2En = useRef(null);
@@ -102,6 +102,8 @@ const SignUpMain = (props) => {
     const [totalPriceState, setTotalPriceState] = useState("0");
 
     const [interpretationCostYn, setInterpretationCostYn] = useState("N");
+
+    const [addr1KoState, setAddr1KoState] = useState("")
 
     useEffect(() => {
         if (isConfirmation) {
@@ -167,6 +169,8 @@ const SignUpMain = (props) => {
             zipcode.current.value = data.zonecode;
             addr1Ko.current.value = data.address;
             addr1En.current.value = data.addressEnglish;
+
+            setAddr1KoState(data.address)
         },
     };
 
@@ -301,6 +305,18 @@ const SignUpMain = (props) => {
                 orgItem["birth_dd"] = birth.split("-")[2];
                 orgItem["birth"] = birth;
                 break;
+            case "birth_yyyy":
+                orgItem = { ...orgItem };
+                orgItem["birth_yyyy"] = val;
+                break;
+            case "birth_mm":
+                orgItem = { ...orgItem };
+                orgItem["birth_mm"] = val;
+                break;
+            case "birth_dd":
+                orgItem = { ...orgItem };
+                orgItem["birth_dd"] = val;
+                break;
             case "name_first_en":
                 orgItem = { ...orgItem };
                 orgItem["name_first_en"] = val;
@@ -418,13 +434,26 @@ const SignUpMain = (props) => {
                     url = apiPath.api_admin_mod_reg_users;
                 }
 
+                let entryInfoArr = [];
+                const entryInfoLength = entryInfo.length
+                for (let i = 0; i < entryInfoLength; i++) {
+                    let entryInfoObj = {
+                        ...entryInfo[i],
+                        birth_mm: entryInfo[i].birth_mm.length === 1 ? `0${entryInfo[i].birth_mm}` : entryInfo[i].birth_mm,
+                        birth_dd: entryInfo[i].birth_dd.length === 1 ? `0${entryInfo[i].birth_dd}` : entryInfo[i].birth_dd
+                    };
+
+                    entryInfoArr.push(entryInfoObj)
+                }
+
                 const data = {
                     payment_status: "000", // 결제상태 000: 결제대기
                     additional_status: "000", // 참가상태 000: 참가등록
                     institution_type: "000", // 000: 병원
                     institution_name_ko: institutionNameEn.current.value,
                     institution_name_en: institutionNameEn.current.value,
-                    addr1_ko: addr1Ko.current.value,
+                    // addr1_ko: addr1Ko.current.value,
+                    addr1_ko: addr1KoState,
                     addr2_ko: addr2En.current.value,
                     addr1_en: addr1En.current.value,
                     addr2_en: addr2En.current.value,
@@ -441,7 +470,7 @@ const SignUpMain = (props) => {
                     name_last_en: nameLastEn.current.value,
                     email: email.current.value,
                     inter_phone_number: "82",
-                    entry_info: entryInfo,
+                    entry_info: entryInfoArr,
                     show_yn: "Y",
                     registration_idx: registrationInfo.registration_idx,
                     interpretation_cost_yn: interpretationCostYn,
@@ -591,10 +620,27 @@ const SignUpMain = (props) => {
                 return false;
             }
 
-            if (!entryInfo[i]["birth"]) {
+            // if (!entryInfo[i]["birth"]) {
+            //     notiEntry("Please enter the participant's date of birth");
+            //
+            //     return false;
+            // }
+
+            if (!entryInfo[i]["birth_yyyy"] || !entryInfo[i]["birth_mm"] || !entryInfo[i]["birth_dd"]) {
                 notiEntry("Please enter the participant's date of birth");
 
                 return false;
+            }
+
+            const birth = `${entryInfo[i]["birth_yyyy"]}-${entryInfo[i]["birth_mm"]}-${entryInfo[i]["birth_dd"]}`
+            if(!checkValidDate(birth)) {
+                CommonNotify({
+                    type: "alert",
+                    hook: alert,
+                    message: "Please check your date of birth again",
+                });
+
+                return false
             }
 
             if (!entryInfo[i]["gender"]) {
@@ -607,11 +653,28 @@ const SignUpMain = (props) => {
         return true;
     };
 
+    // 날짜 validation
+    function checkValidDate(value) {
+        let result = true;
+        try {
+            let date = value.split("-");
+            let y = parseInt(date[0], 10),
+                m = parseInt(date[1], 10),
+                d = parseInt(date[2], 10);
+
+            let dateRegex = /^(?=\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1\d|0?[1-9]))([-.\/])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]\d)?\d\d(?:(?=\x20\d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2})?$/;
+            result = dateRegex.test(d+'-'+m+'-'+y);
+        } catch (err) {
+            result = false;
+        }
+        return result;
+    }
+
     const handleRegistrationInput = (e, inputName) => {
-        setModData({
-            ...modData,
+        setModData((prevData) => ({
+            ...prevData,
             [inputName]: e.target.value,
-        });
+        }));
     };
 
     return (
@@ -1330,16 +1393,76 @@ const SignUpMain = (props) => {
                                                     )}
                                                 </th>
                                                 <td>
+                                                    {/*<input*/}
+                                                    {/*    type="date"*/}
+                                                    {/*    placeholder="YYYY-MM-DD"*/}
+                                                    {/*    value={item.birth}*/}
+                                                    {/*    key={`${item.idx}_birth`}*/}
+                                                    {/*    onChange={(e) =>*/}
+                                                    {/*        changeEntry(*/}
+                                                    {/*            e,*/}
+                                                    {/*            item.idx,*/}
+                                                    {/*            "birth",*/}
+                                                    {/*        )*/}
+                                                    {/*    }*/}
+                                                    {/*    readOnly={*/}
+                                                    {/*        isConfirmation*/}
+                                                    {/*    }*/}
+                                                    {/*/>*/}
                                                     <input
-                                                        type="date"
-                                                        placeholder="YYYY-MM-DD"
-                                                        value={item.birth}
-                                                        key={`${item.idx}_birth`}
+                                                        type="text"
+                                                        placeholder="YYYY"
+                                                        className="input_m"
+                                                        value={item.birth_yyyy}
+                                                        key={`${item.idx}_birth_yyyy`}
+                                                        onInput={(e) => {
+                                                            e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
+                                                        }}
                                                         onChange={(e) =>
                                                             changeEntry(
                                                                 e,
                                                                 item.idx,
-                                                                "birth",
+                                                                "birth_yyyy",
+                                                            )
+                                                        }
+                                                        readOnly={
+                                                            isConfirmation
+                                                        }
+                                                    />
+                                                    <input
+                                                        type="text"
+                                                        placeholder="MM"
+                                                        className="input_m"
+                                                        value={item.birth_mm}
+                                                        key={`${item.idx}_birth_mm`}
+                                                        onInput={(e) => {
+                                                            e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
+                                                        }}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "birth_mm",
+                                                            )
+                                                        }
+                                                        readOnly={
+                                                            isConfirmation
+                                                        }
+                                                    />
+                                                    <input
+                                                        type="text"
+                                                        placeholder="DD"
+                                                        className="input_m"
+                                                        value={item.birth_dd}
+                                                        key={`${item.idx}_birth_dd`}
+                                                        onInput={(e) => {
+                                                            e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
+                                                        }}
+                                                        onChange={(e) =>
+                                                            changeEntry(
+                                                                e,
+                                                                item.idx,
+                                                                "birth_dd",
                                                             )
                                                         }
                                                         readOnly={

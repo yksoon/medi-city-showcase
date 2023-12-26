@@ -63,7 +63,7 @@ const EntryManageChart = (props) => {
             {
                 id: 0,
                 value: dashboardInfo.institution_total_count,
-                label: "총 사전등록 수",
+                label: "총 사전등록기관 수",
             },
             {
                 id: 1,
@@ -231,7 +231,7 @@ const EntryManageChart = (props) => {
                                 data={total}
                                 width={550}
                                 height={330}
-                                title={"총 사전등록/참가자 수"}
+                                title={"총 사전등록기관/참가자 수"}
                             />
                         )}
 

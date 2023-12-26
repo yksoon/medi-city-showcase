@@ -513,11 +513,15 @@ const EntryManageMain = (props) => {
         columnHelper.accessor(
             (row) => (
                 <>
-                    {row.institution_type_cd !== "400" && (
+                    {row.institution_type_cd !== "400" ? (
                         <>
                             {`${row.name_first_ko} ${row.name_last_ko}`}
                             <br />
-                            {`${row.name_first_en} ${row.name_last_en}`}
+                            {`(${row.name_first_en} ${row.name_last_en})`}
+                        </>
+                    ) : (
+                        <>
+                            {`${row.entry_info[0].name_first_en} ${row.entry_info[0].name_last_en}`}
                         </>
                     )}
                 </>
@@ -530,21 +534,42 @@ const EntryManageMain = (props) => {
             },
         ),
 
-        columnHelper.accessor((row) => row.email, {
+        columnHelper.accessor((row) =>
+            <>
+            {row.institution_type_cd !== "400" ? (
+                row.email
+            ) : (
+                row.entry_info[0].email
+            )}
+            </>
+            , {
             id: "email",
             cell: (info) => info.getValue(),
             header: "이메일",
             enableSorting: false,
         }),
 
-        columnHelper.accessor((row) => row.mobile, {
+        columnHelper.accessor((row) =>
+                <>
+                    {row.institution_type_cd !== "400" ? (
+                        row.mobile
+                    ) : (
+                        row.entry_info[0].mobile
+                    )}
+                </>
+            , {
             id: "mobile",
             cell: (info) => info.getValue(),
             header: "연락처",
             enableSorting: false,
         }),
 
-        columnHelper.accessor((row) => row.reg_dttm.split(" ")[0], {
+        columnHelper.accessor((row) =>
+            <>
+                {row.reg_dttm.split(" ")[0]}<br />
+                {row.reg_dttm.split(" ")[1]}
+            </>
+            , {
             id: "reg_dttm",
             cell: (info) => info.getValue(),
             header: "등록일",
@@ -631,11 +656,11 @@ const EntryManageMain = (props) => {
                                 <col width="7%" />
                                 <col width="7%" />
                                 <col width="7%" />
-                                <col width="15%" />
+                                <col width="13%" />
                                 <col width="*" />
                                 <col width="10%" />
                                 <col width="10%" />
-                                <col width="10%" />
+                                <col width="12%" />
                                 <col width="7%" />
                                 <col width="5%" />
                             </colgroup>
