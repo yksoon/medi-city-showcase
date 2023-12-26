@@ -57,10 +57,15 @@ const SignUpMain = (props) => {
 
     const codes = useRecoilValue(codesAtom);
 
+
     // 다음 주소검색
     const open = useDaumPostcodePopup();
 
     const registrationInfo = useRecoilValue(registrationInfoAtom);
+
+    useEffect(() => {
+        codes.length === 0 ? setIsSpinner(true) : setIsSpinner(false)
+    }, [codes]);
 
     // ------------------------------------------------------------------------------------------------------------------------
 
@@ -101,7 +106,7 @@ const SignUpMain = (props) => {
     useEffect(() => {
         if (isConfirmation) {
             if (Object.keys(location.state).length !== 0) {
-                setDefaultEntryInfoFunc();
+                codes.length !== 0 && setDefaultEntryInfoFunc();
             } else {
                 navigate(routerPath.web_signup_check_entry_url);
             }
@@ -109,7 +114,7 @@ const SignUpMain = (props) => {
             setModData({});
             setEntryInfoFunc();
         }
-    }, [location.pathname]);
+    }, [location.pathname, codes]);
 
     // 사전등록 확인일 경우
     const setDefaultEntryInfoFunc = () => {
@@ -1472,9 +1477,9 @@ const SignUpMain = (props) => {
                                             </p>
                                         </td>
                                         <td className="center">
-                                            {registrationInfo.length !== 0 &&
-                                                registrationInfo.entry_cost
-                                                    .toString()
+                                            {Object.keys(registrationInfo).length !== 0 &&
+                                                registrationInfo.entry_cost &&
+                                                String(registrationInfo.entry_cost)
                                                     .replace(
                                                         commaOfNumber,
                                                         ",",
@@ -1520,9 +1525,9 @@ const SignUpMain = (props) => {
                                             Additional Participants (per person)
                                         </th>
                                         <td className="center">
-                                            {registrationInfo.length !== 0 &&
-                                                registrationInfo.additional_cost
-                                                    .toString()
+                                            {Object.keys(registrationInfo).length !== 0 &&
+                                                registrationInfo.additional_cost &&
+                                                String(registrationInfo.additional_cost)
                                                     .replace(
                                                         commaOfNumber,
                                                         ",",
@@ -1554,9 +1559,9 @@ const SignUpMain = (props) => {
                                             2 days
                                         </th>
                                         <td className="center">
-                                            {registrationInfo.length !== 0 &&
-                                                registrationInfo.interpretation_cost
-                                                    .toString()
+                                            {Object.keys(registrationInfo).length !== 0 &&
+                                                registrationInfo.interpretation_cost &&
+                                                String(registrationInfo.interpretation_cost)
                                                     .replace(
                                                         commaOfNumber,
                                                         ",",

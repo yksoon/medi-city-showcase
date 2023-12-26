@@ -134,22 +134,21 @@ const GuidelineIndonesia = () => {
                                 <li className="c03">
                                     <p>
                                         <img
-                                            src="img/web/sub/step_icon05.png"
-                                            alt=""
-                                        />
-                                    </p>
-                                    Receive
-                                    <br />
-                                    Confirmation E-mail
-                                </li>
-                                <li className="c04">
-                                    <p>
-                                        <img
                                             src="img/web/sub/step_icon06.png"
                                             alt=""
                                         />
                                     </p>
                                     Complete
+                                </li>
+                                <li className="c04">
+                                    <p>
+                                        <img
+                                            src="img/web/sub/step_icon08.png"
+                                            alt=""
+                                        />
+                                    </p>
+                                    Confirmation<br />
+                                    message and notice<br />for "What’s App"
                                 </li>
                             </ul>
 
@@ -232,7 +231,7 @@ const GuidelineIndonesia = () => {
                                     </span>
                                     Join our exclusive talk show with a{" "}
                                     <span className="pink">
-                                        mega influencer “Jessica Iskandar”
+                                        mega influencer 
                                     </span>{" "}
                                     who has undergone plastic surgery in Korea!
                                     <br />

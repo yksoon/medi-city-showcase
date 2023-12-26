@@ -8,7 +8,7 @@ import useAlert from "hook/useAlert";
 import useConfirm from "hook/useConfirm";
 import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { codesAtom, isSpinnerAtom, registrationInfoAtom } from "recoils/atoms";
+import {codesAtom, countryBankAtom, isSpinnerAtom, registrationInfoAtom} from "recoils/atoms";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { registration_idx } from "common/js/static";
 import { successCode } from "resultCode";
@@ -86,11 +86,17 @@ const SignUpIndonesia = (props) => {
     const navigate = useNavigate();
 
     const codes = useRecoilValue(codesAtom);
+    const countryBank = useRecoilValue(countryBankAtom);
 
     // 다음 주소검색
     const open = useDaumPostcodePopup();
 
     const registrationInfo = useRecoilValue(registrationInfoAtom);
+
+    useEffect(() => {
+        codes.length === 0 ? setIsSpinner(true) : setIsSpinner(false)
+    }, [codes]);
+
 
     // ------------------------------------------------------------------------------------------------------------------------
 
@@ -111,7 +117,7 @@ const SignUpIndonesia = (props) => {
     useEffect(() => {
         if (isConfirmation) {
             if (Object.keys(location.state).length !== 0) {
-                setDefaultEntryInfoFunc();
+                codes.length !== 0 && setDefaultEntryInfoFunc();
             } else {
                 navigate(routerPath.web_signup_check_entry_url);
             }
@@ -124,7 +130,7 @@ const SignUpIndonesia = (props) => {
             // interestsOther.current.value = "";
             setEntryInfoFunc();
         }
-    }, [location.pathname]);
+    }, [location.pathname, codes]);
 
     useEffect(() => {
         if (!isConfirmation) {
@@ -675,8 +681,8 @@ const SignUpIndonesia = (props) => {
                                                                 (
                                                                     item2,
                                                                     idx2,
-                                                                ) => (
-                                                                    <option
+                                                                ) => {
+                                                                    return <option
                                                                         key={`genderOption_${idx}_${idx2}`}
                                                                         value={
                                                                             item2.code_key
@@ -685,8 +691,8 @@ const SignUpIndonesia = (props) => {
                                                                         {
                                                                             item2.code_value_en
                                                                         }
-                                                                    </option>
-                                                                ),
+                                                                    </option>;
+                                                                },
                                                             )}
                                                     </select>
                                                 </td>
@@ -706,6 +712,7 @@ const SignUpIndonesia = (props) => {
                                                     }
                                                 >
                                                     {!isConfirmation ? (
+                                                            countryBank.length !== 0 &&
                                                         <CountrySelect
                                                             onChange={(
                                                                 e,
