@@ -1239,6 +1239,7 @@ const GalleryManageModalMain = (props) => {
                                 // 댓글
                                 <div style={{ fontWeight: "bold", border: "1px solid #666" }}>
                                     <div>문의자 : {comment.user_name_first_en} {comment.user_name_last_en}</div>
+                                    <div>등록일 : {comment.reg_dttm}</div>
                                     <div>연락처 : (+{comment.inter_phone_number}) {comment.mobile1}</div>
                                     <div>이메일 : {comment.email}</div>
                                     <div>내용 : {comment.content_en}</div>
@@ -1288,6 +1289,7 @@ const GalleryManageModalMain = (props) => {
                                         comment.child_comments.map((childComment) => (
                                             <div key={childComment.comment_idx} style={{ background: "#eee" }}>
                                                 <div>답변자 : {childComment.reg_user_name_en}</div>
+                                                <div>등록일 : {childComment.reg_dttm}</div>
                                                 <div>
                                                     <input
                                                         type="text"
