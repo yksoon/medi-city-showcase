@@ -438,6 +438,13 @@ const apiPath = {
     // PUT
     // 갤러리 수정
     api_mod_gallery: `${base_api_url + slash + version + slash}gallery`,
+
+    // /v1/gallery/_download/{work_idx}/
+    // GET
+    // 갤러리 정보 다운로드
+    api_gallery_download: `${
+        base_api_url + slash + version + slash
+    }gallery/_download${slash}`,
 };
 
 export { routerPath, apiPath };

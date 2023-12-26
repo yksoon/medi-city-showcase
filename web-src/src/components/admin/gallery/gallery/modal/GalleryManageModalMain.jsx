@@ -71,7 +71,6 @@ const GalleryManageModalMain = (props) => {
     const [modiIdx, setModiIdx] = useState("");
 
     // refs
-    // const showYn = useRef(null);
     const mainTitleKo = useRef(null);
     const mainTitleEn = useRef(null);
     const subTitleKo = useRef(null);
@@ -488,12 +487,6 @@ const GalleryManageModalMain = (props) => {
             return false;
         }
 
-        // if (!showYn.current.value) {
-        //     noti(showYn, "노출여부를 선택해주세요");
-        //
-        //     return false;
-        // }
-
         if (!mainTitleKo.current.value || !mainTitleEn.current.value) {
             noti(mainTitleKo, "작품명(국문,영문)을 입력해주세요");
 
@@ -587,8 +580,6 @@ const GalleryManageModalMain = (props) => {
             };
         };
     };
-
-
 
      // 댓글 삭제
      const clickRemoveComment = (comment_idx) => {
@@ -1240,100 +1231,104 @@ const GalleryManageModalMain = (props) => {
 
                 {/* 댓글 관리 */}
                 {isModData && (
-                    modData.comment_info.length !== 9999 && (
-                        modData.comment_info.map((comment, index) => (
-                            // 댓글
-                            <div style={{ fontWeight: "bold", border: "1px solid #666" }}>
-                                <div>문의자 : {comment.user_name_first_en} {comment.user_name_last_en}</div>
-                                <div>연락처 : (+{comment.inter_phone_number}) {comment.mobile1}</div>
-                                <div>이메일 : {comment.email}</div>
-                                <div>내용 : {comment.content_en}</div>
-                                <div style={{ display: "flex", justifyContent: "end" }}>
-                                    <Link
-                                        className="subbtn del"
-                                        onClick={handleRemoveClick(comment.comment_idx)}
-                                    >
-                                        삭제
-                                    </Link>
-                                    <Link
-                                        className="subbtn on"
-                                        onClick={() => clickRegReplying('reg',index)}
-                                    >
-                                        {replyingStates[index] ? '닫기' : '답글'}
-                                    </Link>
-                                </div>
-                                {/* 댓글 첨부파일 */}
-                                {comment.file_info !== null && (
-                                    comment.file_info.map((item, idx) => (
-                                        <div key={`file_info_${idx}`}>
-                                            <Link
-                                                to={`${fileBaseUrl}${item.file_path_enc}`}
-                                            >
-                                                <img
-                                                    src="/img/common_old/file.svg"
-                                                    alt="파일 아이콘"
-                                                />
-                                                {item.file_name}
-                                            </Link>
-                                        </div>
-                                    )
-                                ))}
-                                {/* 답변 입력 */}
-                                {replyingStates[index] && (
-                                    <div>
-                                        <div style={{ color: "#666" }}>답변 작성</div>
-                                        <input onChange={handleInputChange} type="text" className="input wp100" placeholder="답글 내용" />
-                                        <div style={{ display: "flex", justifyContent: "center" }}>
-                                            <button onClick={() => clickRegReplying("reg", index)}>취소</button>
-                                            <button onClick={() => clickRegComment("reg", comment)} >등록</button>
-                                        </div>
+                    modData.comment_info.length !== 0 && (
+                        // 수정화면이고 댓글이 있는 경우 랜더링
+                        <>
+                            <a href={apiPath.api_gallery_download + modData.work_idx}>엑셀다운로드</a>
+                            {modData.comment_info.map((comment, index) => (
+                                // 댓글
+                                <div style={{ fontWeight: "bold", border: "1px solid #666" }}>
+                                    <div>문의자 : {comment.user_name_first_en} {comment.user_name_last_en}</div>
+                                    <div>연락처 : (+{comment.inter_phone_number}) {comment.mobile1}</div>
+                                    <div>이메일 : {comment.email}</div>
+                                    <div>내용 : {comment.content_en}</div>
+                                    <div style={{ display: "flex", justifyContent: "end" }}>
+                                        <Link
+                                            className="subbtn del"
+                                            onClick={handleRemoveClick(comment.comment_idx)}
+                                        >
+                                            삭제
+                                        </Link>
+                                        <Link
+                                            className="subbtn on"
+                                            onClick={() => clickRegReplying('reg',index)}
+                                        >
+                                            {replyingStates[index] ? '닫기' : '답글'}
+                                        </Link>
                                     </div>
-                                )}
-                                {/* 답변 목록 */}
-                                {comment.child_comments.length !== 0 && (
-                                    comment.child_comments.map((childComment) => (
-                                        <div key={childComment.comment_idx} style={{ background: "#eee" }}>
-                                            <div>답변자 : {childComment.reg_user_name_en}</div>
-                                            <div style={{ display: "flex", justifyContent: "end" }}>
+                                    {/* 댓글 첨부파일 */}
+                                    {comment.file_info !== null && (
+                                        comment.file_info.map((item, idx) => (
+                                            <div key={`file_info_${idx}`}>
                                                 <Link
-                                                    className="subbtn del"
-                                                    onClick={handleRemoveClick(childComment.comment_idx)}
+                                                    to={`${fileBaseUrl}${item.file_path_enc}`}
                                                 >
-                                                    삭제
-                                                </Link>
-                                                <Link className="subbtn on" onClick={() => clickRegComment("mod",childComment)}>
-                                                    수정   
+                                                    <img
+                                                        src="/img/common_old/file.svg"
+                                                        alt="파일 아이콘"
+                                                    />
+                                                    {item.file_name}
                                                 </Link>
                                             </div>
-                                            <div>
-                                                <input
-                                                    type="text"
-                                                    className="input wp100"
-                                                    value={childComment.content_en}
-                                                    onChange={(e) => handleInputChangeModi(e, childComment)}
-                                                />
+                                        )
+                                    ))}
+                                    {/* 답변 입력 */}
+                                    {replyingStates[index] && (
+                                        <div>
+                                            <div style={{ color: "#666" }}>답변 작성</div>
+                                            <input onChange={handleInputChange} type="text" className="input wp100" placeholder="답글 내용" />
+                                            <div style={{ display: "flex", justifyContent: "center" }}>
+                                                <button onClick={() => clickRegReplying("reg", index)}>취소</button>
+                                                <button onClick={() => clickRegComment("reg", comment)} >등록</button>
                                             </div>
-                                            {/* 답변 첨부파일 */}
-                                            {childComment.file_info !== null &&
-                                                childComment.file_info.map((item, idx) => (
-                                                    <div key={`file_info_${idx}`}>
-                                                        <Link
-                                                            to={`${fileBaseUrl}${item.file_path_enc}`}
-                                                        >
-                                                            <img
-                                                                src="/img/common_old/file.svg"
-                                                                alt="파일 아이콘"
-                                                            />
-                                                            {item.file_name}
-                                                        </Link>
-                                                    </div>
-                                                )
-                                            )}
                                         </div>
-                                    ))
-                                )}
-                            </div>
-                        ))
+                                    )}
+                                    {/* 답변 목록 */}
+                                    {comment.child_comments.length !== 0 && (
+                                        comment.child_comments.map((childComment) => (
+                                            <div key={childComment.comment_idx} style={{ background: "#eee" }}>
+                                                <div>답변자 : {childComment.reg_user_name_en}</div>
+                                                <div>
+                                                    <input
+                                                        type="text"
+                                                        className="input wp100"
+                                                        value={childComment.content_en}
+                                                        onChange={(e) => handleInputChangeModi(e, childComment)}
+                                                    />
+                                                </div>
+                                                <div style={{ display: "flex", justifyContent: "end" }}>
+                                                    <Link
+                                                        className="subbtn del"
+                                                        onClick={handleRemoveClick(childComment.comment_idx)}
+                                                    >
+                                                        삭제
+                                                    </Link>
+                                                    <Link className="subbtn on" onClick={() => clickRegComment("mod",childComment)}>
+                                                        수정   
+                                                    </Link>
+                                                </div>
+                                                {/* 답변 첨부파일 */}
+                                                {childComment.file_info !== null &&
+                                                    childComment.file_info.map((item, idx) => (
+                                                        <div key={`file_info_${idx}`}>
+                                                            <Link
+                                                                to={`${fileBaseUrl}${item.file_path_enc}`}
+                                                            >
+                                                                <img
+                                                                    src="/img/common_old/file.svg"
+                                                                    alt="파일 아이콘"
+                                                                />
+                                                                {item.file_name}
+                                                            </Link>
+                                                        </div>
+                                                    )
+                                                )}
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+                            ))}
+                        </>
                     )
                 )}
             </div>
