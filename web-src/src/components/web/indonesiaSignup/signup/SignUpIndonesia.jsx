@@ -923,6 +923,7 @@ const SignUpIndonesia = (props) => {
                                                             isConfirmation
                                                         }
                                                     />
+                                                    &#32;-&#32;
                                                     <input
                                                         type="text"
                                                         placeholder="MM"
@@ -941,6 +942,7 @@ const SignUpIndonesia = (props) => {
                                                             isConfirmation
                                                         }
                                                     />
+                                                    &#32;-&#32;
                                                     <input
                                                         type="text"
                                                         placeholder="DD"
