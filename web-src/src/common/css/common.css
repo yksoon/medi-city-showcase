@@ -55,7 +55,7 @@ div.mo_title > h4{font-size: 21px;font-weight: 700;}
 .spinner span {position:absolute;left:50%;top:50%;transform:translate(-50%, -50%);padding:0 !important;color:#e72295;margin-left: -20px;}
 .spinner span.error {color:#1976d2;}
 
-div.select {border: 1px solid #ddd;height: 28px; line-height: 28px; font-size: 14px; color: #333; padding: 0 10px; cursor: pointer; border-radius: 5px;background:url('/public/img/common/arrow_btm.png') right 10px center no-repeat;}
+div.select {border: 1px solid #ddd;height: 28px; line-height: 28px; font-size: 14px; color: #333; padding: 0 10px; cursor: pointer; border-radius: 5px;background:url('/img/common/arrow_btm.png') right 10px center no-repeat;}
 div.select:focus-visible {outline:-webkit-focus-ring-color auto 1px;    border: 1px solid #000;}
 div.select input:focus-visible {outline:-webkit-focus-ring-color auto 1px;    border: 1px solid #000;}
 div.select:focus {outline:-webkit-focus-ring-color auto 1px;    border: 1px solid #000;}
