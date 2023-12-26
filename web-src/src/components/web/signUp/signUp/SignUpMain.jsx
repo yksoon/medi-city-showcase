@@ -1672,13 +1672,18 @@ const SignUpMain = (props) => {
                                             {/*    /!*<option value="">2</option>*!/*/}
                                             {/*    /!*<option value="">3</option>*!/*/}
                                             {/*</select>*/}
-                                            <input
-                                                type="text"
-                                                className="input_m"
-                                                readOnly={true}
+                                            {/*<input*/}
+                                            {/*    type="text"*/}
+                                            {/*    className="input_m"*/}
+                                            {/*    readOnly={true}*/}
+                                            {/*    ref={entryPersonNumber}*/}
+                                            {/*    value={entryInfo.length - 1}*/}
+                                            {/*/>*/}
+                                            <p
                                                 ref={entryPersonNumber}
-                                                value={entryInfo.length - 1}
-                                            />
+                                            >
+                                                {entryInfo.length - 1}
+                                            </p>
                                         </td>
                                     </tr>
                                     <tr>
