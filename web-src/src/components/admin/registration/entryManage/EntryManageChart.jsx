@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BarChart, PieChart } from "@mui/x-charts";
-import { CommonBarChart, CommonPieChart } from "common/js/Common";
+import {CommonBarChart, CommonPieChart} from "common/js/Common";
 
 const EntryManageChart = (props) => {
     const dashboardInfo = props.dashboardInfo;
@@ -309,11 +309,11 @@ const EntryManageChart = (props) => {
                         {entryPositionInfo.length !== 0 && (
                             <CommonPieChart
                                 data={entryPositionInfo}
-                                width={550}
-                                height={330}
+                                width={1650}
+                                height={530}
                                 margin={{
                                     top: 20,
-                                    bottom: 60,
+                                    bottom: 100,
                                     left: 30,
                                     right: 30,
                                 }}

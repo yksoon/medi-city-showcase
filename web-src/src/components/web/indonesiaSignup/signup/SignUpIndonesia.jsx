@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { apiPath, routerPath } from "webPath";
 import useAlert from "hook/useAlert";
 import useConfirm from "hook/useConfirm";
-import { CommonErrModule, CommonNotify, CommonRest } from "common/js/Common";
+import {CommonErrModule, CommonInputNumberPattern, CommonNotify, CommonRest} from "common/js/Common";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {codesAtom, countryBankAtom, isSpinnerAtom, registrationInfoAtom} from "recoils/atoms";
 import { useDaumPostcodePopup } from "react-daum-postcode";
@@ -911,7 +911,10 @@ const SignUpIndonesia = (props) => {
                                                         className="input_m"
                                                         value={item.birth_yyyy}
                                                         key={`${item.idx}_birth_yyyy`}
-                                                        onInput={(e) => {e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')}}
+                                                        // onInput={(e) => {e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')}}
+                                                        onInput={(e) => {
+                                                            e.target.value = CommonInputNumberPattern(e)
+                                                        }}
                                                         onChange={(e) =>
                                                             changeEntry(
                                                                 e,
@@ -922,6 +925,7 @@ const SignUpIndonesia = (props) => {
                                                         readOnly={
                                                             isConfirmation
                                                         }
+                                                        maxLength={4}
                                                     />
                                                     &#32;-&#32;
                                                     <input
@@ -930,7 +934,9 @@ const SignUpIndonesia = (props) => {
                                                         className="input_m"
                                                         value={item.birth_mm}
                                                         key={`${item.idx}_birth_mm`}
-                                                        onInput={(e) => {e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')}}
+                                                        onInput={(e) => {
+                                                            e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
+                                                        }}
                                                         onChange={(e) =>
                                                             changeEntry(
                                                                 e,
@@ -941,6 +947,7 @@ const SignUpIndonesia = (props) => {
                                                         readOnly={
                                                             isConfirmation
                                                         }
+                                                        maxLength={2}
                                                     />
                                                     &#32;-&#32;
                                                     <input
@@ -949,7 +956,9 @@ const SignUpIndonesia = (props) => {
                                                         className="input_m"
                                                         value={item.birth_dd}
                                                         key={`${item.idx}_birth_dd`}
-                                                        onInput={(e) => {e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')}}
+                                                        onInput={(e) => {
+                                                            e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
+                                                        }}
                                                         onChange={(e) =>
                                                             changeEntry(
                                                                 e,
@@ -960,6 +969,7 @@ const SignUpIndonesia = (props) => {
                                                         readOnly={
                                                             isConfirmation
                                                         }
+                                                        maxLength={2}
                                                     />
                                                 </td>
                                                 {isConfirmation && (
@@ -978,8 +988,8 @@ const SignUpIndonesia = (props) => {
                                                                 ).length !== 0
                                                                     ? additional_status_en[
                                                                         modData
-                                                                              .additional_status_cd
-                                                                      ]
+                                                                            .additional_status_cd
+                                                                        ]
                                                                     : ""}
                                                             </p>
                                                         </td>

@@ -19,7 +19,7 @@ import GuestBookBoardModalMain from "components/admin/board/guestBook/modal/Gues
 import RegistrationManageModalMain from "components/admin/registration/registrationManage/modal/RegistrationManageModalMain";
 import EntryManageModalMain from "components/admin/registration/entryManage/modal/EntryManageModalMain";
 import PopupManageModalMain from "components/admin/popupManage/modal/PopupManageModalMain";
-import { BarChart, PieChart } from "@mui/x-charts";
+import {BarChart, LineChart, PieChart} from "@mui/x-charts";
 import ArtistManageModalMain from "components/admin/gallery/artist/modal/ArtistManageModalMain";
 import QrListModalMain from "components/admin/gallery/artist/modal/QrListModalMain";
 import GalleryManageModalMain from "components/admin/gallery/gallery/modal/GalleryManageModalMain";
@@ -612,6 +612,10 @@ const CommonCommaPattern = (str, digit) => {
     return returnValue;
 };
 
+const CommonInputNumberPattern = (e) => {
+    return e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
+}
+
 export {
     CommonModal,
     CommonConsole,
@@ -625,4 +629,5 @@ export {
     CommonPieChart,
     CommonBarChart,
     CommonCommaPattern,
+    CommonInputNumberPattern
 };

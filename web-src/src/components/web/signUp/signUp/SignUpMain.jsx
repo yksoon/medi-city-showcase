@@ -1428,6 +1428,7 @@ const SignUpMain = (props) => {
                                                         readOnly={
                                                             isConfirmation
                                                         }
+                                                        maxLength={4}
                                                     />
                                                     &#32;-&#32;
                                                     <input
@@ -1449,6 +1450,7 @@ const SignUpMain = (props) => {
                                                         readOnly={
                                                             isConfirmation
                                                         }
+                                                        maxLength={2}
                                                     />
                                                     &#32;-&#32;
                                                     <input
@@ -1470,6 +1472,7 @@ const SignUpMain = (props) => {
                                                         readOnly={
                                                             isConfirmation
                                                         }
+                                                        maxLength={2}
                                                     />
                                                 </td>
                                                 <th>
