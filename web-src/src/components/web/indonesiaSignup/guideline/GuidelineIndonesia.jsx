@@ -148,7 +148,7 @@ const GuidelineIndonesia = () => {
                                         />
                                     </p>
                                     Confirmation<br />
-                                    message and notice<br />for "What’s App"
+                                    message and notice<br />for "WhatsApp"
                                 </li>
                             </ul>
 
